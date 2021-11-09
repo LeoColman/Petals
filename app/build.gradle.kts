@@ -17,7 +17,6 @@
  */
 
 import br.com.colman.petals.Libs
-import br.com.colman.petals.Version
 import org.gradle.api.JavaVersion.VERSION_1_8
 
 plugins {
@@ -39,8 +38,8 @@ android {
       applicationId = "br.com.colman.petals"
       minSdk = 21
       targetSdk = 30
-      versionCode = Version.versionCode
-      versionName = Version.versionName
+      versionCode = 101
+      versionName = "1.0.1"
 
       testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
    }
