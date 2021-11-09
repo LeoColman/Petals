@@ -1,0 +1,8 @@
+name: Lint
+on: push
+jobs:
+  detekt:
+    runs-on: ubuntu-latest
+    name: Detekt
+    steps:
+      - run: ./gradlew detekt

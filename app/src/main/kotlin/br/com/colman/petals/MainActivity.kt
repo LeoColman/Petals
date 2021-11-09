@@ -60,83 +60,85 @@ import org.joda.time.Period.ZERO
 import org.joda.time.format.DateTimeFormat
 import org.koin.android.ext.android.inject
 
+@Suppress("FunctionName")
 class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
-   private val quitTimer by inject<QuitTimer>()
+    private val quitTimer by inject<QuitTimer>()
 
-   override fun onCreate(savedInstanceState: Bundle?) {
-      super.onCreate(savedInstanceState)
-      setContent {
-         val quitDate by quitTimer.quitDate.filterNotNull().collectAsState(null)
-         Content(quitDate)
-      }
-   }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            val quitDate by quitTimer.quitDate.filterNotNull().collectAsState(null)
+            Content(quitDate)
+        }
+    }
 
-   @Composable
-   fun Content(quitDate: LocalDateTime? = now()) {
-      Column(Modifier.fillMaxWidth().padding(16.dp), spacedBy(16.dp), CenterHorizontally) {
-         QuitButton()
-         Text("Time since you've quit", fontSize = 18.sp)
-         QuitTimerText(quitDate)
-      }
-   }
+    @Composable
+    fun Content(quitDate: LocalDateTime? = now()) {
+        Column(Modifier.fillMaxWidth().padding(16.dp), spacedBy(16.dp), CenterHorizontally) {
+            QuitButton()
+            Text("Time since you've quit", fontSize = 18.sp)
+            QuitTimerText(quitDate)
+        }
+    }
 
-   @Composable
-   fun QuitButton() {
-      Button({ quit() }) {
-         Text("Quit")
-      }
-   }
+    @Composable
+    fun QuitButton() {
+        Button({ quit() }) {
+            Text("Quit")
+        }
+    }
 
-   private fun quit() {
-      launch { quitTimer.setQuitDate(now()) }
-   }
+    private fun quit() {
+        launch { quitTimer.setQuitDate(now()) }
+    }
 
-   @Composable
-   fun QuitTimerText(quitDate: LocalDateTime? = now()) {
-      if (quitDate == null) {
-         Text("You haven't quit yet")
-         return
-      }
-      Text("Quit date: ${DateTimeFormat.longDateTime().print(quitDate)}")
-      val periodFromStopDate by quitTimer.periodFromStopDate.collectAsState(ZERO)
-      Texts(periodFromStopDate)
-   }
+    @Composable
+    fun QuitTimerText(quitDate: LocalDateTime? = now()) {
+        if (quitDate == null) {
+            Text("You haven't quit yet")
+            return
+        }
+        Text("Quit date: ${DateTimeFormat.longDateTime().print(quitDate)}")
+        val periodFromStopDate by quitTimer.periodFromStopDate.collectAsState(ZERO)
+        Texts(periodFromStopDate)
+    }
 
-   @Preview
-   @Composable
-   fun Texts(periodFromStopDate: Period = Period.years(1)) {
-      Column(verticalArrangement = spacedBy(8.dp)) {
-         periodFromStopDate.run {
-            listOf(
-               Year to years,
-               Month to months,
-               Day to days,
-               Hour to hours,
-               Minute to minutes,
-               Second to seconds,
-               Millisecond to millis
-            )
-         }.fold(0) { acc, (unit, amount) ->
-            (acc + amount).also {
-               if (it > 0)
-                  Row(horizontalArrangement = spacedBy(8.dp), verticalAlignment = CenterVertically) {
-                     Text("$amount", Modifier.width(32.dp), textAlign = TextAlign.Center)
-                     Text(unit.unit)
-                     LinearProgressIndicator((amount.toFloat() / unit.maxAmount.toFloat()), Modifier.height(8.dp))
-                  }
+    @Preview
+    @Composable
+    fun Texts(periodFromStopDate: Period = Period.years(1)) {
+        Column(verticalArrangement = spacedBy(8.dp)) {
+            periodFromStopDate.run {
+                listOf(
+                    Year to years,
+                    Month to months,
+                    Day to days,
+                    Hour to hours,
+                    Minute to minutes,
+                    Second to seconds,
+                    Millisecond to millis
+                )
+            }.fold(0) { acc, (unit, amount) ->
+                (acc + amount).also {
+                    if (it > 0)
+                        Row(horizontalArrangement = spacedBy(8.dp), verticalAlignment = CenterVertically) {
+                            Text("$amount", Modifier.width(32.dp), textAlign = TextAlign.Center)
+                            Text(unit.unit)
+                            LinearProgressIndicator((amount.toFloat() / unit.max), Modifier.height(8.dp))
+                        }
+                }
             }
-         }
-      }
-   }
+        }
+    }
 
-   private enum class TimeUnit(val unit: String, val maxAmount: Int) {
-      Year("Years", 60),
-      Month("Months", 12),
-      Day("Days", 31),
-      Hour("Hours", 24),
-      Minute("Minutes", 60),
-      Second("Seconds", 60),
-      Millisecond("Milliseconds", 1000)
-   }
+    @Suppress("MagicNumber")
+    private enum class TimeUnit(val unit: String, val max: Int) {
+        Year("Years", 60),
+        Month("Months", 12),
+        Day("Days", 31),
+        Hour("Hours", 24),
+        Minute("Minutes", 60),
+        Second("Seconds", 60),
+        Millisecond("Milliseconds", 1000)
+    }
 }

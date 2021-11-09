@@ -28,14 +28,13 @@ import org.joda.time.LocalDateTime
 @RobolectricTest
 class StopTimerTest : ShouldSpec({
 
-   val target = QuitTimer(ApplicationProvider.getApplicationContext())
+    val target = QuitTimer(ApplicationProvider.getApplicationContext())
 
-   should("Persist and return the start date") {
-      val now = LocalDateTime.now()
+    should("Persist and return the start date") {
+        val now = LocalDateTime.now()
 
-      target.setQuitDate(now)
+        target.setQuitDate(now)
 
-      target.quitDate.first() shouldBe now
-   }
-
+        target.quitDate.first() shouldBe now
+    }
 })

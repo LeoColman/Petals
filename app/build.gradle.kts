@@ -24,6 +24,7 @@ plugins {
    id("com.android.application")
    id("kotlin-android")
    kotlin("kapt")
+   id("io.gitlab.arturbosch.detekt").version("1.19.0-RC1")
 }
 
 repositories {
@@ -110,8 +111,16 @@ dependencies {
 
    // JUnit
    testImplementation(Libs.JUnit.junit4)
+
+   // Detekt
+   detektPlugins(Libs.Detekt.formatting)
 }
 
 tasks.withType<Test>() {
    useJUnitPlatform()
+}
+
+detekt {
+   buildUponDefaultConfig = true
+   autoCorrect = true
 }

@@ -26,6 +26,11 @@ object Libs {
       val coroutineTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
    }
 
+   object Detekt {
+      val version = "1.19.0-RC1"
+      val formatting = "io.gitlab.arturbosch.detekt:detekt-formatting:$version"
+   }
+
    object Compose {
       val version = "1.0.5"
    }

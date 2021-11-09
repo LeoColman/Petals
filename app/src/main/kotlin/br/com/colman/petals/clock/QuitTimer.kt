@@ -33,29 +33,28 @@ import org.joda.time.LocalDateTime.now
 import org.joda.time.LocalDateTime.parse
 import org.joda.time.Period
 
+class QuitTimer(private val context: Context) {
 
-class QuitTimer (private val context: Context) {
+    private val Context.datastore: DataStore<Preferences> by preferencesDataStore("quit_timer")
 
-   private val Context.datastore: DataStore<Preferences> by preferencesDataStore("quit_timer")
+    val quitDate = context.datastore.data.map { preferences ->
+        val date = preferences[stringPreferencesKey("stopDate")]
+        date?.let { parse(it) }
+    }
 
-   val quitDate = context.datastore.data.map { preferences ->
-      val date = preferences[stringPreferencesKey("stopDate")]
-      date?.let { parse(it) }
-   }
+    suspend fun setQuitDate(date: LocalDateTime) {
+        context.datastore.edit { it[stringPreferencesKey("stopDate")] = date.toString() }
+    }
 
-   suspend fun setQuitDate(date: LocalDateTime) {
-      context.datastore.edit { it[stringPreferencesKey("stopDate")] = date.toString() }
-   }
-
-   val periodFromStopDate = flow {
-      while(true) {
-         delay(1)
-         val quitDate = quitDate.firstOrNull()
-         if(quitDate == null) {
-            emit(Period.ZERO)
-         } else {
-            emit(Period(quitDate, now()))
-         }
-      }
-   }
+    val periodFromStopDate = flow {
+        while (true) {
+            delay(1)
+            val quitDate = quitDate.firstOrNull()
+            if (quitDate == null) {
+                emit(Period.ZERO)
+            } else {
+                emit(Period(quitDate, now()))
+            }
+        }
+    }
 }
