@@ -5,4 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Detekt
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
       - run: ./gradlew detekt
