@@ -21,25 +21,43 @@ package br.com.colman.petals
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import br.com.colman.petals.MainActivity.TimeUnit.Day
+import br.com.colman.petals.MainActivity.TimeUnit.Hour
+import br.com.colman.petals.MainActivity.TimeUnit.Millisecond
+import br.com.colman.petals.MainActivity.TimeUnit.Minute
+import br.com.colman.petals.MainActivity.TimeUnit.Month
+import br.com.colman.petals.MainActivity.TimeUnit.Second
+import br.com.colman.petals.MainActivity.TimeUnit.Year
 import br.com.colman.petals.clock.QuitTimer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
-import org.joda.time.Duration
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalDateTime.now
+import org.joda.time.Period
+import org.joda.time.Period.ZERO
+import org.joda.time.format.DateTimeFormat
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
@@ -49,17 +67,20 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
       setContent {
-
-         Column {
-            QuitButton()
-
-            val quitTime by quitTimer.quitDate.collectAsState(null)
-            QuitTimerText(quitTime)
-         }
+         val quitDate by quitTimer.quitDate.filterNotNull().collectAsState(null)
+         Content(quitDate)
       }
    }
 
-   @Preview
+   @Composable
+   fun Content(quitDate: LocalDateTime? = now()) {
+      Column(Modifier.fillMaxWidth().padding(16.dp), spacedBy(16.dp), CenterHorizontally) {
+         QuitButton()
+         Text("Time since you've quit", fontSize = 18.sp)
+         QuitTimerText(quitDate)
+      }
+   }
+
    @Composable
    fun QuitButton() {
       Button({ quit() }) {
@@ -71,26 +92,51 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
       launch { quitTimer.setQuitDate(now()) }
    }
 
-   @Preview
    @Composable
-   fun QuitTimerText(stopDate: LocalDateTime? = now()) {
-      if (stopDate == null) {
-         Text("You haven't stopped yet.")
+   fun QuitTimerText(quitDate: LocalDateTime? = now()) {
+      if (quitDate == null) {
+         Text("You haven't quit yet")
          return
       }
+      Text("Quit date: ${DateTimeFormat.longDateTime().print(quitDate)}")
+      val periodFromStopDate by quitTimer.periodFromStopDate.collectAsState(ZERO)
+      Texts(periodFromStopDate)
+   }
 
-      var secondsFromStopDate by remember { mutableStateOf(Duration(stopDate.toDateTime(), now().toDateTime())) }
-      LaunchedEffect(true) {
-         while(true) {
-            delay(1_000)
-            secondsFromStopDate = Duration(stopDate.toDateTime(), now().toDateTime())
+   @Preview
+   @Composable
+   fun Texts(periodFromStopDate: Period = Period.years(1)) {
+      Column(verticalArrangement = spacedBy(8.dp)) {
+         periodFromStopDate.run {
+            listOf(
+               Year to years,
+               Month to months,
+               Day to days,
+               Hour to hours,
+               Minute to minutes,
+               Second to seconds,
+               Millisecond to millis
+            )
+         }.fold(0) { acc, (unit, amount) ->
+            (acc + amount).also {
+               if (it > 0)
+                  Row(horizontalArrangement = spacedBy(8.dp), verticalAlignment = CenterVertically) {
+                     Text("$amount", Modifier.width(32.dp), textAlign = TextAlign.Center)
+                     Text(unit.unit)
+                     LinearProgressIndicator((amount.toFloat() / unit.maxAmount.toFloat()), Modifier.height(8.dp))
+                  }
+            }
          }
-      }
-
-      Column {
-         Text("Time since you've quit")
-         Text("${secondsFromStopDate.standardSeconds} seconds")
       }
    }
 
+   private enum class TimeUnit(val unit: String, val maxAmount: Int) {
+      Year("Years", 60),
+      Month("Months", 12),
+      Day("Days", 31),
+      Hour("Hours", 24),
+      Minute("Minutes", 60),
+      Second("Seconds", 60),
+      Millisecond("Milliseconds", 1000)
+   }
 }

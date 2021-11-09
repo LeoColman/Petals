@@ -24,9 +24,14 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import org.joda.time.LocalDateTime
+import org.joda.time.LocalDateTime.now
 import org.joda.time.LocalDateTime.parse
+import org.joda.time.Period
 
 
 class QuitTimer (private val context: Context) {
@@ -42,4 +47,15 @@ class QuitTimer (private val context: Context) {
       context.datastore.edit { it[stringPreferencesKey("stopDate")] = date.toString() }
    }
 
+   val periodFromStopDate = flow {
+      while(true) {
+         delay(1)
+         val quitDate = quitDate.firstOrNull()
+         if(quitDate == null) {
+            emit(Period.ZERO)
+         } else {
+            emit(Period(quitDate, now()))
+         }
+      }
+   }
 }
