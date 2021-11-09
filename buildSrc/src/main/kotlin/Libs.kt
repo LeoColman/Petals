@@ -1,0 +1,60 @@
+package br.com.colman.petals
+
+object Libs {
+
+   object Kotlin {
+      val version = "1.5.31"
+      val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
+      val coroutineTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
+   }
+
+   object Compose {
+      val version = "1.0.5"
+   }
+
+   object JodaTime {
+      val jodaTime = "joda-time:joda-time:2.10.13"
+   }
+
+   object DataStore {
+      val version = "1.0.0"
+      val dataStorePreferences = "androidx.datastore:datastore-preferences:$version"
+   }
+
+   object AndroidX {
+      val activityCompose = "androidx.activity:activity-compose:1.3.1"
+      val composeMaterial = "androidx.compose.material:material:${Compose.version}"
+      val composeAnimation = "androidx.compose.animation:animation:${Compose.version}"
+      val composeTooling = "androidx.compose.ui:ui-tooling:${Compose.version}"
+      val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-rc01"
+
+      object Test {
+         val version = "1.4.0"
+         val core = "androidx.test:core:$version"
+         val coreKtx = "androidx.test:core-ktx:$version"
+      }
+   }
+
+   object Koin {
+      val version = "3.1.3"
+
+      val android = "io.insert-koin:koin-android:$version"
+      val compose = "io.insert-koin:koin-androidx-compose:$version"
+   }
+
+   object Robolectric {
+      val version = "4.5.1"
+      val robolectric = "org.robolectric:robolectric:$version"
+   }
+
+   object JUnit {
+      val version = "4.13"
+      val junit4 = "junit:junit:$version"
+   }
+
+   object Kotest {
+      val version = "4.6.3"
+      val junitRunner = "io.kotest:kotest-runner-junit5:$version"
+      val robolectricExtension = "io.kotest.extensions:kotest-extensions-robolectric:0.4.0"
+   }
+}
