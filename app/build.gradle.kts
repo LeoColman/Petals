@@ -45,7 +45,7 @@ android {
    }
 
    buildTypes {
-      release {
+      named("release") {
          isMinifyEnabled = true
       }
    }
