@@ -38,14 +38,14 @@ android {
       applicationId = "br.com.colman.petals"
       minSdk = 21
       targetSdk = 30
-      versionCode = 101
-      versionName = "1.0.1"
+      versionCode = 102
+      versionName = "1.0.2"
 
       testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
    }
 
    buildTypes {
-      release {
+      named("release") {
          isMinifyEnabled = true
       }
    }
