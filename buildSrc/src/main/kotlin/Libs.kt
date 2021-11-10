@@ -49,7 +49,7 @@ object Libs {
       val composeMaterial = "androidx.compose.material:material:${Compose.version}"
       val composeAnimation = "androidx.compose.animation:animation:${Compose.version}"
       val composeTooling = "androidx.compose.ui:ui-tooling:${Compose.version}"
-      val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-rc01"
+      val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
 
       object Test {
          val version = "1.4.0"
