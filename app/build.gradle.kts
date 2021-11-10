@@ -38,10 +38,17 @@ android {
       applicationId = "br.com.colman.petals"
       minSdk = 21
       targetSdk = 30
-      versionCode = 105
-      versionName = "1.0.5"
+      versionCode = 106
+      versionName = "1.0.6"
 
       testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+   }
+
+   flavorDimensions("distribution")
+   productFlavors {
+      create("fdroid") {
+         dimension("distribution")
+      }
    }
 
    buildTypes {
