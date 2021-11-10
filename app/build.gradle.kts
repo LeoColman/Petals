@@ -32,14 +32,14 @@ repositories {
 }
 
 android {
-   compileSdk = 31
+   compileSdk = 30
 
    defaultConfig {
       applicationId = "br.com.colman.petals"
       minSdk = 21
       targetSdk = 30
-      versionCode = 103
-      versionName = "1.0.3"
+      versionCode = 104
+      versionName = "1.0.4"
 
       testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
    }
