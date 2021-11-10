@@ -44,6 +44,13 @@ android {
       testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
    }
 
+   flavorDimensions("distribution")
+   productFlavors {
+      create("fdroid") {
+         dimension("distribution")
+      }
+   }
+
    buildTypes {
       named("release") {
          isMinifyEnabled = true
