@@ -38,8 +38,8 @@ android {
       applicationId = "br.com.colman.petals"
       minSdk = 21
       targetSdk = 30
-      versionCode = 106
-      versionName = "1.0.6"
+      versionCode = 110
+      versionName = "v1.1.0"
 
       testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
    }
