@@ -47,7 +47,7 @@ android {
    flavorDimensions("distribution")
    productFlavors {
       create("fdroid") {
-         dimension("distribution")
+         dimension = "distribution"
       }
    }
 
@@ -88,6 +88,9 @@ dependencies {
    implementation(Libs.Kotlin.reflect)
    testImplementation(Libs.Kotlin.coroutineTest)
 
+   // Apache math
+   implementation(Libs.ApacheCommons.math)
+
    // AndroidX
    implementation(Libs.AndroidX.activityCompose)
    implementation(Libs.AndroidX.composeMaterial)
@@ -114,12 +117,20 @@ dependencies {
    // Kotest
    testImplementation(Libs.Kotest.junitRunner)
    testImplementation(Libs.Kotest.robolectricExtension)
+   testImplementation(Libs.Kotest.property)
+
+   // Mockk
+   testImplementation(Libs.Mockk.mockk)
+   testImplementation(Libs.Mockk.mockkAgent)
 
    // JUnit
    testImplementation(Libs.JUnit.junit4)
 
    // Detekt
    detektPlugins(Libs.Detekt.formatting)
+
+   // Graphs
+   implementation(Libs.Graph.graphView)
 }
 
 tasks.withType<Test>() {
@@ -129,4 +140,10 @@ tasks.withType<Test>() {
 detekt {
    buildUponDefaultConfig = true
    autoCorrect = true
+}
+
+java {
+   toolchain {
+      languageVersion.set(JavaLanguageVersion.of(11))
+   }
 }

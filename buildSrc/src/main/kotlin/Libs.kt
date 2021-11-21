@@ -31,6 +31,11 @@ object Libs {
       val formatting = "io.gitlab.arturbosch.detekt:detekt-formatting:$version"
    }
 
+   object Graph {
+      val version = "4.2.2"
+      val graphView = "com.jjoe64:graphview:4.2.2"
+   }
+
    object Compose {
       val version = "1.0.5"
    }
@@ -58,6 +63,16 @@ object Libs {
       }
    }
 
+   object ApacheCommons {
+      val math = "org.apache.commons:commons-math3:3.6.1"
+   }
+
+   object Mockk {
+      val version = "1.12.0"
+      val mockk = "io.mockk:mockk:$version"
+      val mockkAgent = "io.mockk:mockk-agent-jvm:$version"
+   }
+
    object Koin {
       val version = "3.1.3"
 
@@ -79,5 +94,6 @@ object Libs {
       val version = "4.6.3"
       val junitRunner = "io.kotest:kotest-runner-junit5:$version"
       val robolectricExtension = "io.kotest.extensions:kotest-extensions-robolectric:0.4.0"
+      val property = "io.kotest:kotest-property:$version"
    }
 }

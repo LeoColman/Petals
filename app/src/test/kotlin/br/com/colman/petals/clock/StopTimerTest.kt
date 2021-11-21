@@ -21,20 +21,38 @@ package br.com.colman.petals.clock
 import androidx.test.core.app.ApplicationProvider
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.extensions.robolectric.RobolectricTest
+import io.kotest.matchers.doubles.plusOrMinus
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
-import org.joda.time.LocalDateTime
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
+import org.joda.time.LocalDateTime.now
+import kotlin.math.abs
 
 @RobolectricTest
 class StopTimerTest : ShouldSpec({
 
-    val target = QuitTimer(ApplicationProvider.getApplicationContext())
+    val target by lazy { QuitTimer(ApplicationProvider.getApplicationContext()) }
 
     should("Persist and return the start date") {
-        val now = LocalDateTime.now()
+        val now = now()
 
         target.setQuitDate(now)
 
         target.quitDate.first() shouldBe now
+    }
+
+    should("Update the clock every ~1ms") {
+        val now = now()
+
+        target.setQuitDate(now)
+
+        val periods = target.periodSinceQuit.take(100).toList().windowed(2)
+        val timeDifferenceAverage = periods.map { (first, second) ->
+            abs(first.millis - second.millis)
+        }.average()
+
+
+        timeDifferenceAverage shouldBe (1.0 plusOrMinus 1.0)
     }
 })

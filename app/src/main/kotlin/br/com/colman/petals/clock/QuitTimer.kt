@@ -46,7 +46,7 @@ class QuitTimer(private val context: Context) {
         context.datastore.edit { it[stringPreferencesKey("stopDate")] = date.toString() }
     }
 
-    val periodFromStopDate = flow {
+    val periodSinceQuit = flow {
         while (true) {
             delay(1)
             val quitDate = quitDate.firstOrNull()

@@ -49,6 +49,7 @@ import br.com.colman.petals.MainActivity.TimeUnit.Month
 import br.com.colman.petals.MainActivity.TimeUnit.Second
 import br.com.colman.petals.MainActivity.TimeUnit.Year
 import br.com.colman.petals.clock.QuitTimer
+import br.com.colman.petals.withdrawal.WithdrawalView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
@@ -58,6 +59,7 @@ import org.joda.time.LocalDateTime.now
 import org.joda.time.Period
 import org.joda.time.Period.ZERO
 import org.joda.time.format.DateTimeFormat
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 
 @Suppress("FunctionName")
@@ -79,6 +81,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
             QuitButton()
             Text("Time since you've quit", fontSize = 18.sp)
             QuitTimerText(quitDate)
+            WithdrawalView(get()).View()
         }
     }
 
@@ -100,7 +103,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
             return
         }
         Text("Quit date: ${DateTimeFormat.longDateTime().print(quitDate)}")
-        val periodFromStopDate by quitTimer.periodFromStopDate.collectAsState(ZERO)
+        val periodFromStopDate by quitTimer.periodSinceQuit.collectAsState(ZERO)
         Texts(periodFromStopDate)
     }
 

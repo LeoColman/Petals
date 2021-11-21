@@ -16,13 +16,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
+package br.com.colman.petals.withdrawal
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import br.com.colman.petals.withdrawal.thc.view.ThcConcentrationView
+
+
+class WithdrawalView(
+  private val thcConcentrationView: ThcConcentrationView,
+) {
+
+  @Composable
+  fun View() {
+    Column {
+      thcConcentrationView.Content()
     }
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.0.3")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
-    }
+  }
 }
+
