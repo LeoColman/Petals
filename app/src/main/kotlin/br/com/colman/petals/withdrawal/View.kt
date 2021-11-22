@@ -20,11 +20,13 @@ package br.com.colman.petals.withdrawal
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import br.com.colman.petals.withdrawal.discomfort.view.DiscomfortView
 import br.com.colman.petals.withdrawal.thc.view.ThcConcentrationView
 
 
 class WithdrawalView(
   private val thcConcentrationView: ThcConcentrationView,
+  private val discomfortView: DiscomfortView
 ) {
 
   @Composable

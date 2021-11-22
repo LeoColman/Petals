@@ -81,6 +81,10 @@ android {
       }
    }
 
+   packagingOptions {
+      resources.excludes.add("META-INF/*")
+   }
+
 }
 
 dependencies {
@@ -97,6 +101,10 @@ dependencies {
    implementation(Libs.AndroidX.composeAnimation)
    implementation(Libs.AndroidX.composeTooling)
    implementation(Libs.AndroidX.viewModelCompose)
+   implementation(Libs.AndroidX.navigationCompose)
+
+   // Compose
+   implementation(Libs.Compose.composeMaterialIcons)
 
    testImplementation(Libs.AndroidX.Test.core)
    testImplementation(Libs.AndroidX.Test.coreKtx)
@@ -125,6 +133,11 @@ dependencies {
 
    // JUnit
    testImplementation(Libs.JUnit.junit4)
+
+   // UI Tests
+   androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
+   debugImplementation("androidx.compose.ui:ui-test-manifest:${Libs.Compose.version}")
+
 
    // Detekt
    detektPlugins(Libs.Detekt.formatting)

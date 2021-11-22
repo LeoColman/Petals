@@ -20,14 +20,21 @@ package br.com.colman.petals
 
 import br.com.colman.petals.clock.QuitTimer
 import br.com.colman.petals.withdrawal.WithdrawalView
+import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepository
+import br.com.colman.petals.withdrawal.discomfort.view.DiscomfortView
 import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
 import br.com.colman.petals.withdrawal.thc.view.ThcConcentrationView
-import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val KoinModule = module {
-    single { QuitTimer(androidContext()) }
-    single { ThcConcentrationRepository(get()) }
-    single { ThcConcentrationView(get(), get()) }
-    single { WithdrawalView(get()) }
+  single { QuitTimer(androidApplication()) }
+
+  single { ThcConcentrationRepository(get()) }
+  single { ThcConcentrationView(get(), get()) }
+
+  single { DiscomfortRepository(get()) }
+  single { DiscomfortView(get(), get()) }
+
+  single { WithdrawalView(get(), get()) }
 }

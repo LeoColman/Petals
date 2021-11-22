@@ -19,42 +19,110 @@
 package br.com.colman.petals.clock
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import android.content.res.Resources.getSystem
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import br.com.colman.petals.R.string.*
+import br.com.colman.petals.clock.TimeUnit.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalDateTime.now
 import org.joda.time.LocalDateTime.parse
 import org.joda.time.Period
+import org.joda.time.format.DateTimeFormat
 
-class QuitTimer(private val context: Context) {
+class QuitTimer(
+  private val context: Context,
+) : CoroutineScope by CoroutineScope(Default) {
 
-    private val Context.datastore: DataStore<Preferences> by preferencesDataStore("quit_timer")
+  private val Context.datastore by preferencesDataStore("quit_timer")
 
-    val quitDate = context.datastore.data.map { preferences ->
-        val date = preferences[stringPreferencesKey("stopDate")]
-        date?.let { parse(it) }
+  val quitDate = context.datastore.data.map { preferences ->
+    preferences[stringPreferencesKey("stopDate")]?.let { parse(it) }
+  }
+
+  fun setQuitDate(date: LocalDateTime) {
+    launch {
+      context.datastore.edit { it[stringPreferencesKey("stopDate")] = date.toString() }
+    }
+  }
+}
+
+@Composable
+fun QuitTimerView(quitDate: LocalDateTime) {
+  val locale = getSystem().configuration.locale
+  val dateString = DateTimeFormat.longDateTime().withLocale(locale).print(quitDate)
+
+  val periodSinceQuit by flow {
+    while (true) {
+      delay(10)
+      emit(Period(quitDate, now()))
+    }
+  }.collectAsState(null)
+
+  val labels = periodSinceQuit?.run {
+    listOf(
+      Year to years,
+      Month to months,
+      Day to days,
+      Hour to hours,
+      Minute to minutes,
+      Second to seconds,
+      Millisecond to millis
+    )
+  } ?: return
+
+  Column(Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
+    Column {
+      Text(stringResource(quit_date_text))
+      Text(dateString, fontSize = 24.sp)
     }
 
-    suspend fun setQuitDate(date: LocalDateTime) {
-        context.datastore.edit { it[stringPreferencesKey("stopDate")] = date.toString() }
-    }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+      labels.forEach { (label, amount) ->
 
-    val periodSinceQuit = flow {
-        while (true) {
-            delay(1)
-            val quitDate = quitDate.firstOrNull()
-            if (quitDate == null) {
-                emit(Period.ZERO)
-            } else {
-                emit(Period(quitDate, now()))
-            }
+        Row(Modifier, Arrangement.spacedBy(8.dp), Alignment.CenterVertically) {
+          Row(Modifier.weight(0.4f), Arrangement.SpaceBetween) {
+            Text(stringResource(label.unitName))
+            Text("$amount")
+          }
+          LinearProgressIndicator(
+            amount.toFloat() / label.max,
+            Modifier
+              .height(8.dp)
+              .weight(0.6f)
+          )
         }
+      }
     }
+  }
+}
+
+@Suppress("MagicNumber")
+private enum class TimeUnit(@StringRes val unitName: Int, val max: Int) {
+  Year(years, 60),
+  Month(months, 12),
+  Day(days, 31),
+  Hour(hours, 24),
+  Minute(minutes, 60),
+  Second(seconds, 60),
+  Millisecond(milliseconds, 1000)
 }

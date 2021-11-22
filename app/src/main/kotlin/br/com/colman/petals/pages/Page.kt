@@ -1,0 +1,82 @@
+/*
+ * Petals APP
+ * Copyright (C) 2021 Leonardo Colman Lopes
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package br.com.colman.petals.pages
+
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons.Default
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MedicalServices
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import br.com.colman.petals.R
+import br.com.colman.petals.pages.Page.Home
+
+enum class Page(
+  @StringRes val nameRes: Int,
+  val icon: ImageVector,
+  val ui: @Composable () -> Unit
+) {
+  Home(R.string.home, Default.Home, { Home() }),
+  Symptoms(R.string.symptoms, Default.MedicalServices, { Symptoms() });
+}
+
+@Composable
+fun NavHostContainer(navController: NavHostController) {
+  NavHost(navController, Home.name, Modifier.padding(8.dp)) {
+    Page.values().forEach { page ->
+      composable(page.name) { page.ui() }
+    }
+  }
+}
+
+@Composable
+fun BottomNavigationBar(navController: NavHostController) {
+  val navBackStackEntry by navController.currentBackStackEntryAsState()
+  val currentRoute = navBackStackEntry?.destination?.route
+
+  BottomNavigation {
+    Page.values().forEach { page ->
+      BottomNavigationItem(
+        selected = currentRoute == page.name,
+
+        onClick = {
+          navController.navigate(page.name)
+        },
+
+        icon = { Icon(page.icon, stringResource(page.nameRes)) },
+
+        label = { Text(stringResource(page.nameRes)) }
+      )
+    }
+  }
+}
+

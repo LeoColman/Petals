@@ -19,6 +19,7 @@
 package br.com.colman.petals.withdrawal.repository
 
 import br.com.colman.petals.clock.QuitTimer
+import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.doubles.percent
 import io.kotest.matchers.doubles.plusOrMinus

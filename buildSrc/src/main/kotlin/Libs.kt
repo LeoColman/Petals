@@ -38,6 +38,7 @@ object Libs {
 
    object Compose {
       val version = "1.0.5"
+      val composeMaterialIcons = "androidx.compose.material:material-icons-extended:$version"
    }
 
    object JodaTime {
@@ -52,6 +53,8 @@ object Libs {
    object AndroidX {
       val activityCompose = "androidx.activity:activity-compose:1.3.1"
       val composeMaterial = "androidx.compose.material:material:${Compose.version}"
+      val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-beta02"
+
       val composeAnimation = "androidx.compose.animation:animation:${Compose.version}"
       val composeTooling = "androidx.compose.ui:ui-tooling:${Compose.version}"
       val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"

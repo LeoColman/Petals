@@ -18,7 +18,7 @@
 
 package br.com.colman.petals.clock
 
-import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.extensions.robolectric.RobolectricTest
 import io.kotest.matchers.doubles.plusOrMinus
@@ -30,9 +30,9 @@ import org.joda.time.LocalDateTime.now
 import kotlin.math.abs
 
 @RobolectricTest
-class StopTimerTest : ShouldSpec({
+class QuitTimerTest : ShouldSpec({
 
-    val target by lazy { QuitTimer(ApplicationProvider.getApplicationContext()) }
+    val target by lazy { QuitTimer(getApplicationContext()) }
 
     should("Persist and return the start date") {
         val now = now()
