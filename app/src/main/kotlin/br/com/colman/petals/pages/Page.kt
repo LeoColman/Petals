@@ -26,6 +26,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons.Default
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LockClock
 import androidx.compose.material.icons.filled.MedicalServices
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,6 +47,7 @@ enum class Page(
   val ui: @Composable () -> Unit
 ) {
   Home(R.string.home, Default.Home, { Home() }),
+  HitTimer(R.string.hit_timer, Default.LockClock, { ComposeHitTimer() }),
   Symptoms(R.string.symptoms, Default.MedicalServices, { Symptoms() });
 }
 
