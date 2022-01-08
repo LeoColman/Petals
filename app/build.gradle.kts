@@ -60,6 +60,7 @@ android {
    compileOptions {
       sourceCompatibility(VERSION_1_8)
       targetCompatibility(VERSION_1_8)
+      isCoreLibraryDesugaringEnabled = true
    }
 
    kotlinOptions {
@@ -68,6 +69,7 @@ android {
 
    buildFeatures {
       compose = true
+
    }
 
    composeOptions {
@@ -144,6 +146,11 @@ dependencies {
 
    // Graphs
    implementation(Libs.Graph.graphView)
+
+
+   implementation("org.apache.commons:commons-lang3:3.12.0")
+
+   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 }
 
 tasks.withType<Test>() {

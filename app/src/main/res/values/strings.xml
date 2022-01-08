@@ -29,5 +29,6 @@
     <string name="home">Home</string>
     <string name="symptoms">Symptoms</string>
     <string name="symptoms_introduction">An study from Budney et al. from the University of Vermont established how withdrawal symptoms affect and decay on cannabis users. Below you\'ll see an estimate of your current situation based on your last use date</string>
+    <string name="hit_timer">Hit Timer</string>
 
 </resources>
