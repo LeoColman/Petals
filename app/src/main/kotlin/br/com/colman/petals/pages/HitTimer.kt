@@ -18,62 +18,92 @@
 
 package br.com.colman.petals.pages
 
-import android.os.CountDownTimer
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.colman.petals.R.string.reset
+import br.com.colman.petals.R.string.start
 import kotlinx.coroutines.delay
-import org.apache.commons.lang3.time.DurationFormatUtils
-import java.time.Duration
+import kotlinx.coroutines.flow.flow
+import org.apache.commons.lang3.time.DurationFormatUtils.formatDuration
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
-import java.time.LocalTime
-import java.time.temporal.ChronoUnit
 import java.time.temporal.ChronoUnit.MILLIS
-import java.time.temporal.TemporalUnit
 
 @Preview
 @Composable
 fun ComposeHitTimer() {
-    var startTimerTime by remember { mutableStateOf<LocalDateTime?>(null) }
-    var millisLeft by remember { mutableStateOf(10_000L) }
+  val hitTimer = remember { HitTimer() }
 
-    LaunchedEffect(startTimerTime) {
-        while (true) {
-            startTimerTime?.let {
-                millisLeft = (10_000 - it.until(now(), MILLIS)).coerceAtLeast(0)
-            }
-            delay(10L)
-        }
+  val millisLeft by hitTimer.millisLeft.collectAsState(10_000L)
+
+  Column(Modifier.fillMaxWidth().padding(top = 60.dp), spacedBy(24.dp), CenterHorizontally) {
+    TimerText(millisLeft)
+
+    Column(Modifier.width(160.dp), spacedBy(8.dp)) {
+      Button(onClick = { hitTimer.start() }, Modifier.fillMaxWidth()) {
+        Text(stringResource(start), fontSize = 24.sp)
+      }
+
+      Button(onClick = { hitTimer.reset() }, Modifier.fillMaxWidth()) {
+        Text(stringResource(reset), fontSize = 24.sp)
+      }
     }
-
-    Column(
-        Modifier.fillMaxWidth().padding(top = 60.dp),
-        horizontalAlignment = CenterHorizontally,
-        verticalArrangement = spacedBy(24.dp)
-    ) {
-        val duration = DurationFormatUtils.formatDuration(millisLeft, "ss:SSS")
-        Text("$duration", fontSize = 48.sp)
-
-        Column(verticalArrangement = spacedBy(8.dp)) {
-            Button(onClick = { startTimerTime = now() }, Modifier.width(160.dp)) {
-                Text("Start", fontSize = 24.sp)
-            }
-
-            Button(
-                onClick = { startTimerTime = null; millisLeft = 10_000L },
-                Modifier.width(160.dp)
-            ) {
-                Text("Reset", fontSize = 24.sp)
-            }
-        }
-    }
+  }
 }
+
+@Composable
+private fun TimerText(millisLeft: Long) {
+  val duration = HitTimer.duration(millisLeft)
+  Text(duration, fontSize = 52.sp)
+}
+
+private class HitTimer {
+
+  private var startDate: LocalDateTime? = null
+
+  fun start() {
+    startDate = now()
+  }
+
+  fun reset() {
+    startDate = null
+  }
+
+  val millisLeft = flow {
+    while(true) {
+      delay(13)
+      emit(calculateMillisLeft())
+      println(calculateMillisLeft())
+    }
+  }
+
+  private fun calculateMillisLeft(): Long {
+    println(startDate)
+    return startDate?.let { startDate ->
+      val millisElapsed = startDate.until(now(), MILLIS)
+      (tenSecondsMillis - millisElapsed).coerceAtLeast(0)
+    } ?: tenSecondsMillis
+  }
+
+  private val tenSecondsMillis = 10_000L
+
+  companion object {
+    fun duration(millis: Long) = formatDuration(millis, "ss:SSS")
+  }
+}
+
