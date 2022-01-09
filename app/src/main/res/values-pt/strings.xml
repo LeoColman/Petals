@@ -27,4 +27,6 @@
     <string name="seconds">Segundos</string>
     <string name="milliseconds">Milisegundos</string>
     <string name="home">Home</string>
+    <string name="start">Iniciar</string>
+    <string name="reset">Reiniciar</string>
 </resources>
