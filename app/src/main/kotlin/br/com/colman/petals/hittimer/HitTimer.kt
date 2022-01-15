@@ -16,11 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.com.colman.petals.pages
+package br.com.colman.petals.hittimer
 
+import android.content.Context
+import android.graphics.Color
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -31,8 +36,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.colman.petals.R.string.reset
-import br.com.colman.petals.R.string.start
+import androidx.compose.ui.viewinterop.AndroidView
+import br.com.colman.petals.R
+import br.com.colman.petals.R.color.darkGreen
+import br.com.colman.petals.R.color.lightGreen
+import br.com.colman.petals.R.string.*
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import org.apache.commons.lang3.time.DurationFormatUtils.formatDuration
@@ -49,8 +60,14 @@ fun ComposeHitTimer() {
 
   val millisLeft by hitTimer.millisLeft.collectAsState(initial = tenSecondsMillis)
 
-  Column(Modifier.fillMaxWidth().padding(top = 60.dp), spacedBy(24.dp), CenterHorizontally) {
-    TimerText(millisLeft)
+  Column(
+    Modifier
+      .fillMaxWidth()
+      .verticalScroll(rememberScrollState()), spacedBy(24.dp), CenterHorizontally
+  ) {
+    Box(Modifier.padding(top = 60.dp)) {
+      TimerText(millisLeft)
+    }
 
     Column(Modifier.width(160.dp), spacedBy(8.dp)) {
       Button(onClick = { hitTimer.start() }, Modifier.fillMaxWidth()) {
@@ -61,6 +78,7 @@ fun ComposeHitTimer() {
         Text(stringResource(reset), fontSize = 24.sp)
       }
     }
+    WhyTenSeconds()
   }
 }
 
@@ -70,7 +88,9 @@ private fun TimerText(millisLeft: Long) {
   var blinking by remember { mutableStateOf(false) }
 
   LaunchedEffect(isTimerRunning) {
-    if(isTimerRunning) { blinking = false; return@LaunchedEffect }
+    if (isTimerRunning) {
+      blinking = false; return@LaunchedEffect
+    }
 
     repeat(7) {
       blinking = !blinking
@@ -123,3 +143,89 @@ private class HitTimer {
     fun duration(millis: Long): String = formatDuration(millis, "ss:SSS")
   }
 }
+
+@Preview
+@Composable
+private fun WhyTenSeconds() {
+  Card(
+    Modifier
+      .fillMaxWidth()
+      .padding(16.dp)
+  ) {
+    Column(
+      Modifier
+        .fillMaxWidth()
+        .padding(16.dp), spacedBy(16.dp)
+    ) {
+      Text(stringResource(R.string.hittimer_why_ten_secs), fontSize = 24.sp)
+
+      Text(stringResource(tenSecondsIntro), fontSize = 18.sp)
+
+      SubjectiveHigh()
+      Text(stringResource(R.string.hittime_source), fontSize = 12.sp)
+
+    }
+  }
+}
+
+@Preview
+@Composable
+private fun SubjectiveHigh() {
+  Box(Modifier.height(300.dp)) {
+    AndroidView({ createGraph(it) })
+  }
+}
+
+// TODO sync graph and timer
+private fun createGraph(context: Context) = GraphView(context).apply {
+  addSeries(subjectiveHighWeakSeries(context))
+  addSeries(subjectiveHighStrongSeries(context))
+
+  viewport.apply {
+    isYAxisBoundsManual = true
+    setMaxY(60.0)
+    setMinY(0.0)
+    isXAxisBoundsManual = true
+    setMaxX(25.0)
+    setMinX(0.0)
+  }
+
+  legendRenderer.apply {
+    backgroundColor = Color.WHITE
+    isVisible = true
+  }
+
+  gridLabelRenderer.apply {
+    verticalAxisTitle = context.resources.getString(subjectve_high)
+    horizontalAxisTitle = context.getString(breathhold_duration)
+  }
+}
+
+private fun subjectiveHighWeakSeries(context: Context): LineGraphSeries<DataPoint> {
+  val datapoints = arrayOf(
+    DataPoint(0.0, 30.0),
+    DataPoint(10.0, 40.0),
+    DataPoint(20.0, 35.0)
+  )
+
+  return LineGraphSeries(datapoints).apply {
+    color = context.resources.getColor(lightGreen)
+    isDrawDataPoints = true
+    title = context.getString(_175thc)
+  }
+}
+
+private fun subjectiveHighStrongSeries(context: Context): LineGraphSeries<DataPoint> {
+  val datapoints = arrayOf(
+    DataPoint(0.0, 37.0),
+    DataPoint(10.0, 47.0),
+    DataPoint(20.0, 43.0)
+  )
+
+  return LineGraphSeries(datapoints).apply {
+    color = context.resources.getColor(darkGreen)
+    isDrawDataPoints = true
+    title = context.getString(_355thc)
+  }
+}
+

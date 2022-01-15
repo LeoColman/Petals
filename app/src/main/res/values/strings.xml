@@ -33,4 +33,12 @@
     <string name="start">Start</string>
     <string name="reset">Reset</string>
 
+    <string name="tenSecondsIntro">Holding for more than 10 seconds will not increase your high, but will increase bad things that weed cause to you.</string>
+    <string name="hittime_source">Source: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
+    <string name="hittimer_why_ten_secs">Why 10 seconds?</string>
+    <string name="subjectve_high">Subjective \"High\"</string>
+    <string name="breathhold_duration">Breathhold Duration (seconds)</string>
+    <string name="_175thc">1.75% THC</string>
+    <string name="_355thc">3.55% THC</string>
+
 </resources>

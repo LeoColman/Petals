@@ -55,6 +55,10 @@ android {
       named("release") {
          isMinifyEnabled = true
       }
+
+     named("debug") {
+       isPseudoLocalesEnabled = true
+     }
    }
 
    compileOptions {
