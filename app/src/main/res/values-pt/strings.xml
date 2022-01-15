@@ -29,4 +29,14 @@
     <string name="home">Home</string>
     <string name="start">Iniciar</string>
     <string name="reset">Reiniciar</string>
+    <string name="symptoms">Sintomas</string>
+    <string name="symptoms_introduction">Um estudo de Budney et al. da Universidade de Vermont estabelece como sintomas de abstinência afetam usuários de cannabis. Abaixo você verá uma estimativa da sua situação baseado no seu último uso</string>
+    <string name="_355thc">3.55% THC</string>
+    <string name="_175thc">1.75% THC</string>
+    <string name="breathhold_duration">Tempo Segurando (segundos)</string>
+    <string name="subjectve_high">\"Brisa\" subjetiva</string>
+    <string name="hittimer_why_ten_secs">Por que 10 segundos?</string>
+    <string name="hittime_source">Fonte: Azorlosa JL, Greenwald MK, Stitzer ML. Fumo de Marijuana: Efeitos de diferentes volumes de inalação e tempo prendendo. J Pharmacol Exp Ther. Fev. de 1995; 272(2):560–9. PMID: 7853169</string>
+    <string name="tenSecondsIntro">Segurar por mais de 10 segundos não irá aumentar sua brisa, mas aumentará o dano que maconha pode causar a você.</string>
+    <string name="hit_timer">Temporizador</string>
 </resources>

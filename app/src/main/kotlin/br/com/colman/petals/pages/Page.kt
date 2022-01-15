@@ -19,6 +19,7 @@
 package br.com.colman.petals.pages
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -39,6 +40,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import br.com.colman.petals.R
+import br.com.colman.petals.hittimer.ComposeHitTimer
 import br.com.colman.petals.pages.Page.Home
 
 enum class Page(
@@ -55,7 +57,11 @@ enum class Page(
 fun NavHostContainer(navController: NavHostController) {
   NavHost(navController, Home.name, Modifier.padding(8.dp)) {
     Page.values().forEach { page ->
-      composable(page.name) { page.ui() }
+      composable(page.name) {
+        Box(Modifier.padding(bottom = 60.dp)) {
+          page.ui()
+        }
+      }
     }
   }
 }
