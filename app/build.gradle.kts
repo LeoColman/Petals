@@ -18,156 +18,179 @@
 
 import br.com.colman.petals.Libs
 import org.gradle.api.JavaVersion.VERSION_1_8
+import java.util.*
 
 plugins {
-   id("com.android.application")
-   id("kotlin-android")
-   kotlin("kapt")
-   id("io.gitlab.arturbosch.detekt").version("1.19.0-RC1")
+  id("com.android.application")
+  id("kotlin-android")
+  kotlin("kapt")
+  id("io.gitlab.arturbosch.detekt").version("1.19.0-RC1")
 }
 
 repositories {
-   mavenCentral()
-   google()
+  mavenCentral()
+  google()
+}
+
+val keystorePropertiesFile = Properties().apply {
+  load(rootProject.file("local/keystore.properties").inputStream())
 }
 
 android {
-   compileSdk = 31
+  compileSdk = 31
 
-   defaultConfig {
-      applicationId = "br.com.colman.petals"
-      minSdk = 21
-      targetSdk = 30
-      versionCode = 120
-      versionName = "v1.2.0"
+  defaultConfig {
+    applicationId = "br.com.colman.petals"
+    minSdk = 21
+    targetSdk = 30
+    versionCode = 120
+    versionName = "v1.2.0"
 
-      testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
-   }
+    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+  }
 
-   flavorDimensions("distribution")
-   productFlavors {
-      create("fdroid") {
-         dimension = "distribution"
-      }
-   }
+  signingConfigs {
+    create("self-sign") {
+      storeFile = file(keystorePropertiesFile["storeFile"]!!)
+      keyAlias = keystorePropertiesFile["keyAlias"].toString()
+      keyPassword = keystorePropertiesFile["keyPassword"].toString()
+      storePassword = keystorePropertiesFile["storePassword"].toString()
 
-   buildTypes {
-      named("release") {
-         isMinifyEnabled = true
-      }
+      enableV1Signing = true
+      enableV2Signing = true
+    }
+  }
 
-     named("debug") {
-       isPseudoLocalesEnabled = true
-     }
-   }
+  flavorDimensions += "distribution"
+  productFlavors {
+    create("fdroid") {
+      dimension = "distribution"
+    }
 
-   compileOptions {
-      sourceCompatibility(VERSION_1_8)
-      targetCompatibility(VERSION_1_8)
-      isCoreLibraryDesugaringEnabled = true
-   }
+    create("github") {
+      dimension = "distribution"
+      signingConfig = signingConfigs.getByName("self-sign")
+    }
+  }
 
-   kotlinOptions {
-      jvmTarget = "1.8"
-   }
 
-   buildFeatures {
-      compose = true
+  buildTypes {
+    named("release") {
+      isMinifyEnabled = true
+    }
 
-   }
+    named("debug") {
+      isPseudoLocalesEnabled = true
+    }
+  }
 
-   composeOptions {
-      kotlinCompilerExtensionVersion = Libs.Compose.version
-   }
+  compileOptions {
+    sourceCompatibility(VERSION_1_8)
+    targetCompatibility(VERSION_1_8)
+    isCoreLibraryDesugaringEnabled = true
+  }
 
-   testOptions {
-      unitTests {
-         isIncludeAndroidResources = true
-         all { it.useJUnitPlatform() }
-      }
-   }
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
 
-   packagingOptions {
-      resources.excludes.add("META-INF/*")
-   }
+  buildFeatures {
+    compose = true
+
+  }
+
+  composeOptions {
+    kotlinCompilerExtensionVersion = Libs.Compose.version
+  }
+
+  testOptions {
+    unitTests {
+      isIncludeAndroidResources = true
+      all { it.useJUnitPlatform() }
+    }
+  }
+
+  packagingOptions {
+    resources.excludes.add("META-INF/*")
+  }
 
 }
 
 dependencies {
-   // Kotlin
-   implementation(Libs.Kotlin.reflect)
-   testImplementation(Libs.Kotlin.coroutineTest)
+  // Kotlin
+  implementation(Libs.Kotlin.reflect)
+  testImplementation(Libs.Kotlin.coroutineTest)
 
-   // Apache math
-   implementation(Libs.ApacheCommons.math)
+  // Apache math
+  implementation(Libs.ApacheCommons.math)
 
-   // AndroidX
-   implementation(Libs.AndroidX.activityCompose)
-   implementation(Libs.AndroidX.composeMaterial)
-   implementation(Libs.AndroidX.composeAnimation)
-   implementation(Libs.AndroidX.composeTooling)
-   implementation(Libs.AndroidX.viewModelCompose)
-   implementation(Libs.AndroidX.navigationCompose)
+  // AndroidX
+  implementation(Libs.AndroidX.activityCompose)
+  implementation(Libs.AndroidX.composeMaterial)
+  implementation(Libs.AndroidX.composeAnimation)
+  implementation(Libs.AndroidX.composeTooling)
+  implementation(Libs.AndroidX.viewModelCompose)
+  implementation(Libs.AndroidX.navigationCompose)
 
-   // Compose
-   implementation(Libs.Compose.composeMaterialIcons)
+  // Compose
+  implementation(Libs.Compose.composeMaterialIcons)
 
-   testImplementation(Libs.AndroidX.Test.core)
-   testImplementation(Libs.AndroidX.Test.coreKtx)
+  testImplementation(Libs.AndroidX.Test.core)
+  testImplementation(Libs.AndroidX.Test.coreKtx)
 
-   // Joda Time
-   implementation(Libs.JodaTime.jodaTime)
+  // Joda Time
+  implementation(Libs.JodaTime.jodaTime)
 
-   // Datastore
-   implementation(Libs.DataStore.dataStorePreferences)
+  // Datastore
+  implementation(Libs.DataStore.dataStorePreferences)
 
-   // Koin
-   implementation(Libs.Koin.android)
-   implementation(Libs.Koin.compose)
+  // Koin
+  implementation(Libs.Koin.android)
+  implementation(Libs.Koin.compose)
 
-   // Robolectric
-   testImplementation(Libs.Robolectric.robolectric)
+  // Robolectric
+  testImplementation(Libs.Robolectric.robolectric)
 
-   // Kotest
-   testImplementation(Libs.Kotest.junitRunner)
-   testImplementation(Libs.Kotest.robolectricExtension)
-   testImplementation(Libs.Kotest.property)
+  // Kotest
+  testImplementation(Libs.Kotest.junitRunner)
+  testImplementation(Libs.Kotest.robolectricExtension)
+  testImplementation(Libs.Kotest.property)
 
-   // Mockk
-   testImplementation(Libs.Mockk.mockk)
-   testImplementation(Libs.Mockk.mockkAgent)
+  // Mockk
+  testImplementation(Libs.Mockk.mockk)
+  testImplementation(Libs.Mockk.mockkAgent)
 
-   // JUnit
-   testImplementation(Libs.JUnit.junit4)
+  // JUnit
+  testImplementation(Libs.JUnit.junit4)
 
-   // UI Tests
-   androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
-   debugImplementation("androidx.compose.ui:ui-test-manifest:${Libs.Compose.version}")
-
-
-   // Detekt
-   detektPlugins(Libs.Detekt.formatting)
-
-   // Graphs
-   implementation(Libs.Graph.graphView)
+  // UI Tests
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
+  debugImplementation("androidx.compose.ui:ui-test-manifest:${Libs.Compose.version}")
 
 
-   implementation("org.apache.commons:commons-lang3:3.12.0")
+  // Detekt
+  detektPlugins(Libs.Detekt.formatting)
 
-   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+  // Graphs
+  implementation(Libs.Graph.graphView)
+
+
+  implementation("org.apache.commons:commons-lang3:3.12.0")
+
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 }
 
 tasks.withType<Test>() {
-   useJUnitPlatform()
+  useJUnitPlatform()
 }
 
 detekt {
-   buildUponDefaultConfig = true
-   autoCorrect = true
+  buildUponDefaultConfig = true
+  autoCorrect = true
 }
 
 java {
-   toolchain {
-      languageVersion.set(JavaLanguageVersion.of(11))
-   }
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(11))
+  }
 }
