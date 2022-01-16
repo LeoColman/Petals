@@ -1,0 +1,5 @@
+Adiciona temporizador de 'hit'
+
+Pesquisas indicam que segurar maconha por mais de 10s é danoso e não aumentará a brisa.
+Essa atualização adiciona um temporzador para te ajudar a controlar a duração de cada 'hit',
+ajudando com redução de danos.

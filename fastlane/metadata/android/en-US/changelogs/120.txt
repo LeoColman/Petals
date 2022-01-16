@@ -1,0 +1,5 @@
+Add Hit Timer
+
+Research shows that holding weed in for longer than 10s is harmful and won't increase the high.
+This updates adds a Ht Timer to help you control the duration of the 'hit', helping reduce this
+harm.
