@@ -21,7 +21,11 @@ package br.com.colman.petals.clock
 import android.content.Context
 import android.content.res.Resources.getSystem
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -35,8 +39,21 @@ import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import br.com.colman.petals.R.string.*
-import br.com.colman.petals.clock.TimeUnit.*
+import br.com.colman.petals.R.string.days
+import br.com.colman.petals.R.string.hours
+import br.com.colman.petals.R.string.milliseconds
+import br.com.colman.petals.R.string.minutes
+import br.com.colman.petals.R.string.months
+import br.com.colman.petals.R.string.quit_date_text
+import br.com.colman.petals.R.string.seconds
+import br.com.colman.petals.R.string.years
+import br.com.colman.petals.clock.TimeUnit.Day
+import br.com.colman.petals.clock.TimeUnit.Hour
+import br.com.colman.petals.clock.TimeUnit.Millisecond
+import br.com.colman.petals.clock.TimeUnit.Minute
+import br.com.colman.petals.clock.TimeUnit.Month
+import br.com.colman.petals.clock.TimeUnit.Second
+import br.com.colman.petals.clock.TimeUnit.Year
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.delay
@@ -49,36 +66,38 @@ import org.joda.time.LocalDateTime.parse
 import org.joda.time.Period
 import org.joda.time.format.DateTimeFormat
 
-class QuitTimer(
+class LastUseDateRepository(
   private val context: Context,
 ) : CoroutineScope by CoroutineScope(Default) {
 
-  private val Context.datastore by preferencesDataStore("quit_timer")
+  private val Context.datastore by preferencesDataStore("last_use")
 
   val quitDate = context.datastore.data.map { preferences ->
-    preferences[stringPreferencesKey("stopDate")]?.let { parse(it) }
+    preferences[stringPreferencesKey("lastUseDate")]?.let { parse(it) }
   }
 
   fun setQuitDate(date: LocalDateTime) {
     launch {
-      context.datastore.edit { it[stringPreferencesKey("stopDate")] = date.toString() }
+      context.datastore.edit { it[stringPreferencesKey("lastUseDate")] = date.toString() }
     }
   }
+
+
 }
 
 @Composable
-fun QuitTimerView(quitDate: LocalDateTime) {
+fun LastUseDateTimerView(quitDate: LocalDateTime) {
   val locale = getSystem().configuration.locale
   val dateString = DateTimeFormat.longDateTime().withLocale(locale).print(quitDate)
 
-  val periodSinceQuit by flow {
+  val periodSinceLastUse by flow {
     while (true) {
       delay(10)
       emit(Period(quitDate, now()))
     }
   }.collectAsState(null)
 
-  val labels = periodSinceQuit?.run {
+  val labels = periodSinceLastUse?.run {
     listOf(
       Year to years,
       Month to months,

@@ -39,4 +39,5 @@
     <string name="hittime_source">Fonte: Azorlosa JL, Greenwald MK, Stitzer ML. Fumo de Marijuana: Efeitos de diferentes volumes de inalação e tempo prendendo. J Pharmacol Exp Ther. Fev. de 1995; 272(2):560–9. PMID: 7853169</string>
     <string name="tenSecondsIntro">Segurar por mais de 10 segundos não irá aumentar sua brisa, mas aumentará o dano que maconha pode causar a você.</string>
     <string name="hit_timer">Temporizador</string>
+    <string name="add_use">Adicionar Uso</string>
 </resources>
