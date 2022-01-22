@@ -40,5 +40,6 @@
     <string name="breathhold_duration">Breathhold Duration (seconds)</string>
     <string name="_175thc">1.75% THC</string>
     <string name="_355thc">3.55% THC</string>
+    <string name="add_use">Add Use</string>
 
 </resources>

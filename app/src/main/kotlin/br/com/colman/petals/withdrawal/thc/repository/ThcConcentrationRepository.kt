@@ -18,7 +18,7 @@
 
 package br.com.colman.petals.withdrawal.thc.repository
 
-import br.com.colman.petals.clock.QuitTimer
+import br.com.colman.petals.clock.LastUseDateRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -32,7 +32,7 @@ import kotlin.math.abs
 private fun daysInSeconds(days: Int) = days(days).toStandardSeconds().seconds
 
 class ThcConcentrationRepository(
-  private val quitTimer: QuitTimer
+  private val lastUseDateRepository: LastUseDateRepository
 ) {
 
   val concentration = flow {
@@ -81,7 +81,7 @@ class ThcConcentrationRepository(
   }
 
   private suspend fun concentration(): ThcConcentration {
-    val quitDate = quitTimer.quitDate.filterNotNull().first()
+    val quitDate = lastUseDateRepository.quitDate.filterNotNull().first()
     val secondsQuit = secondsBetween(quitDate, now()).seconds
     return toConcentration(secondsQuit)
   }
