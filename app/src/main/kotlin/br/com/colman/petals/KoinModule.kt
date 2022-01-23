@@ -18,17 +18,21 @@
 
 package br.com.colman.petals
 
-import br.com.colman.petals.clock.LastUseDateRepository
+import br.com.colman.petals.use.MyObjectBox
+import br.com.colman.petals.use.UseRepository
 import br.com.colman.petals.withdrawal.WithdrawalView
 import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepository
 import br.com.colman.petals.withdrawal.discomfort.view.DiscomfortView
 import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
 import br.com.colman.petals.withdrawal.thc.view.ThcConcentrationView
+import io.objectbox.BoxStore
+import io.objectbox.kotlin.boxFor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val KoinModule = module {
-  single { LastUseDateRepository(androidApplication()) }
+  single { MyObjectBox.builder().androidContext(androidApplication()).build() }
+  single { UseRepository(get<BoxStore>().boxFor()) }
 
   single { ThcConcentrationRepository(get()) }
   single { ThcConcentrationView(get(), get()) }

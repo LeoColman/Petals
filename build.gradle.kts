@@ -24,6 +24,6 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.4")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
-        classpath("io.realm:realm-gradle-plugin:10.9.0")
+        classpath("io.objectbox:objectbox-gradle-plugin:3.1.0")
     }
 }

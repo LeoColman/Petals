@@ -18,96 +18,44 @@
 
 package br.com.colman.petals.clock
 
-import android.content.Context
-import android.content.res.Resources.getSystem
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import br.com.colman.petals.R.string.days
-import br.com.colman.petals.R.string.hours
-import br.com.colman.petals.R.string.milliseconds
-import br.com.colman.petals.R.string.minutes
-import br.com.colman.petals.R.string.months
-import br.com.colman.petals.R.string.quit_date_text
-import br.com.colman.petals.R.string.seconds
-import br.com.colman.petals.R.string.years
-import br.com.colman.petals.clock.TimeUnit.Day
-import br.com.colman.petals.clock.TimeUnit.Hour
-import br.com.colman.petals.clock.TimeUnit.Millisecond
-import br.com.colman.petals.clock.TimeUnit.Minute
-import br.com.colman.petals.clock.TimeUnit.Month
-import br.com.colman.petals.clock.TimeUnit.Second
-import br.com.colman.petals.clock.TimeUnit.Year
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.Default
+import br.com.colman.petals.R.string.*
+import br.com.colman.petals.clock.TimeUnit.*
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import org.joda.time.LocalDateTime
-import org.joda.time.LocalDateTime.now
-import org.joda.time.LocalDateTime.parse
-import org.joda.time.Period
-import org.joda.time.format.DateTimeFormat
-
-class LastUseDateRepository(
-  private val context: Context,
-) : CoroutineScope by CoroutineScope(Default) {
-
-  private val Context.datastore by preferencesDataStore("last_use")
-
-  val quitDate = context.datastore.data.map { preferences ->
-    preferences[stringPreferencesKey("lastUseDate")]?.let { parse(it) }
-  }
-
-  fun setQuitDate(date: LocalDateTime) {
-    launch {
-      context.datastore.edit { it[stringPreferencesKey("lastUseDate")] = date.toString() }
-    }
-  }
-
-
-}
+import java.time.LocalDateTime
+import java.time.LocalDateTime.now
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 @Composable
-fun LastUseDateTimerView(quitDate: LocalDateTime) {
-  val locale = getSystem().configuration.locale
-  val dateString = DateTimeFormat.longDateTime().withLocale(locale).print(quitDate)
+fun LastUseDateTimerView(lastUseDate: LocalDateTime) {
+  val dateString = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS").format(lastUseDate)
 
-  val periodSinceLastUse by flow {
-    while (true) {
-      delay(10)
-      emit(Period(quitDate, now()))
+  var millis by remember { mutableStateOf(ChronoUnit.MILLIS.between(lastUseDate, now())) }
+
+  LaunchedEffect(millis) {
+    while(true) {
+      delay(11)
+      millis = ChronoUnit.MILLIS.between(lastUseDate, now())
     }
-  }.collectAsState(null)
+  }
 
-  val labels = periodSinceLastUse?.run {
-    listOf(
-      Year to years,
-      Month to months,
-      Day to days,
-      Hour to hours,
-      Minute to minutes,
-      Second to seconds,
-      Millisecond to millis
-    )
-  } ?: return
+  var millisCopy = millis
+  val labels = listOf(Year, Month, Day, Hour, Minute, Second, Millisecond).map {
+    val unitsInTotal = millisCopy / it.millis
+    millisCopy -= unitsInTotal * it.millis
+    it to unitsInTotal
+  }
+
 
   Column(Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
     Column {
@@ -136,12 +84,12 @@ fun LastUseDateTimerView(quitDate: LocalDateTime) {
 }
 
 @Suppress("MagicNumber")
-private enum class TimeUnit(@StringRes val unitName: Int, val max: Int) {
-  Year(years, 60),
-  Month(months, 12),
-  Day(days, 31),
-  Hour(hours, 24),
-  Minute(minutes, 60),
-  Second(seconds, 60),
-  Millisecond(milliseconds, 1000)
+private enum class TimeUnit(@StringRes val unitName: Int, val max: Int, val millis: Long) {
+  Year(years, 60, 12L * 30 * 24 * 60 * 60 * 1_000),
+  Month(months, 12, 30L * 24 * 60 * 60 * 1_000),
+  Day(days, 31, 24 * 60 * 60 * 1_000),
+  Hour(hours, 24, 60 * 60 * 1_000),
+  Minute(minutes, 60, 60 * 1_000),
+  Second(seconds, 60, 1_000),
+  Millisecond(milliseconds, 1000, 1)
 }

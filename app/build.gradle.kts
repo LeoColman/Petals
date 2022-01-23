@@ -25,7 +25,7 @@ plugins {
   id("kotlin-android")
   kotlin("kapt")
   id("io.gitlab.arturbosch.detekt").version("1.19.0-RC1")
-  id("realm-android")
+  id("io.objectbox") // Apply last.
 }
 
 repositories {

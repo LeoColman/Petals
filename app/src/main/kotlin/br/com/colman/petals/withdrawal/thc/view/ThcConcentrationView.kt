@@ -24,7 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.viewinterop.AndroidView
-import br.com.colman.petals.clock.LastUseDateRepository
+import br.com.colman.petals.use.UseRepository
 import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
@@ -33,21 +33,21 @@ import com.jjoe64.graphview.series.PointsGraphSeries
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import org.joda.time.Days
-import org.joda.time.LocalDateTime.now
-import org.joda.time.Seconds.secondsBetween
+import java.time.LocalDateTime.now
+import java.time.temporal.ChronoUnit
 
 
 @Suppress("FunctionName")
 class ThcConcentrationView(
-  private val lastUseDateRepository: LastUseDateRepository,
+  private val useRepository: UseRepository,
   private val repository: ThcConcentrationRepository,
 ) {
 
   @Composable
   fun Content() {
-    val quitDate by lastUseDateRepository.quitDate.filterNotNull().collectAsState(now())
+    val quitDate by useRepository.lastUseDate.filterNotNull().collectAsState(now())
     val currentPercentage by repository.concentration.map { it.percentageOnBodyFromStart }.collectAsState(100.0)
-    val quitDays = secondsBetween(quitDate, now()).seconds.toDouble().div(86400)
+    val quitDays = ChronoUnit.SECONDS.between(quitDate, now()).toDouble().div(86400)
 
     AndroidView({ createGraph(it, currentPercentage, quitDays) }, update = {
       it.title = "Current  THC Concentration: " + String.format("%.3f", currentPercentage) + "%"

@@ -1,22 +1,58 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package br.com.colman.petals.use
 
-import io.realm.RealmObject
-import io.realm.annotations.Ignore
+import io.objectbox.Box
+import io.objectbox.annotation.Convert
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
+import io.objectbox.converter.PropertyConverter
+import io.objectbox.kotlin.toFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
 import java.math.BigDecimal
+import java.math.BigDecimal.ZERO
+import java.time.LocalDateTime
+import java.time.LocalDateTime.parse
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
-class UseRepository {
+class UseRepository(private val box: Box<Use>) {
+
+  val lastUseDate = all().map { it.maxOfOrNull(Use::date) }
+
+  fun insert(use: Use) {
+    box.put(use)
+  }
+
+  fun all() = box.query().build().subscribe().toFlow().map { it.toList() }
 }
 
-@Suppress("CanBeParameter")
-open class Use(
-  private var amountGramsDb: Long = 0,
-  private var costPerGramDb: Long = 0,
-) : RealmObject() {
+@Entity
+data class Use(
+  @Convert(converter = BigDecimalConverter::class, dbType = String::class)
+  val amountGrams: BigDecimal = ZERO,
 
-  @Ignore val amountGrams = BigDecimal(amountGramsDb).divide(precision).setScale(3)
-  @Ignore val costPerGram = BigDecimal(costPerGramDb).divide(precision).setScale(3)
+  @Convert(converter = BigDecimalConverter::class, dbType = String::class)
+  val costPerGram: BigDecimal = ZERO,
 
-  companion object {
-    private val precision = BigDecimal(100)
+  @Convert(converter = LocalDateTimeConverter::class, dbType = String::class)
+  val date: LocalDateTime = LocalDateTime.now(),
+
+  @Id var id: Long = 0
+)
+
+class BigDecimalConverter : PropertyConverter<BigDecimal, String> {
+  override fun convertToEntityProperty(str: String): BigDecimal {
+    return BigDecimal(str)
   }
+
+  override fun convertToDatabaseValue(bigDecimal: BigDecimal): String {
+    return bigDecimal.toString()
+  }
+}
+
+class LocalDateTimeConverter : PropertyConverter<LocalDateTime, String> {
+  override fun convertToEntityProperty(str: String): LocalDateTime = parse(str, ISO_LOCAL_DATE_TIME)
+
+  override fun convertToDatabaseValue(ldt: LocalDateTime): String = ldt.format(ISO_LOCAL_DATE_TIME)
 }
