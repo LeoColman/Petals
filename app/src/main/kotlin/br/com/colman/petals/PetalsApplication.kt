@@ -19,6 +19,7 @@
 package br.com.colman.petals
 
 import android.app.Application
+import io.realm.Realm
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -29,5 +30,11 @@ class PetalsApplication : Application() {
             androidContext(this@PetalsApplication)
             modules(KoinModule)
         }
+      initRealm()
     }
+
+  private fun initRealm() {
+    Realm.init(this)
+  }
 }
+
