@@ -31,20 +31,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R.string.add_use
-import br.com.colman.petals.clock.LastUseDateRepository
 import br.com.colman.petals.clock.LastUseDateTimerView
-import kotlinx.coroutines.flow.filterNotNull
-import org.joda.time.LocalDateTime.now
+import br.com.colman.petals.use.Use
+import br.com.colman.petals.use.UseRepository
 import org.koin.androidx.compose.get
 
 @Composable
-fun Home(lastUseDateRepository: LastUseDateRepository = get()) {
-  val quitDate by lastUseDateRepository.quitDate.filterNotNull().collectAsState(null)
+fun Home(useRepository: UseRepository = get()) {
+  val quitDate by useRepository.lastUseDate.collectAsState(null)
 
   Column(Modifier, spacedBy(8.dp), CenterHorizontally) {
     quitDate?.let { LastUseDateTimerView(it) }
 
-    AddUseButton { lastUseDateRepository.setQuitDate(now()) }
+    AddUseButton { useRepository.insert(Use()) }
   }
 }
 

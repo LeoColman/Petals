@@ -18,21 +18,21 @@
 
 package br.com.colman.petals.withdrawal.thc.repository
 
-import br.com.colman.petals.clock.LastUseDateRepository
+import br.com.colman.petals.use.UseRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator
 import org.joda.time.Days.days
-import org.joda.time.LocalDateTime.now
-import org.joda.time.Seconds.secondsBetween
+import java.time.LocalDateTime.now
+import java.time.temporal.ChronoUnit
 import kotlin.math.abs
 
 private fun daysInSeconds(days: Int) = days(days).toStandardSeconds().seconds
 
 class ThcConcentrationRepository(
-  private val lastUseDateRepository: LastUseDateRepository
+  private val useRepository: UseRepository
 ) {
 
   val concentration = flow {
@@ -81,9 +81,9 @@ class ThcConcentrationRepository(
   }
 
   private suspend fun concentration(): ThcConcentration {
-    val quitDate = lastUseDateRepository.quitDate.filterNotNull().first()
-    val secondsQuit = secondsBetween(quitDate, now()).seconds
-    return toConcentration(secondsQuit)
+    val quitDate = useRepository.lastUseDate.filterNotNull().first()
+    val secondsQuit = ChronoUnit.SECONDS.between(quitDate, now())
+    return toConcentration(secondsQuit.toInt())
   }
 
   data class ThcConcentration(val percentageOnBodyFromStart: Double)

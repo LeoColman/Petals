@@ -1,21 +1,61 @@
 package br.com.colman.petals.use
 
+import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import io.objectbox.kotlin.boxFor
+import kotlinx.coroutines.flow.first
 import java.math.BigDecimal
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
 class UseRepositoryTests : FunSpec({
 
-  val target = UseRepository()
-  val use = Use(1_00, 2_75)
+  context("BigDecimal converter") {
+    val target = BigDecimalConverter()
 
-  context("Use") {
-    test("Converts grams") {
-      use.amountGrams shouldBe BigDecimal("1.000")
+    test("Converts to string") {
+      target.convertToDatabaseValue(BigDecimal("19.255")) shouldBe "19.255"
     }
-    test("Convert cost") {
-      use.costPerGram shouldBe BigDecimal("2.750")
+
+    test("Converts from string") {
+      target.convertToEntityProperty("19.255") shouldBe BigDecimal("19.255")
     }
   }
 
+  context("LocalDateTime converter") {
+    val target = LocalDateTimeConverter()
+
+    val ldt = LocalDateTime.now()
+    val ldtString = ldt.format(ISO_LOCAL_DATE_TIME)
+
+    test("Converts to string") {
+      target.convertToDatabaseValue(ldt) shouldBe ldtString
+    }
+
+    test("Converts from string") {
+      target.convertToEntityProperty(ldtString) shouldBe ldt
+    }
+  }
+
+  context("Use Repository") {
+    val box = MyObjectBox.builder().build().boxFor<Use>()
+    beforeTest { box.removeAll() }
+
+    val target = UseRepository(box)
+
+    val use = Use(BigDecimal("1234.567"), BigDecimal("123.01"))
+
+    test("Insert") {
+      target.insert(use)
+      box.all.single() shouldBe use
+    }
+
+    test("Get all") {
+      box.put(use)
+      target.all().first().single() shouldBe use
+    }
+  }
+
+  isolationMode = InstancePerTest
 })

@@ -18,20 +18,19 @@
 
 package br.com.colman.petals.withdrawal.discomfort.repository
 
-import br.com.colman.petals.clock.LastUseDateRepository
+import br.com.colman.petals.use.UseRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator
 import org.joda.time.Days.days
-import org.joda.time.LocalDateTime.now
-import org.joda.time.Seconds.secondsBetween
+import java.time.LocalDateTime.now
+import java.time.temporal.ChronoUnit.SECONDS
 
-private fun daysInSeconds(days: Int) = days(days).toStandardSeconds().seconds
 
 class DiscomfortRepository(
-  private val lastUseDateRepository: LastUseDateRepository
+  private val useRepository: UseRepository
 ) {
 
   val discomfort = flow {
@@ -87,8 +86,8 @@ class DiscomfortRepository(
   )
 
   private suspend fun calculateDiscomfort(): Discomfort {
-    val quitDate = lastUseDateRepository.quitDate.filterNotNull().first()
-    val secondsQuit = secondsBetween(quitDate, now()).seconds
+    val quitDate = useRepository.lastUseDate.filterNotNull().first()
+    val secondsQuit = SECONDS.between(quitDate, now())
     return Discomfort(interpolator.value(secondsQuit.toDouble()))
   }
 
