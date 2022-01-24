@@ -26,9 +26,9 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons.Default
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LockClock
 import androidx.compose.material.icons.filled.MedicalServices
+import androidx.compose.material.icons.filled.SmokingRooms
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -41,21 +41,21 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import br.com.colman.petals.R
 import br.com.colman.petals.hittimer.ComposeHitTimer
-import br.com.colman.petals.pages.Page.Home
+import br.com.colman.petals.pages.Page.Usage
 
 enum class Page(
   @StringRes val nameRes: Int,
   val icon: ImageVector,
   val ui: @Composable () -> Unit
 ) {
-  Home(R.string.home, Default.Home, { Home() }),
+  Usage(R.string.usage, Default.SmokingRooms, { Usage() }),
   HitTimer(R.string.hit_timer, Default.LockClock, { ComposeHitTimer() }),
   Symptoms(R.string.symptoms, Default.MedicalServices, { Symptoms() });
 }
 
 @Composable
 fun NavHostContainer(navController: NavHostController) {
-  NavHost(navController, Home.name, Modifier.padding(8.dp)) {
+  NavHost(navController, Usage.name, Modifier.padding(8.dp)) {
     Page.values().forEach { page ->
       composable(page.name) {
         Box(Modifier.padding(bottom = 60.dp)) {

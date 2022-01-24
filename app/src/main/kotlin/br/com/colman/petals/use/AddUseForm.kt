@@ -9,8 +9,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -35,6 +33,7 @@ import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Calendar
 import compose.icons.tablericons.Clock
+import compose.icons.tablericons.CurrencyDollar
 import compose.icons.tablericons.Scale
 import java.time.LocalDate
 import java.time.LocalTime
@@ -72,7 +71,7 @@ fun AddUseForm(
     OutlinedTextField(
       value = cost,
       onValueChange = { cost = it },
-      leadingIcon = { Icon(Icons.Default.AttachMoney, null) },
+      leadingIcon = { Icon(TablerIcons.CurrencyDollar, null) },
       keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
       label = { Text(stringResource(cost_per_gram)) },
       placeholder = { Text("18.00") }
