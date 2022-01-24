@@ -40,4 +40,11 @@
     <string name="tenSecondsIntro">Segurar por mais de 10 segundos não irá aumentar sua brisa, mas aumentará o dano que maconha pode causar a você.</string>
     <string name="hit_timer">Temporizador</string>
     <string name="add_use">Adicionar Uso</string>
+    <string name="amount_grams">Quantidade (g)</string>
+    <string name="cost_per_gram">Custo por grama</string>
+    <string name="date">Data</string>
+    <string name="time">Horário</string>
+    <string name="select_date">Selecione a data</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancelar</string>
 </resources>

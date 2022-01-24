@@ -81,7 +81,7 @@ class ThcConcentrationRepository(
   }
 
   private suspend fun concentration(): ThcConcentration {
-    val quitDate = useRepository.lastUseDate.filterNotNull().first()
+    val quitDate = useRepository.getLastUseDate().filterNotNull().first()
     val secondsQuit = ChronoUnit.SECONDS.between(quitDate, now())
     return toConcentration(secondsQuit.toInt())
   }

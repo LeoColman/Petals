@@ -21,7 +21,7 @@ package br.com.colman.petals
 object Libs {
 
    object Kotlin {
-      val version = "1.5.31"
+      val version = "1.6.10"
       val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
       val coroutineTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
    }
@@ -37,7 +37,7 @@ object Libs {
    }
 
    object Compose {
-      val version = "1.0.5"
+      val version = "1.2.0-alpha01"
       val composeMaterialIcons = "androidx.compose.material:material-icons-extended:$version"
    }
 
@@ -94,9 +94,22 @@ object Libs {
    }
 
    object Kotest {
-      val version = "4.6.3"
+      val version = "5.1.0"
       val junitRunner = "io.kotest:kotest-runner-junit5:$version"
       val robolectricExtension = "io.kotest.extensions:kotest-extensions-robolectric:0.4.0"
       val property = "io.kotest:kotest-property:$version"
+   }
+
+   object ComposeMaterialDialogs {
+      val version = "0.6.3"
+
+      val core = "io.github.vanpra.compose-material-dialogs:core:$version"
+      val dateTime = "io.github.vanpra.compose-material-dialogs:datetime:$version"
+   }
+
+   object Timber {
+      val version = "5.0.1"
+
+      val timber = "com.jakewharton.timber:timber:$version"
    }
 }

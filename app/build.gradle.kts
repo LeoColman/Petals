@@ -18,7 +18,7 @@
 
 import br.com.colman.petals.Libs
 import org.gradle.api.JavaVersion.VERSION_1_8
-import java.util.*
+import java.util.Properties
 
 plugins {
   id("com.android.application")
@@ -82,6 +82,7 @@ android {
 
     named("debug") {
       isPseudoLocalesEnabled = true
+      isDebuggable = true
     }
   }
 
@@ -179,6 +180,16 @@ dependencies {
   implementation("org.apache.commons:commons-lang3:3.12.0")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+
+  // Material Compose dialogs
+  implementation(Libs.ComposeMaterialDialogs.core)
+  implementation(Libs.ComposeMaterialDialogs.dateTime)
+
+  // Timber
+  implementation(Libs.Timber.timber)
+
+  // Icons
+  implementation("br.com.devsrsouza.compose.icons.android:tabler-icons:1.0.0")
 }
 
 tasks.withType<Test>() {
