@@ -45,7 +45,7 @@ class ThcConcentrationView(
 
   @Composable
   fun Content() {
-    val quitDate by useRepository.lastUseDate.filterNotNull().collectAsState(now())
+    val quitDate by useRepository.getLastUseDate().filterNotNull().collectAsState(now())
     val currentPercentage by repository.concentration.map { it.percentageOnBodyFromStart }.collectAsState(100.0)
     val quitDays = ChronoUnit.SECONDS.between(quitDate, now()).toDouble().div(86400)
 

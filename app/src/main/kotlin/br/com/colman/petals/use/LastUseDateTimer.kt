@@ -16,20 +16,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.com.colman.petals.clock
+package br.com.colman.petals.use
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.colman.petals.R.string.*
-import br.com.colman.petals.clock.TimeUnit.*
+import br.com.colman.petals.R.string.days
+import br.com.colman.petals.R.string.hours
+import br.com.colman.petals.R.string.milliseconds
+import br.com.colman.petals.R.string.minutes
+import br.com.colman.petals.R.string.months
+import br.com.colman.petals.R.string.quit_date_text
+import br.com.colman.petals.R.string.seconds
+import br.com.colman.petals.R.string.years
+import br.com.colman.petals.use.TimeUnit.Day
+import br.com.colman.petals.use.TimeUnit.Hour
+import br.com.colman.petals.use.TimeUnit.Millisecond
+import br.com.colman.petals.use.TimeUnit.Minute
+import br.com.colman.petals.use.TimeUnit.Month
+import br.com.colman.petals.use.TimeUnit.Second
+import br.com.colman.petals.use.TimeUnit.Year
 import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
@@ -37,13 +59,13 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 @Composable
-fun LastUseDateTimerView(lastUseDate: LocalDateTime) {
+fun LastUseDateTimer(lastUseDate: LocalDateTime) {
   val dateString = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS").format(lastUseDate)
 
   var millis by remember { mutableStateOf(ChronoUnit.MILLIS.between(lastUseDate, now())) }
 
   LaunchedEffect(millis) {
-    while(true) {
+    while (true) {
       delay(11)
       millis = ChronoUnit.MILLIS.between(lastUseDate, now())
     }
@@ -84,12 +106,13 @@ fun LastUseDateTimerView(lastUseDate: LocalDateTime) {
 }
 
 @Suppress("MagicNumber")
-private enum class TimeUnit(@StringRes val unitName: Int, val max: Int, val millis: Long) {
-  Year(years, 60, 12L * 30 * 24 * 60 * 60 * 1_000),
-  Month(months, 12, 30L * 24 * 60 * 60 * 1_000),
-  Day(days, 31, 24 * 60 * 60 * 1_000),
-  Hour(hours, 24, 60 * 60 * 1_000),
-  Minute(minutes, 60, 60 * 1_000),
-  Second(seconds, 60, 1_000),
-  Millisecond(milliseconds, 1000, 1)
+private enum class TimeUnit(@StringRes val unitName: Int, val max: Long, val millis: Long) {
+  Millisecond(milliseconds, 1000L, 1),
+  Second(seconds, 60L, Millisecond.max),
+  Minute(minutes, 60L, Second.max * Millisecond.max),
+  Hour(hours, 24L, Minute.max * Minute.millis),
+  Day(days, 31L, Hour.max * Hour.millis),
+  Month(months, 12L, Day.max * Day.millis),
+  Year(years, 60L, Month.max * Month.millis),
+
 }

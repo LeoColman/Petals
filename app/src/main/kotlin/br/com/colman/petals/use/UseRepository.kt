@@ -10,6 +10,7 @@ import io.objectbox.converter.PropertyConverter
 import io.objectbox.kotlin.toFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import java.math.BigDecimal
 import java.math.BigDecimal.ZERO
 import java.time.LocalDateTime
@@ -18,11 +19,12 @@ import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
 class UseRepository(private val box: Box<Use>) {
 
-  val lastUseDate = all().map { it.maxOfOrNull(Use::date) }
-
   fun insert(use: Use) {
+    Timber.d("Adding use: $use")
     box.put(use)
   }
+
+  fun getLastUseDate() = all().map { it.maxOfOrNull(Use::date) }
 
   fun all() = box.query().build().subscribe().toFlow().map { it.toList() }
 }

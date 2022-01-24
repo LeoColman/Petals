@@ -1,6 +1,5 @@
 package br.com.colman.petals.use
 
-import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.objectbox.kotlin.boxFor
@@ -9,7 +8,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
-class UseRepositoryTests : FunSpec({
+class UseRepositoryTest : FunSpec({
 
   context("BigDecimal converter") {
     val target = BigDecimalConverter()
@@ -40,7 +39,7 @@ class UseRepositoryTests : FunSpec({
 
   context("Use Repository") {
     val box = MyObjectBox.builder().build().boxFor<Use>()
-    beforeTest { box.removeAll() }
+    beforeEach { box.removeAll() }
 
     val target = UseRepository(box)
 
@@ -55,7 +54,13 @@ class UseRepositoryTests : FunSpec({
       box.put(use)
       target.all().first().single() shouldBe use
     }
-  }
 
-  isolationMode = InstancePerTest
+    test("Last use date") {
+      val useBefore = use.copy(date = use.date.minusYears(1))
+      box.put(use)
+      box.put(useBefore)
+
+      target.getLastUseDate().first() shouldBe useBefore.date
+    }
+  }
 })

@@ -21,6 +21,7 @@ package br.com.colman.petals
 import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import timber.log.Timber
 
 class PetalsApplication : Application() {
     override fun onCreate() {
@@ -29,6 +30,14 @@ class PetalsApplication : Application() {
             androidContext(this@PetalsApplication)
             modules(KoinModule)
         }
+
+        startTimber()
+    }
+}
+
+private fun startTimber() {
+    if(BuildConfig.DEBUG) {
+        Timber.plant(Timber.DebugTree())
     }
 }
 
