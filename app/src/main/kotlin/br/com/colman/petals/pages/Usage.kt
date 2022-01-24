@@ -20,6 +20,8 @@ package br.com.colman.petals.pages
 
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,18 +30,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.use.AddUseButton
 import br.com.colman.petals.use.LastUseDateTimer
-import br.com.colman.petals.use.Use
+import br.com.colman.petals.use.UseCards
 import br.com.colman.petals.use.UseRepository
 import org.koin.androidx.compose.get
 
 @Composable
-fun Home(useRepository: UseRepository = get()) {
-  val quitDate by useRepository.getLastUseDate().collectAsState(null)
+fun Usage(useRepository: UseRepository = get()) {
+  val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
 
-  Column(Modifier, spacedBy(8.dp), CenterHorizontally) {
-    quitDate?.let { LastUseDateTimer(it) }
+  Column(Modifier.verticalScroll(rememberScrollState()), spacedBy(8.dp), CenterHorizontally) {
+    lastUseDate?.let { LastUseDateTimer(it) }
 
-    AddUseButton { useRepository.insert(Use()) }
+    AddUseButton { useRepository.insert(it) }
+
+    val uses by useRepository.all().collectAsState(emptyList())
+    UseCards(uses)
   }
 }
 

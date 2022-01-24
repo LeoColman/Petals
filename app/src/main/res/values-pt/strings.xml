@@ -26,7 +26,7 @@
     <string name="minutes">Minutos</string>
     <string name="seconds">Segundos</string>
     <string name="milliseconds">Milisegundos</string>
-    <string name="home">Home</string>
+    <string name="usage">Uso</string>
     <string name="start">Iniciar</string>
     <string name="reset">Reiniciar</string>
     <string name="symptoms">Sintomas</string>
