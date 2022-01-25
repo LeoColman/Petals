@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.colman.petals.R.string.add_use
+import br.com.colman.petals.R.string.ok
 import java.math.BigDecimal.ZERO
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -63,7 +64,7 @@ private fun ConfirmNewUseButton(
   onDismiss: () -> Unit = {}
 ) {
   TextButton({ onAddUse(use); onDismiss() }) {
-    Text("Ok")
+    Text(stringResource(ok))
   }
 }
 

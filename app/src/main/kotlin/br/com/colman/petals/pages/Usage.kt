@@ -44,7 +44,7 @@ fun Usage(useRepository: UseRepository = get()) {
     AddUseButton { useRepository.insert(it) }
 
     val uses by useRepository.all().collectAsState(emptyList())
-    UseCards(uses)
+    UseCards(uses, { useRepository.insert(it) }, { useRepository.delete(it) })
   }
 }
 
