@@ -27,6 +27,11 @@ class UseRepository(private val box: Box<Use>) {
   fun getLastUseDate() = all().map { it.maxOfOrNull(Use::date) }
 
   fun all() = box.query().build().subscribe().toFlow().map { it.toList() }
+
+  fun delete(use: Use) {
+    Timber.d("Deleting use: $use")
+    box.remove(use)
+  }
 }
 
 @Entity

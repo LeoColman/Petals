@@ -1,6 +1,8 @@
 package br.com.colman.petals.use
 
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.shouldBe
 import io.objectbox.kotlin.boxFor
 import kotlinx.coroutines.flow.first
@@ -53,6 +55,13 @@ class UseRepositoryTest : FunSpec({
     test("Get all") {
       box.put(use)
       target.all().first().single() shouldBe use
+    }
+
+    test("Delete") {
+      box.put(use)
+      box.all.shouldNotBeEmpty()
+      target.delete(use)
+      box.all.shouldBeEmpty()
     }
 
     test("Last use date") {
