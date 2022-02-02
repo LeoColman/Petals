@@ -28,10 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.com.colman.petals.use.AddUseButton
-import br.com.colman.petals.use.LastUseDateTimer
-import br.com.colman.petals.use.UseCards
-import br.com.colman.petals.use.UseRepository
+import br.com.colman.petals.use.*
 import org.koin.androidx.compose.get
 
 @Composable
@@ -44,6 +41,8 @@ fun Usage(useRepository: UseRepository = get()) {
     AddUseButton { useRepository.insert(it) }
 
     val uses by useRepository.all().collectAsState(emptyList())
+    if(uses.isEmpty()) return
+    UseBlock(uses)
     UseCards(uses, { useRepository.insert(it) }, { useRepository.delete(it) })
   }
 }
