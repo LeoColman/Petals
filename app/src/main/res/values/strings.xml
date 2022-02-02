@@ -48,5 +48,7 @@
     <string name="select_date">Select Date</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
+    <string name="in_total_money">%s total</string>
+    <string name="total_grams">%sg in total</string>
 
 </resources>
