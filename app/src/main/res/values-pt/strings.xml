@@ -40,13 +40,22 @@
     <string name="tenSecondsIntro">Segurar por mais de 10 segundos não irá aumentar sua brisa, mas aumentará o dano que maconha pode causar a você.</string>
     <string name="hit_timer">Temporizador</string>
     <string name="add_use">Adicionar Uso</string>
-    <string name="amount_grams">Quantidade (g)</string>
-    <string name="cost_per_gram">Custo por grama</string>
+    <string name="amount_grams_title">Quantidade (g)</string>
+    <string name="cost_per_gram_title">Custo por grama</string>
     <string name="date">Data</string>
     <string name="time">Horário</string>
     <string name="select_date">Selecione a data</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancelar</string>
-    <string name="in_total_money">%s total</string>
-    <string name="total_grams">%sg in total</string>
+    <string name="today">Hoje</string>
+    <string name="this_week">Essa semana</string>
+    <string name="this_month">Esse mês</string>
+    <string name="this_year">Esse ano</string>
+    <string name="all_time">Desde o início</string>
+    <string name="see_more">Ver mais</string>
+    <string name="cost_per_gram">$%s por grama</string>
+    <string name="amount_grams">%s gramas</string>
+    <string name="amount_grams_short">%sg</string>
+    <string name="total_spent">$%s total</string>
+    <string name="total_spent_short">$%s</string>
 </resources>

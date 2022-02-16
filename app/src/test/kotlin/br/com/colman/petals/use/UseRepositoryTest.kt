@@ -64,11 +64,12 @@ class UseRepositoryTest : FunSpec({
       box.all.shouldBeEmpty()
     }
 
-    test("Last use date") {
+    test("Last use") {
       val useBefore = use.copy(date = use.date.minusYears(1))
       box.put(use)
       box.put(useBefore)
 
+      target.getLastUse().first() shouldBe useBefore
       target.getLastUseDate().first() shouldBe useBefore.date
     }
   }

@@ -18,32 +18,51 @@
 
 package br.com.colman.petals.use
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment.Companion.Bottom
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.colman.petals.R.string.in_total_money
-import br.com.colman.petals.R.string.total_grams
+import br.com.colman.petals.R.string.*
+import br.com.colman.petals.use.repository.Use
 import compose.icons.TablerIcons
-import compose.icons.tablericons.ChartInfographic
 import compose.icons.tablericons.Scale
 import compose.icons.tablericons.ZoomMoney
+import java.math.RoundingMode.HALF_UP
+import java.time.DayOfWeek.MONDAY
 import java.time.LocalDate.now
 
 @Composable
 fun StatsBlocks(uses: List<Use>) {
-  UseBlock("Today", uses.filter { it.date.toLocalDate() == now() })
+  Row(Modifier.horizontalScroll(rememberScrollState())) {
+
+    UseBlock(stringResource(today), uses.filter { it.date.toLocalDate() == now() })
+
+    UseBlock(stringResource(this_week), uses.filter { it.date.toLocalDate().with(MONDAY) == now().with(MONDAY) })
+
+    UseBlock(stringResource(this_month), uses.filter {
+      it.date.month == now().month
+    })
+
+    UseBlock(stringResource(this_year), uses.filter {
+      it.date.year == now().year
+    })
+
+    UseBlock(stringResource(all_time), uses)
+  }
 }
 
 @Composable
@@ -51,9 +70,11 @@ private fun UseBlock(title: String, uses: List<Use>) {
   var totalGrams by remember { mutableStateOf("") }
   var totalCost by remember { mutableStateOf("") }
 
-  LaunchedEffect(totalGrams, totalCost) {
-    totalGrams = uses.sumOf { it.amountGrams }.setScale(3).toString()
-    totalCost = uses.sumOf { it.costPerGram * it.amountGrams }.setScale(3).toString()
+  // HALF_UP is necessary because the default rounding
+  // mode is "throw an exception".
+  LaunchedEffect(uses) {
+    totalGrams = uses.sumOf { it.amountGrams }.setScale(3, HALF_UP).toString()
+    totalCost = uses.sumOf { it.costPerGram * it.amountGrams }.setScale(3, HALF_UP).toString()
   }
 
   UseBlock(title, totalGrams, totalCost)
@@ -66,22 +87,19 @@ private fun UseBlock(
   totalGrams: String = "12.345",
   totalValue: String = "54.321"
 ) {
-  Card(Modifier.padding(8.dp)) {
-    Column(Modifier, spacedBy(4.dp)) {
-      Row(Modifier.padding(8.dp), spacedBy(4.dp), Bottom) {
-        Icon(TablerIcons.ChartInfographic, null)
-        Text(title, fontWeight = FontWeight.Bold)
-      }
+  Card(Modifier.padding(8.dp).defaultMinSize(145.dp), elevation = 4.dp) {
+    Column(Modifier.padding(8.dp), spacedBy(4.dp)) {
+      Text(title, fontWeight = Bold, modifier = Modifier.padding(8.dp).align(CenterHorizontally))
 
       Row(Modifier.padding(8.dp), spacedBy(4.dp), CenterVertically) {
         Icon(TablerIcons.ZoomMoney, null)
-        Text(stringResource(in_total_money, "$$totalValue"))
+        Text(stringResource(total_spent_short, totalValue))
       }
 
       Row(Modifier.padding(8.dp), spacedBy(4.dp), CenterVertically) {
 
         Icon(TablerIcons.Scale, null)
-        Text(stringResource(total_grams, totalGrams))
+        Text(stringResource(amount_grams_short, totalGrams))
       }
     }
   }

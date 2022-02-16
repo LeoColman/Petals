@@ -38,12 +38,13 @@ fun Usage(useRepository: UseRepository = get()) {
   Column(Modifier.verticalScroll(rememberScrollState()), spacedBy(8.dp), CenterHorizontally) {
     lastUseDate?.let { LastUseDateTimer(it) }
 
-    AddUseButton { useRepository.insert(it) }
+    AddUseButton(useRepository)
 
     val uses by useRepository.all().collectAsState(emptyList())
-    if(uses.isEmpty()) return
-    StatsBlocks(uses)
-    UseCards(uses, { useRepository.insert(it) }, { useRepository.delete(it) })
+    if (uses.isNotEmpty()) {
+      StatsBlocks(uses)
+      UseCards(uses, { useRepository.insert(it) }, { useRepository.delete(it) })
+    }
   }
 }
 
