@@ -36,9 +36,16 @@ fun UseCards(
   onEditUse: (Use) -> Unit = {},
   onDeleteUse: (Use) -> Unit = {},
 ) {
+  var usesToShow by remember { mutableStateOf(5) }
+
+
   Column(Modifier.fillMaxWidth(), spacedBy(8.dp)) {
-    uses.sortedByDescending { it.date }.forEach {
+    uses.sortedByDescending { it.date }.take(usesToShow).forEach {
       UseCard(it, onEditUse, onDeleteUse)
+    }
+
+    Button({ usesToShow += 5 }, Modifier.align(CenterHorizontally)) {
+      Text(stringResource(see_more))
     }
   }
 }
@@ -61,20 +68,20 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.CurrencyDollar, null)
-          val costPerGramString = costPerGram.setScale(2).toString()
-          Text("$costPerGramString per gram")
+          val costPerGramString = costPerGram.setScale(3, HALF_UP).toString()
+          Text(stringResource(R.string.cost_per_gram, costPerGramString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.Scale, null)
-          val amountGramsString = amountGrams.setScale(2).toString()
-          Text("$amountGramsString grams")
+          val amountGramsString = amountGrams.setScale(3, HALF_UP).toString()
+          Text(stringResource(R.string.amount_grams, amountGramsString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.ReportMoney, null)
-          val total = (amountGrams * costPerGram).setScale(2)
-          Text("$total total")
+          val total = (amountGrams * costPerGram).setScale(3, HALF_UP)
+          Text(stringResource(R.string.total_spent, total))
         }
       }
 
@@ -136,6 +143,6 @@ private fun ConfirmEdit(
   onDismiss: () -> Unit = {},
 ) {
   TextButton({ onAddUse(use); onDismiss() }) {
-    Text("Ok")
+    Text(stringResource(ok))
   }
 }
