@@ -41,14 +41,23 @@
     <string name="_175thc">1.75% THC</string>
     <string name="_355thc">3.55% THC</string>
     <string name="add_use">Add Use</string>
-    <string name="amount_grams">Amount (g)</string>
-    <string name="cost_per_gram">Cost per gram</string>
+    <string name="amount_grams_title">Amount (g)</string>
+    <string name="cost_per_gram_title">Cost per gram</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="select_date">Select Date</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
-    <string name="in_total_money">%s total</string>
-    <string name="total_grams">%sg in total</string>
+    <string name="today">Today</string>
+    <string name="this_week">This week</string>
+    <string name="this_month">This month</string>
+    <string name="this_year">This year</string>
+    <string name="all_time">All time</string>
+    <string name="see_more">See more</string>
+    <string name="cost_per_gram">$%s per gram</string>
+    <string name="amount_grams">%s grams</string>
+    <string name="amount_grams_short">%sg</string>
+    <string name="total_spent">$%s total</string>
+    <string name="total_spent_short">$%s</string>
 
 </resources>

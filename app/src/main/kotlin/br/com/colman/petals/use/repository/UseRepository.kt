@@ -24,7 +24,9 @@ class UseRepository(private val box: Box<Use>) {
     box.put(use)
   }
 
-  fun getLastUseDate() = all().map { it.maxOfOrNull(Use::date) }
+  fun getLastUse() = all().map { it.maxByOrNull { it.date } }
+
+  fun getLastUseDate() = getLastUse().map { it?.date }
 
   fun all() = box.query().build().subscribe().toFlow().map { it.toList() }
 

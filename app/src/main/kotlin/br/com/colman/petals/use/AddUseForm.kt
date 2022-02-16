@@ -20,11 +20,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.colman.petals.R
-import br.com.colman.petals.R.string.add_use
-import br.com.colman.petals.R.string.amount_grams
-import br.com.colman.petals.R.string.cost_per_gram
-import br.com.colman.petals.R.string.ok
-import br.com.colman.petals.R.string.select_date
+import br.com.colman.petals.R.string.*
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogScope
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
@@ -64,7 +60,7 @@ fun AddUseForm(
       onValueChange = { amount = it },
       leadingIcon = { Icon(TablerIcons.Scale, null) },
       keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-      label = { Text(stringResource(amount_grams)) },
+      label = { Text(stringResource(amount_grams_title)) },
       placeholder = { Text("0.25") }
     )
 
@@ -73,7 +69,7 @@ fun AddUseForm(
       onValueChange = { cost = it },
       leadingIcon = { Icon(TablerIcons.CurrencyDollar, null) },
       keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-      label = { Text(stringResource(cost_per_gram)) },
+      label = { Text(stringResource(cost_per_gram_title)) },
       placeholder = { Text("18.00") }
     )
 
