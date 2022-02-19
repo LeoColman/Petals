@@ -16,6 +16,7 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+    <string name="app_name">Petals</string>
     <string name="quit_date_text">Last use date</string>
 
 
@@ -59,5 +60,9 @@
     <string name="amount_grams_short">%sg</string>
     <string name="total_spent">$%s total</string>
     <string name="total_spent_short">$%s</string>
+    <string name="date_label">date</string>
+    <string name="amount_label">amount</string>
+    <string name="cost_per_gram_label">cost_per_gram</string>
+    <string name="export">Export</string>
 
 </resources>

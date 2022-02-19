@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Petals APP
   ~ Copyright (C) 2021 Leonardo Colman Lopes
   ~
@@ -18,24 +17,36 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="br.com.colman.petals">
+    package="br.com.colman.petals">
 
     <application
-            android:name=".PetalsApplication"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="Petals"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true">
+        android:name=".PetalsApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Petals"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.NoTitleBar">
         <activity
-                android:name=".MainActivity"
-                android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

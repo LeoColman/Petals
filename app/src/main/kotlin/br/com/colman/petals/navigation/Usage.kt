@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.com.colman.petals.pages
+package br.com.colman.petals.navigation
 
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
@@ -28,7 +28,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.com.colman.petals.use.*
+import br.com.colman.petals.use.AddUseButton
+import br.com.colman.petals.use.LastUseDateTimer
+import br.com.colman.petals.use.StatsBlocks
+import br.com.colman.petals.use.UseCards
+import br.com.colman.petals.use.repository.UseRepository
 import org.koin.androidx.compose.get
 
 @Composable

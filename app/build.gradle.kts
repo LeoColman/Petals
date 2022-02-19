@@ -18,7 +18,7 @@
 
 import br.com.colman.petals.Libs
 import org.gradle.api.JavaVersion.VERSION_1_8
-import java.util.Properties
+import java.util.*
 
 plugins {
   id("com.android.application")
@@ -44,8 +44,8 @@ android {
     applicationId = "br.com.colman.petals"
     minSdk = 21
     targetSdk = 30
-    versionCode = 120
-    versionName = "v1.2.0"
+    versionCode = 2006
+    versionName = "v2.0.0-prerelease6"
 
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
   }
@@ -81,6 +81,7 @@ android {
     }
 
     named("debug") {
+      applicationIdSuffix = ".debug"
       isPseudoLocalesEnabled = true
       isDebuggable = true
     }

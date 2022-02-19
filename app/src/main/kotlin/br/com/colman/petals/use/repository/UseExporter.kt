@@ -16,14 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.1.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
-        classpath("io.objectbox:objectbox-gradle-plugin:3.1.0")
-    }
+package br.com.colman.petals.use.repository
+
+import kotlinx.coroutines.flow.first
+
+class UseExporter(
+  private val useRepository: UseRepository
+) {
+
+  suspend fun toCsvFileContent(
+    dateLabel: String,
+    amountLabel: String,
+    costPerGramLabel: String
+  ): String {
+    val headers = "$dateLabel,$amountLabel,$costPerGramLabel"
+    val uses = useRepository.all().first().map { toCsvLine(it) }
+    return (listOf(headers) + uses).joinToString("\n")
+  }
+
+  fun toCsvLine(use: Use) = """
+    "${use.date}","${use.amountGrams}","${use.costPerGram}"
+  """.trimIndent()
+
 }

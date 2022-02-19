@@ -18,7 +18,7 @@
 
 package br.com.colman.petals.withdrawal.thc.repository
 
-import br.com.colman.petals.use.UseRepository
+import br.com.colman.petals.use.repository.UseRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.com.colman.petals.pages
+package br.com.colman.petals.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
@@ -41,7 +41,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import br.com.colman.petals.R
 import br.com.colman.petals.hittimer.ComposeHitTimer
-import br.com.colman.petals.pages.Page.Usage
+import br.com.colman.petals.navigation.Page.Usage
 
 enum class Page(
   @StringRes val nameRes: Int,
