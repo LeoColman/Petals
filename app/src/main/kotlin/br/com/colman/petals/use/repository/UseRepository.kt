@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalCoroutinesApi::class)
 
-package br.com.colman.petals.use
+package br.com.colman.petals.use.repository
 
 import io.objectbox.Box
 import io.objectbox.annotation.Convert

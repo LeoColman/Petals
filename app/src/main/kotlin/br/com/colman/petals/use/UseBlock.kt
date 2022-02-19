@@ -97,7 +97,6 @@ private fun UseBlock(
       }
 
       Row(Modifier.padding(8.dp), spacedBy(4.dp), CenterVertically) {
-
         Icon(TablerIcons.Scale, null)
         Text(stringResource(amount_grams_short, totalGrams))
       }

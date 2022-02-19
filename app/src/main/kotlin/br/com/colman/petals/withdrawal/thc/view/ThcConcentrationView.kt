@@ -24,7 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.viewinterop.AndroidView
-import br.com.colman.petals.use.UseRepository
+import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint

@@ -58,4 +58,8 @@
     <string name="amount_grams_short">%sg</string>
     <string name="total_spent">$%s total</string>
     <string name="total_spent_short">$%s</string>
+    <string name="date_label">data</string>
+    <string name="amount_label">quantidade</string>
+    <string name="cost_per_gram_label">custo_por_grama</string>
+    <string name="export">Exportar</string>
 </resources>

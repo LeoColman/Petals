@@ -25,8 +25,9 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
-import br.com.colman.petals.pages.BottomNavigationBar
-import br.com.colman.petals.pages.NavHostContainer
+import br.com.colman.petals.navigation.BottomNavigationBar
+import br.com.colman.petals.navigation.MyTopAppBar
+import br.com.colman.petals.navigation.NavHostContainer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
 
       Surface(color = Color.White) {
         Scaffold(
+          topBar = { MyTopAppBar() },
           bottomBar = { BottomNavigationBar(navController) },
           content = { NavHostContainer(navController) }
         )
@@ -47,5 +49,3 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
     }
   }
 }
-
-
