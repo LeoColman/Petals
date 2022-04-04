@@ -24,13 +24,17 @@ plugins {
   id("com.android.application")
   id("kotlin-android")
   kotlin("kapt")
-  id("io.gitlab.arturbosch.detekt").version("1.19.0-RC1")
+  id("io.gitlab.arturbosch.detekt") version "1.19.0-RC1"
+  id("org.jetbrains.kotlinx.kover") version "0.5.0"
   id("io.objectbox") // Apply last.
 }
 
 repositories {
   mavenCentral()
   google()
+  maven("https://jitpack.io/")
+  maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
+
 }
 
 val keystorePropertiesFile = Properties().apply {
@@ -170,6 +174,11 @@ dependencies {
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
   debugImplementation("androidx.compose.ui:ui-test-manifest:${Libs.Compose.version}")
 
+  // Calpose
+  implementation("io.github.boguszpawlowski.composecalendar:composecalendar:0.4.1-SNAPSHOT")
+
+  // Date range
+  implementation("me.moallemi.tools:kotlin-date-range:1.0.0")
 
   // Detekt
   detektPlugins(Libs.Detekt.formatting)
@@ -191,6 +200,14 @@ dependencies {
 
   // Icons
   implementation("br.com.devsrsouza.compose.icons.android:tabler-icons:1.0.0")
+  implementation("br.com.devsrsouza.compose.icons.android:octicons:1.0.0")
+  implementation("br.com.devsrsouza.compose.icons.android:font-awesome:1.0.0")
+
+
+  // KotlinCSV
+  implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.2.0")
+
+  testImplementation("com.natpryce:snodge:3.7.0.0")
 }
 
 tasks.withType<Test>() {

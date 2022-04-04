@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit
 
-
 @Suppress("FunctionName")
 class DiscomfortView(
   private val useRepository: UseRepository,
@@ -87,11 +86,10 @@ class DiscomfortView(
     }
   }
 
-
   private fun currentDiscomfortPoint(percentage: Double, day: Double) =
     PointsGraphSeries(arrayOf(DataPoint(day, percentage))).apply {
       size = 20f
       color = Color.parseColor("#059033")
-      shape =  PointsGraphSeries.Shape.POINT
+      shape = PointsGraphSeries.Shape.POINT
     }
 }

@@ -54,7 +54,8 @@ fun MyTopAppBar() {
       Modifier
         .padding(16.dp)
         .height(56.dp)
-        .fillMaxWidth()) {
+        .fillMaxWidth()
+    ) {
       MyTopAppBarContent(get())
     }
   }
@@ -72,20 +73,20 @@ fun MyTopAppBarContent(
   val amountLabel = stringResource(amount_label)
   val costPerGramLabel = stringResource(cost_per_gram_label)
 
-
   Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
 
     Text(stringResource(R.string.app_name), fontWeight = FontWeight.Bold, fontSize = 20.sp)
-    Box(Modifier.clickable {
-      coroutineScope.launch {
-        exportUses(useExporter.toCsvFileContent(dateLabel, amountLabel, costPerGramLabel), context, launcher)
+    Box(
+      Modifier.clickable {
+        coroutineScope.launch {
+          exportUses(useExporter.toCsvFileContent(dateLabel, amountLabel, costPerGramLabel), context, launcher)
+        }
       }
-    }) {
+    ) {
       Text(stringResource(export), fontSize = 14.sp)
     }
   }
 }
-
 
 private fun exportUses(
   usesCsv: String,
@@ -116,4 +117,3 @@ private fun createCsvFile(usesCsv: String, context: Context): Uri {
 
   return FileProvider.getUriForFile(context, APPLICATION_ID, export, "export.csv")
 }
-

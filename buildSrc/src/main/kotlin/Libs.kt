@@ -37,7 +37,7 @@ object Libs {
    }
 
    object Compose {
-      val version = "1.2.0-alpha01"
+      val version = "1.1.0"
       val composeMaterialIcons = "androidx.compose.material:material-icons-extended:$version"
    }
 

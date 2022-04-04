@@ -28,13 +28,12 @@ import org.joda.time.Days.days
 import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit.SECONDS
 
-
 class DiscomfortRepository(
   private val useRepository: UseRepository
 ) {
 
   val discomfort = flow {
-    while(true) {
+    while (true) {
       delay(100)
       emit(calculateDiscomfort())
     }
@@ -92,5 +91,4 @@ class DiscomfortRepository(
   }
 
   data class Discomfort(val discomfortStrength: Double)
-
 }

@@ -24,20 +24,19 @@ import org.koin.core.context.startKoin
 import timber.log.Timber
 
 class PetalsApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        startKoin {
-            androidContext(this@PetalsApplication)
-            modules(KoinModule)
-        }
-
-        startTimber()
+  override fun onCreate() {
+    super.onCreate()
+    startKoin {
+      androidContext(this@PetalsApplication)
+      modules(KoinModule)
     }
+
+    startTimber()
+  }
 }
 
 private fun startTimber() {
-    if(BuildConfig.DEBUG) {
-        Timber.plant(Timber.DebugTree())
-    }
+  if (BuildConfig.DEBUG) {
+    Timber.plant(Timber.DebugTree())
+  }
 }
-

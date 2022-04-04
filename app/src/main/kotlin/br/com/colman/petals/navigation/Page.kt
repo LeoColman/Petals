@@ -87,4 +87,3 @@ fun BottomNavigationBar(navController: NavHostController) {
     }
   }
 }
-

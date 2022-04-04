@@ -36,7 +36,6 @@ import org.joda.time.Days
 import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit
 
-
 @Suppress("FunctionName")
 class ThcConcentrationView(
   private val useRepository: UseRepository,
@@ -96,6 +95,6 @@ class ThcConcentrationView(
     PointsGraphSeries(arrayOf(DataPoint(day, percentage))).apply {
       size = 24f
       color = Color.parseColor("#059033")
-      shape =  PointsGraphSeries.Shape.POINT
+      shape = PointsGraphSeries.Shape.POINT
     }
 }

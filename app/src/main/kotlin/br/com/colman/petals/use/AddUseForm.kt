@@ -85,7 +85,6 @@ fun AddUseForm(
         label = { Text(stringResource(R.string.date)) }
       )
 
-
       OutlinedTextField(
         modifier = Modifier
           .weight(0.5f)

@@ -63,7 +63,7 @@ class UseRepositoryTest : FunSpec({
 
     val target = UseRepository(box)
 
-    val use = Use(BigDecimal("1234.567"), BigDecimal("123.01"))
+    val use = Use(amountGrams = BigDecimal("1234.567"), costPerGram = BigDecimal("123.01"))
 
     test("Insert") {
       target.insert(use)
@@ -87,8 +87,8 @@ class UseRepositoryTest : FunSpec({
       box.put(use)
       box.put(useBefore)
 
-      target.getLastUse().first() shouldBe useBefore
-      target.getLastUseDate().first() shouldBe useBefore.date
+      target.getLastUse().first() shouldBe use
+      target.getLastUseDate().first() shouldBe use.date
     }
   }
 })

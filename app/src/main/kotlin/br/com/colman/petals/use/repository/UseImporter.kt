@@ -18,33 +18,33 @@
 
 package br.com.colman.petals.use.repository
 
-import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
-import kotlinx.coroutines.flow.first
-import java.io.ByteArrayOutputStream
-import kotlin.text.Charsets.UTF_8
+import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
-class UseExporter(
+class UseImporter(
   private val useRepository: UseRepository
 ) {
 
-  private val csvWriter = csvWriter {
-    lineTerminator = "\n"
+  fun import(csvFileLines: List<String>): Result<Unit> = runCatching {
+    val uses = csvFileLines.mapIndexed { index, s ->
+      UseCsvParser.parse(s).onFailure {
+        if (index > 0) throw it
+      }
+    }.mapNotNull { it.getOrNull() }
+
+    useRepository.insertAll(uses)
   }
+}
 
-  suspend fun toCsvFileContent(
-    dateLabel: String,
-    amountLabel: String,
-    costPerGramLabel: String
-  ): String {
-    val headers = listOf(dateLabel, amountLabel, costPerGramLabel)
-    val uses = useRepository.all().first().map { it.columns() }
+object UseCsvParser {
+  private val csvReader = csvReader()
 
-    val headerUses = listOf(headers) + uses
+  fun parse(line: String): Result<Use> = runCatching {
+    val (date, amount, cost) = csvReader.readAll(line).single()
 
-    val strOutput = ByteArrayOutputStream()
+    val dateTime = LocalDateTime.parse(date, ISO_LOCAL_DATE_TIME)
 
-    csvWriter.writeAll(headerUses, strOutput)
-
-    return strOutput.toByteArray().toString(UTF_8)
+    Use(dateTime, amount.toBigDecimal(), cost.toBigDecimal())
   }
 }

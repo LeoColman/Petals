@@ -50,19 +50,20 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="today">Today</string>
-    <string name="this_week">This week</string>
-    <string name="this_month">This month</string>
+    <!--FIXME Since Monday?-->
+    <string name="this_week">Since Monday</string>
+    <string name="this_month">Since the 1st</string>
     <string name="this_year">This year</string>
     <string name="all_time">All time</string>
     <string name="see_more">See more</string>
-    <string name="cost_per_gram">$%s per gram</string>
+    <string name="cost_per_gram">%s per gram</string>
+    <string name="cost_per_gram_short">%s/g</string>
     <string name="amount_grams">%s grams</string>
     <string name="amount_grams_short">%sg</string>
-    <string name="total_spent">$%s total</string>
-    <string name="total_spent_short">$%s</string>
+    <string name="total_spent">%s total</string>
     <string name="date_label">date</string>
     <string name="amount_label">amount</string>
     <string name="cost_per_gram_label">cost_per_gram</string>
     <string name="export">Export</string>
-
+    <string name="currency_symbol">$</string>
 </resources>
