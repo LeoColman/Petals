@@ -18,6 +18,7 @@
 
 package br.com.colman.petals.use.repository
 
+import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldNotBeEmpty
@@ -53,11 +54,13 @@ class UseRepositoryTest : FunSpec({
   }
 
   test("Last use") {
-    val useBefore = use.copy(date = use.date.minusYears(1))
+    val useBefore = use.copy(date = use.date.minusYears(1), id = 0)
     box.put(use)
     box.put(useBefore)
 
     target.getLastUse().first() shouldBe use
     target.getLastUseDate().first() shouldBe use.date
   }
+
+  isolationMode = IsolationMode.SingleInstance
 })
