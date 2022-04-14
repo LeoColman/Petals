@@ -47,3 +47,8 @@ private fun startTimber() {
     Timber.plant(Timber.DebugTree())
   }
 }
+
+private val AndroidModule = module {
+  single { get<Context>().resources }
+  single { get<Context>().contentResolver }
+}

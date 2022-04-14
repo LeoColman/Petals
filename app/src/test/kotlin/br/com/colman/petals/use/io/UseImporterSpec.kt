@@ -1,40 +1,18 @@
-package br.com.colman.petals.use.repository
+package br.com.colman.petals.use.io
 
+import br.com.colman.petals.use.repository.UseRepository
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.result.shouldBeFailure
 import io.kotest.matchers.result.shouldBeSuccess
-import io.kotest.matchers.shouldBe
-import io.kotest.property.arbitrary.next
 import io.kotest.property.arbitrary.take
 import io.mockk.Called
 import io.mockk.mockk
 import io.mockk.verify
-import kotlin.random.Random.Default.nextInt
 
 class UseImporterSpec : FunSpec({
   val useRepository = mockk<UseRepository>(relaxed = true)
   val target = UseImporter(useRepository)
-
-  context("UseCsvParser") {
-    test("Converts CSV to Use") {
-      val use = useArb.next()
-      val useCsv = use.columns().joinToString(",")
-      val parsed = UseCsvParser.parse(useCsv)
-
-      parsed.getOrThrow() shouldBe use
-    }
-
-    test("Returns failure if an invalid line is passed") {
-      val useCsv = "invalid,cs,v"
-      UseCsvParser.parse(useCsv).shouldBeFailure()
-    }
-
-    test("Returns failure if more than one line is passed") {
-      val uses = useCsvArb.take(nextInt(2, 1000)).toList().joinToString("\n")
-      UseCsvParser.parse(uses).shouldBeFailure()
-    }
-  }
 
   context("Parse file") {
     test("Returns success if all lines are parseable") {
@@ -59,6 +37,10 @@ class UseImporterSpec : FunSpec({
       val otherLines = (listOf(header) + usesCsv + invalidUseCsvs).shuffled()
 
       target.import(firstLine + otherLines).shouldBeFailure()
+    }
+
+    test("Returns success when file is empty") {
+      target.import(emptyList()).shouldBeSuccess()
     }
   }
 
@@ -97,6 +79,18 @@ class UseImporterSpec : FunSpec({
       shouldNotThrowAny {
         verify {
           useRepository.insertAll(uses)
+        }
+      }
+    }
+
+    test("Doesn't do anything if the list is empty") {
+      val empty = emptyList<String>()
+
+      target.import(empty)
+
+      shouldNotThrowAny {
+        verify {
+          useRepository.insertAll(emptyList())
         }
       }
     }

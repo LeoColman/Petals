@@ -19,7 +19,6 @@
 package br.com.colman.petals
 
 import br.com.colman.petals.use.repository.MyObjectBox
-import br.com.colman.petals.use.repository.UseExporter
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepository
 import br.com.colman.petals.withdrawal.discomfort.view.DiscomfortView
@@ -33,7 +32,6 @@ import org.koin.dsl.module
 val KoinModule = module {
   single { MyObjectBox.builder().androidContext(androidApplication()).build() }
   single { UseRepository(get<BoxStore>().boxFor()) }
-  single { UseExporter(get()) }
 
   single { ThcConcentrationRepository(get()) }
   single { ThcConcentrationView(get(), get()) }

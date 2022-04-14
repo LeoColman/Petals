@@ -1,5 +1,7 @@
 package br.com.colman.petals.use.repository
 
+import br.com.colman.petals.use.repository.converter.BigDecimalConverter
+import br.com.colman.petals.use.repository.converter.LocalDateTimeConverter
 import io.objectbox.annotation.Convert
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id

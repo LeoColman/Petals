@@ -64,6 +64,7 @@
     <string name="date_label">date</string>
     <string name="amount_label">amount</string>
     <string name="cost_per_gram_label">cost_per_gram</string>
-    <string name="export">Export</string>
+    <string name="import_import">Import</string> <!-- Java uses `import` as a reserved keyword. Can't be used -->
+    <string name="export_export">Export</string> <!-- We should match import_import, so it's cute. -->
     <string name="currency_symbol">$</string>
 </resources>

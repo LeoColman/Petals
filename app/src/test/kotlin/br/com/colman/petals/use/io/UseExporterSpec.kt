@@ -16,8 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.com.colman.petals.use.repository
+package br.com.colman.petals.use.io
 
+import br.com.colman.petals.use.repository.Use
+import br.com.colman.petals.use.repository.UseRepository
 import com.natpryce.snodge.mutants
 import com.natpryce.snodge.text.replaceWithPossiblyMeaningfulText
 import io.kotest.core.spec.style.FunSpec
@@ -33,14 +35,15 @@ import kotlin.random.Random
 
 class UseExporterSpec : FunSpec({
   val useRepository = mockk<UseRepository>()
-  val target = UseExporter(useRepository)
+  val useCsvHeaders = UseCsvHeaders("date", "amount", "cost")
+  val target = UseCsvSerializer(useRepository, useCsvHeaders)
 
   context("Create CSV content") {
     val uses = useArb.take(1000).toList()
     val usesCsv = uses.map { it.columns().joinToString(",") }
     every { useRepository.all() } returns flowOf(uses)
 
-    val file = target.toCsvFileContent("date", "amount", "cost")
+    val file = target.computeUseCsv()
 
     test("Includes all values in resulting file") {
       file shouldContain usesCsv.joinToString("\n")

@@ -211,6 +211,9 @@ dependencies {
   implementation(Libs.ComposeMaterialDialogs.core)
   implementation(Libs.ComposeMaterialDialogs.dateTime)
 
+  // Sweet Toast
+  implementation("com.github.tfaki:ComposableSweetToast:1.0.1")
+
   // Timber
   implementation(Libs.Timber.timber)
 

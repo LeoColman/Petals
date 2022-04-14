@@ -16,11 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.com.colman.petals.use.repository
+package br.com.colman.petals.use.io
 
-import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
+import br.com.colman.petals.use.repository.UseRepository
 
 class UseImporter(
   private val useRepository: UseRepository
@@ -37,14 +35,3 @@ class UseImporter(
   }
 }
 
-object UseCsvParser {
-  private val csvReader = csvReader()
-
-  fun parse(line: String): Result<Use> = runCatching {
-    val (date, amount, cost) = csvReader.readAll(line).single()
-
-    val dateTime = LocalDateTime.parse(date, ISO_LOCAL_DATE_TIME)
-
-    Use(dateTime, amount.toBigDecimal(), cost.toBigDecimal())
-  }
-}

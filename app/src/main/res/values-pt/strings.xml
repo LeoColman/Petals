@@ -60,7 +60,7 @@
     <string name="date_label">data</string>
     <string name="amount_label">quantidade</string>
     <string name="cost_per_gram_label">custo_por_grama</string>
-    <string name="export">Exportar</string>
+    <string name="export_export">Exportar</string>
     <string name="currency_symbol">R$</string>
     <string name="cost_per_gram_short">%s/g</string>
 </resources>
