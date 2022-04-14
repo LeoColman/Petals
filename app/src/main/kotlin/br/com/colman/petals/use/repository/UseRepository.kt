@@ -3,15 +3,11 @@
 package br.com.colman.petals.use.repository
 
 import io.objectbox.Box
-import io.objectbox.converter.PropertyConverter
 import io.objectbox.kotlin.toFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
-import java.math.BigDecimal
-import java.time.LocalDateTime
-import java.time.LocalDateTime.parse
-import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
 class UseRepository(private val box: Box<Use>) {
 
@@ -29,7 +25,7 @@ class UseRepository(private val box: Box<Use>) {
 
   fun getLastUseDate() = getLastUse().map { it?.date }
 
-  fun all() = box.query().build().subscribe().toFlow().map { it.toList() }
+  fun all(): Flow<List<Use>> = box.query().build().subscribe().toFlow().map { it.toList() }
 
   fun delete(use: Use) {
     Timber.d("Deleting use: $use")
@@ -37,18 +33,3 @@ class UseRepository(private val box: Box<Use>) {
   }
 }
 
-class BigDecimalConverter : PropertyConverter<BigDecimal, String> {
-  override fun convertToEntityProperty(str: String): BigDecimal {
-    return BigDecimal(str)
-  }
-
-  override fun convertToDatabaseValue(bigDecimal: BigDecimal): String {
-    return bigDecimal.toString()
-  }
-}
-
-class LocalDateTimeConverter : PropertyConverter<LocalDateTime, String> {
-  override fun convertToEntityProperty(str: String): LocalDateTime = parse(str, ISO_LOCAL_DATE_TIME)
-
-  override fun convertToDatabaseValue(ldt: LocalDateTime): String = ldt.format(ISO_LOCAL_DATE_TIME)
-}
