@@ -51,7 +51,9 @@ android {
     versionCode = 203
     versionName = "v2.0.3"
 
-    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+    testApplicationId = "$applicationId.test"
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    testFunctionalTest = true
   }
 
   signingConfigs {
@@ -141,6 +143,17 @@ dependencies {
 
   // Compose
   implementation(Libs.Compose.composeMaterialIcons)
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
+  // Needed for createComposeRule, but not createAndroidComposeRule:
+  debugImplementation("androidx.compose.ui:ui-test-manifest:${Libs.Compose.version}")
+
+
+  androidTestImplementation("androidx.test:core:1.4.0")
+  androidTestImplementation("androidx.test:rules:1.4.0")
+  androidTestImplementation("androidx.test:runner:1.4.0")
+  androidTestImplementation("androidx.compose.ui:ui-test:${Libs.Compose.version}")
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
+
 
   testImplementation(Libs.AndroidX.Test.core)
   testImplementation(Libs.AndroidX.Test.coreKtx)
@@ -154,6 +167,7 @@ dependencies {
   // Koin
   implementation(Libs.Koin.android)
   implementation(Libs.Koin.compose)
+  androidTestImplementation(Libs.Koin.test)
 
   // Robolectric
   testImplementation(Libs.Robolectric.robolectric)
@@ -162,13 +176,15 @@ dependencies {
   testImplementation(Libs.Kotest.junitRunner)
   testImplementation(Libs.Kotest.robolectricExtension)
   testImplementation(Libs.Kotest.property)
+  androidTestImplementation(Libs.Kotest.property)
+  androidTestImplementation(Libs.Kotest.assertions)
 
   // Mockk
   testImplementation(Libs.Mockk.mockk)
   testImplementation(Libs.Mockk.mockkAgent)
 
   // JUnit
-  testImplementation(Libs.JUnit.junit4)
+  androidTestImplementation(Libs.JUnit.junit4)
 
   // UI Tests
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
