@@ -84,9 +84,11 @@ class DiscomfortRepository(
     discomfortSeconds.values.toDoubleArray()
   )
 
+  private val maxKnownInterpolatableValue = discomfortDays.keys.maxOf { it }.toStandardSeconds().seconds.toLong()
+
   private suspend fun calculateDiscomfort(): Discomfort {
     val quitDate = useRepository.getLastUseDate().filterNotNull().first()
-    val secondsQuit = SECONDS.between(quitDate, now()).coerceAtMost(25 * 24 * 60 * 60)
+    val secondsQuit = SECONDS.between(quitDate, now()).coerceAtMost(maxKnownInterpolatableValue)
     return Discomfort(interpolator.value(secondsQuit.toDouble()))
   }
 

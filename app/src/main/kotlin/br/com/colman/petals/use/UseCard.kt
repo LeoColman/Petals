@@ -20,10 +20,7 @@ import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R.string.*
 import br.com.colman.petals.use.repository.Use
 import compose.icons.TablerIcons
-import compose.icons.tablericons.ReportMoney
-import compose.icons.tablericons.Scale
-import compose.icons.tablericons.Smoking
-import compose.icons.tablericons.Trash
+import compose.icons.tablericons.*
 import java.math.BigDecimal
 import java.math.RoundingMode.HALF_UP
 import java.time.LocalDateTime
@@ -47,6 +44,11 @@ fun UseCards(
     Text(stringResource(see_more))
   }
   }
+}
+
+fun CurrencyIcon(symbol: String) = when (symbol) {
+  "R$" -> TablerIcons.CurrencyReal
+  else -> TablerIcons.CurrencyDollar
 }
 
 @Preview

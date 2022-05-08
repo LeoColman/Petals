@@ -35,7 +35,11 @@ class CsvFileReader(
     rememberLauncherForActivityResult(OpenDocument()) { contentUri ->
       val lines = contentUri.readLines()
       importResult.value = useImporter.import(lines)
-    }.launch(arrayOf("text/*"))
+    }.apply {
+      SideEffect {
+        launch(arrayOf("text/*"))
+      }
+    }
 
     return importResult
   }

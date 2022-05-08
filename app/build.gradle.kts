@@ -190,9 +190,6 @@ dependencies {
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
   debugImplementation("androidx.compose.ui:ui-test-manifest:${Libs.Compose.version}")
 
-  // Calpose
-  implementation("io.github.boguszpawlowski.composecalendar:composecalendar:0.4.1-SNAPSHOT")
-
   // Date range
   implementation("me.moallemi.tools:kotlin-date-range:1.0.0")
 

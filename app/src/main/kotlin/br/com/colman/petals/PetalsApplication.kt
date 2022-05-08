@@ -21,6 +21,7 @@ package br.com.colman.petals
 import android.app.Application
 import android.content.Context
 import br.com.colman.petals.BuildConfig.DEBUG
+import br.com.colman.petals.use.io.IoModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
@@ -36,7 +37,8 @@ class PetalsApplication : Application() {
     koin = startKoin {
       androidContext(this@PetalsApplication)
       modules(KoinModule)
-
+      modules(AndroidModule)
+      modules(IoModules)
     }.koin
     startTimber()
   }
