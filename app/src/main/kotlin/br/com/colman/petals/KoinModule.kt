@@ -21,7 +21,6 @@ package br.com.colman.petals
 import br.com.colman.petals.use.repository.MyObjectBox
 import br.com.colman.petals.use.repository.UseExporter
 import br.com.colman.petals.use.repository.UseRepository
-import br.com.colman.petals.withdrawal.WithdrawalView
 import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepository
 import br.com.colman.petals.withdrawal.discomfort.view.DiscomfortView
 import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
@@ -41,6 +40,4 @@ val KoinModule = module {
 
   single { DiscomfortRepository(get()) }
   single { DiscomfortView(get(), get()) }
-
-  single { WithdrawalView(get(), get()) }
 }

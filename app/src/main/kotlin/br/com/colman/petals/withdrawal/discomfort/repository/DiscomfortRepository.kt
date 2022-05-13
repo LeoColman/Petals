@@ -87,7 +87,7 @@ class DiscomfortRepository(
 
   private suspend fun calculateDiscomfort(): Discomfort {
     val quitDate = useRepository.getLastUseDate().filterNotNull().first()
-    val secondsQuit = SECONDS.between(quitDate, now())
+    val secondsQuit = SECONDS.between(quitDate, now()).coerceAtMost(25 * 24 * 60 * 60)
     return Discomfort(interpolator.value(secondsQuit.toDouble()))
   }
 
