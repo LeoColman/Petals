@@ -26,6 +26,7 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons.Default
+import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.LockClock
 import androidx.compose.material.icons.filled.MedicalServices
 import androidx.compose.material.icons.filled.SmokingRooms
@@ -42,6 +43,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import br.com.colman.petals.R
 import br.com.colman.petals.hittimer.ComposeHitTimer
 import br.com.colman.petals.navigation.Page.Usage
+import br.com.colman.petals.statistics.StatisticsPage
+import org.koin.androidx.compose.get
 
 enum class Page(
   @StringRes val nameRes: Int,
@@ -50,7 +53,8 @@ enum class Page(
 ) {
   Usage(R.string.usage, Default.SmokingRooms, { Usage() }),
   HitTimer(R.string.hit_timer, Default.LockClock, { ComposeHitTimer() }),
-  Symptoms(R.string.symptoms, Default.MedicalServices, { Symptoms() });
+  Symptoms(R.string.symptoms, Default.MedicalServices, { Symptoms() }),
+  Stats(R.string.stats, Default.GraphicEq, { StatisticsPage(get()) });
 }
 
 @Composable

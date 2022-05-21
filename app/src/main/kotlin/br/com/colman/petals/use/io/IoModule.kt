@@ -5,7 +5,7 @@ import org.koin.dsl.module
 
 private val inputModule = module {
   singleOf(::UseImporter)
-  singleOf(::CsvFileReader)
+  singleOf(::UseCsvFileImporter)
 }
 
 private val exportModule = module {

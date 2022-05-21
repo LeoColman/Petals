@@ -29,6 +29,7 @@
     <string name="milliseconds">Milliseconds</string>
     <string name="usage">Usage</string>
     <string name="symptoms">Symptoms</string>
+    <string name="stats">Stats</string>
     <string name="symptoms_introduction">An study from Budney et al. from the University of Vermont established how withdrawal symptoms affect and decay on cannabis users. Below you\'ll see an estimate of your current situation based on your last use date</string>
     <string name="hit_timer">Hit Timer</string>
     <string name="start">Start</string>
@@ -67,4 +68,16 @@
     <string name="import_import">Import</string> <!-- Java uses `import` as a reserved keyword. Can't be used -->
     <string name="export_export">Export</string> <!-- We should match import_import, so it's cute. -->
     <string name="currency_symbol">$</string>
+    <string name="chart_legend">% of total use</string>
+    <string name="usage_distribution_per_hour">Usage distribution per hour of day</string>
+    <string name="end_date">End Date</string>
+    <string name="start_date">Start Date</string>
+    <string name="last_seven_days">Last 7 days</string>
+    <string name="last_fourteen_days">Last 14 days</string>
+    <string name="last_thirty_days">Last 30 days</string>
+    <string name="last_sixty_days">Last 60 days</string>
+    <string name="last_ninety_days">Last 90 days</string>
+    <string name="change_period">Change period</string>
+    <string name="grams">Grams</string>
+    <string name="grams_distribution_per_hour_of_day">Grams distribution per hour of day</string>
 </resources>

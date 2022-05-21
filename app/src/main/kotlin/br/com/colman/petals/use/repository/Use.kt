@@ -38,6 +38,9 @@ data class Use(
 val List<Use>.totalGrams
   get() = map { it.amountGrams }.fold(BigDecimal.ZERO, BigDecimal::add)
 
+val List<Use>.totalCost
+  get() = map { it.costPerGram * it.amountGrams }.fold(BigDecimal.ZERO, BigDecimal::add)
+
 val List<Use>.minGrams
   get() = minOfOrNull { it.amountGrams }?.toDouble() ?: 0.0
 

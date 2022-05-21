@@ -224,6 +224,8 @@ dependencies {
   implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.2.0")
 
   testImplementation("com.natpryce:snodge:3.7.0.0")
+  implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 }
 
 tasks.withType<Test>() {

@@ -20,12 +20,14 @@ package br.com.colman.petals.navigation
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -34,7 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.colman.petals.R.string.*
-import br.com.colman.petals.use.io.CsvFileReader
+import br.com.colman.petals.use.io.UseCsvFileImporter
 import br.com.colman.petals.use.io.UseExporter
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
@@ -76,17 +78,16 @@ fun MyTopAppBarContent() {
 @Preview
 @Composable
 private fun ImportButton(
-  csvFileREader: CsvFileReader = get()
+  useCsvFileImporter: UseCsvFileImporter = get()
 ) {
-  var showCsvImporter by remember { mutableStateOf(false) }
-
-  Box(Modifier.clickable { showCsvImporter = true }) {
-    Text(stringResource(import_import), fontSize = 14.sp)
+  val launcher = rememberLauncherForActivityResult(GetContent()) {
+    if(it != null) {
+      useCsvFileImporter.importCsvFile(it)
+    }
   }
 
-  if(showCsvImporter) {
-    csvFileREader.ReadCsvFile()
-    showCsvImporter = false
+  Box(Modifier.clickable { launcher.launch("text/*") }) {
+    Text(stringResource(import_import), fontSize = 14.sp)
   }
 }
 
