@@ -17,9 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.colman.petals.R
-import br.com.colman.petals.R.string.ok
-import br.com.colman.petals.R.string.see_more
+import br.com.colman.petals.R.string.*
 import br.com.colman.petals.use.repository.Use
 import compose.icons.TablerIcons
 import compose.icons.tablericons.*
@@ -27,7 +25,6 @@ import java.math.BigDecimal
 import java.math.RoundingMode.HALF_UP
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern
-
 
 @Preview
 @Composable
@@ -38,24 +35,29 @@ fun UseCards(
 ) {
   var usesToShow by remember { mutableStateOf(5) }
 
-
   Column(Modifier.fillMaxWidth(), spacedBy(8.dp)) {
     uses.sortedByDescending { it.date }.take(usesToShow).forEach {
       UseCard(it, onEditUse, onDeleteUse)
     }
 
     Button({ usesToShow += 5 }, Modifier.align(CenterHorizontally)) {
-      Text(stringResource(see_more))
-    }
+    Text(stringResource(see_more))
   }
+  }
+}
+
+fun CurrencyIcon(symbol: String) = when (symbol) {
+  "R$" -> TablerIcons.CurrencyReal
+  else -> TablerIcons.CurrencyDollar
 }
 
 @Preview
 @Composable
 fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use) -> Unit = {}) {
-  val (amountGrams, costPerGram, date) = use
+  val (date, amountGrams, costPerGram) = use
   val dateString = date.format(ofPattern("yyyy/MM/dd"))
   val timeString = date.format(ofPattern("HH:mm"))
+  val currencySymbol = stringResource(currency_symbol)
 
   Card(Modifier.padding(8.dp).fillMaxWidth(), elevation = 6.dp) {
     Row(Modifier.fillMaxWidth(), spacedBy(8.dp), CenterVertically) {
@@ -63,25 +65,25 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
       Column(Modifier.padding(24.dp).weight(0.7F), spacedBy(16.dp)) {
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.Smoking, null)
-          Text("$dateString at $timeString")
+          Text(stringResource(date_at_time, dateString, timeString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
-          Icon(TablerIcons.CurrencyDollar, null)
+          Icon(CurrencyIcon(currencySymbol), null)
           val costPerGramString = costPerGram.setScale(3, HALF_UP).toString()
-          Text(stringResource(R.string.cost_per_gram, costPerGramString))
+          Text(stringResource(cost_per_gram, costPerGramString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.Scale, null)
           val amountGramsString = amountGrams.setScale(3, HALF_UP).toString()
-          Text(stringResource(R.string.amount_grams, amountGramsString))
+          Text(stringResource(amount_grams, amountGramsString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.ReportMoney, null)
           val total = (amountGrams * costPerGram).setScale(3, HALF_UP)
-          Text(stringResource(R.string.total_spent, total))
+          Text("$currencySymbol " + stringResource(total_spent, total))
         }
       }
 
@@ -119,13 +121,13 @@ private fun EditUseDialog(
 ) {
   val amount = remember { mutableStateOf(use.amountGrams.toString()) }
   val costPerGram = remember { mutableStateOf(use.costPerGram.toString()) }
-  val date = remember { mutableStateOf(use.date.toLocalDate()) }
+  val date = remember { mutableStateOf(use.localDate) }
   val time = remember { mutableStateOf(use.date.toLocalTime()) }
 
   val use = Use(
+    LocalDateTime.of(date.value, time.value),
     amount.value.toBigDecimalOrNull() ?: BigDecimal.ZERO,
     costPerGram.value.toBigDecimalOrNull() ?: BigDecimal.ZERO,
-    LocalDateTime.of(date.value, time.value),
     use.id
   )
 

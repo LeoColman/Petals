@@ -93,7 +93,8 @@ private fun UseBlock(
 
       Row(Modifier.padding(8.dp), spacedBy(4.dp), CenterVertically) {
         Icon(TablerIcons.ZoomMoney, null)
-        Text(stringResource(total_spent_short, totalValue))
+        val currency = stringResource(currency_symbol)
+        Text("$currency $totalValue")
       }
 
       Row(Modifier.padding(8.dp), spacedBy(4.dp), CenterVertically) {

@@ -18,6 +18,7 @@
 
 package br.com.colman.petals.use.repository
 
+import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldNotBeEmpty
@@ -25,70 +26,41 @@ import io.kotest.matchers.shouldBe
 import io.objectbox.kotlin.boxFor
 import kotlinx.coroutines.flow.first
 import java.math.BigDecimal
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
 class UseRepositoryTest : FunSpec({
 
-  context("BigDecimal converter") {
-    val target = BigDecimalConverter()
+  val box = MyObjectBox.builder().build().boxFor<Use>()
+  beforeEach { box.removeAll() }
 
-    test("Converts to string") {
-      target.convertToDatabaseValue(BigDecimal("19.255")) shouldBe "19.255"
-    }
+  val target = UseRepository(box)
 
-    test("Converts from string") {
-      target.convertToEntityProperty("19.255") shouldBe BigDecimal("19.255")
-    }
+  val use = Use(amountGrams = BigDecimal("1234.567"), costPerGram = BigDecimal("123.01"))
+
+  test("Insert") {
+    target.insert(use)
+    box.all.single() shouldBe use
   }
 
-  context("LocalDateTime converter") {
-    val target = LocalDateTimeConverter()
-
-    val ldt = LocalDateTime.now()
-    val ldtString = ldt.format(ISO_LOCAL_DATE_TIME)
-
-    test("Converts to string") {
-      target.convertToDatabaseValue(ldt) shouldBe ldtString
-    }
-
-    test("Converts from string") {
-      target.convertToEntityProperty(ldtString) shouldBe ldt
-    }
+  test("Get all") {
+    box.put(use)
+    target.all().first().single() shouldBe use
   }
 
-  context("Use Repository") {
-    val box = MyObjectBox.builder().build().boxFor<Use>()
-    beforeEach { box.removeAll() }
-
-    val target = UseRepository(box)
-
-    val use = Use(BigDecimal("1234.567"), BigDecimal("123.01"))
-
-    test("Insert") {
-      target.insert(use)
-      box.all.single() shouldBe use
-    }
-
-    test("Get all") {
-      box.put(use)
-      target.all().first().single() shouldBe use
-    }
-
-    test("Delete") {
-      box.put(use)
-      box.all.shouldNotBeEmpty()
-      target.delete(use)
-      box.all.shouldBeEmpty()
-    }
-
-    test("Last use") {
-      val useBefore = use.copy(date = use.date.minusYears(1))
-      box.put(use)
-      box.put(useBefore)
-
-      target.getLastUse().first() shouldBe useBefore
-      target.getLastUseDate().first() shouldBe useBefore.date
-    }
+  test("Delete") {
+    box.put(use)
+    box.all.shouldNotBeEmpty()
+    target.delete(use)
+    box.all.shouldBeEmpty()
   }
+
+  test("Last use") {
+    val useBefore = use.copy(date = use.date.minusYears(1), id = 0)
+    box.put(use)
+    box.put(useBefore)
+
+    target.getLastUse().first() shouldBe use
+    target.getLastUseDate().first() shouldBe use.date
+  }
+
+  isolationMode = IsolationMode.SingleInstance
 })

@@ -19,25 +19,38 @@
 package br.com.colman.petals
 
 import android.app.Application
+import android.content.Context
+import br.com.colman.petals.BuildConfig.DEBUG
+import br.com.colman.petals.use.io.IoModules
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.Koin
 import org.koin.core.context.startKoin
+import org.koin.dsl.module
 import timber.log.Timber
 
-class PetalsApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        startKoin {
-            androidContext(this@PetalsApplication)
-            modules(KoinModule)
-        }
+lateinit var koin: Koin
+  private set
 
-        startTimber()
-    }
+class PetalsApplication : Application() {
+  override fun onCreate() {
+    super.onCreate()
+    koin = startKoin {
+      androidContext(this@PetalsApplication)
+      modules(KoinModule)
+      modules(AndroidModule)
+      modules(IoModules)
+    }.koin
+    startTimber()
+  }
 }
 
 private fun startTimber() {
-    if(BuildConfig.DEBUG) {
-        Timber.plant(Timber.DebugTree())
-    }
+  if (DEBUG) {
+    Timber.plant(Timber.DebugTree())
+  }
 }
 
+private val AndroidModule = module {
+  single { get<Context>().resources }
+  single { get<Context>().contentResolver }
+}

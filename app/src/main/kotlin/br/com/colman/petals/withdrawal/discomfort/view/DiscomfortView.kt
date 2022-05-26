@@ -23,7 +23,9 @@ import android.graphics.Color
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
+import br.com.colman.petals.R.string.*
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepository
 import com.jjoe64.graphview.GraphView
@@ -34,7 +36,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit
-
 
 @Suppress("FunctionName")
 class DiscomfortView(
@@ -48,8 +49,9 @@ class DiscomfortView(
     val currentPercentage by repository.discomfort.map { it.discomfortStrength }.collectAsState(8.0)
     val quitDays = ChronoUnit.SECONDS.between(quitDate, now()).toDouble().div(86400)
 
+    val graphTitle = stringResource(current_withdrawal_discomfort, "%.2f".format(currentPercentage))
     AndroidView({ createGraph(it, currentPercentage, quitDays) }, update = {
-      it.title = "Current  Withdrawal Discomfort: " + String.format("%.2f", currentPercentage)
+      it.title = graphTitle 
       it.removeAllSeries()
       it.addSeries(discomfortSeries())
       it.addSeries(currentDiscomfortPoint(currentPercentage, quitDays))
@@ -71,8 +73,8 @@ class DiscomfortView(
     }
 
     gridLabelRenderer.apply {
-      verticalAxisTitle = "Discomfort Strength"
-      horizontalAxisTitle = "Days"
+      verticalAxisTitle = context.getString(discomfort_strength)
+      horizontalAxisTitle = context.getString(days)
     }
   }
 
@@ -87,11 +89,10 @@ class DiscomfortView(
     }
   }
 
-
   private fun currentDiscomfortPoint(percentage: Double, day: Double) =
     PointsGraphSeries(arrayOf(DataPoint(day, percentage))).apply {
       size = 20f
       color = Color.parseColor("#059033")
-      shape =  PointsGraphSeries.Shape.POINT
+      shape = PointsGraphSeries.Shape.POINT
     }
 }

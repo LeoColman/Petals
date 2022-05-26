@@ -36,7 +36,7 @@ class ThcConcentrationRepository(
 ) {
 
   val concentration = flow {
-    while(true) {
+    while (true) {
       delay(100)
       emit(concentration())
     }
@@ -87,5 +87,4 @@ class ThcConcentrationRepository(
   }
 
   data class ThcConcentration(val percentageOnBodyFromStart: Double)
-
 }

@@ -28,13 +28,12 @@ import org.joda.time.Days.days
 import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit.SECONDS
 
-
 class DiscomfortRepository(
   private val useRepository: UseRepository
 ) {
 
   val discomfort = flow {
-    while(true) {
+    while (true) {
       delay(100)
       emit(calculateDiscomfort())
     }
@@ -85,12 +84,13 @@ class DiscomfortRepository(
     discomfortSeconds.values.toDoubleArray()
   )
 
+  private val maxKnownInterpolatableValue = discomfortDays.keys.maxOf { it }.toStandardSeconds().seconds.toLong()
+
   private suspend fun calculateDiscomfort(): Discomfort {
     val quitDate = useRepository.getLastUseDate().filterNotNull().first()
-    val secondsQuit = SECONDS.between(quitDate, now()).coerceAtMost(25 * 24 * 60 * 60)
+    val secondsQuit = SECONDS.between(quitDate, now()).coerceAtMost(maxKnownInterpolatableValue)
     return Discomfort(interpolator.value(secondsQuit.toDouble()))
   }
 
   data class Discomfort(val discomfortStrength: Double)
-
 }

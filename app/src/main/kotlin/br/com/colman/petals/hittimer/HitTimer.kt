@@ -63,7 +63,8 @@ fun ComposeHitTimer() {
   Column(
     Modifier
       .fillMaxWidth()
-      .verticalScroll(rememberScrollState()), spacedBy(24.dp), CenterHorizontally
+      .verticalScroll(rememberScrollState()),
+    spacedBy(24.dp), CenterHorizontally
   ) {
     Box(Modifier.padding(top = 60.dp)) {
       TimerText(millisLeft)
@@ -71,12 +72,12 @@ fun ComposeHitTimer() {
 
     Column(Modifier.width(160.dp), spacedBy(8.dp)) {
       Button(onClick = { hitTimer.start() }, Modifier.fillMaxWidth()) {
-        Text(stringResource(start), fontSize = 24.sp)
-      }
+      Text(stringResource(start), fontSize = 24.sp)
+    }
 
       Button(onClick = { hitTimer.reset() }, Modifier.fillMaxWidth()) {
-        Text(stringResource(reset), fontSize = 24.sp)
-      }
+      Text(stringResource(reset), fontSize = 24.sp)
+    }
     }
     WhyTenSeconds()
   }
@@ -155,7 +156,8 @@ private fun WhyTenSeconds() {
     Column(
       Modifier
         .fillMaxWidth()
-        .padding(16.dp), spacedBy(16.dp)
+        .padding(16.dp),
+      spacedBy(16.dp)
     ) {
       Text(stringResource(R.string.hittimer_why_ten_secs), fontSize = 24.sp)
 
@@ -163,7 +165,6 @@ private fun WhyTenSeconds() {
 
       SubjectiveHigh()
       Text(stringResource(R.string.hittime_source), fontSize = 12.sp)
-
     }
   }
 }
@@ -228,4 +229,3 @@ private fun subjectiveHighStrongSeries(context: Context): LineGraphSeries<DataPo
     title = context.getString(_355thc)
   }
 }
-

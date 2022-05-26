@@ -24,13 +24,17 @@ plugins {
   id("com.android.application")
   id("kotlin-android")
   kotlin("kapt")
-  id("io.gitlab.arturbosch.detekt").version("1.19.0-RC1")
+  id("io.gitlab.arturbosch.detekt") version "1.19.0-RC1"
+  id("org.jetbrains.kotlinx.kover") version "0.5.0"
   id("io.objectbox") // Apply last.
 }
 
 repositories {
   mavenCentral()
   google()
+  maven("https://jitpack.io/")
+  maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
+
 }
 
 val keystorePropertiesFile = Properties().apply {
@@ -47,7 +51,9 @@ android {
     versionCode = 203
     versionName = "v2.0.3"
 
-    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+    testApplicationId = "$applicationId.test"
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    testFunctionalTest = true
   }
 
   signingConfigs {
@@ -137,6 +143,17 @@ dependencies {
 
   // Compose
   implementation(Libs.Compose.composeMaterialIcons)
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
+  // Needed for createComposeRule, but not createAndroidComposeRule:
+  debugImplementation("androidx.compose.ui:ui-test-manifest:${Libs.Compose.version}")
+
+
+  androidTestImplementation("androidx.test:core:1.4.0")
+  androidTestImplementation("androidx.test:rules:1.4.0")
+  androidTestImplementation("androidx.test:runner:1.4.0")
+  androidTestImplementation("androidx.compose.ui:ui-test:${Libs.Compose.version}")
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
+
 
   testImplementation(Libs.AndroidX.Test.core)
   testImplementation(Libs.AndroidX.Test.coreKtx)
@@ -150,6 +167,7 @@ dependencies {
   // Koin
   implementation(Libs.Koin.android)
   implementation(Libs.Koin.compose)
+  androidTestImplementation(Libs.Koin.test)
 
   // Robolectric
   testImplementation(Libs.Robolectric.robolectric)
@@ -158,18 +176,22 @@ dependencies {
   testImplementation(Libs.Kotest.junitRunner)
   testImplementation(Libs.Kotest.robolectricExtension)
   testImplementation(Libs.Kotest.property)
+  androidTestImplementation(Libs.Kotest.property)
+  androidTestImplementation(Libs.Kotest.assertions)
 
   // Mockk
   testImplementation(Libs.Mockk.mockk)
   testImplementation(Libs.Mockk.mockkAgent)
 
   // JUnit
-  testImplementation(Libs.JUnit.junit4)
+  androidTestImplementation(Libs.JUnit.junit4)
 
   // UI Tests
   androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
   debugImplementation("androidx.compose.ui:ui-test-manifest:${Libs.Compose.version}")
 
+  // Date range
+  implementation("me.moallemi.tools:kotlin-date-range:1.0.0")
 
   // Detekt
   detektPlugins(Libs.Detekt.formatting)
@@ -186,11 +208,24 @@ dependencies {
   implementation(Libs.ComposeMaterialDialogs.core)
   implementation(Libs.ComposeMaterialDialogs.dateTime)
 
+  // Sweet Toast
+  implementation("com.github.tfaki:ComposableSweetToast:1.0.1")
+
   // Timber
   implementation(Libs.Timber.timber)
 
   // Icons
   implementation("br.com.devsrsouza.compose.icons.android:tabler-icons:1.0.0")
+  implementation("br.com.devsrsouza.compose.icons.android:octicons:1.0.0")
+  implementation("br.com.devsrsouza.compose.icons.android:font-awesome:1.0.0")
+
+
+  // KotlinCSV
+  implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.2.0")
+
+  testImplementation("com.natpryce:snodge:3.7.0.0")
+  implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 }
 
 tasks.withType<Test>() {

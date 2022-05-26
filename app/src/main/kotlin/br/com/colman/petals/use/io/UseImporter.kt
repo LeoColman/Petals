@@ -16,26 +16,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.com.colman.petals.use.repository
+package br.com.colman.petals.use.io
 
-import kotlinx.coroutines.flow.first
+import br.com.colman.petals.use.repository.UseRepository
 
-class UseExporter(
+class UseImporter(
   private val useRepository: UseRepository
 ) {
 
-  suspend fun toCsvFileContent(
-    dateLabel: String,
-    amountLabel: String,
-    costPerGramLabel: String
-  ): String {
-    val headers = "$dateLabel,$amountLabel,$costPerGramLabel"
-    val uses = useRepository.all().first().map { toCsvLine(it) }
-    return (listOf(headers) + uses).joinToString("\n")
+  fun import(csvFileLines: List<String>): Result<Unit> = runCatching {
+    val uses = csvFileLines.mapIndexed { index, s ->
+      UseCsvParser.parse(s).onFailure {
+        if (index > 0) throw it
+      }
+    }.mapNotNull { it.getOrNull() }
+
+    useRepository.insertAll(uses)
   }
-
-  fun toCsvLine(use: Use) = """
-    "${use.date}","${use.amountGrams}","${use.costPerGram}"
-  """.trimIndent()
-
 }
+

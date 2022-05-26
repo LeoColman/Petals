@@ -22,7 +22,7 @@ fun AddUseButton(repository: UseRepository) {
   val lastUse by repository.getLastUse().collectAsState(null)
 
   if (openDialog) {
-    AddUseDialog(lastUse, {repository.insert(it)}) { openDialog = false }
+    AddUseDialog(lastUse, { repository.insert(it) }) { openDialog = false }
   }
 
   Button(onClick = { openDialog = true }) {
@@ -44,9 +44,9 @@ private fun AddUseDialog(
   val time = remember { mutableStateOf(LocalTime.now()) }
 
   val use = Use(
+    LocalDateTime.of(date.value, time.value),
     amount.value.toBigDecimalOrNull() ?: ZERO,
-    costPerGram.value.toBigDecimalOrNull() ?: ZERO,
-    LocalDateTime.of(date.value, time.value)
+    costPerGram.value.toBigDecimalOrNull() ?: ZERO
   )
 
   AlertDialog(
@@ -66,4 +66,3 @@ private fun ConfirmNewUseButton(
     Text(stringResource(ok))
   }
 }
-

@@ -37,7 +37,7 @@ object Libs {
    }
 
    object Compose {
-      val version = "1.2.0-alpha01"
+      val version = "1.1.0"
       val composeMaterialIcons = "androidx.compose.material:material-icons-extended:$version"
    }
 
@@ -77,9 +77,10 @@ object Libs {
    }
 
    object Koin {
-      val version = "3.1.3"
+      val version = "3.2.0-beta-1"
 
       val android = "io.insert-koin:koin-android:$version"
+      val test = "io.insert-koin:koin-test:$version"
       val compose = "io.insert-koin:koin-androidx-compose:$version"
    }
 
@@ -98,6 +99,7 @@ object Libs {
       val junitRunner = "io.kotest:kotest-runner-junit5:$version"
       val robolectricExtension = "io.kotest.extensions:kotest-extensions-robolectric:0.4.0"
       val property = "io.kotest:kotest-property:$version"
+      val assertions = "io.kotest:kotest-assertions-core:$version"
    }
 
    object ComposeMaterialDialogs {

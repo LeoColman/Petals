@@ -78,13 +78,12 @@ fun AddUseForm(
         modifier = Modifier
           .weight(0.5f)
           .clickable { dateDialog.show() },
-        value = date.format(DateTimeFormatter.ofPattern("yy/MM/dd")),
+        value = date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")),
         onValueChange = {},
         leadingIcon = { Icon(TablerIcons.Calendar, null) },
         enabled = false,
         label = { Text(stringResource(R.string.date)) }
       )
-
 
       OutlinedTextField(
         modifier = Modifier
