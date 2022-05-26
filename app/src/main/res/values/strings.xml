@@ -78,7 +78,7 @@
     <string name="change_period">Change period</string>
     <string name="grams">Grams</string>
     <string name="grams_distribution_per_hour_of_day">Grams distribution per hour of day</string>
-    <string name="current_thc_concentration">Current THC concentration: %s %</string>
+    <string name="current_thc_concentration">Current THC concentration: %s \%%</string>
     <string name="thc_concentration">THC Concentration(%)</string>
     <string name="current_withdrawal_discomfort">Current withdrawal discomfort: %s</string>
     <string name="discomfort_strength">Discomfort strength</string>
