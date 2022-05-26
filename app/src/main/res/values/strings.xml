@@ -16,7 +16,7 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-    <string name="app_name">Petals</string>
+    <string name="app_name" translatable="false">Petals</string>
     <string name="quit_date_text">Last use date</string>
 
 
@@ -68,8 +68,6 @@
     <string name="import_import">Import</string> <!-- Java uses `import` as a reserved keyword. Can't be used -->
     <string name="export_export">Export</string> <!-- We should match import_import, so it's cute. -->
     <string name="currency_symbol">$</string>
-    <string name="chart_legend">% of total use</string>
-    <string name="usage_distribution_per_hour">Usage distribution per hour of day</string>
     <string name="end_date">End Date</string>
     <string name="start_date">Start Date</string>
     <string name="last_seven_days">Last 7 days</string>
@@ -80,4 +78,9 @@
     <string name="change_period">Change period</string>
     <string name="grams">Grams</string>
     <string name="grams_distribution_per_hour_of_day">Grams distribution per hour of day</string>
+    <string name="current_thc_concentration">Current THC concentration: %s %</string>
+    <string name="thc_concentration">THC Concentration(%)</string>
+    <string name="current_withdrawal_discomfort">Current withdrawal discomfort: %s</string>
+    <string name="discomfort_strength">Discomfort strength</string>
+    <string name="date_at_time">%s at %s</string>
 </resources>

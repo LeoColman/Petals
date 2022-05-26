@@ -12,12 +12,14 @@ import br.com.colman.petals.R.string.grams_distribution_per_hour_of_day
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.totalGrams
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.time.LocalDate
+import kotlin.math.roundToInt
 
 @Composable
 @Preview
@@ -34,6 +36,11 @@ val GramsFormatter = object : ValueFormatter() {
   override fun getPointLabel(entry: Entry): String {
     return "%.1f".format(entry.y) + "g"
   }
+
+  override fun getAxisLabel(value: Float, axis: AxisBase): String {
+    if(value.roundToInt() == 12) return "12"
+    return (value.roundToInt() % 12).toString()
+  }
 }
 
 @Composable
@@ -46,6 +53,10 @@ fun UsePerHourGraph(uses: List<Use>) {
       val gramsPerHour = calculateGramDistributionPerHour(uses)
       val gramsData = LineDataSet(gramsPerHour, grams).apply {
         valueFormatter = GramsFormatter
+        setDrawFilled(true)
+        setDrawCircles(true)
+        setDrawValues(false)
+        lineWidth = 3f
       }
 
       chart.description.text = description
@@ -54,18 +65,27 @@ fun UsePerHourGraph(uses: List<Use>) {
       chart.notifyDataSetChanged()
       chart.invalidate()
 
+      chart.axisRight.isEnabled = false
+
+      chart.axisLeft.apply {
+        axisMinimum = 0f
+      }
+
       chart.xAxis.apply {
         position = XAxis.XAxisPosition.BOTTOM
-        axisMaximum = 0f
+        axisMinimum = 0f
         axisMaximum = 23.0f
+        labelCount = 24
         granularity = 1.0f
+        valueFormatter = GramsFormatter
       }
     }
   }
 }
 
 fun calculateGramDistributionPerHour(uses: List<Use>): List<Entry> {
-  val usesPerHourOfDay = uses.groupBy { it.date.hour }
+  val hoursInDay = (0..23)
+  val usesPerHourOfDay = hoursInDay.associateWith { uses.filter { a -> a.date.hour == it } }
   return usesPerHourOfDay.mapValues { it.value.totalGrams }.toSortedMap().map { (k, v) -> Entry(k.toFloat(), v.toFloat()) }
 }
 

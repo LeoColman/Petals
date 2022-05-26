@@ -65,8 +65,7 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
       Column(Modifier.padding(24.dp).weight(0.7F), spacedBy(16.dp)) {
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.Smoking, null)
-          // FIXME Create issue/fix this shit
-          Text("$dateString at $timeString")
+          Text(stringResource(date_at_time, dateString, timeString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {

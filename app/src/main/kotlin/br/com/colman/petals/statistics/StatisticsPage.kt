@@ -38,7 +38,7 @@ fun MyDropdown(text: String, days: Int, onClick: (LocalDateRange) -> Unit) {
 
 @Composable
 fun StatisticsPage(useRepository: UseRepository) {
-  Column(Modifier.verticalScroll(rememberScrollState()), spacedBy(16.dp)) {
+  Column(Modifier.verticalScroll(rememberScrollState())) {
     val uses by useRepository.all().collectAsState(emptyList())
 
     var period by remember { mutableStateOf(LocalDateRange(now(), now())) }

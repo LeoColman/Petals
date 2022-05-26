@@ -23,7 +23,9 @@ import android.graphics.Color
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
+import br.com.colman.petals.R.string.*
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
 import com.jjoe64.graphview.GraphView
@@ -48,8 +50,10 @@ class ThcConcentrationView(
     val currentPercentage by repository.concentration.map { it.percentageOnBodyFromStart }.collectAsState(100.0)
     val quitDays = ChronoUnit.SECONDS.between(quitDate, now()).toDouble().div(86400)
 
+    val graphTitle = stringResource(current_thc_concentration, "%.3f".format(currentPercentage))
+    
     AndroidView({ createGraph(it, currentPercentage, quitDays) }, update = {
-      it.title = "Current  THC Concentration: " + String.format("%.3f", currentPercentage) + "%"
+      it.title = graphTitle
       it.removeAllSeries()
       it.addSeries(concentrationSeries())
       it.addSeries(currentPercentagePoint(currentPercentage, quitDays))
@@ -71,8 +75,8 @@ class ThcConcentrationView(
     }
 
     gridLabelRenderer.apply {
-      verticalAxisTitle = "THC Concentration(%)"
-      horizontalAxisTitle = "Days"
+      verticalAxisTitle = context.getString(thc_concentration)
+      horizontalAxisTitle = context.getString(days)
     }
   }
 
