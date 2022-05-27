@@ -37,9 +37,12 @@ repositories {
 
 }
 
-val keystorePropertiesFile = Properties().apply {
-  load(rootProject.file("local/keystore.properties").inputStream())
-}
+val keystorePropertiesFile: Properties?
+  get() = kotlin.runCatching {
+    Properties().apply {
+      load(rootProject.file("local/keystore.properties").inputStream())
+    }
+  }.getOrNull()
 
 android {
   compileSdk = 31
@@ -57,14 +60,16 @@ android {
   }
 
   signingConfigs {
-    create("self-sign") {
-      storeFile = file(keystorePropertiesFile["storeFile"]!!)
-      keyAlias = keystorePropertiesFile["keyAlias"].toString()
-      keyPassword = keystorePropertiesFile["keyPassword"].toString()
-      storePassword = keystorePropertiesFile["storePassword"].toString()
+    keystorePropertiesFile?.let {
+      create("self-sign") {
+        storeFile = file(it["storeFile"]!!)
+        keyAlias = it["keyAlias"].toString()
+        keyPassword = it["keyPassword"].toString()
+        storePassword = it["storePassword"].toString()
 
-      enableV1Signing = true
-      enableV2Signing = true
+        enableV1Signing = true
+        enableV2Signing = true
+      }
     }
   }
 
@@ -74,9 +79,11 @@ android {
       dimension = "distribution"
     }
 
-    create("github") {
-      dimension = "distribution"
-      signingConfig = signingConfigs.getByName("self-sign")
+    signingConfigs.findByName("self-sign")?.let {
+      create("github") {
+        dimension = "distribution"
+        signingConfig = signingConfigs.getByName("self-sign")
+      }
     }
   }
 
