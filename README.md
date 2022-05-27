@@ -1,4 +1,9 @@
-Petals
+# Petals
+
+[![License](https://img.shields.io/github/license/LeoColman/Petals)](https://github.com/LeoColman/Petals/blob/main/LICENSE)
+[![Unit Tests](https://github.com/LeoColman/Petals/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/unit-tests.yml)
+[![Lint](https://github.com/LeoColman/Petals/actions/workflows/lint.yml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/lint.yml)
+
 ------
 
  The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're using. 
