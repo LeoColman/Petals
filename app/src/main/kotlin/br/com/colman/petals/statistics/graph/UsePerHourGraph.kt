@@ -25,8 +25,9 @@ import kotlin.math.roundToInt
 @Preview
 fun UsePerHourGraphPreview() {
   val hoursInDay = (0..23).toList()
+  val minutesInHour = (0..59).toList()
   val uses = List(293) {
-    Use(LocalDate.now().atTime(hoursInDay.random(), 30), "3.37".toBigDecimal(), (it % 4).toBigDecimal())
+    Use(LocalDate.now().atTime(hoursInDay.random(), minutesInHour.random()), "3.37".toBigDecimal(), (it % 4).toBigDecimal())
   }
 
   UsePerHourGraph(uses)
