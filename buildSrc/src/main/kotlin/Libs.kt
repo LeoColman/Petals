@@ -27,7 +27,7 @@ object Libs {
    }
 
    object Detekt {
-      val version = "1.19.0-RC1"
+      val version = "1.21.0-RC1"
       val formatting = "io.gitlab.arturbosch.detekt:detekt-formatting:$version"
    }
 
