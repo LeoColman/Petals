@@ -27,7 +27,11 @@ fun UsePerHourGraphPreview() {
   val hoursInDay = (0..23).toList()
   val minutesInHour = (0..59).toList()
   val uses = List(293) {
-    Use(LocalDate.now().atTime(hoursInDay.random(), minutesInHour.random()), "3.37".toBigDecimal(), (it % 4).toBigDecimal())
+    Use(
+      LocalDate.now().atTime(hoursInDay.random(), minutesInHour.random()),
+      "3.37".toBigDecimal(),
+      (it % 4).toBigDecimal()
+    )
   }
 
   UsePerHourGraph(uses)
@@ -49,38 +53,43 @@ fun UsePerHourGraph(uses: List<Use>) {
   val grams = stringResource(grams)
   val description = stringResource(grams_distribution_per_hour_of_day)
 
-  Box(Modifier.fillMaxWidth().aspectRatio(1f).padding(8.dp)) {
-    AndroidView({ LineChart(it) }, Modifier.fillMaxSize()) { chart ->
-    val gramsPerHour = calculateGramDistributionPerHour(uses)
-    val gramsData = LineDataSet(gramsPerHour, grams).apply {
-      valueFormatter = GramsFormatter
-      setDrawFilled(true)
-      setDrawCircles(true)
-      setDrawValues(false)
-      lineWidth = 3f
+  Box(
+    Modifier
+      .fillMaxWidth()
+      .aspectRatio(1f)
+      .padding(8.dp)
+  ) {
+    AndroidView(::LineChart, Modifier.fillMaxSize()) { chart ->
+      val gramsPerHour = calculateGramDistributionPerHour(uses)
+      val gramsData = LineDataSet(gramsPerHour, grams).apply {
+        valueFormatter = GramsFormatter
+        setDrawFilled(true)
+        setDrawCircles(true)
+        setDrawValues(false)
+        lineWidth = 3f
+      }
+
+      chart.description.text = description
+
+      chart.data = LineData(gramsData)
+      chart.notifyDataSetChanged()
+      chart.invalidate()
+
+      chart.axisRight.isEnabled = false
+
+      chart.axisLeft.apply {
+        axisMinimum = 0f
+      }
+
+      chart.xAxis.apply {
+        position = XAxis.XAxisPosition.BOTTOM
+        axisMinimum = 0f
+        axisMaximum = 23.0f
+        labelCount = 24
+        granularity = 1.0f
+        valueFormatter = GramsFormatter
+      }
     }
-
-    chart.description.text = description
-
-    chart.data = LineData(gramsData)
-    chart.notifyDataSetChanged()
-    chart.invalidate()
-
-    chart.axisRight.isEnabled = false
-
-    chart.axisLeft.apply {
-      axisMinimum = 0f
-    }
-
-    chart.xAxis.apply {
-      position = XAxis.XAxisPosition.BOTTOM
-      axisMinimum = 0f
-      axisMaximum = 23.0f
-      labelCount = 24
-      granularity = 1.0f
-      valueFormatter = GramsFormatter
-    }
-  }
   }
 }
 
