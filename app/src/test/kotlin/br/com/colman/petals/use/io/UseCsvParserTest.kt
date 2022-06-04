@@ -25,5 +25,4 @@ class UseCsvParserTest : FunSpec({
     val uses = useCsvArb.take(Random.nextInt(2, 1000)).toList().joinToString("\n")
     UseCsvParser.parse(uses).shouldBeFailure()
   }
-
 })

@@ -8,7 +8,7 @@ class BigDecimalConverter : PropertyConverter<BigDecimal, String> {
     BigDecimal(it)
   }
   override fun convertToDatabaseValue(bigDecimal: BigDecimal?) = bigDecimal?.let {
-    if(it.scale() == 0)
+    if (it.scale() == 0)
       it.setScale(1).toPlainString()
     else
       it.toPlainString()

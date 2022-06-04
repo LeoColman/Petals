@@ -34,4 +34,3 @@ class UseImporter(
     useRepository.insertAll(uses)
   }
 }
-

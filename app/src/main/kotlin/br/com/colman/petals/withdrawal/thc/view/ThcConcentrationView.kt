@@ -51,7 +51,7 @@ class ThcConcentrationView(
     val quitDays = ChronoUnit.SECONDS.between(quitDate, now()).toDouble().div(86400)
 
     val graphTitle = stringResource(current_thc_concentration, "%.3f".format(currentPercentage))
-    
+
     AndroidView({ createGraph(it, currentPercentage, quitDays) }, update = {
       it.title = graphTitle
       it.removeAllSeries()

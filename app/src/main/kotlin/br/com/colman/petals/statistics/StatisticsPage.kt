@@ -56,8 +56,8 @@ fun StatisticsPage(useRepository: UseRepository) {
 
     Column {
       Button(onClick = { expanded = true }, Modifier.fillMaxWidth()) {
-        Text(stringResource(change_period))
-      }
+      Text(stringResource(change_period))
+    }
 
       val setPeriod: (LocalDateRange) -> Unit = {
         period = it

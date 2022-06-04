@@ -81,7 +81,7 @@ private fun ImportButton(
   useCsvFileImporter: UseCsvFileImporter = get()
 ) {
   val launcher = rememberLauncherForActivityResult(GetContent()) {
-    if(it != null) {
+    if (it != null) {
       useCsvFileImporter.importCsvFile(it)
     }
   }
@@ -98,12 +98,13 @@ private fun ExportButton(
   val coroutineScope = rememberCoroutineScope()
   val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
-  Box(Modifier.clickable {
-    coroutineScope.launch {
-      useExporter.exportUses(launcher)
+  Box(
+    Modifier.clickable {
+      coroutineScope.launch {
+        useExporter.exportUses(launcher)
+      }
     }
-  }) {
+  ) {
     Text(stringResource(export_export), fontSize = 14.sp)
   }
 }
-

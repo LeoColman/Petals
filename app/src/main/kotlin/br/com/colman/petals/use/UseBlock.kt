@@ -53,13 +53,19 @@ fun StatsBlocks(uses: List<Use>) {
 
     UseBlock(stringResource(this_week), uses.filter { it.date.toLocalDate().with(MONDAY) == now().with(MONDAY) })
 
-    UseBlock(stringResource(this_month), uses.filter {
-      it.date.month == now().month
-    })
+    UseBlock(
+      stringResource(this_month),
+      uses.filter {
+        it.date.month == now().month
+      }
+    )
 
-    UseBlock(stringResource(this_year), uses.filter {
-      it.date.year == now().year
-    })
+    UseBlock(
+      stringResource(this_year),
+      uses.filter {
+        it.date.year == now().year
+      }
+    )
 
     UseBlock(stringResource(all_time), uses)
   }

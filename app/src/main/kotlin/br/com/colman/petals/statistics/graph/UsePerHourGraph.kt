@@ -39,7 +39,7 @@ val GramsFormatter = object : ValueFormatter() {
   }
 
   override fun getAxisLabel(value: Float, axis: AxisBase): String {
-    if(value.roundToInt() == 12) return "12"
+    if (value.roundToInt() == 12) return "12"
     return (value.roundToInt() % 12).toString()
   }
 }
@@ -51,42 +51,42 @@ fun UsePerHourGraph(uses: List<Use>) {
 
   Box(Modifier.fillMaxWidth().aspectRatio(1f).padding(8.dp)) {
     AndroidView({ LineChart(it) }, Modifier.fillMaxSize()) { chart ->
-      val gramsPerHour = calculateGramDistributionPerHour(uses)
-      val gramsData = LineDataSet(gramsPerHour, grams).apply {
-        valueFormatter = GramsFormatter
-        setDrawFilled(true)
-        setDrawCircles(true)
-        setDrawValues(false)
-        lineWidth = 3f
-      }
-
-      chart.description.text = description
-
-      chart.data = LineData(gramsData)
-      chart.notifyDataSetChanged()
-      chart.invalidate()
-
-      chart.axisRight.isEnabled = false
-
-      chart.axisLeft.apply {
-        axisMinimum = 0f
-      }
-
-      chart.xAxis.apply {
-        position = XAxis.XAxisPosition.BOTTOM
-        axisMinimum = 0f
-        axisMaximum = 23.0f
-        labelCount = 24
-        granularity = 1.0f
-        valueFormatter = GramsFormatter
-      }
+    val gramsPerHour = calculateGramDistributionPerHour(uses)
+    val gramsData = LineDataSet(gramsPerHour, grams).apply {
+      valueFormatter = GramsFormatter
+      setDrawFilled(true)
+      setDrawCircles(true)
+      setDrawValues(false)
+      lineWidth = 3f
     }
+
+    chart.description.text = description
+
+    chart.data = LineData(gramsData)
+    chart.notifyDataSetChanged()
+    chart.invalidate()
+
+    chart.axisRight.isEnabled = false
+
+    chart.axisLeft.apply {
+      axisMinimum = 0f
+    }
+
+    chart.xAxis.apply {
+      position = XAxis.XAxisPosition.BOTTOM
+      axisMinimum = 0f
+      axisMaximum = 23.0f
+      labelCount = 24
+      granularity = 1.0f
+      valueFormatter = GramsFormatter
+    }
+  }
   }
 }
 
 fun calculateGramDistributionPerHour(uses: List<Use>): List<Entry> {
   val hoursInDay = (0..23)
   val usesPerHourOfDay = hoursInDay.associateWith { uses.filter { a -> a.date.hour == it } }
-  return usesPerHourOfDay.mapValues { it.value.totalGrams }.toSortedMap().map { (k, v) -> Entry(k.toFloat(), v.toFloat()) }
+  return usesPerHourOfDay.mapValues { it.value.totalGrams }
+    .toSortedMap().map { (k, v) -> Entry(k.toFloat(), v.toFloat()) }
 }
-

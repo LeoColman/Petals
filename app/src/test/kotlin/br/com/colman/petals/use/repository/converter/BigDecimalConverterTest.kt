@@ -22,7 +22,7 @@ class BigDecimalConverterTest : FunSpec({
 
   test("Converts numeric strings to big decimal") {
     Arb.bigDecimal().map { it to it.toPlainString() }.checkAll {
-    val (bigDecimal, str) = it
+      val (bigDecimal, str) = it
       target.convertToEntityProperty(str) shouldBe bigDecimal
     }
   }

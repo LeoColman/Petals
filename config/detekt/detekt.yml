@@ -1,0 +1,8 @@
+formatting:
+  Indentation:
+    active: true
+    autoCorrect: true
+    indentSize: 2
+    continuationIndentSize: 2
+  NoWildcardImports:
+    active: false

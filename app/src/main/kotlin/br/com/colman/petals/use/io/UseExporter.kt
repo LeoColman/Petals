@@ -29,7 +29,7 @@ class UseExporter(
       putExtra(Intent.EXTRA_STREAM, uri)
     }
     val activityInfo = intent.resolveActivityInfo(context.packageManager, GET_META_DATA)
-    if(activityInfo?.exported == true) {
+    if (activityInfo?.exported == true) {
       launch(intent)
     } else {
       Timber.e("No application for this context exists")

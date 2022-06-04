@@ -32,4 +32,3 @@ class UseRepository(private val box: Box<Use>) {
     box.remove(use)
   }
 }
-

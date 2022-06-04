@@ -51,7 +51,7 @@ class DiscomfortView(
 
     val graphTitle = stringResource(current_withdrawal_discomfort, "%.2f".format(currentPercentage))
     AndroidView({ createGraph(it, currentPercentage, quitDays) }, update = {
-      it.title = graphTitle 
+      it.title = graphTitle
       it.removeAllSeries()
       it.addSeries(discomfortSeries())
       it.addSeries(currentDiscomfortPoint(currentPercentage, quitDays))
