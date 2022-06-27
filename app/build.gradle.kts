@@ -41,6 +41,7 @@ val keystorePropertiesFile: Properties?
   get() = kotlin.runCatching {
     Properties().apply {
       load(rootProject.file("local/keystore.properties").inputStream())
+      println(keys.map { it.toString() })
     }
   }.getOrNull()
 
