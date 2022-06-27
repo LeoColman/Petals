@@ -1,0 +1,30 @@
+name: Build and Publish
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  create-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download Signing Configuration
+        run: |
+          mkdir local
+          echo "Writing signing key to local/keystore"
+          echo $SIGNING_KEY_BASE64 | base64 --decode >> local/keystore
+          echo "Writing keystore properties file to local/keystore.properties"
+          echo $KEYSTORE_PROPERTIES_FILE_BASE64 | base64 --decode >> local/keystore.properties
+        env:
+          SIGNING_KEY_BASE64: ${{ secrets.SIGNING_KEY_BASE64 }}
+          KEYSTORE_PROPERTIES_FILE_BASE64: ${{ secrets.KEYSTORE_PROPERTIES_FILE_BASE64 }}
+      - name: Create APK
+        run: ./gradlew packageGithubReleaseUniversalApk --stacktrace
+      - name: Releasing using Hub
+        uses: kyze8439690/action-release-releaseapk@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          APP_FOLDER: app
