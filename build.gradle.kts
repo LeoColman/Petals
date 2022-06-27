@@ -17,13 +17,26 @@
  */
 
 buildscript {
-    repositories {
-        mavenCentral()
-        google()
+  repositories {
+    mavenCentral()
+    google()
+  }
+  dependencies {
+    classpath("com.android.tools.build:gradle:7.2.1")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+    classpath("io.objectbox:objectbox-gradle-plugin:3.1.0")
+  }
+}
+
+plugins {
+  id("com.autonomousapps.dependency-analysis") version "1.8.0"
+}
+
+dependencyAnalysis {
+  issues {
+    all {
+      onUnusedDependencies { severity("fail") }
+      onUnusedAnnotationProcessors { severity("fail") }
     }
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.1.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
-        classpath("io.objectbox:objectbox-gradle-plugin:3.1.0")
-    }
+  }
 }

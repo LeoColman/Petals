@@ -116,7 +116,7 @@ android {
   }
 
   composeOptions {
-    kotlinCompilerExtensionVersion = Libs.Compose.version
+    kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.version
   }
 
   testOptions {
@@ -135,107 +135,93 @@ android {
 dependencies {
   // Kotlin
   implementation(Libs.Kotlin.reflect)
-  testImplementation(Libs.Kotlin.coroutineTest)
-
-  // Apache math
-  implementation(Libs.ApacheCommons.math)
+  testImplementation(Libs.KotlinX.Test.coroutines)
 
   // AndroidX
+  implementation(Libs.AndroidX.Compose.material)
+  implementation(Libs.AndroidX.Compose.materialIcons)
+  compileOnly(Libs.AndroidX.Compose.tooling)
+  androidTestImplementation(Libs.AndroidX.Compose.Test.uiTest)
+  androidTestImplementation(Libs.AndroidX.Compose.Test.uiTestJunit4)
+
   implementation(Libs.AndroidX.activityCompose)
-  implementation(Libs.AndroidX.composeMaterial)
-  implementation(Libs.AndroidX.composeAnimation)
-  implementation(Libs.AndroidX.composeTooling)
-  implementation(Libs.AndroidX.viewModelCompose)
   implementation(Libs.AndroidX.navigationCompose)
 
-  // Compose
-  implementation(Libs.Compose.composeMaterialIcons)
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
-  // Needed for createComposeRule, but not createAndroidComposeRule:
-  debugImplementation("androidx.compose.ui:ui-test-manifest:${Libs.Compose.version}")
+  androidTestImplementation(Libs.AndroidX.Test.rules)
+  androidTestImplementation(Libs.AndroidX.Test.runner)
 
+  // GraphView
+  implementation(Libs.GraphView.graphView) {
+    because("We use graphs for statistics and other UI components")
+  }
 
-  androidTestImplementation("androidx.test:core:1.4.0")
-  androidTestImplementation("androidx.test:rules:1.4.0")
-  androidTestImplementation("androidx.test:runner:1.4.0")
-  androidTestImplementation("androidx.compose.ui:ui-test:${Libs.Compose.version}")
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
+  // Mp Android Chart
+  implementation(Libs.MPAndroidChart.mpAndroidChart) {
+    because("Sometimes the other GraphView isn't enough")
+  }
 
+  // Apache Math
+  implementation(Libs.Apache.math)
 
-  testImplementation(Libs.AndroidX.Test.core)
-  testImplementation(Libs.AndroidX.Test.coreKtx)
-
+  // Apache Commons
+  implementation(Libs.Apache.commons)
+  
   // Joda Time
   implementation(Libs.JodaTime.jodaTime)
-
-  // Datastore
-  implementation(Libs.DataStore.dataStorePreferences)
 
   // Koin
   implementation(Libs.Koin.android)
   implementation(Libs.Koin.compose)
   androidTestImplementation(Libs.Koin.test)
 
-  // Robolectric
-  testImplementation(Libs.Robolectric.robolectric)
-
   // Kotest
   testImplementation(Libs.Kotest.junitRunner)
-  testImplementation(Libs.Kotest.robolectricExtension)
   testImplementation(Libs.Kotest.property)
   androidTestImplementation(Libs.Kotest.property)
   androidTestImplementation(Libs.Kotest.assertions)
 
   // Mockk
   testImplementation(Libs.Mockk.mockk)
-  testImplementation(Libs.Mockk.mockkAgent)
 
   // JUnit
   androidTestImplementation(Libs.JUnit.junit4)
 
   // UI Tests
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
-  debugImplementation("androidx.compose.ui:ui-test-manifest:${Libs.Compose.version}")
+  androidTestImplementation(Libs.AndroidX.Compose.Test.uiTestJunit4)
 
   // Date range
-  implementation("me.moallemi.tools:kotlin-date-range:1.0.0")
+  implementation(Libs.KotlinDateRange.kotlinDateRange)
 
   // Detekt
   detektPlugins(Libs.Detekt.formatting)
 
-  // Graphs
-  implementation(Libs.Graph.graphView)
-
-
-  implementation("org.apache.commons:commons-lang3:3.12.0")
-
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+  coreLibraryDesugaring(Libs.Android.desugarJdk) {
+    because("We want to use features from Java 8+, and this is the way to do it in Android")
+  }
 
   // Material Compose dialogs
   implementation(Libs.ComposeMaterialDialogs.core)
   implementation(Libs.ComposeMaterialDialogs.dateTime)
 
-  // Sweet Toast
-  implementation("com.github.tfaki:ComposableSweetToast:1.0.1")
-
   // Timber
-  implementation(Libs.Timber.timber)
+  implementation(Libs.Timber.timber) {
+    because("Logging library, easy to use")
+  }
 
   // Icons
-  implementation("br.com.devsrsouza.compose.icons.android:tabler-icons:1.0.0")
-  implementation("br.com.devsrsouza.compose.icons.android:octicons:1.0.0")
-  implementation("br.com.devsrsouza.compose.icons.android:font-awesome:1.0.0")
-
+  implementation(Libs.TablerIcons.tablerIcons)
 
   // KotlinCSV
-  implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.2.0")
+  implementation(Libs.KotlinCsv.jvm)
 
-  testImplementation("com.natpryce:snodge:3.7.0.0")
-  implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+  // Snodge
+  testImplementation(Libs.Snodge.snodge) {
+    because("It's useful for fuzzy testing (mutating strings, jsons, etc)")
+  }
 
 }
 
-tasks.withType<Test>() {
+tasks.withType<Test> {
   useJUnitPlatform()
 }
 

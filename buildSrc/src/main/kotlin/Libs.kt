@@ -20,10 +20,55 @@ package br.com.colman.petals
 
 object Libs {
 
+   object Android {
+      val version = "1.1.5"
+      val desugarJdk = "com.android.tools:desugar_jdk_libs:$version"
+   }
+
+   object AndroidX {
+      object Compose {
+         val version = "1.1.0"
+
+         val material = "androidx.compose.material:material:$version"
+         val materialIcons = "androidx.compose.material:material-icons-extended:$version"
+         val tooling = "androidx.compose.ui:ui-tooling:$version"
+
+         object Test {
+            val uiTest = "androidx.compose.ui:ui-test:$version"
+            val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:$version"
+         }
+      }
+
+      val activityCompose = "androidx.activity:activity-compose:1.3.1"
+      val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-beta02"
+
+      object Test {
+         val version = "1.4.0"
+         val rules = "androidx.test:rules:$version"
+         val runner = "androidx.test:runner:$version"
+      }
+   }
+
+   object TablerIcons {
+      private val version = "1.0.0"
+      val tablerIcons = "br.com.devsrsouza.compose.icons.android:tabler-icons:$version"
+   }
+
+   object KotlinCsv {
+      private val version = "1.2.0"
+      val jvm = "com.github.doyaaaaaken:kotlin-csv-jvm:$version"
+   }
+
    object Kotlin {
       val version = "1.6.10"
       val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
-      val coroutineTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
+   }
+
+   object KotlinX {
+      object Test {
+         val version = "1.5.1"
+         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
+      }
    }
 
    object Detekt {
@@ -31,49 +76,34 @@ object Libs {
       val formatting = "io.gitlab.arturbosch.detekt:detekt-formatting:$version"
    }
 
-   object Graph {
+   object GraphView {
       val version = "4.2.2"
-      val graphView = "com.jjoe64:graphview:4.2.2"
+      val graphView = "com.jjoe64:graphview:$version"
    }
 
-   object Compose {
-      val version = "1.1.0"
-      val composeMaterialIcons = "androidx.compose.material:material-icons-extended:$version"
+   object MPAndroidChart {
+      val version = "v3.1.0"
+      val mpAndroidChart = "com.github.PhilJay:MPAndroidChart:$version"
+   }
+
+   object KotlinDateRange {
+      val version = "1.0.0"
+      val kotlinDateRange = "me.moallemi.tools:kotlin-date-range:$version"
    }
 
    object JodaTime {
-      val jodaTime = "joda-time:joda-time:2.10.13"
+      val version = "2.10.13"
+      val jodaTime = "joda-time:joda-time:$version"
    }
 
-   object DataStore {
-      val version = "1.0.0"
-      val dataStorePreferences = "androidx.datastore:datastore-preferences:$version"
-   }
-
-   object AndroidX {
-      val activityCompose = "androidx.activity:activity-compose:1.3.1"
-      val composeMaterial = "androidx.compose.material:material:${Compose.version}"
-      val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-beta02"
-
-      val composeAnimation = "androidx.compose.animation:animation:${Compose.version}"
-      val composeTooling = "androidx.compose.ui:ui-tooling:${Compose.version}"
-      val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
-
-      object Test {
-         val version = "1.4.0"
-         val core = "androidx.test:core:$version"
-         val coreKtx = "androidx.test:core-ktx:$version"
-      }
-   }
-
-   object ApacheCommons {
+   object Apache {
+      val commons = "org.apache.commons:commons-lang3:3.12.0"
       val math = "org.apache.commons:commons-math3:3.6.1"
    }
 
    object Mockk {
       val version = "1.12.0"
       val mockk = "io.mockk:mockk:$version"
-      val mockkAgent = "io.mockk:mockk-agent-jvm:$version"
    }
 
    object Koin {
@@ -84,11 +114,6 @@ object Libs {
       val compose = "io.insert-koin:koin-androidx-compose:$version"
    }
 
-   object Robolectric {
-      val version = "4.5.1"
-      val robolectric = "org.robolectric:robolectric:$version"
-   }
-
    object JUnit {
       val version = "4.13"
       val junit4 = "junit:junit:$version"
@@ -97,7 +122,6 @@ object Libs {
    object Kotest {
       val version = "5.1.0"
       val junitRunner = "io.kotest:kotest-runner-junit5:$version"
-      val robolectricExtension = "io.kotest.extensions:kotest-extensions-robolectric:0.4.0"
       val property = "io.kotest:kotest-property:$version"
       val assertions = "io.kotest:kotest-assertions-core:$version"
    }
@@ -113,5 +137,10 @@ object Libs {
       val version = "5.0.1"
 
       val timber = "com.jakewharton.timber:timber:$version"
+   }
+
+   object Snodge {
+      val version = "3.7.0.0"
+      val snodge = "com.natpryce:snodge:$version"
    }
 }
