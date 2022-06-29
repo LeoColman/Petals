@@ -23,8 +23,35 @@ jobs:
           KEYSTORE_PROPERTIES_FILE_BASE64: ${{ secrets.KEYSTORE_PROPERTIES_FILE_BASE64 }}
       - name: Create APK
         run: ./gradlew packageGithubReleaseUniversalApk --stacktrace
-      - name: Releasing using Hub
-        uses: kyze8439690/action-release-releaseapk@master
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: apk
+          path: app/build/outputs/universal_apk/githubRelease/app-github-release-universal.apk
+  release:
+    name: Release APK
+    needs: create-apk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download APK from build
+        uses: actions/download-artifact@v1
+        with:
+          name: apk
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          APP_FOLDER: app
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{github.run_number}}
+          release_name: ${{ github.event.repository.name }} v${{ github.run_number }}
+      - name: Upload Release APK
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: petals.apk
+          asset_name: ${{ github.event.repository.name }}.apk
+          asset_content_type: application/zip
