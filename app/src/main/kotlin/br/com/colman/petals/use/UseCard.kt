@@ -41,8 +41,8 @@ fun UseCards(
     }
 
     Button({ usesToShow += 5 }, Modifier.align(CenterHorizontally)) {
-    Text(stringResource(see_more))
-  }
+      Text(stringResource(see_more))
+    }
   }
 }
 
