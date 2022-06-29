@@ -72,12 +72,12 @@ fun ComposeHitTimer() {
 
     Column(Modifier.width(160.dp), spacedBy(8.dp)) {
       Button(onClick = { hitTimer.start() }, Modifier.fillMaxWidth()) {
-      Text(stringResource(start), fontSize = 24.sp)
-    }
+        Text(stringResource(start), fontSize = 24.sp)
+      }
 
       Button(onClick = { hitTimer.reset() }, Modifier.fillMaxWidth()) {
-      Text(stringResource(reset), fontSize = 24.sp)
-    }
+        Text(stringResource(reset), fontSize = 24.sp)
+      }
     }
     WhyTenSeconds()
   }
