@@ -24,7 +24,7 @@ plugins {
   id("com.android.application")
   id("kotlin-android")
   kotlin("kapt")
-  id("io.gitlab.arturbosch.detekt") version "1.21.0-RC1"
+  id("io.gitlab.arturbosch.detekt") version "1.21.0-RC2"
   id("org.jetbrains.kotlinx.kover") version "0.5.1"
   id("io.objectbox") // Apply last.
 }
