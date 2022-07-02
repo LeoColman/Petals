@@ -18,6 +18,7 @@
 
 package br.com.colman.petals.withdrawal.discomfort.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import androidx.compose.runtime.Composable
@@ -43,6 +44,7 @@ class DiscomfortView(
   private val repository: DiscomfortRepository,
 ) {
 
+  @SuppressLint("FlowOperatorInvokedInComposition")
   @Composable
   fun Content() {
     val quitDate by useRepository.getLastUseDate().filterNotNull().collectAsState(now())

@@ -18,6 +18,7 @@
 
 package br.com.colman.petals.withdrawal.thc.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import androidx.compose.runtime.Composable
@@ -44,6 +45,7 @@ class ThcConcentrationView(
   private val repository: ThcConcentrationRepository,
 ) {
 
+  @SuppressLint("FlowOperatorInvokedInComposition")
   @Composable
   fun Content() {
     val quitDate by useRepository.getLastUseDate().filterNotNull().collectAsState(now())
