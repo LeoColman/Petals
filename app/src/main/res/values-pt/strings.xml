@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Petals APP
   ~ Copyright (C) 2021 Leonardo Colman Lopes
   ~
@@ -18,7 +17,7 @@
   -->
 <resources>
 
-    <string name="quit_date_text" >Data de último uso</string>
+    <string name="quit_date_text">Data de último uso</string>
     <string name="years">Anos</string>
     <string name="months">Meses</string>
     <string name="days">Dias</string>
@@ -80,4 +79,17 @@
     <string name="current_withdrawal_discomfort">Desconforto atual de abstinência: %s</string>
     <string name="discomfort_strength">Intensidade de desconforto</string>
     <string name="date_at_time">%s às %s</string>
+    <plurals name="amount_uses">
+        <item quantity="one">%s uso</item>
+        <item quantity="other">%s usos</item>
+    </plurals>
+    <plurals name="amount_days">
+        <item quantity="one">%s dia</item>
+        <item quantity="other">%s dias</item>
+    </plurals>
+    <string name="average_per">Média por %s</string>
+    <string name="day">dia</string>
+    <string name="week">semana</string>
+    <string name="month">mês</string>
+    <string name="year">ano</string>
 </resources>

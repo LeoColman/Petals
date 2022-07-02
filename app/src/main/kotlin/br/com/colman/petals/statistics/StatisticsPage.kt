@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R
 import br.com.colman.petals.R.string.*
+import br.com.colman.petals.statistics.card.AverageUseCard
 import br.com.colman.petals.statistics.graph.UsePerHourGraph
 import br.com.colman.petals.use.repository.UseRepository
 import com.vanpra.composematerialdialogs.MaterialDialog
@@ -99,6 +100,7 @@ fun StatisticsPage(useRepository: UseRepository) {
     }
 
     UsePerHourGraph(usesInPeriod)
+    AverageUseCard(usesInPeriod, period)
   }
 }
 

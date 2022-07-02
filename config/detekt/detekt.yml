@@ -1,3 +1,6 @@
+naming:
+  FunctionNaming:
+    ignoreAnnotated: [Composable]
 formatting:
   Indentation:
     active: true

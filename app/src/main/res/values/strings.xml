@@ -83,4 +83,18 @@
     <string name="current_withdrawal_discomfort">Current withdrawal discomfort: %s</string>
     <string name="discomfort_strength">Discomfort strength</string>
     <string name="date_at_time">%s at %s</string>
+    <plurals name="amount_uses">
+        <item quantity="one">%s use</item>
+        <item quantity="other">%s uses</item>
+    </plurals>
+    <plurals name="amount_days">
+        <item quantity="one">%s day</item>
+        <item quantity="other">%s days</item>
+    </plurals>
+
+    <string name="average_per">Average per %s</string>
+    <string name="day">day</string>
+    <string name="week">week</string>
+    <string name="month">month</string>
+    <string name="year">year</string>
 </resources>
