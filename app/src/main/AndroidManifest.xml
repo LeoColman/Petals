@@ -19,6 +19,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.colman.petals">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:name=".PetalsApplication"
         android:allowBackup="true"
