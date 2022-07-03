@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/github/license/LeoColman/Petals)](https://github.com/LeoColman/Petals/blob/main/LICENSE)
 [![Unit Tests](https://github.com/LeoColman/Petals/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/unit-tests.yml)
 [![Lint](https://github.com/LeoColman/Petals/actions/workflows/lint.yml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/lint.yml)
+[![Dependency Analysis](https://github.com/LeoColman/Petals/actions/workflows/dependency-analysis.yml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/dependency-analysis.yml)
 
 ------
 
