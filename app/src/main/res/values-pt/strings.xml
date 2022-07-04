@@ -92,4 +92,5 @@
     <string name="week">semana</string>
     <string name="month">mês</string>
     <string name="year">ano</string>
+    <string name="vibrate_on_timer_end">Vibrar quando o timer terminar</string>
 </resources>

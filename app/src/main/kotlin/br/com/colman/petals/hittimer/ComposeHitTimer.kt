@@ -26,6 +26,7 @@ import android.os.VibrationEffect.DEFAULT_AMPLITUDE
 import android.os.Vibrator
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
+import androidx.compose.foundation.layout.Arrangement.Start
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -34,6 +35,7 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Red
@@ -82,7 +84,7 @@ fun ComposeHitTimer() {
       TimerText(millisLeft)
     }
 
-    Column(Modifier.width(160.dp), spacedBy(8.dp)) {
+    Column(Modifier.width(180.dp), spacedBy(8.dp)) {
       Button(onClick = { hitTimer.start() }, Modifier.fillMaxWidth()) {
         Text(stringResource(start), fontSize = 24.sp)
       }
@@ -91,9 +93,9 @@ fun ComposeHitTimer() {
         Text(stringResource(reset), fontSize = 24.sp)
       }
 
-      Row {
+      Row(Modifier.fillMaxWidth(), Start, CenterVertically) {
         Checkbox(shouldVibrate, { shouldVibrate = it } )
-        Text("Vibrate on timer end")
+        Text(stringResource(vibrate_on_timer_end))
       }
     }
     WhyTenSeconds()
