@@ -6,10 +6,8 @@ import io.kotest.matchers.collections.shouldEndWith
 import io.kotest.matchers.collections.shouldStartWith
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.shouldBe
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
-
 
 class HitTimerTest : FunSpec({
 
@@ -36,5 +34,4 @@ class HitTimerTest : FunSpec({
     val allResults = flow.take(300).toList()
     allResults.size shouldBeGreaterThanOrEqual (duration / 10).toInt()
   }
-
 })

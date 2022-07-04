@@ -15,51 +15,54 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+@file:Suppress("MagicNumber")
 
 package br.com.colman.petals.hittimer
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.VibrationEffect.DEFAULT_AMPLITUDE
 import android.os.Vibrator
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Arrangement.Start
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
-import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.getSystemService
-import br.com.colman.petals.R
-import br.com.colman.petals.R.color.darkGreen
-import br.com.colman.petals.R.color.lightGreen
-import br.com.colman.petals.R.string.*
-import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
+import br.com.colman.petals.R.color.smokeColor
+import br.com.colman.petals.R.string.reset
+import br.com.colman.petals.R.string.start
+import br.com.colman.petals.R.string.vibrate_on_timer_end
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
-import org.apache.commons.lang3.time.DurationFormatUtils.formatDuration
-import java.time.LocalDateTime
-import java.time.LocalDateTime.now
-import java.time.temporal.ChronoUnit.MILLIS
-
 
 @Preview
 @Composable
@@ -70,13 +73,17 @@ fun ComposeHitTimer() {
   val millisLeft by hitTimer.millisLeft.collectAsState(hitTimer.durationMillis)
   var shouldVibrate by remember { mutableStateOf(false) }
 
-  if(millisLeft == 0L && shouldVibrate) {
+  val alpha = millisLeft.toFloat() / hitTimer.durationMillis
+  val backgroundColor = colorResource(smokeColor).copy(1 - alpha)
+
+  if (millisLeft == 0L && shouldVibrate) {
     ctx.vibrate()
   }
 
   Column(
     Modifier
       .fillMaxWidth()
+      .background(backgroundColor)
       .verticalScroll(rememberScrollState()),
     spacedBy(24.dp), CenterHorizontally
   ) {
@@ -94,7 +101,7 @@ fun ComposeHitTimer() {
       }
 
       Row(Modifier.fillMaxWidth(), Start, CenterVertically) {
-        Checkbox(shouldVibrate, { shouldVibrate = it } )
+        Checkbox(shouldVibrate, { shouldVibrate = it })
         Text(stringResource(vibrate_on_timer_end))
       }
     }
@@ -133,9 +140,10 @@ private fun NonBlinkingText(text: String) {
   Text(text, fontSize = 52.sp, color = Black, modifier = Modifier.height(100.dp))
 }
 
+@Suppress("DEPRECATION")
 private fun Context.vibrate() {
   val vibrator = getSystemService<Vibrator>()
-  if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
     val effect = VibrationEffect.createOneShot(500, DEFAULT_AMPLITUDE)
     vibrator?.vibrate(effect)
   } else {
