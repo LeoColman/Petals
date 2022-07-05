@@ -1,0 +1,1 @@
+- Persist hit timer vibration toggle
