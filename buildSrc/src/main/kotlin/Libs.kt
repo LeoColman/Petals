@@ -41,6 +41,7 @@ object Libs {
 
       val activityCompose = "androidx.activity:activity-compose:1.3.1"
       val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-beta02"
+      val datastorePreferences = "androidx.datastore:datastore-preferences:1.0.0"
 
       object Test {
          val version = "1.4.0"

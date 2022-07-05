@@ -63,15 +63,16 @@ import br.com.colman.petals.R.string.reset
 import br.com.colman.petals.R.string.start
 import br.com.colman.petals.R.string.vibrate_on_timer_end
 import kotlinx.coroutines.delay
+import org.koin.androidx.compose.get
 
 @Preview
 @Composable
-fun ComposeHitTimer() {
+fun ComposeHitTimer(repository: HitTimerRepository = get()) {
   val hitTimer = remember { HitTimer() }
 
   val ctx = LocalContext.current
   val millisLeft by hitTimer.millisLeft.collectAsState(hitTimer.durationMillis)
-  var shouldVibrate by remember { mutableStateOf(false) }
+  val shouldVibrate by repository.shouldVibrate.collectAsState(false)
 
   val alpha = millisLeft.toFloat() / hitTimer.durationMillis
   val backgroundColor = colorResource(smokeColor).copy(1 - alpha)
@@ -101,7 +102,7 @@ fun ComposeHitTimer() {
       }
 
       Row(Modifier.fillMaxWidth(), Start, CenterVertically) {
-        Checkbox(shouldVibrate, { shouldVibrate = it })
+        Checkbox(shouldVibrate, { repository.setShouldVibrate(it) })
         Text(stringResource(vibrate_on_timer_end))
       }
     }

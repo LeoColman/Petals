@@ -147,6 +147,7 @@ dependencies {
 
   implementation(Libs.AndroidX.activityCompose)
   implementation(Libs.AndroidX.navigationCompose)
+  implementation(Libs.AndroidX.datastorePreferences)
 
   androidTestImplementation(Libs.AndroidX.Test.rules)
   androidTestImplementation(Libs.AndroidX.Test.runner)
