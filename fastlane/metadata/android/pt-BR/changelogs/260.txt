@@ -1,0 +1,1 @@
+- Persiste configuração de vibração do temporizador
