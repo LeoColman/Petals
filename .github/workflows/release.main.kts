@@ -1,6 +1,7 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.21.0")
 
+import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.actions.softprops.ActionGhReleaseV1
@@ -35,6 +36,7 @@ workflow(
 
   job("create-apk", runsOn = UbuntuLatest, needs = listOf(keystoreFile)) {
     uses(name = "Set up JDK", SetupJavaV3("11", SetupJavaV3.Distribution.Adopt))
+    uses(CheckoutV3())
     uses("Create APK", GradleBuildActionV2(
       arguments = "packageGithubReleaseUniversalApk"
     ))
