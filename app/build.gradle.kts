@@ -18,7 +18,7 @@
 
 import br.com.colman.petals.Libs
 import org.gradle.api.JavaVersion.VERSION_1_8
-import java.util.*
+import java.lang.System.getenv
 
 plugins {
   id("com.android.application")
@@ -37,14 +37,6 @@ repositories {
 
 }
 
-val keystorePropertiesFile: Properties?
-  get() = kotlin.runCatching {
-    Properties().apply {
-      load(rootProject.file("local/keystore.properties").inputStream())
-      println(keys.map { it.toString() })
-    }
-  }.getOrNull()
-
 android {
   compileSdk = 31
 
@@ -61,16 +53,13 @@ android {
   }
 
   signingConfigs {
-    keystorePropertiesFile?.let {
-      create("self-sign") {
-        storeFile = file(it["storeFile"]!!)
-        keyAlias = it["keyAlias"].toString()
-        keyPassword = it["keyPassword"].toString()
-        storePassword = it["storePassword"].toString()
+    if(getenv("KEYSTORE_FILE") == null) return@signingConfigs
 
-        enableV1Signing = true
-        enableV2Signing = true
-      }
+    create("self-sign") {
+      storeFile = file(getenv("KEYSTORE_FILE"))
+      storePassword = getenv("KEYSTORE_PASSWORD")
+      keyAlias = getenv("SIGNING_KEY_ALIAS")
+      keyPassword = getenv("SIGNING_KEY_PASSWORD")
     }
   }
 
@@ -80,11 +69,11 @@ android {
       dimension = "distribution"
     }
 
-    signingConfigs.findByName("self-sign")?.let {
-      create("github") {
-        dimension = "distribution"
-        signingConfig = signingConfigs.getByName("self-sign")
-      }
+    if(signingConfigs.findByName("self-sign") == null) return@productFlavors
+
+    create("github") {
+      dimension = "distribution"
+      signingConfig = signingConfigs.getByName("self-sign")
     }
   }
 

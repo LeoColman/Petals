@@ -1,0 +1,64 @@
+# This file was generated using Kotlin DSL (.github/workflows/release.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  KEYSTORE_FILE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+  SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+  SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+
+jobs:
+  "check_yaml_consistency":
+    runs-on: "ubuntu-latest"
+    steps:
+      - id: step-0
+        name: Check out
+        uses: actions/checkout@v3
+      - id: step-1
+        name: Execute script
+        run: rm '.github/workflows/release.yaml' && '.github/workflows/release.main.kts'
+      - id: step-2
+        name: Consistency check
+        run: git diff --exit-code '.github/workflows/release.yaml'
+  "keystore-file":
+    runs-on: "ubuntu-latest"
+    needs:
+      - "check_yaml_consistency"
+    steps:
+      - id: step-0
+        run: mkdir local
+      - id: step-1
+        run: echo $KEYSTORE_FILE_BASE64 | base64 --decode >> local/keystore
+  "create-apk":
+    runs-on: "ubuntu-latest"
+    needs:
+      - "keystore-file"
+      - "check_yaml_consistency"
+    steps:
+      - id: step-0
+        name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: adopt
+      - id: step-1
+        name: Create APK
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: packageGithubReleaseUniversalApk
+      - id: step-2
+        name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Version ${{ github.ref }}
+          tag_name: ${{ github.ref }}
+          draft: true
+          files: app/build/outputs/universal_apk/githubRelease/app-github-release-universal.apk
