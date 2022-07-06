@@ -29,12 +29,9 @@ workflow(
     "SIGNING_KEY_PASSWORD" to expr { SIGNING_KEY_PASSWORD }
   )
 ) {
-  val keystoreFile = job("keystore-file", runsOn = UbuntuLatest) {
+  job("create-apk", runsOn = UbuntuLatest, env = linkedMapOf("KEYSTORE_FILE" to "../local/keystore")) {
     run("mkdir local")
     run("echo \$KEYSTORE_FILE_BASE64 | base64 --decode >> local/keystore")
-  }
-
-  job("create-apk", runsOn = UbuntuLatest, needs = listOf(keystoreFile), env = linkedMapOf("KEYSTORE_FILE" to "local/keystore")) {
     uses(name = "Set up JDK", SetupJavaV3("11", SetupJavaV3.Distribution.Adopt))
     uses(CheckoutV3())
     uses("Create APK", GradleBuildActionV2(
