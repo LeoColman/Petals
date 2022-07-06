@@ -30,10 +30,10 @@ workflow(
   )
 ) {
   job("create-apk", runsOn = UbuntuLatest, env = linkedMapOf("KEYSTORE_FILE" to "../local/keystore")) {
-    run("mkdir local")
-    run("echo \$KEYSTORE_FILE_BASE64 | base64 --decode >> local/keystore")
     uses(name = "Set up JDK", SetupJavaV3("11", SetupJavaV3.Distribution.Adopt))
     uses(CheckoutV3())
+    run("mkdir local")
+    run("echo \$KEYSTORE_FILE_BASE64 | base64 --decode >> local/keystore")
     uses("Create APK", GradleBuildActionV2(
       arguments = "packageGithubReleaseUniversalApk"
     ))
