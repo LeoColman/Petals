@@ -42,6 +42,8 @@ jobs:
     needs:
       - "keystore-file"
       - "check_yaml_consistency"
+    env:
+      KEYSTORE_FILE: local/keystore
     steps:
       - id: step-0
         name: Set up JDK
