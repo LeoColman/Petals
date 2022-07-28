@@ -11,6 +11,7 @@ on:
 
 env:
   KEYSTORE_FILE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+  PLAY_CONFIG_JSON_BASE64: ${{ secrets.PLAY_CONFIG_JSON_BASE64 }}
   KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
   SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
   SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
@@ -60,3 +61,30 @@ jobs:
           tag_name: ${{ github.ref }}
           draft: true
           files: app/build/outputs/universal_apk/githubRelease/app-github-release-universal.apk
+  "publish-playstore":
+    runs-on: "ubuntu-latest"
+    needs:
+      - "check_yaml_consistency"
+    env:
+      KEYSTORE_FILE: ../local/keystore
+    steps:
+      - id: step-0
+        name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: adopt
+      - id: step-1
+        uses: actions/checkout@v3
+      - id: step-2
+        run: mkdir local
+      - id: step-3
+        run: echo $KEYSTORE_FILE_BASE64 | base64 --decode >> local/keystore
+      - id: step-4
+        run: echo $PLAY_CONFIG_JSON_BASE64 | base64 --decode >> local/playconfig
+      - id: step-5
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+      - id: step-6
+        run: bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore
