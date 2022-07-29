@@ -5,6 +5,8 @@
 [![Lint](https://github.com/LeoColman/Petals/actions/workflows/lint.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/lint.yaml)
 [![Dependency Analysis](https://github.com/LeoColman/Petals/actions/workflows/dependency-analysis.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/dependency-analysis.yaml)
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K62Y2GB)
+
 ------
 
  The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're using. 
