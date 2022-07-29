@@ -18,7 +18,19 @@
      alt="Get it on Play Store"
      height="80">](https://play.google.com/store/apps/details?id=br.com.colman.petals)    
     
-     
+    
+## Screenshots
+<details>
+<summary>Open to see screenshots</summary>
+
+![](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png)
+![](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png)
+![](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png)
+
+[More Screenshots](fastlane/metadata/android/en-US/images/phoneScreenshots)
+
+</details>
+
 
 ## Building
 
