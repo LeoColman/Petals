@@ -17,5 +17,9 @@ local.properties
 local
 .idea/*
 .idea/
-local/keystore
+keystore
 app/objectbox/
+.gitsecret/keys/random_seed
+!*.secret
+keystore.properties
+google-play.json
