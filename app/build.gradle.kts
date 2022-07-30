@@ -19,6 +19,7 @@
 import br.com.colman.petals.Libs
 import org.gradle.api.JavaVersion.VERSION_1_8
 import java.lang.System.getenv
+import java.util.Properties
 
 plugins {
   id("com.android.application")
@@ -53,13 +54,22 @@ android {
   }
 
   signingConfigs {
-    if(getenv("KEYSTORE_FILE") == null) return@signingConfigs
+    val keystore = rootProject.file("keystore")
+    val keystoreSecret = rootProject.file("keystore.secret")
+
+    if(!keystore.exists() && keystoreSecret.exists()) {
+      logger.warn("Impossible to create signing configuration with files encrypted")
+      return@signingConfigs
+    }
+    val keystoreProperties = Properties().apply {
+      load(rootProject.file("keystore.properties").inputStream())
+    }
 
     create("self-sign") {
-      storeFile = file(getenv("KEYSTORE_FILE"))
-      storePassword = getenv("KEYSTORE_PASSWORD")
-      keyAlias = getenv("SIGNING_KEY_ALIAS")
-      keyPassword = getenv("SIGNING_KEY_PASSWORD")
+      storeFile = keystore
+      storePassword = keystoreProperties.getProperty("KEYSTORE_PASSWORD")
+      keyAlias = keystoreProperties.getProperty("SIGNING_KEY_ALIAS")
+      keyPassword = keystoreProperties.getProperty("SIGNING_KEY_PASSWORD")
     }
   }
 
