@@ -28,8 +28,8 @@ workflow(
     uses("reveal-secrets", CustomAction(
       "entrostat",
       "git-secret-action",
-      "v3",
-      mapOf("GPG_KEY" to expr { GPG_KEY })
+      "v3.3.0",
+      mapOf("gpg-private-key" to expr { GPG_KEY })
     ))
 
     uses("Create APK", GradleBuildActionV2(

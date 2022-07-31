@@ -1,0 +1,2 @@
+- Consertada quebra de linha em data no diálogo de adicionar uso
+- Melhora o estilo dos campos de data e tempo para parecerem editáveis
