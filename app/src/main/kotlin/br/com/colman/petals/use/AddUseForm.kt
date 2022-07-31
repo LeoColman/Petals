@@ -1,7 +1,10 @@
 package br.com.colman.petals.use
 
-import androidx.compose.foundation.clickable
+import androidx.annotation.StringRes
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,15 +15,22 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.colman.petals.R
-import br.com.colman.petals.R.string.*
+import br.com.colman.petals.R.string
+import br.com.colman.petals.R.string.add_use
+import br.com.colman.petals.R.string.amount_grams_title
+import br.com.colman.petals.R.string.cancel
+import br.com.colman.petals.R.string.cost_per_gram_title
+import br.com.colman.petals.R.string.ok
+import br.com.colman.petals.R.string.select_date
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogScope
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
@@ -33,9 +43,9 @@ import compose.icons.tablericons.CurrencyDollar
 import compose.icons.tablericons.Scale
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit.MINUTES
 
-@Suppress("NAME_SHADOWING")
+@Suppress("NAME_SHADOWING", "MagicNumber")
 @Composable
 fun AddUseForm(
   amount: MutableState<String>,
@@ -74,29 +84,45 @@ fun AddUseForm(
     )
 
     Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(8.dp)) {
-      OutlinedTextField(
-        modifier = Modifier
-          .weight(0.5f)
-          .clickable { dateDialog.show() },
-        value = date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")),
-        onValueChange = {},
-        leadingIcon = { Icon(TablerIcons.Calendar, null) },
-        enabled = false,
-        label = { Text(stringResource(R.string.date)) }
-      )
-
-      OutlinedTextField(
-        modifier = Modifier
-          .weight(0.5f)
-          .clickable { timeDialog.show() },
-        value = time.format(DateTimeFormatter.ofPattern("HH:mm")),
-        onValueChange = {},
-        leadingIcon = { Icon(TablerIcons.Clock, null) },
-        enabled = false,
-        label = { Text(stringResource(R.string.time)) }
-      )
+      Box(Modifier.weight(0.55f)) {
+        ClickableTextField(label = string.date, leadingIcon = TablerIcons.Calendar, value = "$date") {
+          dateDialog.show()
+        }
+      }
+      Box(Modifier.weight(0.45f)) {
+        ClickableTextField(
+          label = string.time,
+          leadingIcon = TablerIcons.Clock,
+          value = "${time.truncatedToMinute()}"
+        ) {
+          timeDialog.show()
+        }
+      }
     }
   }
+}
+
+@Composable
+private fun ClickableTextField(
+  @StringRes label: Int,
+  leadingIcon: ImageVector,
+  value: String,
+  onClick: () -> Unit
+) {
+  val interactionSource = remember { MutableInteractionSource() }
+  val isPressed by interactionSource.collectIsPressedAsState()
+  if (isPressed) {
+    onClick()
+  }
+
+  OutlinedTextField(
+    value,
+    onValueChange = {},
+    leadingIcon = { Icon(leadingIcon, null) },
+    label = { Text(stringResource(label)) },
+    readOnly = true,
+    interactionSource = interactionSource
+  )
 }
 
 @Composable
@@ -117,8 +143,10 @@ private fun myMaterialDialog(content: @Composable MaterialDialogScope.() -> Unit
     dialogState = it,
     buttons = {
       positiveButton(stringResource(ok))
-      negativeButton(stringResource(R.string.cancel))
+      negativeButton(stringResource(cancel))
     },
     content = content
   )
 }
+
+private fun LocalTime.truncatedToMinute() = truncatedTo(MINUTES)
