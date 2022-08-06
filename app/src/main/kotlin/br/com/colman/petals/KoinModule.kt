@@ -18,7 +18,10 @@
 
 package br.com.colman.petals
 
+import android.content.Context
+import androidx.datastore.preferences.preferencesDataStore
 import br.com.colman.petals.hittimer.HitTimerRepository
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.repository.MyObjectBox
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepository
@@ -30,10 +33,13 @@ import io.objectbox.kotlin.boxFor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
+private val Context.settingsDatastore by preferencesDataStore("settings")
+
 val KoinModule = module {
   single { MyObjectBox.builder().androidContext(androidApplication()).build() }
   single { UseRepository(get<BoxStore>().boxFor()) }
   single { HitTimerRepository(get()) }
+  single { SettingsRepository(get<Context>().settingsDatastore) }
 
   single { ThcConcentrationRepository(get()) }
   single { ThcConcentrationView(get(), get()) }

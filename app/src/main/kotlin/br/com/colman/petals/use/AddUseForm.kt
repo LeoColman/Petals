@@ -38,8 +38,8 @@ import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Calendar
+import compose.icons.tablericons.Cash
 import compose.icons.tablericons.Clock
-import compose.icons.tablericons.CurrencyDollar
 import compose.icons.tablericons.Scale
 import java.time.LocalDate
 import java.time.LocalTime
@@ -77,7 +77,7 @@ fun AddUseForm(
     OutlinedTextField(
       value = cost,
       onValueChange = { cost = it },
-      leadingIcon = { Icon(TablerIcons.CurrencyDollar, null) },
+      leadingIcon = { Icon(TablerIcons.Cash, null) },
       keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
       label = { Text(stringResource(cost_per_gram_title)) },
       placeholder = { Text("18.00") }

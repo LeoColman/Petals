@@ -6,10 +6,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -17,10 +27,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.colman.petals.R.string.*
+import br.com.colman.petals.R.string.amount_grams
+import br.com.colman.petals.R.string.cost_per_gram
+import br.com.colman.petals.R.string.date_at_time
+import br.com.colman.petals.R.string.ok
+import br.com.colman.petals.R.string.see_more
+import br.com.colman.petals.R.string.total_spent
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.repository.Use
 import compose.icons.TablerIcons
-import compose.icons.tablericons.*
+import compose.icons.tablericons.Cash
+import compose.icons.tablericons.ReportMoney
+import compose.icons.tablericons.Scale
+import compose.icons.tablericons.Smoking
+import compose.icons.tablericons.Trash
+import org.koin.androidx.compose.get
 import java.math.BigDecimal
 import java.math.RoundingMode.HALF_UP
 import java.time.LocalDateTime
@@ -46,32 +67,37 @@ fun UseCards(
   }
 }
 
-fun CurrencyIcon(symbol: String) = when (symbol) {
-  "R$" -> TablerIcons.CurrencyReal
-  else -> TablerIcons.CurrencyDollar
-}
-
 @Preview
 @Composable
 fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use) -> Unit = {}) {
   val (date, amountGrams, costPerGram) = use
   val dateString = date.format(ofPattern("yyyy/MM/dd"))
   val timeString = date.format(ofPattern("HH:mm"))
-  val currencySymbol = stringResource(currency_symbol)
+  val currencySymbol by get<SettingsRepository>().currencyIcon.collectAsState("$")
 
-  Card(Modifier.padding(8.dp).fillMaxWidth(), elevation = 6.dp) {
+  Card(
+    Modifier
+      .padding(8.dp)
+      .fillMaxWidth(),
+    elevation = 6.dp
+  ) {
     Row(Modifier.fillMaxWidth(), spacedBy(8.dp), CenterVertically) {
 
-      Column(Modifier.padding(24.dp).weight(0.7F), spacedBy(16.dp)) {
+      Column(
+        Modifier
+          .padding(24.dp)
+          .weight(0.7F),
+        spacedBy(16.dp)
+      ) {
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.Smoking, null)
           Text(stringResource(date_at_time, dateString, timeString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
-          Icon(CurrencyIcon(currencySymbol), null)
+          Icon(TablerIcons.Cash, null)
           val costPerGramString = costPerGram.setScale(3, HALF_UP).toString()
-          Text(stringResource(cost_per_gram, costPerGramString))
+          Text("$currencySymbol " + stringResource(cost_per_gram, costPerGramString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
@@ -87,7 +113,12 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
         }
       }
 
-      Column(Modifier.padding(24.dp).weight(0.3F), spacedBy(24.dp), Alignment.End) {
+      Column(
+        Modifier
+          .padding(24.dp)
+          .weight(0.3F),
+        spacedBy(24.dp), Alignment.End
+      ) {
         EditDialogButton(use, onEditUse)
 
         DeleteUseButton(use, onDeleteUse)

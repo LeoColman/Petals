@@ -43,6 +43,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import br.com.colman.petals.R
 import br.com.colman.petals.hittimer.ComposeHitTimer
 import br.com.colman.petals.navigation.Page.Usage
+import br.com.colman.petals.settings.SettingsView
 import br.com.colman.petals.statistics.StatisticsPage
 import org.koin.androidx.compose.get
 
@@ -66,6 +67,10 @@ fun NavHostContainer(navController: NavHostController) {
           page.ui()
         }
       }
+    }
+
+    composable("settings") {
+      SettingsView(get())
     }
   }
 }

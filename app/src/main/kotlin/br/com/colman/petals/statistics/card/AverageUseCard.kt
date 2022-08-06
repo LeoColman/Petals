@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -17,11 +19,11 @@ import br.com.colman.petals.R.plurals.amount_days
 import br.com.colman.petals.R.plurals.amount_uses
 import br.com.colman.petals.R.string.amount_grams
 import br.com.colman.petals.R.string.average_per
-import br.com.colman.petals.R.string.currency_symbol
 import br.com.colman.petals.R.string.day
 import br.com.colman.petals.R.string.month
 import br.com.colman.petals.R.string.week
 import br.com.colman.petals.R.string.year
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.totalCost
 import br.com.colman.petals.use.repository.totalGrams
@@ -30,6 +32,7 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.CalendarStats
 import compose.icons.tablericons.ChartPie
 import me.moallemi.tools.daterange.localdate.LocalDateRange
+import org.koin.androidx.compose.get
 import java.math.BigDecimal
 import java.time.LocalDate.now
 
@@ -101,9 +104,12 @@ private fun AverageList(uses: List<Use>, period: LocalDateRange) {
 
 @Composable
 private fun AverageListItem(label: String, grams: BigDecimal, cost: BigDecimal) {
+  val settingsRepository = get<SettingsRepository>()
+  val currencyIcon by settingsRepository.currencyIcon.collectAsState("$")
+
   Row {
     Text(stringResource(average_per, label), Modifier.weight(0.5f))
     Text(stringResource(amount_grams, grams), Modifier.weight(0.25f))
-    Text(stringResource(currency_symbol) + cost, Modifier.weight(0.25f))
+    Text(currencyIcon + cost, Modifier.weight(0.25f))
   }
 }

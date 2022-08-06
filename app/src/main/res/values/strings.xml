@@ -67,7 +67,6 @@
     <string name="cost_per_gram_label">cost_per_gram</string>
     <string name="import_import">Import</string> <!-- Java uses `import` as a reserved keyword. Can't be used -->
     <string name="export_export">Export</string> <!-- We should match import_import, so it's cute. -->
-    <string name="currency_symbol">$</string>
     <string name="end_date">End Date</string>
     <string name="start_date">Start Date</string>
     <string name="last_seven_days">Last 7 days</string>
@@ -98,4 +97,7 @@
     <string name="month">month</string>
     <string name="year">year</string>
     <string name="vibrate_on_timer_end">Vibrate on timer end</string>
+    <string name="currency_icon">Currency Icon</string>
+    <string name="what_icon_should_be_used_for_currency">What icon should be used for currency</string>
+    <string name="settings">Settings</string>
 </resources>

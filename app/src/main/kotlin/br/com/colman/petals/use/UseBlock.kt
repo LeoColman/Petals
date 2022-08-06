@@ -28,7 +28,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -36,11 +42,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.colman.petals.R.string.*
+import br.com.colman.petals.R.string.all_time
+import br.com.colman.petals.R.string.amount_grams_short
+import br.com.colman.petals.R.string.this_month
+import br.com.colman.petals.R.string.this_week
+import br.com.colman.petals.R.string.this_year
+import br.com.colman.petals.R.string.today
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.repository.Use
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Scale
 import compose.icons.tablericons.ZoomMoney
+import org.koin.androidx.compose.get
 import java.math.RoundingMode.HALF_UP
 import java.time.DayOfWeek.MONDAY
 import java.time.LocalDate.now
@@ -93,14 +106,26 @@ private fun UseBlock(
   totalGrams: String = "12.345",
   totalValue: String = "54.321"
 ) {
-  Card(Modifier.padding(8.dp).defaultMinSize(145.dp), elevation = 4.dp) {
+  val settingsRepository = get<SettingsRepository>()
+  val currencyIcon by settingsRepository.currencyIcon.collectAsState("$")
+
+  Card(
+    Modifier
+      .padding(8.dp)
+      .defaultMinSize(145.dp),
+    elevation = 4.dp
+  ) {
     Column(Modifier.padding(8.dp), spacedBy(4.dp)) {
-      Text(title, fontWeight = Bold, modifier = Modifier.padding(8.dp).align(CenterHorizontally))
+      Text(
+        title, fontWeight = Bold,
+        modifier = Modifier
+          .padding(8.dp)
+          .align(CenterHorizontally)
+      )
 
       Row(Modifier.padding(8.dp), spacedBy(4.dp), CenterVertically) {
         Icon(TablerIcons.ZoomMoney, null)
-        val currency = stringResource(currency_symbol)
-        Text("$currency $totalValue")
+        Text("$currencyIcon $totalValue")
       }
 
       Row(Modifier.padding(8.dp), spacedBy(4.dp), CenterVertically) {

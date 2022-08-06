@@ -22,27 +22,39 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.colman.petals.R.string.*
+import androidx.navigation.NavController
+import br.com.colman.petals.R.string.app_name
+import br.com.colman.petals.R.string.export_export
+import br.com.colman.petals.R.string.import_import
+import br.com.colman.petals.R.string.settings
 import br.com.colman.petals.use.io.UseCsvFileImporter
 import br.com.colman.petals.use.io.UseExporter
+import compose.icons.TablerIcons
+import compose.icons.tablericons.Settings
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 
 @Composable
-fun MyTopAppBar() {
+fun MyTopAppBar(navController: NavController) {
   TopAppBar {
     Box(
       Modifier
@@ -50,16 +62,16 @@ fun MyTopAppBar() {
         .height(56.dp)
         .fillMaxWidth()
     ) {
-      MyTopAppBarContent()
+      MyTopAppBarContent(navController)
     }
   }
 }
 
 @Composable
-fun MyTopAppBarContent() {
+fun MyTopAppBarContent(navController: NavController) {
   val coroutineScope = rememberCoroutineScope()
 
-  Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+  Row(Modifier.fillMaxWidth(), SpaceBetween, CenterVertically) {
     Text(stringResource(app_name), fontWeight = FontWeight.Bold, fontSize = 20.sp)
     Box(
       Modifier.clickable {
@@ -70,6 +82,7 @@ fun MyTopAppBarContent() {
       Row(Modifier, spacedBy(16.dp)) {
         ImportButton()
         ExportButton(get())
+        SettingsButton(navController)
       }
     }
   }
@@ -107,4 +120,16 @@ private fun ExportButton(
   ) {
     Text(stringResource(export_export), fontSize = 14.sp)
   }
+}
+
+@Composable
+private fun SettingsButton(
+  navController: NavController
+) {
+  Icon(
+    TablerIcons.Settings, stringResource(settings),
+    Modifier.clickable {
+      navController.navigate("settings")
+    }
+  )
 }

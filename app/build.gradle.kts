@@ -18,7 +18,6 @@
 
 import br.com.colman.petals.Libs
 import org.gradle.api.JavaVersion.VERSION_1_8
-import java.lang.System.getenv
 import java.util.Properties
 
 plugins {
@@ -146,7 +145,8 @@ dependencies {
 
   implementation(Libs.AndroidX.activityCompose)
   implementation(Libs.AndroidX.navigationCompose)
-  implementation(Libs.AndroidX.datastorePreferences)
+  implementation(Libs.AndroidX.DataStore.android)
+  implementation(Libs.AndroidX.DataStore.core)
 
   androidTestImplementation(Libs.AndroidX.Test.rules)
   androidTestImplementation(Libs.AndroidX.Test.runner)

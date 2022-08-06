@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
 
       Surface(color = Color.White) {
         Scaffold(
-          topBar = { MyTopAppBar() },
+          topBar = { MyTopAppBar(navController) },
           bottomBar = { BottomNavigationBar(navController) },
           content = { NavHostContainer(navController) }
         )
