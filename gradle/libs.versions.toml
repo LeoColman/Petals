@@ -5,11 +5,10 @@ datastore = "1.0.0"
 detekt = "1.21.0-RC1"
 koin = "3.2.0-beta-1"
 kotest = "5.4.2"
-vanpra-material-dialogs = "0.6.3"
 kotlin = "1.6.10"
+vanpra-material-dialogs = "0.6.3"
 
 [libraries]
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:1.1.5"
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx" }
@@ -39,6 +38,7 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlin-csv = "com.github.doyaaaaaken:kotlin-csv-jvm:1.2.0"
 kotlin-date-range = "me.moallemi.tools:kotlin-date-range:1.0.0"
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
 mockk = "io.mockk:mockk:1.12.0"
 mp-android-chart = "com.github.PhilJay:MPAndroidChart:v3.1.0"
