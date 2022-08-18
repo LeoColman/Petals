@@ -133,7 +133,7 @@ android {
 
 dependencies {
   // Kotlin
-  implementation(libs.kotlin.reflect)
+  testRuntimeOnly(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
 
   // Compose

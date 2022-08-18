@@ -6,8 +6,10 @@ detekt = "1.21.0-RC1"
 koin = "3.2.0-beta-1"
 kotest = "5.4.2"
 vanpra-material-dialogs = "0.6.3"
+kotlin = "1.6.10"
 
 [libraries]
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:1.1.5"
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx" }
