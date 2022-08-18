@@ -16,15 +16,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import br.com.colman.petals.Libs
 import org.gradle.api.JavaVersion.VERSION_1_8
 import java.util.Properties
 
+@Suppress("DSL_SCOPE_VIOLATION") //KTIJ-19369
 plugins {
   id("com.android.application")
   id("kotlin-android")
   kotlin("kapt")
-  id("io.gitlab.arturbosch.detekt") version "1.21.0"
+  alias(libs.plugins.detekt)
   id("org.jetbrains.kotlinx.kover") version "0.5.1"
   id("io.objectbox") // Apply last.
 }
@@ -115,7 +115,7 @@ android {
   }
 
   composeOptions {
-    kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.version
+    kotlinCompilerExtensionVersion = libs.versions.compose.get()
   }
 
   testOptions {
@@ -133,90 +133,57 @@ android {
 
 dependencies {
   // Kotlin
-  implementation(Libs.Kotlin.reflect)
-  testImplementation(Libs.KotlinX.Test.coroutines)
+  implementation(libs.kotlin.reflect)
+  testImplementation(libs.kotlinx.coroutines.test)
+
+  // Compose
+  implementation(libs.bundles.compose)
+  compileOnly(libs.compose.material.tooling)
+  androidTestImplementation(libs.bundles.compose.test)
 
   // AndroidX
-  implementation(Libs.AndroidX.Compose.material)
-  implementation(Libs.AndroidX.Compose.materialIcons)
-  compileOnly(Libs.AndroidX.Compose.tooling)
-  androidTestImplementation(Libs.AndroidX.Compose.Test.uiTest)
-  androidTestImplementation(Libs.AndroidX.Compose.Test.uiTestJunit4)
+  androidTestImplementation(libs.bundles.androidx.test)
 
-  implementation(Libs.AndroidX.activityCompose)
-  implementation(Libs.AndroidX.navigationCompose)
-  implementation(Libs.AndroidX.DataStore.android)
-  implementation(Libs.AndroidX.DataStore.core)
+  // Datastore
+  implementation(libs.bundles.datastore)
 
-  androidTestImplementation(Libs.AndroidX.Test.rules)
-  androidTestImplementation(Libs.AndroidX.Test.runner)
+  // Graph Views
+  implementation(libs.bundles.graph.view)
 
-  // GraphView
-  implementation(Libs.GraphView.graphView) {
-    because("We use graphs for statistics and other UI components")
-  }
-
-  // Mp Android Chart
-  implementation(Libs.MPAndroidChart.mpAndroidChart) {
-    because("Sometimes the other GraphView isn't enough")
-  }
-
-  // Apache Math
-  implementation(Libs.Apache.math)
-
-  // Apache Commons
-  implementation(Libs.Apache.commons)
-  
-  // Joda Time
-  implementation(Libs.JodaTime.jodaTime)
+  // Apache commons
+  implementation(libs.bundles.apache.commons)
 
   // Koin
-  implementation(Libs.Koin.android)
-  implementation(Libs.Koin.compose)
-  androidTestImplementation(Libs.Koin.test)
+  implementation(libs.bundles.koin)
+  androidTestImplementation(libs.koin.test)
 
   // Kotest
-  testImplementation(Libs.Kotest.junitRunner)
-  testImplementation(Libs.Kotest.property)
-  androidTestImplementation(Libs.Kotest.property)
-  androidTestImplementation(Libs.Kotest.assertions)
+  testImplementation(libs.bundles.kotest.all)
+  androidTestImplementation(libs.bundles.kotest.extras)
 
   // Mockk
-  testImplementation(Libs.Mockk.mockk)
+  testImplementation(libs.mockk)
 
-  // JUnit
-  androidTestImplementation(Libs.JUnit.junit4)
-
-  // UI Tests
-  androidTestImplementation(Libs.AndroidX.Compose.Test.uiTestJunit4)
-
-  // Date range
-  implementation(Libs.KotlinDateRange.kotlinDateRange)
+  // Date manipulation
+  implementation(libs.bundles.date.time)
 
   // Detekt
-  detektPlugins(Libs.Detekt.formatting)
+  detektPlugins(libs.detekt.formatting)
 
-  coreLibraryDesugaring(Libs.Android.desugarJdk) {
+  coreLibraryDesugaring(libs.android.desugar.jdk) {
     because("We want to use features from Java 8+, and this is the way to do it in Android")
   }
 
-  // Material Compose dialogs
-  implementation(Libs.ComposeMaterialDialogs.core)
-  implementation(Libs.ComposeMaterialDialogs.dateTime)
-
   // Timber
-  implementation(Libs.Timber.timber) {
+  implementation(libs.timber) {
     because("Logging library, easy to use")
   }
 
-  // Icons
-  implementation(Libs.TablerIcons.tablerIcons)
-
   // KotlinCSV
-  implementation(Libs.KotlinCsv.jvm)
+  implementation(libs.kotlin.csv)
 
   // Snodge
-  testImplementation(Libs.Snodge.snodge) {
+  testImplementation(libs.snodge) {
     because("It's useful for fuzzy testing (mutating strings, jsons, etc)")
   }
 
