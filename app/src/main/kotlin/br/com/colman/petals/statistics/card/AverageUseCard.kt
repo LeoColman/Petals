@@ -1,4 +1,5 @@
 @file:Suppress("MagicNumber")
+
 package br.com.colman.petals.statistics.card
 
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
@@ -17,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R.plurals.amount_days
 import br.com.colman.petals.R.plurals.amount_uses
-import br.com.colman.petals.R.string.amount_grams
+import br.com.colman.petals.R.string.amount_grams_short
 import br.com.colman.petals.R.string.average_per
 import br.com.colman.petals.R.string.day
 import br.com.colman.petals.R.string.month
@@ -34,6 +35,7 @@ import compose.icons.tablericons.ChartPie
 import me.moallemi.tools.daterange.localdate.LocalDateRange
 import org.koin.androidx.compose.get
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.time.LocalDate.now
 
 @Preview
@@ -83,33 +85,54 @@ private fun AverageList(uses: List<Use>, period: LocalDateRange) {
   val totalGrams = uses.totalGrams
   val totalCost = uses.totalCost
 
-  val days = (period.count() - 1).coerceAtLeast(1)
+  val days = (period.count() - 1).coerceAtLeast(1).toDouble()
   val weeks = days / 7.0
   val months = days / 30.0
   val years = days / 365.25
 
-  AverageListItem(stringResource(day), totalGrams / days.toBigDecimal(), totalCost / days.toBigDecimal())
+  AverageListItem(
+    stringResource(day),
+    totalGrams / days.toBigDecimal(),
+    totalCost / days.toBigDecimal(),
+    (uses.size / days).toBigDecimal()
+  )
   if (weeks >= 1.0) {
-    AverageListItem(stringResource(week), totalGrams / weeks.toBigDecimal(), totalCost / weeks.toBigDecimal())
+    AverageListItem(
+      stringResource(week),
+      totalGrams / weeks.toBigDecimal(),
+      totalCost / weeks.toBigDecimal(),
+      (uses.size / weeks).toBigDecimal()
+    )
   }
 
   if (months >= 1.0) {
-    AverageListItem(stringResource(month), totalGrams / months.toBigDecimal(), totalCost / months.toBigDecimal())
+    AverageListItem(
+      stringResource(month),
+      totalGrams / months.toBigDecimal(),
+      totalCost / months.toBigDecimal(),
+      (uses.size / months).toBigDecimal()
+    )
   }
 
   if (years >= 1.0) {
-    AverageListItem(stringResource(year), totalGrams / years.toBigDecimal(), totalCost / years.toBigDecimal())
+    AverageListItem(
+      stringResource(year),
+      totalGrams / years.toBigDecimal(),
+      totalCost / years.toBigDecimal(),
+      (uses.size / years).toBigDecimal()
+    )
   }
 }
 
 @Composable
-private fun AverageListItem(label: String, grams: BigDecimal, cost: BigDecimal) {
+private fun AverageListItem(label: String, grams: BigDecimal, cost: BigDecimal, uses: BigDecimal) {
   val settingsRepository = get<SettingsRepository>()
   val currencyIcon by settingsRepository.currencyIcon.collectAsState("$")
 
   Row {
-    Text(stringResource(average_per, label), Modifier.weight(0.5f))
-    Text(stringResource(amount_grams, grams), Modifier.weight(0.25f))
-    Text(currencyIcon + cost, Modifier.weight(0.25f))
+    Text(stringResource(average_per, label), Modifier.weight(0.4f))
+    Text(stringResource(amount_grams_short, grams), Modifier.weight(0.6f / 3f))
+    Text(currencyIcon + cost, Modifier.weight(0.6f / 3f))
+    Text(pluralResource(amount_uses, uses.toInt(), uses.setScale(2, RoundingMode.CEILING)))
   }
 }
