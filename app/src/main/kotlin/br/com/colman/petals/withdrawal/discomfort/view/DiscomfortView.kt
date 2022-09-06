@@ -65,30 +65,31 @@ class DiscomfortView(
     })
   }
 
-  private fun createGraph(context: Context, currentPercentage: Double, quitDay: Double, colors: Colors) = GraphView(context).apply {
-    addSeries(discomfortSeries())
-    addSeries(currentDiscomfortPoint(currentPercentage, quitDay))
+  private fun createGraph(context: Context, currentPercentage: Double, quitDay: Double, colors: Colors) =
+    GraphView(context).apply {
+      addSeries(discomfortSeries())
+      addSeries(currentDiscomfortPoint(currentPercentage, quitDay))
 
-    viewport.apply {
-      isYAxisBoundsManual = true
-      setMaxY(10.0)
-      setMinY(0.0)
-      isXAxisBoundsManual = true
-      setMaxX(27.0)
-      setMinX(0.0)
+      viewport.apply {
+        isYAxisBoundsManual = true
+        setMaxY(10.0)
+        setMinY(0.0)
+        isXAxisBoundsManual = true
+        setMaxX(27.0)
+        setMinX(0.0)
+      }
+
+      gridLabelRenderer.apply {
+        titleColor = colors.primary.toArgb()
+        verticalAxisTitleColor = colors.primary.toArgb()
+        horizontalAxisTitleColor = colors.primary.toArgb()
+        horizontalLabelsColor = colors.primary.toArgb()
+        verticalLabelsColor = colors.primary.toArgb()
+
+        verticalAxisTitle = context.getString(discomfort_strength)
+        horizontalAxisTitle = context.getString(days)
+      }
     }
-
-    gridLabelRenderer.apply {
-      titleColor = colors.primary.toArgb()
-      verticalAxisTitleColor = colors.primary.toArgb()
-      horizontalAxisTitleColor = colors.primary.toArgb()
-      horizontalLabelsColor = colors.primary.toArgb()
-      verticalLabelsColor = colors.primary.toArgb()
-
-      verticalAxisTitle = context.getString(discomfort_strength)
-      horizontalAxisTitle = context.getString(days)
-    }
-  }
 
   private fun discomfortSeries(): LineGraphSeries<DataPoint> {
     val dataPoints = repository.discomfortDays.map {

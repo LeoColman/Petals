@@ -67,30 +67,31 @@ class ThcConcentrationView(
     })
   }
 
-  private fun createGraph(context: Context, currentPercentage: Double, quitDay: Double, colors: Colors) = GraphView(context).apply {
-    addSeries(concentrationSeries())
-    addSeries(currentPercentagePoint(currentPercentage, quitDay))
+  private fun createGraph(context: Context, currentPercentage: Double, quitDay: Double, colors: Colors) =
+    GraphView(context).apply {
+      addSeries(concentrationSeries())
+      addSeries(currentPercentagePoint(currentPercentage, quitDay))
 
-    viewport.apply {
-      isYAxisBoundsManual = true
-      setMaxY(100.0)
-      setMinY(0.0)
-      isXAxisBoundsManual = true
-      setMaxX(15.0)
-      setMinX(0.0)
+      viewport.apply {
+        isYAxisBoundsManual = true
+        setMaxY(100.0)
+        setMinY(0.0)
+        isXAxisBoundsManual = true
+        setMaxX(15.0)
+        setMinX(0.0)
+      }
+
+      gridLabelRenderer.apply {
+        titleColor = colors.primary.toArgb()
+        verticalAxisTitleColor = colors.primary.toArgb()
+        horizontalAxisTitleColor = colors.primary.toArgb()
+        horizontalLabelsColor = colors.primary.toArgb()
+        verticalLabelsColor = colors.primary.toArgb()
+
+        verticalAxisTitle = context.getString(thc_concentration)
+        horizontalAxisTitle = context.getString(days)
+      }
     }
-
-    gridLabelRenderer.apply {
-      titleColor = colors.primary.toArgb()
-      verticalAxisTitleColor = colors.primary.toArgb()
-      horizontalAxisTitleColor = colors.primary.toArgb()
-      horizontalLabelsColor = colors.primary.toArgb()
-      verticalLabelsColor = colors.primary.toArgb()
-
-      verticalAxisTitle = context.getString(thc_concentration)
-      horizontalAxisTitle = context.getString(days)
-    }
-  }
 
   private fun concentrationSeries(): LineGraphSeries<DataPoint> {
     val dataPoints = abstinenceThcPercentages().map {
