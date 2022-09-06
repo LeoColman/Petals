@@ -21,9 +21,12 @@ package br.com.colman.petals.withdrawal.thc.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import androidx.compose.material.Colors
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import br.com.colman.petals.R.string.*
@@ -53,8 +56,9 @@ class ThcConcentrationView(
     val quitDays = ChronoUnit.SECONDS.between(quitDate, now()).toDouble().div(86400)
 
     val graphTitle = stringResource(current_thc_concentration, "%.3f".format(currentPercentage))
+    val colors = MaterialTheme.colors
 
-    AndroidView({ createGraph(it, currentPercentage, quitDays) }, update = {
+    AndroidView({ createGraph(it, currentPercentage, quitDays, colors) }, update = {
       it.title = graphTitle
       it.removeAllSeries()
       it.addSeries(concentrationSeries())
@@ -63,7 +67,7 @@ class ThcConcentrationView(
     })
   }
 
-  private fun createGraph(context: Context, currentPercentage: Double, quitDay: Double) = GraphView(context).apply {
+  private fun createGraph(context: Context, currentPercentage: Double, quitDay: Double, colors: Colors) = GraphView(context).apply {
     addSeries(concentrationSeries())
     addSeries(currentPercentagePoint(currentPercentage, quitDay))
 
@@ -77,6 +81,12 @@ class ThcConcentrationView(
     }
 
     gridLabelRenderer.apply {
+      titleColor = colors.primary.toArgb()
+      verticalAxisTitleColor = colors.primary.toArgb()
+      horizontalAxisTitleColor = colors.primary.toArgb()
+      horizontalLabelsColor = colors.primary.toArgb()
+      verticalLabelsColor = colors.primary.toArgb()
+
       verticalAxisTitle = context.getString(thc_concentration)
       horizontalAxisTitle = context.getString(days)
     }

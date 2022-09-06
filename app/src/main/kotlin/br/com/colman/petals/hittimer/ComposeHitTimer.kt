@@ -38,6 +38,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -133,12 +134,12 @@ private fun TimerText(millisLeft: Long) {
 
 @Composable
 private fun BlinkingText(text: String) {
-  Text(text, fontSize = 60.sp, color = Red, modifier = Modifier.height(100.dp))
+  Text(text, fontSize = 60.sp, color = MaterialTheme.colors.error, modifier = Modifier.height(100.dp))
 }
 
 @Composable
 private fun NonBlinkingText(text: String) {
-  Text(text, fontSize = 52.sp, color = Black, modifier = Modifier.height(100.dp))
+  Text(text, fontSize = 52.sp, color = MaterialTheme.colors.primary, modifier = Modifier.height(100.dp))
 }
 
 @Suppress("DEPRECATION")

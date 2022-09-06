@@ -1,8 +1,10 @@
 package br.com.colman.petals.statistics.graph
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,6 +54,7 @@ val GramsFormatter = object : ValueFormatter() {
 fun UsePerHourGraph(uses: List<Use>) {
   val grams = stringResource(grams)
   val description = stringResource(grams_distribution_per_hour_of_day)
+  val colors = MaterialTheme.colors
 
   Box(
     Modifier
@@ -70,6 +73,8 @@ fun UsePerHourGraph(uses: List<Use>) {
       }
 
       chart.description.text = description
+      chart.description.textColor = colors.primary.toArgb()
+      chart.legend.textColor = colors.primary.toArgb()
 
       chart.data = LineData(gramsData)
       chart.notifyDataSetChanged()
@@ -79,6 +84,9 @@ fun UsePerHourGraph(uses: List<Use>) {
 
       chart.axisLeft.apply {
         axisMinimum = 0f
+
+        textColor = colors.primary.toArgb()
+        axisLineColor = colors.primary.toArgb()
       }
 
       chart.xAxis.apply {
@@ -88,6 +96,10 @@ fun UsePerHourGraph(uses: List<Use>) {
         labelCount = 24
         granularity = 1.0f
         valueFormatter = GramsFormatter
+
+        textColor = colors.primary.toArgb()
+        axisLineColor = colors.primary.toArgb()
+
       }
     }
   }

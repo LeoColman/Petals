@@ -21,9 +21,12 @@ package br.com.colman.petals
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.ui.graphics.Color
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.navigation.compose.rememberNavController
 import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
@@ -39,12 +42,14 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
     setContent {
       val navController = rememberNavController()
 
-      Surface(color = Color.White) {
-        Scaffold(
-          topBar = { MyTopAppBar(navController) },
-          bottomBar = { BottomNavigationBar(navController) },
-          content = { NavHostContainer(navController) }
-        )
+      MaterialTheme(if (isSystemInDarkTheme()) darkColors() else lightColors()) {
+        Surface {
+          Scaffold(
+            topBar = { MyTopAppBar(navController) },
+            bottomBar = { BottomNavigationBar(navController) },
+            content = { NavHostContainer(navController) }
+          )
+        }
       }
     }
   }
