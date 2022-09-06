@@ -99,7 +99,6 @@ fun UsePerHourGraph(uses: List<Use>) {
 
         textColor = colors.primary.toArgb()
         axisLineColor = colors.primary.toArgb()
-
       }
     }
   }
