@@ -1,0 +1,1 @@
+- Adiciona suporte ao modo escuro
