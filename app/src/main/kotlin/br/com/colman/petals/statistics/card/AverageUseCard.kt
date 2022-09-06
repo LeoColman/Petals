@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -60,10 +61,12 @@ fun AverageUseCard(
   period: LocalDateRange
 ) {
   if (uses.isEmpty()) return
-  Column(Modifier.padding(8.dp), spacedBy(8.dp)) {
-    Title(uses.count(), period)
+  Card(Modifier.padding(8.dp)) {
+    Column(Modifier.padding(8.dp), spacedBy(8.dp)) {
+      Title(uses.count(), period)
 
-    AverageList(uses, period)
+      AverageList(uses, period)
+    }
   }
 }
 
