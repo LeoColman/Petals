@@ -38,7 +38,7 @@ repositories {
 }
 
 android {
-  compileSdk = 31
+  compileSdk = 33
 
   defaultConfig {
     applicationId = "br.com.colman.petals"
