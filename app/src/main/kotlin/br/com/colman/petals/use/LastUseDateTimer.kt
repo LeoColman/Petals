@@ -66,7 +66,7 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
       labels.forEach { (label, amount) ->
 
         Row(Modifier, Arrangement.spacedBy(8.dp), Alignment.CenterVertically) {
-          Row(Modifier.weight(0.4f), Arrangement.SpaceBetween) {
+          Row(Modifier.weight(0.5f), Arrangement.SpaceBetween) {
             Text(stringResource(label.unitName))
             Text("$amount")
           }
@@ -74,7 +74,7 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
             amount.toFloat() / label.max,
             Modifier
               .height(8.dp)
-              .weight(0.6f)
+              .weight(0.5f)
           )
         }
       }
