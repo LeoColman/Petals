@@ -1,0 +1,1 @@
+- Fix milliseconds sometimes breaking line in counter
