@@ -1,4 +1,3 @@
-@file:Suppress("MagicNumber")
 package br.com.colman.petals.hittimer
 
 import android.content.Context

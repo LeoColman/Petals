@@ -82,7 +82,6 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
   }
 }
 
-@Suppress("MagicNumber")
 private enum class TimeUnit(@StringRes val unitName: Int, val max: Long, val millis: Long) {
   Millisecond(milliseconds, 1000L, 1),
   Second(seconds, 60L, Millisecond.max),

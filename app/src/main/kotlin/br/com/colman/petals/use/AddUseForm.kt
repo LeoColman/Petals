@@ -45,7 +45,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit.MINUTES
 
-@Suppress("NAME_SHADOWING", "MagicNumber")
+@Suppress("NAME_SHADOWING")
 @Composable
 fun AddUseForm(
   amount: MutableState<String>,
