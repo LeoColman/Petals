@@ -11,11 +11,10 @@
 
 ------
 
-The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know
-how much they're using.
+The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're
+using.
 
-Download from the [Releases Page](https://github.com/LeoColman/Petals/releases) or from any of the
-options below
+Download from the [Releases Page](https://github.com/LeoColman/Petals/releases) or from any of the options below
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
 alt="Get it on F-Droid"
@@ -40,6 +39,7 @@ height="80">](https://play.google.com/store/apps/details?id=br.com.colman.petals
 ## Building
 
 ### Signed
+
 The signed version (the one published to Github and PlayStore) can be built with:
 
 ```
@@ -49,8 +49,8 @@ The signed version (the one published to Github and PlayStore) can be built with
 You must first decrypt secrets using `git secret reveal`
 
 ### Unsigned
-If you're building an unsigned version, build the same one that goes to FDroid (as FDroid signs the
-app themselves).
+
+If you're building an unsigned version, build the same one that goes to FDroid (as FDroid signs the app themselves).
 
 ```
 ./gradlew packageFdroidReleaseUniversalApk
@@ -60,8 +60,7 @@ This approach doesn't require secrets.
 
 ## Git Secrets
 
-The **Keystore**, **Keystore Properties** and **Google Play deploy json** files are included in the
-repository using
+The **Keystore**, **Keystore Properties** and **Google Play deploy json** files are included in the repository using
 [git secret](https://git-secret.io/). The current secret owners are:
 
 - Leonardo Colman Lopes
@@ -73,3 +72,26 @@ repository using
     - Auto-publishing signed app to github
     - Expires on 2024-07-29
     - Available on environment secret `GPG_KEY`
+
+## Releasing
+
+Release to all our channels are made automatically after a tag is released. The workflow responsible for doing that
+is [release.main.kts](.github/workflows/release.main.kts).
+
+### Google Play Store
+
+1. Decrypt all git secrets
+2. Run `./gradlew packageGithubReleaseUniversalApk`
+3. Publish to playstore
+   running `bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore`
+
+### F-Droid
+
+F-Droid builds automatically from the repository whenever a new tag is published. The definitions for how to build the
+app are
+in [FDroid's data repository](https://gitlab.com/fdroid/fdroiddata/-/blob/master/metadata/br.com.colman.petals.yml). If
+modifications are required, the place to change is there.
+
+### Releases Page
+1. Decrypt all git secrets
+2. Run `./gradlew packageGithubReleaseUniversalApk`
