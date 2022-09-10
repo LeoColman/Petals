@@ -9,3 +9,6 @@ formatting:
     continuationIndentSize: 2
   NoWildcardImports:
     active: false
+style:
+  MagicNumber:
+    active: false
