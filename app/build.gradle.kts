@@ -139,6 +139,7 @@ dependencies {
   // Compose
   implementation(libs.bundles.compose)
   compileOnly(libs.compose.material.tooling)
+  debugRuntimeOnly(libs.compose.material.tooling)
   androidTestImplementation(libs.bundles.compose.test)
 
   // AndroidX
