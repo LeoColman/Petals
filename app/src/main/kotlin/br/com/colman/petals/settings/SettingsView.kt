@@ -19,13 +19,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.colman.petals.R
 import br.com.colman.petals.R.string.currency_icon
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.what_icon_should_be_used_for_currency
 import compose.icons.TablerIcons
+import compose.icons.tablericons.BrandGithub
 import compose.icons.tablericons.Cash
 
 @Composable
@@ -35,6 +38,22 @@ fun SettingsView(settingsRepository: SettingsRepository) {
 
   Column {
     CurrencyListItem(currentCurrency, setCurrency)
+    RepositoryListItem()
+  }
+}
+
+@Preview
+@Composable
+private fun RepositoryListItem() {
+  val uriHandler = LocalUriHandler.current
+  val openUrl = { uriHandler.openUri("https://github.com/LeoColman/Petals") }
+
+  ListItem(
+    modifier = Modifier.clickable { openUrl() },
+    icon = { Icon(TablerIcons.BrandGithub, null, Modifier.size(42.dp)) },
+    secondaryText = { Text(stringResource(R.string.repository_link_description)) }
+  ) {
+    Text(stringResource(R.string.repository_link_title))
   }
 }
 
