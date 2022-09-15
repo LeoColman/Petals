@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Petals APP
   ~ Copyright (C) 2021 Leonardo Colman Lopes
   ~
@@ -14,9 +15,7 @@
   ~
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-<resources>
-
+  --><resources>
     <string name="quit_date_text">Data de último uso</string>
     <string name="years">Anos</string>
     <string name="months">Meses</string>
@@ -34,7 +33,7 @@
     <string name="_175thc">1.75% THC</string>
     <string name="breathhold_duration">Tempo Segurando (segundos)</string>
     <string name="subjectve_high">\"Brisa\" subjetiva</string>
-    <string name="hittimer_why_ten_secs">Por que 10 segundos?</string>
+    <string name="hittimer_why_ten_secs">Por que 10 segundos\?</string>
     <string name="hittime_source">Fonte: Azorlosa JL, Greenwald MK, Stitzer ML. Fumo de Marijuana: Efeitos de diferentes volumes de inalação e tempo prendendo. J Pharmacol Exp Ther. Fev. de 1995; 272(2):560–9. PMID: 7853169</string>
     <string name="tenSecondsIntro">Segurar por mais de 10 segundos não irá aumentar sua brisa, mas aumentará o dano que maconha pode causar a você.</string>
     <string name="hit_timer">Timer</string>
@@ -73,7 +72,7 @@
     <string name="change_period">Mudar período</string>
     <string name="grams">Gramas</string>
     <string name="grams_distribution_per_hour_of_day">Distribuição de gramas por hora do dia</string>
-    <string name="current_thc_concentration">Concentração atual de THC: %s \%%</string>
+    <string name="current_thc_concentration">Concentração atual de THC: %s %</string>
     <string name="thc_concentration">Concentração de THC (%)</string>
     <string name="current_withdrawal_discomfort">Desconforto atual de abstinência: %s</string>
     <string name="discomfort_strength">Intensidade de desconforto</string>
@@ -97,4 +96,5 @@
     <string name="settings">Configurações</string>
     <string name="repository_link_description">Este app é Software Livre e Código Aberto, sob a licença AGPL-3.0. O código-fonte está disponível no GitHub, em github.com/LeoColman/Petals</string>
     <string name="repository_link_title">Acesso ao Código-Fonte</string>
+    <string name="app_name" translatable="false"></string>
 </resources>
