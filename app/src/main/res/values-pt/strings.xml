@@ -98,5 +98,4 @@
     <string name="settings">Configurações</string>
     <string name="repository_link_description">Este app é Software Livre e Código Aberto, sob a licença AGPL-3.0. O código-fonte está disponível no GitHub, em github.com/LeoColman/Petals</string>
     <string name="repository_link_title">Acesso ao Código-Fonte</string>
-    <string name="app_name" translatable="false"></string>
 </resources>
