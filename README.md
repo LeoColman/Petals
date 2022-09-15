@@ -4,6 +4,9 @@
 [![Unit Tests](https://github.com/LeoColman/Petals/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/unit-tests.yaml)
 [![Lint](https://github.com/LeoColman/Petals/actions/workflows/lint.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/lint.yaml)
 [![Dependency Analysis](https://github.com/LeoColman/Petals/actions/workflows/dependency-analysis.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/dependency-analysis.yaml)
+<a href="https://hosted.weblate.org/engage/petals-app/">
+<img src="https://hosted.weblate.org/widgets/petals-app/-/svg-badge.svg" alt="Translation status" />
+</a>
 
 <a href="https://www.producthunt.com/posts/petals?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-petals" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=356573&theme=light" alt="Petals - An&#0032;open&#0032;source&#0032;app&#0032;to&#0032;help&#0032;users&#0032;quit&#0032;or&#0032;control&#0032;weed&#0032;usage | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
@@ -22,6 +25,19 @@ height="80">](https://f-droid.org/packages/br.com.colman.petals/)
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt="Get it on Play Store"
 height="80">](https://play.google.com/store/apps/details?id=br.com.colman.petals)
+
+## Translations
+Translations are hosted at Weblate. You can contribute to your language [here](https://hosted.weblate.org/engage/petals-app)
+
+<a href="https://hosted.weblate.org/engage/petals-app/">
+<img src="https://hosted.weblate.org/widgets/petals-app/-/287x66-white.png" alt="Translation status" />
+</a>
+
+<br>
+
+<a href="https://hosted.weblate.org/engage/petals-app/">
+<img src="https://hosted.weblate.org/widgets/petals-app/-/multi-green.svg" alt="Translation status" />
+</a>
 
 ## Screenshots
 
