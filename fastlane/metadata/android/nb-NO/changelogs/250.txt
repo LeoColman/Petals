@@ -1,0 +1,2 @@
+- Vibrasjon på slutten av innpustingstidsur som kan veksles på/av
+- Skjermformørkelse når tidsur slutter
