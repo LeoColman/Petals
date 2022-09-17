@@ -1,0 +1,2 @@
+- Bruksdato fungerer nå over to linjer
+- Stilisert dato og tidsfelt for økt redigerbarhet
