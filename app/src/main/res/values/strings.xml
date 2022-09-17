@@ -45,7 +45,7 @@
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="select_date">Select Date</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="today">Today</string>
     <!--FIXME Since Monday?-->
