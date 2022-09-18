@@ -4,7 +4,7 @@
     <string name="amount_grams">%s grammes</string>
     <string name="quit_date_text">Date de la dernière utilisation</string>
     <string name="years">Années</string>
-    <string name="hit_timer">Appuyez sur la minuterie</string>
+    <string name="hit_timer">Minuterie tactile</string>
     <string name="start">Démarrer</string>
     <string name="hittimer_why_ten_secs">Pourquoi 10 secondes \?</string>
     <string name="add_use">Ajouter une utilisation</string>
