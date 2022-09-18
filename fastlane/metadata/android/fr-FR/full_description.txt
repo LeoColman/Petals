@@ -1,0 +1,9 @@
+L'application à code source ouvert Petals vise à aider ses utilisateurs à arrêter de fumer, à réduire leur consommation ou simplement à savoir combien ils consomment.
+
+Caractéristiques
+
+- Suivi de la consommation
+- Suivi de la consommation
+- Voir les statistiques pour comprendre votre consommation
+- Instructions de réduction des dommages
+- Exportation et importation sous forme de simples fichiers CSV
