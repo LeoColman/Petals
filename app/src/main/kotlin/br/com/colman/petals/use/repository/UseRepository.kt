@@ -1,15 +1,11 @@
-@file:OptIn(ExperimentalCoroutinesApi::class)
-
 package br.com.colman.petals.use.repository
 
-import io.objectbox.Box
-import io.objectbox.kotlin.toFlow
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
-class UseRepository(private val box: Box<Use>) {
+class UseRepository {
 
   // TODO Test
   fun insertAll(uses: Iterable<Use>) {
@@ -18,17 +14,17 @@ class UseRepository(private val box: Box<Use>) {
 
   fun insert(use: Use) {
     Timber.d("Adding use: $use")
-    box.put(use)
+    TODO()
   }
 
   fun getLastUse() = all().map { it.maxByOrNull { it.date } }
 
   fun getLastUseDate() = getLastUse().map { it?.date }
 
-  fun all(): Flow<List<Use>> = box.query().build().subscribe().toFlow().map { it.toList() }
+  fun all(): Flow<List<Use>> = emptyFlow()
 
   fun delete(use: Use) {
     Timber.d("Deleting use: $use")
-    box.remove(use)
+    TODO()
   }
 }
