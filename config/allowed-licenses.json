@@ -1,0 +1,33 @@
+{
+  "allowedLicenses": [
+    {
+      "moduleLicense": "Apache License, Version 2.0"
+    },
+    {
+      "moduleLicense": "MIT License"
+    },
+    {
+      "moduleLicense": "GNU GENERAL PUBLIC LICENSE including GPL linking exception"
+    },
+
+    {
+      "moduleLicense": null,
+      "moduleVersion": "v3.1.0",
+      "moduleName": "com.github.PhilJay:MPAndroidChart",
+      "comment": "MPAndroidChart is APACHE 2 https://github.com/PhilJay/MPAndroidChart/blob/master/LICENSE"
+    },
+    {
+      "moduleLicense": null,
+      "moduleVersion": "3.2.0",
+      "moduleName": "io.insert-koin:koin-core",
+      "comment": "Koin is Apache 2 https://github.com/InsertKoinIO/koin/blob/main/LICENSE"
+    },
+    {
+      "moduleLicense": null,
+      "moduleVersion": "1.6.1",
+      "moduleName": "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+      "comment": "Coroutines is Apache 2 https://github.com/Kotlin/kotlinx.coroutines/blob/master/LICENSE.txt"
+
+    }
+  ]
+}

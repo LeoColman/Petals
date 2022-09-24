@@ -1,3 +1,6 @@
+import com.github.jk1.license.filter.LicenseBundleNormalizer
+import com.github.jk1.license.render.InventoryMarkdownReportRenderer
+
 /*
  * Petals APP
  * Copyright (C) 2021 Leonardo Colman Lopes
@@ -31,6 +34,15 @@ plugins {
   id("com.autonomousapps.dependency-analysis") version "1.13.1"
   id("com.github.ben-manes.versions") version "0.42.0"
   id("nl.littlerobots.version-catalog-update") version "0.6.1"
+  id("com.github.jk1.dependency-license-report") version "2.0"
+}
+
+licenseReport {
+  configurations = arrayOf("fdroidDebugCompileClasspath")
+  allowedLicensesFile = file("config/allowed-licenses.json")
+  filters = arrayOf(LicenseBundleNormalizer())
+  renderers = arrayOf(InventoryMarkdownReportRenderer())
+  excludeBoms = true
 }
 
 dependencyAnalysis {
