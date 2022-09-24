@@ -1,27 +1,17 @@
 package br.com.colman.petals.use.repository
 
-import br.com.colman.petals.use.repository.converter.BigDecimalConverter
-import br.com.colman.petals.use.repository.converter.LocalDateTimeConverter
-import io.objectbox.annotation.Convert
-import io.objectbox.annotation.Entity
-import io.objectbox.annotation.Id
-import io.objectbox.annotation.Transient
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@Entity
 data class Use(
-  @Convert(converter = LocalDateTimeConverter::class, dbType = String::class)
   val date: LocalDateTime = LocalDateTime.now(),
 
-  @Convert(converter = BigDecimalConverter::class, dbType = String::class)
   val amountGrams: BigDecimal = BigDecimal.ZERO,
 
-  @Convert(converter = BigDecimalConverter::class, dbType = String::class)
   val costPerGram: BigDecimal = BigDecimal.ZERO,
 
-  @Id var id: Long = 0
+  var id: Long = 0
 ) {
 
   @Transient

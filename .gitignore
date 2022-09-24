@@ -18,9 +18,7 @@ local
 .idea/*
 .idea/
 keystore
-app/objectbox/
 .gitsecret/keys/random_seed
 !*.secret
 keystore.properties
 google-play.json
-/app/libobjectbox-jni-linux-x64.so
