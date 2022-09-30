@@ -7,6 +7,7 @@ koin = "3.2.0"
 kotest = "5.4.2"
 kotlin = "1.6.10"
 vanpra-material-dialogs = "0.6.3"
+sqldelight = "1.5.3"
 
 [libraries]
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:1.1.5"
@@ -44,6 +45,9 @@ mockk = "io.mockk:mockk:1.12.7"
 mp-android-chart = "com.github.PhilJay:MPAndroidChart:v3.1.0"
 snodge = "com.natpryce:snodge:3.7.0.0"
 timber = "com.jakewharton.timber:timber:5.0.1"
+sqldelight-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 
 [bundles]
 androidx-test = [
@@ -96,3 +100,4 @@ kotest-extras = [
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }

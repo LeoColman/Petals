@@ -18,43 +18,59 @@
 
 package br.com.colman.petals.use.repository
 
+import br.com.colman.petals.Database
+import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
+import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver.Companion.IN_MEMORY
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
-import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
 import java.math.BigDecimal
 
 class UseRepositoryTest : FunSpec({
 
-  val target = UseRepository()
+  val database = JdbcSqliteDriver(IN_MEMORY).let {
+    Database.Schema.create(it)
+    Database(it)
+  }
+
+  val target = UseRepository(database.useQueries)
 
   val use = Use(amountGrams = BigDecimal("1234.567"), costPerGram = BigDecimal("123.01"))
 
   test("Insert") {
     target.insert(use)
-    TODO()
+    database.useQueries.selectAll().executeAsOne() shouldBe use.toEntity()
+  }
+
+  test("Insert multiple") {
+    val uses = List(10) {
+      use.copy(id = "$it")
+    }
+    target.insertAll(uses)
+    target.all().first() shouldBe uses
   }
 
   test("Get all") {
-    TODO()
+    database.useQueries.insert(use.toEntity())
     target.all().first().single() shouldBe use
   }
 
   test("Delete") {
-    TODO()
+    database.useQueries.insert(use.toEntity())
     target.delete(use)
-    TODO()
+    database.useQueries.selectAll().executeAsList().shouldBeEmpty()
   }
 
   test("Last use") {
-    val useBefore = use.copy(date = use.date.minusYears(1), id = 0)
-    TODO()
+    val useBefore = use.copy(date = use.date.minusYears(1), id = "2")
+    database.useQueries.insert(use.toEntity())
+    database.useQueries.insert(useBefore.toEntity())
 
     target.getLastUse().first() shouldBe use
     target.getLastUseDate().first() shouldBe use.date
   }
 
-  isolationMode = IsolationMode.SingleInstance
+  isolationMode = IsolationMode.InstancePerTest
 })

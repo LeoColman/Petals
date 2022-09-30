@@ -1,0 +1,15 @@
+CREATE TABLE Use(
+    date TEXT NOT NULL,
+    amount_grams TEXT NOT NULL,
+    cost_per_gram TEXT NOT NULL,
+    id TEXT PRIMARY KEY
+);
+
+insert:
+INSERT INTO Use(date, amount_grams, cost_per_gram, id) VALUES ?;
+
+selectAll:
+SELECT * FROM Use;
+
+delete:
+DELETE FROM Use WHERE id IS (?);

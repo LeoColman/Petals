@@ -25,6 +25,7 @@ plugins {
   id("kotlin-android")
   kotlin("kapt")
   alias(libs.plugins.detekt)
+  alias(libs.plugins.sqldelight)
   id("org.jetbrains.kotlinx.kover") version "0.6.0"
 }
 
@@ -186,6 +187,10 @@ dependencies {
   testImplementation(libs.snodge) {
     because("It's useful for fuzzy testing (mutating strings, jsons, etc)")
   }
+
+  implementation(libs.sqldelight.android.driver)
+  implementation(libs.sqldelight.coroutines.extensions)
+  testImplementation(libs.sqldelight.sqlite.driver)
 
 }
 
