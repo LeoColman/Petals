@@ -3,6 +3,7 @@ package br.com.colman.petals.use.repository
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.UUID
 
 data class Use(
   val date: LocalDateTime = LocalDateTime.now(),
@@ -11,7 +12,7 @@ data class Use(
 
   val costPerGram: BigDecimal = BigDecimal.ZERO,
 
-  var id: Long = 0
+  val id: String = UUID.randomUUID().toString()
 ) {
 
   @Transient
@@ -21,7 +22,7 @@ data class Use(
     date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
     amountGrams.toPlainString(),
     costPerGram.toPlainString(),
-    id.toString() // FIXME ThinkMe: should this be included?
+    id // FIXME ThinkMe: should this be included?
   )
 }
 

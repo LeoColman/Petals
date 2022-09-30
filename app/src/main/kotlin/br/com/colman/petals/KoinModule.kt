@@ -27,13 +27,12 @@ import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepositor
 import br.com.colman.petals.withdrawal.discomfort.view.DiscomfortView
 import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
 import br.com.colman.petals.withdrawal.thc.view.ThcConcentrationView
-import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 private val Context.settingsDatastore by preferencesDataStore("settings")
 
 val KoinModule = module {
-  single { UseRepository() }
+  single { UseRepository(get<Database>().useQueries) }
   single { HitTimerRepository(get()) }
   single { SettingsRepository(get<Context>().settingsDatastore) }
 

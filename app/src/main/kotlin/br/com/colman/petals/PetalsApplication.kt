@@ -22,7 +22,10 @@ import android.app.Application
 import android.content.Context
 import br.com.colman.petals.BuildConfig.DEBUG
 import br.com.colman.petals.use.io.IoModules
+import com.squareup.sqldelight.android.AndroidSqliteDriver
+import com.squareup.sqldelight.db.SqlDriver
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.compose.get
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -39,6 +42,7 @@ class PetalsApplication : Application() {
       modules(KoinModule)
       modules(AndroidModule)
       modules(IoModules)
+      modules(SqlDelightModule)
     }.koin
     startTimber()
   }
@@ -53,4 +57,9 @@ private fun startTimber() {
 private val AndroidModule = module {
   single { get<Context>().resources }
   single { get<Context>().contentResolver }
+}
+
+private val SqlDelightModule = module {
+  single<SqlDriver> { AndroidSqliteDriver(Database.Schema, get()) }
+  single { Database(get()) }
 }
