@@ -28,6 +28,17 @@
       "moduleName": "org.jetbrains.kotlinx:kotlinx-coroutines-core",
       "comment": "Coroutines is Apache 2 https://github.com/Kotlin/kotlinx.coroutines/blob/master/LICENSE.txt"
 
+    },
+
+    {
+      "moduleLicense": null,
+      "moduleName": "com.squareup.sqldelight:coroutines-extensions",
+      "comment": "SQLDelight is Apache 2 https://github.com/cashapp/sqldelight/blob/master/LICENSE.txt"
+    },
+    {
+      "moduleLicense": null,
+      "moduleName": "com.squareup.sqldelight:runtime",
+      "comment": "SQLDelight is Apache 2 https://github.com/cashapp/sqldelight/blob/master/LICENSE.txt"
     }
   ]
 }
