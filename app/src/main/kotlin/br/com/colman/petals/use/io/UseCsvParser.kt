@@ -10,10 +10,10 @@ object UseCsvParser {
   private val csvReader = csvReader()
 
   fun parse(line: String): Result<Use> = runCatching {
-    val (date, amount, cost, id) = csvReader.readAll(line).single()
+    val (date, amount, cost) = csvReader.readAll(line).single()
 
     val dateTime = LocalDateTime.parse(date, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 
-    Use(dateTime, amount.toBigDecimal(), cost.toBigDecimal(), id)
+    Use(dateTime, amount.toBigDecimal(), cost.toBigDecimal())
   }
 }
