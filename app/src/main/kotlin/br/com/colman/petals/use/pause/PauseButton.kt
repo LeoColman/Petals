@@ -17,9 +17,8 @@ import compose.icons.tablericons.Alarm
 @Preview
 @Composable
 fun PauseButton() {
-  Row(Modifier.padding(8.dp).clickable {  }, spacedBy(8.dp), CenterVertically) {
+  Row(Modifier.padding(8.dp).clickable { }, spacedBy(8.dp), CenterVertically) {
     Icon(TablerIcons.Alarm, null)
     Text("Pause Time")
   }
 }
-
