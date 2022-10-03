@@ -1,0 +1,14 @@
+CREATE TABLE Pause(
+  start_time TEXT NOT NULL,
+  end_time TEXT NOT NULL,
+  id TEXT PRIMARY KEY
+);
+
+insert:
+INSERT INTO Pause(start_time, end_time, id) VALUES ?;
+
+deleteAll:
+DELETE FROM Pause;
+
+selectFirst:
+SELECT * FROM Pause LIMIT 1;
