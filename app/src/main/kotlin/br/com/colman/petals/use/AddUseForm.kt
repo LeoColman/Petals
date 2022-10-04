@@ -31,6 +31,10 @@ import br.com.colman.petals.R.string.cancel
 import br.com.colman.petals.R.string.cost_per_gram_title
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.select_date
+import br.com.colman.petals.components.ClickableTextField
+import br.com.colman.petals.components.dateDialogState
+import br.com.colman.petals.components.timeDialogState
+import br.com.colman.petals.utils.truncatedToMinute
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogScope
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
@@ -57,10 +61,10 @@ fun AddUseForm(
   var cost by cost
 
   var date by date
-  val dateDialog = dateDialog { date = it }
+  val dateDialog = dateDialogState { date = it }
 
   var time by time
-  val timeDialog = timeDialog { time = it }
+  val timeDialog = timeDialogState { time = it }
 
   Column(Modifier, Arrangement.spacedBy(8.dp)) {
     Text(stringResource(add_use), fontWeight = Bold, fontSize = 16.sp)
@@ -101,52 +105,3 @@ fun AddUseForm(
     }
   }
 }
-
-@Composable
-private fun ClickableTextField(
-  @StringRes label: Int,
-  leadingIcon: ImageVector,
-  value: String,
-  onClick: () -> Unit
-) {
-  val interactionSource = remember { MutableInteractionSource() }
-  val isPressed by interactionSource.collectIsPressedAsState()
-  if (isPressed) {
-    onClick()
-  }
-
-  OutlinedTextField(
-    value,
-    onValueChange = {},
-    leadingIcon = { Icon(leadingIcon, null) },
-    label = { Text(stringResource(label)) },
-    readOnly = true,
-    interactionSource = interactionSource
-  )
-}
-
-@Composable
-private fun dateDialog(onDateChange: (LocalDate) -> Unit) = myMaterialDialog {
-  datepicker(title = stringResource(select_date)) { date ->
-    onDateChange(date)
-  }
-}
-
-@Composable
-private fun timeDialog(onTimeChange: (LocalTime) -> Unit) = myMaterialDialog {
-  timepicker { onTimeChange(it) }
-}
-
-@Composable
-private fun myMaterialDialog(content: @Composable MaterialDialogScope.() -> Unit) = rememberMaterialDialogState().also {
-  MaterialDialog(
-    dialogState = it,
-    buttons = {
-      positiveButton(stringResource(ok))
-      negativeButton(stringResource(cancel))
-    },
-    content = content
-  )
-}
-
-private fun LocalTime.truncatedToMinute() = truncatedTo(MINUTES)
