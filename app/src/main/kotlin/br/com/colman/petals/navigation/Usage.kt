@@ -36,11 +36,15 @@ import br.com.colman.petals.use.LastUseDateTimer
 import br.com.colman.petals.use.StatsBlocks
 import br.com.colman.petals.use.UseCards
 import br.com.colman.petals.use.pause.PauseButton
+import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.UseRepository
 import org.koin.androidx.compose.get
 
 @Composable
-fun Usage(useRepository: UseRepository = get()) {
+fun Usage(
+  useRepository: UseRepository = get(),
+  pauseRepository: PauseRepository = get()
+) {
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
 
   Column(Modifier.verticalScroll(rememberScrollState()), spacedBy(8.dp), CenterHorizontally) {
@@ -48,7 +52,7 @@ fun Usage(useRepository: UseRepository = get()) {
 
     Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {
       AddUseButton(useRepository)
-      PauseButton()
+      PauseButton(pauseRepository)
     }
 
     val uses by useRepository.all().collectAsState(emptyList())
