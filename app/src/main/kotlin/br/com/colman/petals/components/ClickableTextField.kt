@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 
@@ -17,7 +18,8 @@ fun ClickableTextField(
   @StringRes label: Int,
   leadingIcon: ImageVector,
   value: String,
-  onClick: () -> Unit
+  modifier: Modifier = Modifier,
+  onClick: () -> Unit,
 ) {
   val interactionSource = remember { MutableInteractionSource() }
   val isPressed by interactionSource.collectIsPressedAsState()
@@ -31,6 +33,7 @@ fun ClickableTextField(
     leadingIcon = { Icon(leadingIcon, null) },
     label = { Text(stringResource(label)) },
     readOnly = true,
-    interactionSource = interactionSource
+    interactionSource = interactionSource,
+    modifier = modifier
   )
 }

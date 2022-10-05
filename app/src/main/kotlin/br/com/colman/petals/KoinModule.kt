@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
 import br.com.colman.petals.hittimer.HitTimerRepository
 import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepository
 import br.com.colman.petals.withdrawal.discomfort.view.DiscomfortView
@@ -33,6 +34,7 @@ private val Context.settingsDatastore by preferencesDataStore("settings")
 
 val KoinModule = module {
   single { UseRepository(get<Database>().useQueries) }
+  single { PauseRepository(get<Database>().pauseQueries) }
   single { HitTimerRepository(get()) }
   single { SettingsRepository(get<Context>().settingsDatastore) }
 

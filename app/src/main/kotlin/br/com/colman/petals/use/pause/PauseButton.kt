@@ -7,17 +7,46 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.colman.petals.use.pause.repository.Pause
+import br.com.colman.petals.use.pause.repository.PauseRepository
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Alarm
+import org.koin.androidx.compose.get
+
+@Composable
+fun PauseButton(
+  pauseRepository: PauseRepository
+) {
+  var openPauseDialog by remember { mutableStateOf(false) }
+
+  PauseButtonView { openPauseDialog = true }
+
+  if (openPauseDialog) {
+    PauseDialog(
+      pause = pauseRepository.get() ?: Pause(),
+      setPause = {
+        if (it == null) pauseRepository.delete()
+        else pauseRepository.set(it)
+      },
+      onDismiss = { openPauseDialog = false }
+    )
+  }
+}
 
 @Preview
 @Composable
-fun PauseButton() {
-  Row(Modifier.padding(8.dp).clickable { }, spacedBy(8.dp), CenterVertically) {
+private fun PauseButtonView(
+  onClick: () -> Unit = { }
+) {
+  Row(Modifier.padding(8.dp).clickable { onClick() }, spacedBy(8.dp), CenterVertically) {
     Icon(TablerIcons.Alarm, null)
     Text("Pause Time")
   }
