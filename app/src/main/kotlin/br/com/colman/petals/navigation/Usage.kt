@@ -51,7 +51,7 @@ fun Usage(
     lastUseDate?.let { LastUseDateTimer(it) }
 
     Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {
-      AddUseButton(useRepository)
+      AddUseButton(useRepository, pauseRepository.get())
       PauseButton(pauseRepository)
     }
 
