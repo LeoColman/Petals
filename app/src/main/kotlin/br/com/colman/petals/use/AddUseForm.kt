@@ -1,8 +1,5 @@
 package br.com.colman.petals.use
 
-import androidx.annotation.StringRes
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,10 +12,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.KeyboardType
@@ -27,19 +22,11 @@ import androidx.compose.ui.unit.sp
 import br.com.colman.petals.R.string
 import br.com.colman.petals.R.string.add_use
 import br.com.colman.petals.R.string.amount_grams_title
-import br.com.colman.petals.R.string.cancel
 import br.com.colman.petals.R.string.cost_per_gram_title
-import br.com.colman.petals.R.string.ok
-import br.com.colman.petals.R.string.select_date
 import br.com.colman.petals.components.ClickableTextField
 import br.com.colman.petals.components.dateDialogState
 import br.com.colman.petals.components.timeDialogState
 import br.com.colman.petals.utils.truncatedToMinute
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.MaterialDialogScope
-import com.vanpra.composematerialdialogs.datetime.date.datepicker
-import com.vanpra.composematerialdialogs.datetime.time.timepicker
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Calendar
 import compose.icons.tablericons.Cash
@@ -47,7 +34,6 @@ import compose.icons.tablericons.Clock
 import compose.icons.tablericons.Scale
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.temporal.ChronoUnit.MINUTES
 
 @Suppress("NAME_SHADOWING")
 @Composable

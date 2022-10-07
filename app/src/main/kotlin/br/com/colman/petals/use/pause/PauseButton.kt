@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,12 +27,13 @@ fun PauseButton(
   pauseRepository: PauseRepository
 ) {
   var openPauseDialog by remember { mutableStateOf(false) }
+  val pause by pauseRepository.get().collectAsState(null)
 
   PauseButtonView { openPauseDialog = true }
 
   if (openPauseDialog) {
     PauseDialog(
-      pause = pauseRepository.get() ?: Pause(),
+      pause = pause ?: Pause(),
       setPause = {
         if (it == null) pauseRepository.delete()
         else pauseRepository.set(it)

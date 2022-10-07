@@ -33,7 +33,6 @@ import compose.icons.tablericons.Clock
 import java.time.LocalTime
 import java.time.LocalTime.now
 
-
 @Preview
 @Composable
 fun PauseDialog(
@@ -55,7 +54,7 @@ fun PauseDialog(
 @Preview
 fun PauseDialogContent(
   pause: Pause = Pause(),
-  setPause: (Pause) -> Unit = {  }
+  setPause: (Pause) -> Unit = { }
 ) {
 
   var pauseStart by remember { mutableStateOf(pause.startTime) }
@@ -103,7 +102,6 @@ private fun AddTimeButton(
     Text(stringResource(R.string.pause_change_minutes, minutes), fontSize = 10.sp)
   }
 }
-
 
 @Composable
 private fun ConfirmPauseButton(
