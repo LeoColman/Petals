@@ -98,4 +98,11 @@
     <string name="settings">Configurações</string>
     <string name="repository_link_description">Este app é Software Livre e Código Aberto, sob a licença AGPL-3.0. O código-fonte está disponível no GitHub, em github.com/LeoColman/Petals</string>
     <string name="repository_link_title">Acesso ao Código-Fonte</string>
+    <string name="start_time">Tempo de Início</string>
+    <string name="end_time">Tempo de Fim</string>
+    <string name="pause_change_minutes">%+d min</string>
+    <string name="delete">Remover</string>
+    <string name="yes">Sim</string>
+    <string name="yes_timer">Sim (%ss)</string>
+    <string name="no">Não</string>
 </resources>
