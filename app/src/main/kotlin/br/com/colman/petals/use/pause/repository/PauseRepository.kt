@@ -1,6 +1,10 @@
 package br.com.colman.petals.use.pause.repository
 
 import br.com.colman.petals.PauseQueries
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import br.com.colman.petals.Pause as PauseEntity
@@ -9,8 +13,8 @@ class PauseRepository(
   private val pauseQueries: PauseQueries
 ) {
 
-  fun get(): Pause? {
-    return pauseQueries.selectFirst().executeAsOneOrNull()?.toPause()
+  fun get(): Flow<Pause?> {
+    return pauseQueries.selectFirst().asFlow().mapToOneOrNull().map { it?.toPause() }
   }
 
   fun set(pause: Pause) {

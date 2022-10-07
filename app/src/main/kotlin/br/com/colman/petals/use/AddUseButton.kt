@@ -46,8 +46,7 @@ fun AddUseButton(
     }
   }
 
-
-  if (pause == null) {
+  if (pause == null || !pause.isActive()) {
     UseButton { openAddUseDialog = true }
   } else {
     PauseUseButton { openConfirmAddUseDialog = true }
@@ -96,7 +95,7 @@ private fun ConfirmAddUseDuringPauseDialog(
     text = { Text("You scheduled this period to be a pause. Are you sure you want to add an use now?") },
     confirmButton = {
       TextButton(onConfirm, enabled = yesEnabled) {
-        if(yesEnabled) {
+        if (yesEnabled) {
           Text(stringResource(yes))
         } else {
           Text(stringResource(yes_timer, yesTimer))
@@ -106,7 +105,6 @@ private fun ConfirmAddUseDuringPauseDialog(
     dismissButton = { TextButton(onDismiss) { Text(stringResource(no)) } }
   )
 }
-
 
 @Suppress("NAME_SHADOWING")
 @Composable

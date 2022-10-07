@@ -46,12 +46,13 @@ fun Usage(
   pauseRepository: PauseRepository = get()
 ) {
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
+  val pause by pauseRepository.get().collectAsState(null)
 
   Column(Modifier.verticalScroll(rememberScrollState()), spacedBy(8.dp), CenterHorizontally) {
     lastUseDate?.let { LastUseDateTimer(it) }
 
     Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {
-      AddUseButton(useRepository, pauseRepository.get())
+      AddUseButton(useRepository, pause)
       PauseButton(pauseRepository)
     }
 

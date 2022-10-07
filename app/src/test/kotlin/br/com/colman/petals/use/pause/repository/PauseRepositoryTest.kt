@@ -9,6 +9,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.localTime
 import io.kotest.property.arbitrary.next
+import kotlinx.coroutines.flow.first
 
 class PauseRepositoryTest : FunSpec({
 
@@ -34,7 +35,7 @@ class PauseRepositoryTest : FunSpec({
 
   test("Get") {
     database.pauseQueries.insert(pause.toEntity())
-    target.get() shouldBe pause
+    target.get().first() shouldBe pause
   }
 
   test("Delete") {
