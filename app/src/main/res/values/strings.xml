@@ -104,4 +104,7 @@
     <string name="end_time">End Time</string>
     <string name="pause_change_minutes">%+d min</string>
     <string name="delete">Delete</string>
+    <string name="yes">Yes</string>
+    <string name="yes_timer">Yes (%ss)</string>
+    <string name="no">No</string>
 </resources>
