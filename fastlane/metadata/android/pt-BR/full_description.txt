@@ -3,6 +3,7 @@ O aplicativo Open Source Petals busca ajudar seus usuários a parar, reduzir ou 
 Funcionalidades:
 
 - Rastreio do consumo
+- Controle de horário do uso
 - Rastreio de usos
 - Estatísticas para entender melhor seu consumo
 - Instruções para redução de danos

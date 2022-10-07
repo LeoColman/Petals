@@ -3,6 +3,7 @@ The Open Source app Petals aims to help its users to either quit weed, reduce us
 Features
 
 - Track consumption
+- Time-gate your consumption
 - Track usage
 - See statistics to understand your consumption
 - Damage reduction instructions
