@@ -61,7 +61,9 @@ private val AndroidModule = module {
 
 private val SqlDelightModule = module {
   single<SqlDriver> {
-    AndroidSqliteDriver(Database.Schema, get(), "Database")
+    AndroidSqliteDriver(Database.Schema, get(), "Database").apply {
+      Database.Schema.migrate(this, 1, 2)
+    }
   }
   single { Database(get()) }
 }
