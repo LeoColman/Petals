@@ -208,3 +208,10 @@ java {
     languageVersion.set(JavaLanguageVersion.of(11))
   }
 }
+
+sqldelight {
+  database("Database") {
+    schemaOutputDirectory = file("src/main/sqldelight/databases")
+    verifyMigrations = true
+  }
+}
