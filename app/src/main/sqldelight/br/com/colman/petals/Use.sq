@@ -8,6 +8,9 @@ CREATE TABLE Use(
 insert:
 INSERT INTO Use(date, amount_grams, cost_per_gram, id) VALUES ?;
 
+selectLast:
+SELECT * FROM Use ORDER BY date DESC LIMIT 1;
+
 selectAll:
 SELECT * FROM Use;
 
