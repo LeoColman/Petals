@@ -3,6 +3,7 @@ package br.com.colman.petals.use.repository
 import br.com.colman.petals.UseQueries
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
@@ -23,7 +24,7 @@ class UseRepository(
     useQueries.insert(use.toEntity())
   }
 
-  fun getLastUse() = all().map { it.maxByOrNull { it.date } }
+  fun getLastUse() = useQueries.selectLast().asFlow().mapToOneOrNull().map { it?.toUse() }
 
   fun getLastUseDate() = getLastUse().map { it?.date }
 

@@ -19,14 +19,18 @@
 package br.com.colman.petals.use.repository
 
 import br.com.colman.petals.Database
+import br.com.colman.petals.use.io.useArb
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver.Companion.IN_MEMORY
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.longs.shouldBeLessThan
 import io.kotest.matchers.shouldBe
+import io.kotest.property.arbitrary.take
 import kotlinx.coroutines.flow.first
 import java.math.BigDecimal
+import kotlin.system.measureTimeMillis
 
 class UseRepositoryTest : FunSpec({
 
@@ -70,6 +74,16 @@ class UseRepositoryTest : FunSpec({
 
     target.getLastUse().first() shouldBe use
     target.getLastUseDate().first() shouldBe use.date
+  }
+
+  test("Last use performance") {
+    useArb.take(100_000).map(Use::toEntity).forEach(database.useQueries::insert)
+
+    measureTimeMillis {
+      target.getLastUseDate().first()
+    } shouldBeLessThan measureTimeMillis {
+      target.all().first().maxByOrNull { it.date }
+    }
   }
 
   isolationMode = IsolationMode.InstancePerTest
