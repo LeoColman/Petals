@@ -18,7 +18,7 @@
     <string name="thc_concentration">Concentration en THC (%)</string>
     <string name="current_withdrawal_discomfort">Malaise actuel lié au sevrage : %s</string>
     <string name="discomfort_strength">Intensité de l’inconfort</string>
-    <string name="date_at_time">%s à %s</string>
+    <string name="date_at_time">%1$s à %2$s</string>
     <plurals name="amount_uses">
         <item quantity="one">%s utilisation</item>
         <item quantity="many">%s utilisations</item>
@@ -82,4 +82,11 @@
     <string name="repository_link_description">Cette application est un logiciel libre sous licence AGPL-3.0. Le code source est disponible sur GitHub à l’adresse github.com/LeoColman/Petals</string>
     <string name="repository_link_title">Accès au code source</string>
     <string name="symptoms_introduction">Une étude de Budney et al. de l’université du Vermont a établi comment les symptômes de sevrage affectent et dévalorisent les consommateurs de cannabis. Vous trouverez ci-dessous une estimation de votre situation actuelle en fonction de la date de votre dernière consommation</string>
+    <string name="pause_change_minutes">%+d min</string>
+    <string name="no">Non</string>
+    <string name="yes">Oui</string>
+    <string name="start_time">Heure de début</string>
+    <string name="end_time">Heure de fin</string>
+    <string name="delete">Supprimer</string>
+    <string name="yes_timer">Oui (%s s)</string>
 </resources>
