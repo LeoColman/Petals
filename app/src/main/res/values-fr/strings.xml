@@ -6,7 +6,7 @@
     <string name="years">Années</string>
     <string name="hit_timer">Minuterie tactile</string>
     <string name="start">Démarrer</string>
-    <string name="hittimer_why_ten_secs">Pourquoi 10 secondes \?</string>
+    <string name="hittimer_why_ten_secs">Pourquoi 10 secondes ?</string>
     <string name="add_use">Ajouter une utilisation</string>
     <string name="amount_grams_title">Quantité (g)</string>
     <string name="cost_per_gram_title">Coût par gramme</string>
@@ -61,7 +61,7 @@
     <string name="end_date">Date de fin</string>
     <string name="change_period">Période de changement</string>
     <string name="grams">Grammes</string>
-    <string name="current_thc_concentration">Concentration actuelle en THC: %s \%%</string>
+    <string name="current_thc_concentration">Concentration actuelle en THC: %s %</string>
     <plurals name="amount_days">
         <item quantity="one">%s jour</item>
         <item quantity="many">%s jours</item>
@@ -96,10 +96,10 @@
     <string name="share_app_title">Partager l\'appli</string>
     <string name="share_app_message">Hé, l\'application Petals m\'aide
 \nTéléchargez-la sur Google Play :
-\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals
 \nou sur F-Droid
 \nhttps://f-droid.org/packages/br.com.colman.petals/</string>
-    <string name="confirm_to_delete">Êtes-vous sûr·e de vouloir supprimer l\'utilisation ajoutée sur %s \?</string>
+    <string name="confirm_to_delete">Êtes-vous sûr·e de vouloir supprimer l\'utilisation ajoutée sur %s ?</string>
     <string name="app_pin">NIP de l\'appli</string>
     <string name="pin_main_screen">Cette application est protégée par un mot de passe. Entrez le bon mot de passe pour continuer.</string>
     <string name="password_description">Pour plus de confidentialité, vous pouvez définir un mot de passe pour accéder à l\'application. La définition d\'un mot de passe vide le supprime. ATTENTION ! Il n\'est pas possible de récupérer un mot de passe défini</string>
