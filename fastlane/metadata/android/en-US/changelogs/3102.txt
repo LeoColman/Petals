@@ -1,0 +1,2 @@
+- Improve performance on Last Use details
+- Localize the text in Pause Dialog
