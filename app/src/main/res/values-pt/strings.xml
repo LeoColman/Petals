@@ -105,4 +105,5 @@
     <string name="yes">Sim</string>
     <string name="yes_timer">Sim (%ss)</string>
     <string name="no">Não</string>
+    <string name="add_use_during_pause_alert">Você marcou este horário como uma pause. Tem certeza que deseja adicionar um uso agora?</string>
 </resources>

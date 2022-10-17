@@ -107,4 +107,5 @@
     <string name="yes">Yes</string>
     <string name="yes_timer">Yes (%ss)</string>
     <string name="no">No</string>
+    <string name="add_use_during_pause_alert">You scheduled this period to be a pause. Are you sure you want to add an use now?</string>
 </resources>
