@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.colman.petals.R.string.add_use
+import br.com.colman.petals.R.string.add_use_during_pause_alert
 import br.com.colman.petals.R.string.no
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.yes
@@ -92,7 +93,7 @@ private fun ConfirmAddUseDuringPauseDialog(
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { Text("You scheduled this period to be a pause. Are you sure you want to add an use now?") },
+    text = { Text(stringResource(add_use_during_pause_alert)) },
     confirmButton = {
       TextButton(onConfirm, enabled = yesEnabled) {
         if (yesEnabled) {
