@@ -80,4 +80,12 @@
     <string name="grams">Gram</string>
     <string name="hittime_source">Kilde: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
     <string name="subjectve_high">Subjektiv «ruseffekt»</string>
+    <string name="end_time">Slutt-tid</string>
+    <string name="start_time">Start-tid</string>
+    <string name="add_use_during_pause_alert">Du har planlagt at denne tiden skal være en pause. Vil du legge til bruk nå\?</string>
+    <string name="yes">Ja</string>
+    <string name="pause_change_minutes">%+d min</string>
+    <string name="delete">Slett</string>
+    <string name="yes_timer">Ja (%ss)</string>
+    <string name="no">Nei</string>
 </resources>
