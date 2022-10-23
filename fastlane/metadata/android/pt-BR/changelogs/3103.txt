@@ -1,0 +1,2 @@
+- Traduções de colaboradores externos sincronizada
+- Consertado bug que impedia usos de serem editados
