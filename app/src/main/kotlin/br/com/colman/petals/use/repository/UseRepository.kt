@@ -15,13 +15,13 @@ class UseRepository(
   private val useQueries: UseQueries
 ) {
 
-  fun insertAll(uses: Iterable<Use>) {
-    uses.forEach(::insert)
+  fun upsertAll(uses: Iterable<Use>) {
+    uses.forEach(::upsert)
   }
 
-  fun insert(use: Use) {
+  fun upsert(use: Use) {
     Timber.d("Adding use: $use")
-    useQueries.insert(use.toEntity())
+    useQueries.upsert(use.toEntity())
   }
 
   fun getLastUse() = useQueries.selectLast().asFlow().mapToOneOrNull().map { it?.toUse() }

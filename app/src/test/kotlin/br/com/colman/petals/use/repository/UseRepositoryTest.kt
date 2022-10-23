@@ -43,41 +43,49 @@ class UseRepositoryTest : FunSpec({
 
   val use = Use(amountGrams = BigDecimal("1234.567"), costPerGram = BigDecimal("123.01"))
 
-  test("Insert") {
-    target.insert(use)
+  test("Plain insert") {
+    target.upsert(use)
     database.useQueries.selectAll().executeAsOne() shouldBe use.toEntity()
   }
 
-  test("Insert multiple") {
+  test("Plain Insert multiple") {
     val uses = List(10) {
       use.copy(id = "$it")
     }
-    target.insertAll(uses)
+    target.upsertAll(uses)
     target.all().first() shouldBe uses
   }
 
+  test("Upsert") {
+    val otherUse = use.copy(amountGrams = 1.0.toBigDecimal())
+    target.upsert(use)
+    target.upsert(otherUse)
+
+    target.all().first().single() shouldBe otherUse
+  }
+
   test("Get all") {
-    database.useQueries.insert(use.toEntity())
+    database.useQueries.upsert(use.toEntity())
     target.all().first().single() shouldBe use
   }
 
   test("Delete") {
-    database.useQueries.insert(use.toEntity())
+    database.useQueries.upsert(use.toEntity())
     target.delete(use)
     database.useQueries.selectAll().executeAsList().shouldBeEmpty()
   }
 
   test("Last use") {
     val useBefore = use.copy(date = use.date.minusYears(1), id = "2")
-    database.useQueries.insert(use.toEntity())
-    database.useQueries.insert(useBefore.toEntity())
+    database.useQueries.upsert(use.toEntity())
+    database.useQueries.upsert(useBefore.toEntity())
 
     target.getLastUse().first() shouldBe use
     target.getLastUseDate().first() shouldBe use.date
   }
 
   test("Last use performance") {
-    useArb.take(100_000).map(Use::toEntity).forEach(database.useQueries::insert)
+    useArb.take(100_000).map(Use::toEntity).forEach(database.useQueries::upsert)
 
     measureTimeMillis {
       target.getLastUseDate().first()

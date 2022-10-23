@@ -59,7 +59,7 @@ fun Usage(
     val uses by useRepository.all().collectAsState(emptyList())
     if (uses.isNotEmpty()) {
       StatsBlocks(uses)
-      UseCards(uses, { useRepository.insert(it) }, { useRepository.delete(it) })
+      UseCards(uses, { useRepository.upsert(it) }, { useRepository.delete(it) })
     }
   }
 }
