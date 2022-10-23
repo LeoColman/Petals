@@ -31,6 +31,6 @@ class UseImporter(
       }
     }.mapNotNull { it.getOrNull() }
 
-    useRepository.insertAll(uses)
+    useRepository.upsertAll(uses)
   }
 }

@@ -211,6 +211,7 @@ java {
 
 sqldelight {
   database("Database") {
+    dialect = "sqlite:3.25"
     schemaOutputDirectory = file("src/main/sqldelight/databases")
     verifyMigrations = true
   }

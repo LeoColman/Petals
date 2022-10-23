@@ -37,7 +37,7 @@ fun AddUseButton(
   val lastUse by repository.getLastUse().collectAsState(null)
 
   if (openAddUseDialog) {
-    AddUseDialog(lastUse, { repository.insert(it) }) { openAddUseDialog = false }
+    AddUseDialog(lastUse, { repository.upsert(it) }) { openAddUseDialog = false }
   }
 
   if (openConfirmAddUseDialog) {

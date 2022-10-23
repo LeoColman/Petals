@@ -5,8 +5,11 @@ CREATE TABLE Use(
     id TEXT PRIMARY KEY
 );
 
-insert:
-INSERT INTO Use(date, amount_grams, cost_per_gram, id) VALUES ?;
+upsert:
+INSERT INTO Use(date, amount_grams, cost_per_gram, id) VALUES ?
+ON CONFLICT (id) DO UPDATE SET date = excluded.date,
+ amount_grams = excluded.amount_grams,
+  cost_per_gram = excluded.cost_per_gram;
 
 selectLast:
 SELECT * FROM Use ORDER BY date DESC LIMIT 1;

@@ -65,7 +65,7 @@ class UseImporterSpec : FunSpec({
 
       shouldNotThrowAny {
         verify {
-          useRepository.insertAll(uses)
+          useRepository.upsertAll(uses)
         }
       }
     }
@@ -78,7 +78,7 @@ class UseImporterSpec : FunSpec({
 
       shouldNotThrowAny {
         verify {
-          useRepository.insertAll(uses)
+          useRepository.upsertAll(uses)
         }
       }
     }
@@ -90,7 +90,7 @@ class UseImporterSpec : FunSpec({
 
       shouldNotThrowAny {
         verify {
-          useRepository.insertAll(emptyList())
+          useRepository.upsertAll(emptyList())
         }
       }
     }
