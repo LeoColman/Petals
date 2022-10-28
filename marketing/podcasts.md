@@ -5,8 +5,8 @@ Contacting cannabis content creators can bring some visibility to the project as
 
 ## Podcasts in Brazilian Portuguese
 
-- [ ] Cannabis na Íntegra
-- [ ] Mundo Cannabis Brasil
-- [ ] Santa Cannabis Podcast
+- [X] ~Cannabis na Íntegra~ - Não produzem desde Nov/2020
+- [X] ~Mundo Cannabis Brasil~ - Não produzem desde Mai/2020
+- [ ] Santa Cannabis Podcast - E-mail enviado
 - [ ] Cannabis Saluten
 - [ ] Maconhômetro
