@@ -13,7 +13,7 @@
     <string name="start">Inicio</string>
     <string name="reset">Reiniciar</string>
     <string name="tenSecondsIntro">Aguantar más de 10 segundos no aumentará tu subidón, pero sí las cosas malas que te causa el cannabis.</string>
-    <string name="hittimer_why_ten_secs">¿Por qué 10 segundos\?</string>
+    <string name="hittimer_why_ten_secs">¿Por qué 10 segundos?</string>
     <string name="subjectve_high">“Subidón” subjetivo</string>
     <string name="breathhold_duration">Duración de la respiración (segundos)</string>
     <string name="_175thc">1.75% THC</string>
@@ -43,7 +43,7 @@
     <string name="start_date">Fecha inicio</string>
     <string name="change_period">Cambiar periodo</string>
     <string name="grams_distribution_per_hour_of_day">Distribución de gramos por hora del día</string>
-    <string name="current_thc_concentration">Concentración actual de THC: %s \%%</string>
+    <string name="current_thc_concentration">Concentración actual de THC: %s %</string>
     <string name="current_withdrawal_discomfort">Malestar actual por la abstinencia: %s</string>
     <string name="discomfort_strength">Intensidad del malestar</string>
     <string name="day">día</string>
