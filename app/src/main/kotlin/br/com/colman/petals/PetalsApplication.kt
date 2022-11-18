@@ -24,6 +24,7 @@ import br.com.colman.petals.BuildConfig.DEBUG
 import br.com.colman.petals.use.io.IoModules
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
+import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.compose.get
 import org.koin.core.Koin
@@ -61,7 +62,7 @@ private val AndroidModule = module {
 
 private val SqlDelightModule = module {
   single<SqlDriver> {
-    AndroidSqliteDriver(Database.Schema, get(), "Database")
+    AndroidSqliteDriver(Database.Schema, get(), "Database", RequerySQLiteOpenHelperFactory())
   }
   single { Database(get()) }
 }

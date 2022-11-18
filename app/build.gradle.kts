@@ -191,6 +191,7 @@ dependencies {
   implementation(libs.sqldelight.android.driver)
   implementation(libs.sqldelight.coroutines.extensions)
   testImplementation(libs.sqldelight.sqlite.driver)
+  implementation(libs.requery.sqlite)
 
 }
 
