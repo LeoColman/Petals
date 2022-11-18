@@ -34,7 +34,7 @@
     <string name="breathhold_duration">Tempo Segurando (segundos)</string>
     <string name="subjectve_high">\"Brisa\" subjetiva</string>
     <string name="hittimer_why_ten_secs">Por que 10 segundos?</string>
-    <string name="hittime_source">Fonte: Azorlosa JL, Greenwald MK, Stitzer ML. Fumo de Marijuana: Efeitos de diferentes volumes de inalação e tempo prendendo. J Pharmacol Exp Ther. Fev. de 1995; 272(2):560–9. PMID: 7853169</string>
+    <string name="hittime_source">Fonte: Azorlosa JL, Greenwald MK, Stitzer ML. Fumo de Marijuana: Efeitos de diferentes volumes de inalação e tempo prendendo. J Pharmacol Exp Ther. Fev. de 1995; 272(2):560–9. PMID: 7853169.</string>
     <string name="tenSecondsIntro">Segurar por mais de 10 segundos não irá aumentar sua brisa, mas aumentará o dano que maconha pode causar a você.</string>
     <string name="hit_timer">Timer</string>
     <string name="add_use">Adicionar Uso</string>
@@ -76,13 +76,15 @@
     <string name="thc_concentration">Concentração de THC (%)</string>
     <string name="current_withdrawal_discomfort">Desconforto atual de abstinência: %s</string>
     <string name="discomfort_strength">Intensidade de desconforto</string>
-    <string name="date_at_time">%s às %s</string>
+    <string name="date_at_time">%1$s às %2$s</string>
     <plurals name="amount_uses">
         <item quantity="one">%s uso</item>
+        <item quantity="many">%s usos</item>
         <item quantity="other">%s usos</item>
     </plurals>
     <plurals name="amount_days">
         <item quantity="one">%s dia</item>
+        <item quantity="many">%s dias</item>
         <item quantity="other">%s dias</item>
     </plurals>
     <string name="average_per">Média por %s</string>
