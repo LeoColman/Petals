@@ -43,7 +43,7 @@ android {
   defaultConfig {
     applicationId = "br.com.colman.petals"
     minSdk = 21
-    targetSdk = 30
+    targetSdk = 33
     versionCode = 3200
     versionName = "3.2.0"
 
