@@ -1,0 +1,5 @@
+Sla Timer toevoegen
+
+Onderzoek toont aan dat het langer dan 10 seconden inhouden van wiet schadelijk is en de high niet verhoogt.
+Deze update voegt een Sla Timer toe om je te helpen de duur van de 'sla/hit' te controleren, waardoor deze
+schade.

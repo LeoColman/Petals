@@ -1,0 +1,2 @@
+- Synchroniseer vertalingen van externe medewerkers
+- Bug opgelost waardoor gebruiken niet bewerkbaar zijn
