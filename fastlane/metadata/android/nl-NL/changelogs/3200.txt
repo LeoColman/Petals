@@ -1,0 +1,2 @@
+- Bug opgelost waardoor sommige apparaten geen Use kunnen invoegen
+- Vertalingen van Weblate toegevoegd

@@ -1,0 +1,10 @@
+De Open Source app Petals wil zijn gebruikers helpen om te stoppen met wiet, hun gebruik te verminderen of gewoon te weten hoeveel ze gebruiken.
+
+Kenmerken
+
+- Verbruik bijhouden
+- Beperk je verbruik
+- Volg het verbruik
+- Bekijk statistieken om jouw verbruik te begrijpen
+- Instructies voor schadebeperking
+- Exporteren en importeren als eenvoudige CSV-bestanden

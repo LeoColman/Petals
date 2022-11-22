@@ -1,0 +1,2 @@
+- Schakelbare trilling toevoegen aan het einde van de hit-timer
+- Scherm donkerder maken bij hit timer

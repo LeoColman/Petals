@@ -1,0 +1,1 @@
+- Configuratie-optie toevoegen aan valutapictogram
