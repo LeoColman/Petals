@@ -13,7 +13,7 @@
     <string name="start">Старт</string>
     <string name="reset">Перезапуск</string>
     <string name="tenSecondsIntro">Удерживание вдоха длительнее 10 секунд не увеличит ваш кайф, но повысит вред, причиняемый употреблением.</string>
-    <string name="hittimer_why_ten_secs">Почему 10 секунд\?</string>
+    <string name="hittimer_why_ten_secs">Почему 10 секунд?</string>
     <string name="subjectve_high">Субъективный \"кайф\"</string>
     <string name="breathhold_duration">Время задержки дыхания (в секундах)</string>
     <string name="_175thc">1.75% ТГК</string>
@@ -78,7 +78,7 @@
     <string name="see_more">Увидеть больше</string>
     <string name="cost_per_gram_short">%s/г</string>
     <string name="import_import">Импортировать</string>
-    <string name="current_thc_concentration">Текущая концентрация ТГК: %s \%%</string>
+    <string name="current_thc_concentration">Текущая концентрация ТГК: %s %</string>
     <string name="grams_distribution_per_hour_of_day">Распределение граммов по часам дня</string>
     <string name="week">неделю</string>
     <string name="grams">Граммы</string>
