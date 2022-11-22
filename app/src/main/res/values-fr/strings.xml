@@ -66,7 +66,7 @@
     <string name="change_period">Période de changement</string>
     <string name="last_ninety_days">Les 90 derniers jours</string>
     <string name="grams">Grammes</string>
-    <string name="current_thc_concentration">Concentration actuelle en THC : %s %</string>
+    <string name="current_thc_concentration">Concentration actuelle en THC : %s \\%%</string>
     <plurals name="amount_days">
         <item quantity="one">%s jour</item>
         <item quantity="many">%s jours</item>
