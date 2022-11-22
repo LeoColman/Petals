@@ -51,7 +51,7 @@
     <string name="change_period">Zeitraum ändern</string>
     <string name="grams">Gramm</string>
     <string name="grams_distribution_per_hour_of_day">Verteilung in Gramm pro Stunde des Tages</string>
-    <string name="current_thc_concentration">Aktuelle THC-Konzentration: %s %</string>
+    <string name="current_thc_concentration">Aktuelle THC-Konzentration: %s \%%</string>
     <string name="thc_concentration">THC-Konzentration(%)</string>
     <string name="current_withdrawal_discomfort">Aktuelle Entzugsbeschwerden: %s</string>
     <string name="discomfort_strength">Stärke des Unbehagens</string>
