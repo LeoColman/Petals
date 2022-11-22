@@ -1,0 +1,10 @@
+Die Open-Source-App Petals soll ihren Nutzern helfen, entweder mit dem Kiffen aufzuhören, den Konsum zu reduzieren oder einfach zu wissen, wie viel sie konsumieren.
+
+Funktionen
+
+- Konsum verfolgen
+- Zeitliche Erfassung des Konsums
+- Verfolgen Sie Ihren Verbrauch
+- Statistiken zum Verständnis Ihres Verbrauchs
+- Anweisungen zur Schadensbegrenzung
+- Export und Import als einfache CSV-Dateien
