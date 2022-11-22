@@ -1,0 +1,2 @@
+- Fehler behoben, der bei einigen Geräten das Einfügen von Use verhindert
+- Übersetzungen von Weblate hinzugefügt

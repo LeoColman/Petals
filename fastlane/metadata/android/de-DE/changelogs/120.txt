@@ -1,0 +1,5 @@
+Zug-Timer hinzufügen
+
+Die Forschung zeigt, dass es schädlich ist, das Gras länger als 10 Sekunden zu konsumieren und dass es den Rausch nicht verstärkt.
+Dieses Update fügt einen Zug Timer hinzu, der Dir hilft, die Dauer des "Zuges/Hits" zu kontrollieren, um diesen Schaden zu reduzieren.
+Schaden.
