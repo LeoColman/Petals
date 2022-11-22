@@ -61,7 +61,7 @@
     <plurals name="amount_days">
         <item quantity="one">%s Día</item>
         <item quantity="many">%s Días</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="export_export">Exportar</string>
     <string name="years">Años</string>
@@ -78,7 +78,7 @@
     <plurals name="amount_uses">
         <item quantity="one">%s uso</item>
         <item quantity="many">%s usos</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="year">año</string>
     <string name="repository_link_description">Esta app es software libre y de código abierto bajo la licencia AGPL-3.0. El código fuente está disponible en github.com/LeoColman/Petals</string>
