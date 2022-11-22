@@ -1,0 +1,1 @@
+- Fix bug with some translated languages crashing on symptoms page
