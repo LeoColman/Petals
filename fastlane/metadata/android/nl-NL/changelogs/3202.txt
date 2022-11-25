@@ -1,0 +1,1 @@
+- Bug oplossen waarbij sommige vertaalde talen crashen op de symptomenpagina
