@@ -1,0 +1,1 @@
+- Fix sommige vertalingen worden niet geüpload naar google play store
