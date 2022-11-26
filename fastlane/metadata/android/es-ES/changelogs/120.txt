@@ -1,0 +1,5 @@
+Añade un temporizador 
+
+Las investigaciones demuestran que mantener el cannabis durante más de 10 segundos es perjudicial y no aumenta el efecto.
+Esta actualización añade un temporizador para ayudarte a controlar la duración del "golpe", ayudando a reducir este
+daño.

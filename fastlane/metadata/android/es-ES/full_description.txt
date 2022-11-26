@@ -1,0 +1,10 @@
+La aplicación de código abierto Petals pretende ayudar a sus usuarios a dejar el cannabis, a reducir su consumo o simplemente a saber cuánto están consumiendo.
+
+Características
+
+- Seguimiento del consumo
+- Controla el tiempo de tu consumo
+- Seguimiento del uso
+- Consulta las estadísticas para entender tu consumo
+- Instrucciones de reducción de daños
+- Exportar e importar como simples archivos CSV
