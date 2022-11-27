@@ -1,1 +1,0 @@
-- Fix some translations not being uploaded to google play store
