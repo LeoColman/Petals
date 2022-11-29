@@ -12,7 +12,7 @@ ON CONFLICT (id) DO UPDATE SET date = excluded.date,
   cost_per_gram = excluded.cost_per_gram;
 
 selectLast:
-SELECT * FROM Use ORDER BY date DESC LIMIT 1;
+SELECT * FROM Use WHERE datetime(date) <= datetime('now', 'localtime') ORDER BY date DESC LIMIT 1;
 
 selectAll:
 SELECT * FROM Use;
