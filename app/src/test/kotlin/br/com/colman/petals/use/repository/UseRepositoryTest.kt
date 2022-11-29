@@ -77,15 +77,24 @@ class UseRepositoryTest : FunSpec({
 
   test("Last use") {
     val useBefore = use.copy(date = use.date.minusYears(1), id = "2")
-    database.useQueries.upsert(use.toEntity())
-    database.useQueries.upsert(useBefore.toEntity())
+    target.upsert(use)
+    target.upsert(useBefore)
+
+    target.getLastUse().first() shouldBe use
+    target.getLastUseDate().first() shouldBe use.date
+  }
+
+  test("Last use should disconsider uses in the future") {
+    val useInTheFuture = use.copy(date = use.date.plusHours(3), id = "2")
+    target.upsert(use)
+    target.upsert(useInTheFuture)
 
     target.getLastUse().first() shouldBe use
     target.getLastUseDate().first() shouldBe use.date
   }
 
   test("Last use performance") {
-    useArb.take(100_000).map(Use::toEntity).forEach(database.useQueries::upsert)
+    useArb.take(10_000).map(Use::toEntity).forEach(database.useQueries::upsert)
 
     measureTimeMillis {
       target.getLastUseDate().first()
