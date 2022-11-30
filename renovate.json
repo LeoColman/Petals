@@ -7,5 +7,7 @@
   "automerge": true,
   "major": {
     "automerge": false
-  }
+  },
+
+  "commitMessagePrefix": "⬆"
 }
