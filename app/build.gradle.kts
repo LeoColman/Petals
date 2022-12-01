@@ -38,6 +38,7 @@ repositories {
 }
 
 android {
+  namespace = "br.com.colman.petals"
   compileSdk = 33
 
   defaultConfig {
