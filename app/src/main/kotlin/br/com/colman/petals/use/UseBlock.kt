@@ -61,7 +61,6 @@ import java.time.LocalDate.now
 @Composable
 fun StatsBlocks(uses: List<Use>) {
   Row(Modifier.horizontalScroll(rememberScrollState())) {
-
     UseBlock(stringResource(today), uses.filter { it.date.toLocalDate() == now() })
 
     UseBlock(stringResource(this_week), uses.filter { it.date.toLocalDate().with(MONDAY) == now().with(MONDAY) })
@@ -117,7 +116,8 @@ private fun UseBlock(
   ) {
     Column(Modifier.padding(8.dp), spacedBy(4.dp)) {
       Text(
-        title, fontWeight = Bold,
+        title,
+        fontWeight = Bold,
         modifier = Modifier
           .padding(8.dp)
           .align(CenterHorizontally)

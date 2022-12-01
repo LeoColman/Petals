@@ -26,7 +26,12 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldStartWith
 import io.kotest.property.Arb
-import io.kotest.property.arbitrary.*
+import io.kotest.property.arbitrary.arbitrary
+import io.kotest.property.arbitrary.bigDecimal
+import io.kotest.property.arbitrary.localDateTime
+import io.kotest.property.arbitrary.map
+import io.kotest.property.arbitrary.next
+import io.kotest.property.arbitrary.take
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf

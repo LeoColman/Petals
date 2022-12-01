@@ -127,7 +127,8 @@ private fun SettingsButton(
   navController: NavController
 ) {
   Icon(
-    TablerIcons.Settings, stringResource(settings),
+    TablerIcons.Settings,
+    stringResource(settings),
     Modifier.clickable {
       navController.navigate("settings")
     }

@@ -14,5 +14,7 @@ data class Pause(
 
   fun isActive(time: LocalTime = LocalTime.now()) = if (passesThroughMidnight) {
     time.isAfter(startTime) || time.isBefore(endTime)
-  } else time in startTime..endTime
+  } else {
+    time in startTime..endTime
+  }
 }

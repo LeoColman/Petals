@@ -82,7 +82,6 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
     elevation = 6.dp
   ) {
     Row(Modifier.fillMaxWidth(), spacedBy(8.dp), CenterVertically) {
-
       Column(
         Modifier
           .padding(24.dp)
@@ -117,7 +116,8 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
         Modifier
           .padding(24.dp)
           .weight(0.3F),
-        spacedBy(24.dp), Alignment.End
+        spacedBy(24.dp),
+        Alignment.End
       ) {
         EditDialogButton(use, onEditUse)
 

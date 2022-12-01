@@ -35,8 +35,11 @@ fun PauseButton(
     PauseDialog(
       pause = pause ?: Pause(),
       setPause = {
-        if (it == null) pauseRepository.delete()
-        else pauseRepository.set(it)
+        if (it == null) {
+          pauseRepository.delete()
+        } else {
+          pauseRepository.set(it)
+        }
       },
       onDismiss = { openPauseDialog = false }
     )

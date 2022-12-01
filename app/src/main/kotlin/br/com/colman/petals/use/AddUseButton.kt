@@ -79,7 +79,6 @@ private fun ConfirmAddUseDuringPauseDialog(
   onDismiss: () -> Unit = {},
   onConfirm: () -> Unit = {}
 ) {
-
   var yesTimer by remember { mutableStateOf(10) }
   var yesEnabled by remember { mutableStateOf(yesTimer == 0) }
 
