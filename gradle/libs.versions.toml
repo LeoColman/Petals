@@ -7,7 +7,7 @@ koin = "3.3.0"
 kotest = "5.5.4"
 kotlin = "1.6.10"
 vanpra-material-dialogs = "0.6.3"
-sqldelight = "1.5.3"
+sqldelight = "1.5.4"
 
 [libraries]
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:1.2.2"
