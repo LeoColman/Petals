@@ -84,7 +84,8 @@ fun ComposeHitTimer(repository: HitTimerRepository = get()) {
       .fillMaxWidth()
       .background(backgroundColor)
       .verticalScroll(rememberScrollState()),
-    spacedBy(24.dp), CenterHorizontally
+    spacedBy(24.dp),
+    CenterHorizontally
   ) {
     Box(Modifier.padding(top = 60.dp)) {
       TimerText(millisLeft)

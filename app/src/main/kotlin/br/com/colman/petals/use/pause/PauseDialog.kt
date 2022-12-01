@@ -56,7 +56,6 @@ fun PauseDialogContent(
   pause: Pause = Pause(),
   setPause: (Pause) -> Unit = { }
 ) {
-
   var pauseStart by remember { mutableStateOf(pause.startTime) }
   var pauseEnd by remember { mutableStateOf(pause.endTime) }
 
