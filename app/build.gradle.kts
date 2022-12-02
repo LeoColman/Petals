@@ -200,6 +200,7 @@ dependencies {
     because("It's useful for fuzzy testing (mutating strings, jsons, etc)")
   }
 
+  // SQLite
   implementation(libs.sqldelight.android.driver)
   implementation(libs.sqldelight.coroutines.extensions)
   testImplementation(libs.sqldelight.sqlite.driver)
@@ -208,6 +209,8 @@ dependencies {
   // Google Ads
   "playstoreImplementation"("com.google.android.gms:play-services-ads:21.4.0")
 
+  // Glance
+  implementation(libs.glance)
 }
 
 tasks.withType<Test> {
