@@ -23,7 +23,6 @@
     },
     {
       "moduleLicense": null,
-      "moduleVersion": "1.6.1",
       "moduleName": "org.jetbrains.kotlinx:kotlinx-coroutines-core",
       "comment": "Coroutines is Apache 2 https://github.com/Kotlin/kotlinx.coroutines/blob/master/LICENSE.txt"
 
