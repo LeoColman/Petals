@@ -18,7 +18,7 @@ default_platform(:android)
 platform :android do
     desc "Deploy to Google Play Store"
     lane :playstore do
-        gradle(task: "bundleGithub")
+        gradle(task: "clean bundleGithub")
         upload_to_play_store()
     end
 end
