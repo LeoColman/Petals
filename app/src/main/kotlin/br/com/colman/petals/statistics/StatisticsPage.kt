@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R
 import br.com.colman.petals.R.string.*
 import br.com.colman.petals.statistics.card.AverageUseCard
+import br.com.colman.petals.statistics.graph.UsePerDayOfWeekGraph
 import br.com.colman.petals.statistics.graph.UsePerHourGraph
 import br.com.colman.petals.use.repository.UseRepository
 import com.vanpra.composematerialdialogs.MaterialDialog
@@ -84,7 +85,7 @@ fun StatisticsPage(useRepository: UseRepository) {
         onValueChange = {},
         leadingIcon = { Icon(TablerIcons.Calendar, null) },
         enabled = false,
-        label = { Text(stringResource(R.string.start_date)) }
+        label = { Text(stringResource(start_date)) }
       )
 
       OutlinedTextField(
@@ -100,6 +101,7 @@ fun StatisticsPage(useRepository: UseRepository) {
     }
 
     UsePerHourGraph(usesInPeriod)
+    UsePerDayOfWeekGraph(usesInPeriod)
     AverageUseCard(usesInPeriod, period)
   }
 }

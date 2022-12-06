@@ -108,4 +108,5 @@
     <string name="yes_timer">Yes (%ss)</string>
     <string name="no">No</string>
     <string name="add_use_during_pause_alert">You scheduled this period to be a pause. Are you sure you want to add an use now?</string>
+    <string name="grams_distribution_per_day_of_week">Grams distribution per day of week</string>
 </resources>

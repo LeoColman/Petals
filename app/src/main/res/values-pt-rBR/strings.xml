@@ -106,4 +106,5 @@
     <string name="yes_timer">Sim (%ss)</string>
     <string name="no">Não</string>
     <string name="add_use_during_pause_alert">Você marcou este horário como uma pause. Tem certeza que deseja adicionar um uso agora?</string>
+    <string name="grams_distribution_per_day_of_week">Distribuição de gramas por dia da semana</string>
 </resources>
