@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
@@ -23,6 +24,8 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.time.DayOfWeek
 import java.time.LocalDateTime
+import java.time.format.TextStyle
+import java.util.Locale
 
 @Composable
 @Preview
@@ -43,6 +46,7 @@ fun UsePerDayOfWeekGraph(uses: List<Use>) {
   val grams = stringResource(grams)
   val description = stringResource(grams_distribution_per_day_of_week)
   val colors = MaterialTheme.colors
+  val locale = LocalContext.current.resources.configuration.locales[0]
 
   Box(
     Modifier
@@ -58,7 +62,7 @@ fun UsePerDayOfWeekGraph(uses: List<Use>) {
       chart.legend.textColor = colors.primary.toArgb()
 
       chart.xAxis.apply {
-        valueFormatter = DayOfWeekFormatter
+        valueFormatter = DayOfWeekFormatter(locale)
         axisMinimum = 1.0f
         axisMaximum = 7.0f
         granularity = 1.0f
@@ -96,8 +100,8 @@ private fun calculateGramDistributionPerDayOfWeek(uses: List<Use>): List<BarEntr
     .map { (k, v) -> BarEntry(k.value.toFloat(), v.toFloat()) }
 }
 
-object DayOfWeekFormatter : ValueFormatter() {
+class DayOfWeekFormatter(private val locale: Locale) : ValueFormatter() {
   override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-    return DayOfWeek.of(value.toInt()).name // TODO Localize names
+    return DayOfWeek.of(value.toInt()).getDisplayName(TextStyle.FULL, locale)
   }
 }
