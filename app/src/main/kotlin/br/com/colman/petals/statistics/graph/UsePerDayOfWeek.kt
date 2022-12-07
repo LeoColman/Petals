@@ -63,11 +63,17 @@ fun UsePerDayOfWeekGraph(uses: List<Use>) {
         axisMaximum = 7.0f
         granularity = 1.0f
         labelCount = 7
+
+        textColor = colors.primary.toArgb()
+        axisLineColor = colors.primary.toArgb()
       }
 
       chart.axisLeft.isEnabled = false
       chart.axisRight.apply {
         axisMinimum = 0f
+
+        textColor = colors.primary.toArgb()
+        axisLineColor = colors.primary.toArgb()
       }
 
       chart.data = BarData(gramsData).apply {
