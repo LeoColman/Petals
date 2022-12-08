@@ -90,4 +90,5 @@
     <string name="delete">Supprimer</string>
     <string name="yes_timer">Oui (%s s)</string>
     <string name="add_use_during_pause_alert">Vous avez programmé cette période comme une pause. Êtes-vous sûr·e de vouloir ajouter une utilisation maintenant \?</string>
+    <string name="grams_distribution_per_day_of_week">Distribution de grammes par jour de la semaine</string>
 </resources>
