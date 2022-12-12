@@ -81,13 +81,12 @@ android {
 
     create("playstore") {
       dimension = "distribution"
+      signingConfig = signingConfigs.findByName("self-sign")
     }
-
-    if(signingConfigs.findByName("self-sign") == null) return@productFlavors
 
     create("github") {
       dimension = "distribution"
-      signingConfig = signingConfigs.getByName("self-sign")
+      signingConfig = signingConfigs.findByName("self-sign")
     }
   }
 
