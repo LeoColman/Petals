@@ -1,0 +1,1 @@
+- Include ads in the google play store version of the app
