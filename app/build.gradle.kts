@@ -79,11 +79,23 @@ android {
       dimension = "distribution"
     }
 
+    create("playstore") {
+      dimension = "distribution"
+    }
+
     if(signingConfigs.findByName("self-sign") == null) return@productFlavors
 
     create("github") {
       dimension = "distribution"
       signingConfig = signingConfigs.getByName("self-sign")
+    }
+  }
+
+  sourceSets {
+    named("playstore") {
+      res.srcDirs("src/playstore/res")
+      java.srcDirs("src/playstore/java")
+      kotlin.srcDirs("src/playstore/kotlin")
     }
   }
 
@@ -193,6 +205,9 @@ dependencies {
   implementation(libs.sqldelight.coroutines.extensions)
   testImplementation(libs.sqldelight.sqlite.driver)
   implementation(libs.requery.sqlite)
+
+  // Google Ads
+  "playstoreImplementation"("com.google.android.gms:play-services-ads:21.3.0")
 
 }
 
