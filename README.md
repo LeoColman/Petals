@@ -26,6 +26,10 @@ height="80">](https://f-droid.org/packages/br.com.colman.petals/)
 alt="Get it on Play Store"
 height="80">](https://play.google.com/store/apps/details?id=br.com.colman.petals)
 
+### ⚠️ The Google Play Store version contains advertisements
+
+For an ad free experience download the app either from F-Droid or from the Releases Page.
+
 ## Translations
 Translations are hosted at Weblate. You can contribute to your language [here](https://hosted.weblate.org/engage/petals-app)
 
