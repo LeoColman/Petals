@@ -12,8 +12,14 @@ class SettingsRepository(
 ) {
 
   val currencyIcon = datastore.data.map { it[CurrencyIcon] ?: "$" }
-  val dateFormatList = listOf("yyyy-MM-dd", "yyyy/MM/dd", "dd-MM-yyyy", "dd.MM.yyyy",
-                               "MM/dd/yyyy", "MM-dd-yyyy")
+  val dateFormatList = listOf(
+    "yyyy-MM-dd",
+    "yyyy/MM/dd",
+    "dd-MM-yyyy",
+    "dd.MM.yyyy",
+    "MM/dd/yyyy",
+    "MM-dd-yyyy"
+  )
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
   val timeFormatList = listOf("HH-mm", "HH:mm", "mm-HH", "mm:HH")
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }

@@ -37,13 +37,21 @@ import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import java.util.*
 
 @Composable
 fun LastUseDateTimer(lastUseDate: LocalDateTime) {
   val settingsRepository = get<SettingsRepository>()
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val dateString = DateTimeFormatter.ofPattern( String.format("%s %s", dateFormat, timeFormat)).format(lastUseDate)
+  val dateString = DateTimeFormatter.ofPattern(
+    String.format(
+      Locale.US,
+      "%s %s",
+      dateFormat,
+      timeFormat
+    )
+  ).format(lastUseDate)
 
   var millis by remember { mutableStateOf(ChronoUnit.MILLIS.between(lastUseDate, now())) }
 
