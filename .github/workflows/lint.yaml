@@ -5,6 +5,7 @@
 name: Lint
 on:
   push: {}
+  pull_request: {}
 jobs:
   check_yaml_consistency:
     runs-on: ubuntu-latest
