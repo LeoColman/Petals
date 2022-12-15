@@ -29,11 +29,8 @@ class SettingsRepositoryTest : FunSpec({
 
   test("Validate date formats") {
     val flow = target.dateFormatList
-    val allFormats = mutableListOf<Boolean>()
     flow.forEach {
       DateTimeFormatter.ofPattern(it)
-      allFormats.add(true)
     }
-    allFormats shouldBe true
   }
 })
