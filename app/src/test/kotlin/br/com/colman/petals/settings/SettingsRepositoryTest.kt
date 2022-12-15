@@ -35,4 +35,14 @@ class SettingsRepositoryTest : FunSpec({
     }
     value shouldBe true
   }
+
+  test("Validate time formats") {
+    val flow = target.timeFormatList
+    var value = false
+    flow.forEach {
+      DateTimeFormatter.ofPattern(it)
+      value = true
+    }
+    value shouldBe true
+  }
 })
