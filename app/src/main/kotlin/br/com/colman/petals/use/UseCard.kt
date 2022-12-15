@@ -71,8 +71,11 @@ fun UseCards(
 @Composable
 fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use) -> Unit = {}) {
   val (date, amountGrams, costPerGram) = use
-  val dateString = date.format(ofPattern("yyyy/MM/dd"))
-  val timeString = date.format(ofPattern("HH:mm"))
+  val settingsRepository = get<SettingsRepository>()
+  val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
+  val dateString = date.format(ofPattern(dateFormat))
+  val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
+  val timeString = date.format(ofPattern(timeFormat))
   val currencySymbol by get<SettingsRepository>().currencyIcon.collectAsState("$")
 
   Card(

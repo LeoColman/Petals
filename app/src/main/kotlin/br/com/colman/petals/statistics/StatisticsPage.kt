@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R
 import br.com.colman.petals.R.string.*
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.statistics.card.AverageUseCard
 import br.com.colman.petals.statistics.graph.UsePerDayOfWeekGraph
 import br.com.colman.petals.statistics.graph.UsePerHourGraph
@@ -26,6 +27,7 @@ import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Calendar
 import me.moallemi.tools.daterange.localdate.LocalDateRange
+import org.koin.androidx.compose.get
 import java.time.LocalDate
 import java.time.LocalDate.now
 import java.time.format.DateTimeFormatter
@@ -40,6 +42,9 @@ fun MyDropdown(text: String, days: Int, onClick: (LocalDateRange) -> Unit) {
 
 @Composable
 fun StatisticsPage(useRepository: UseRepository) {
+  val settingsRepository = get<SettingsRepository>()
+  val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
+
   Column(Modifier.verticalScroll(rememberScrollState())) {
     val uses by useRepository.all().collectAsState(emptyList())
 
@@ -81,7 +86,7 @@ fun StatisticsPage(useRepository: UseRepository) {
         modifier = Modifier
           .weight(0.5f)
           .clickable { startDateDialog.show() },
-        value = period.start.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+        value = period.start.format(DateTimeFormatter.ofPattern(dateFormat)),
         onValueChange = {},
         leadingIcon = { Icon(TablerIcons.Calendar, null) },
         enabled = false,
@@ -92,7 +97,7 @@ fun StatisticsPage(useRepository: UseRepository) {
         modifier = Modifier
           .weight(0.5f)
           .clickable { endDateDialog.show() },
-        value = period.endInclusive.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+        value = period.endInclusive.format(DateTimeFormatter.ofPattern(dateFormat)),
         onValueChange = {},
         leadingIcon = { Icon(TablerIcons.Calendar, null) },
         enabled = false,
