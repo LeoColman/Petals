@@ -6,6 +6,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
+import java.text.SimpleDateFormat
 
 class SettingsRepositoryTest : FunSpec({
   val datastore = PreferenceDataStoreFactory.create { tempfile(suffix = ".preferences_pb") }
@@ -23,5 +24,15 @@ class SettingsRepositoryTest : FunSpec({
   test("Persists specified currency to permanent storage") {
     target.setCurrencyIcon("R$")
     datastore.data.first().get(CurrencyIcon) shouldBe "R$"
+  }
+
+  test("Validate date formats") {
+    val flow = target.dateFormatList
+    val allFormats = mutableListOf<Boolean>()
+    flow.forEach {
+      SimpleDateFormat(it).parse(it)
+      allFormats.add(true)
+    }
+    allFormats shouldBe true
   }
 })
