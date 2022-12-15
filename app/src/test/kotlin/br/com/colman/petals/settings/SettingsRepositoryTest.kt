@@ -32,5 +32,6 @@ class SettingsRepositoryTest : FunSpec({
     flow.forEach {
       DateTimeFormatter.ofPattern(it)
     }
+    assert(true)
   }
 })
