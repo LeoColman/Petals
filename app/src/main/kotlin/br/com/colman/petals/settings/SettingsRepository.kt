@@ -18,7 +18,8 @@ class SettingsRepository(
     "dd-MM-yyyy",
     "dd.MM.yyyy",
     "MM/dd/yyyy",
-    "MM-dd-yyyy"
+    "MM-dd-yyyy",
+    "invalidFormat"
   )
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
   val timeFormatList = listOf("HH-mm", "HH:mm", "mm-HH", "mm:HH")
