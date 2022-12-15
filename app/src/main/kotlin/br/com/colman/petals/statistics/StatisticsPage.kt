@@ -41,8 +41,9 @@ fun MyDropdown(text: String, days: Int, onClick: (LocalDateRange) -> Unit) {
 }
 
 @Composable
-fun StatisticsPage(useRepository: UseRepository) {
-  val settingsRepository = get<SettingsRepository>()
+fun StatisticsPage(
+  useRepository: UseRepository,
+  settingsRepository: SettingsRepository) {
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
 
   Column(Modifier.verticalScroll(rememberScrollState())) {

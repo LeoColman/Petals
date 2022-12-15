@@ -86,7 +86,7 @@ private fun CurrencyListItem(
 @Composable
 fun DateListItem(
   dateFormat: String  = "",
-  dateFormatList: Array<String> = arrayOf(),
+  dateFormatList: List<String> = listOf(),
   setDateFormat: (String) -> Unit = {}
 ) {
   var shouldShowDialog by remember { mutableStateOf(false) }
@@ -109,7 +109,7 @@ fun DateListItem(
 @Composable
 fun TimeListItem(
   timeFormat: String  = "",
-  timeFormatList: Array<String> = arrayOf(),
+  timeFormatList: List<String> = listOf(),
   setTimeFormat: (String) -> Unit = {}
 ) {
   var shouldShowDialog by remember { mutableStateOf(false) }
@@ -132,7 +132,7 @@ fun TimeListItem(
 @Composable
 private fun TimeDialog(
   timeFormat: String = "",
-  timeFormatList: Array<String> = arrayOf(),
+  timeFormatList: List<String> = listOf(),
   setTimeFormat: (String) -> Unit = {},
   onDismiss: () -> Unit = {},
 ) {
@@ -189,7 +189,7 @@ private fun TimeDialog(
 @Composable
 private fun DateDialog(
   dateFormat: String = "",
-  dateFormatList: Array<String> = arrayOf(),
+  dateFormatList: List<String> = listOf(),
   setDateFormat: (String) -> Unit = {},
   onDismiss: () -> Unit = {},
 ) {

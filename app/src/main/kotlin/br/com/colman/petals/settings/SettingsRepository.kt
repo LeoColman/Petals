@@ -12,10 +12,11 @@ class SettingsRepository(
 ) {
 
   val currencyIcon = datastore.data.map { it[CurrencyIcon] ?: "$" }
-  val dateFormatList = arrayOf("yyyy-MM-dd", "yyyy/MM/dd", "dd-MM-yyyy", "dd.MM.yyyy")
-  val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList[0] }
-  val timeFormatList = arrayOf("HH-mm", "HH:mm", "mm-HH", "mm:HH")
-  val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList[0] }
+  val dateFormatList = listOf("yyyy-MM-dd", "yyyy/MM/dd", "dd-MM-yyyy", "dd.MM.yyyy",
+                               "MM/dd/yyyy", "MM-dd-yyyy")
+  val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
+  val timeFormatList = listOf("HH-mm", "HH:mm", "mm-HH", "mm:HH")
+  val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
     datastore.edit { it[CurrencyIcon] = value }
