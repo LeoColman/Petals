@@ -6,7 +6,6 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
-import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 
 class SettingsRepositoryTest : FunSpec({
@@ -29,9 +28,11 @@ class SettingsRepositoryTest : FunSpec({
 
   test("Validate date formats") {
     val flow = target.dateFormatList
+    var value = false
     flow.forEach {
       DateTimeFormatter.ofPattern(it)
+      value = true
     }
-    assert(true)
+    value shouldBe true
   }
 })
