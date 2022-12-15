@@ -7,6 +7,7 @@ import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 
 class SettingsRepositoryTest : FunSpec({
   val datastore = PreferenceDataStoreFactory.create { tempfile(suffix = ".preferences_pb") }
@@ -30,7 +31,7 @@ class SettingsRepositoryTest : FunSpec({
     val flow = target.dateFormatList
     val allFormats = mutableListOf<Boolean>()
     flow.forEach {
-      SimpleDateFormat(it).parse(it)
+      DateTimeFormatter.ofPattern(it)
       allFormats.add(true)
     }
     allFormats shouldBe true
