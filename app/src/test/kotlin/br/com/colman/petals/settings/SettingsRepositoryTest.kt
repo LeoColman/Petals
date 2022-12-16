@@ -2,6 +2,7 @@ package br.com.colman.petals.settings
 
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import br.com.colman.petals.settings.SettingsRepository.Companion.CurrencyIcon
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
@@ -27,22 +28,16 @@ class SettingsRepositoryTest : FunSpec({
   }
 
   test("Validate date formats") {
-    val flow = target.dateFormatList
-    var value = false
-    flow.forEach {
-      DateTimeFormatter.ofPattern(it)
-      value = true
+    val dateFormatList = target.dateFormatList
+    shouldNotThrowAny {
+      dateFormatList.forEach { DateTimeFormatter.ofPattern(it) }
     }
-    value shouldBe true
   }
 
   test("Validate time formats") {
-    val flow = target.timeFormatList
-    var value = false
-    flow.forEach {
-      DateTimeFormatter.ofPattern(it)
-      value = true
+    val timeFormatList = target.timeFormatList
+    shouldNotThrowAny {
+      timeFormatList.forEach { DateTimeFormatter.ofPattern(it) }
     }
-    value shouldBe true
   }
 })
