@@ -2,6 +2,8 @@ package br.com.colman.petals.settings
 
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import br.com.colman.petals.settings.SettingsRepository.Companion.CurrencyIcon
+import br.com.colman.petals.settings.SettingsRepository.Companion.DateFormat
+import br.com.colman.petals.settings.SettingsRepository.Companion.TimeFormat
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
@@ -39,5 +41,33 @@ class SettingsRepositoryTest : FunSpec({
     shouldNotThrowAny {
       timeFormatList.forEach { DateTimeFormatter.ofPattern(it) }
     }
+  }
+
+  test("Defaults date format to yyyy-MM-dd") {
+    target.dateFormat.first() shouldBe "yyyy-MM-dd"
+  }
+
+  test("Changes date format to the specified one") {
+    target.setDateFormat("yyyy/MM/dd")
+    target.dateFormat.first() shouldBe "yyyy/MM/dd"
+  }
+
+  test("Persists specified time format to permanent storage") {
+    target.setDateFormat("yyyy/MM/dd")
+    datastore.data.first().get(DateFormat) shouldBe "yyyy/MM/dd"
+  }
+
+  test("Defaults time format to HH-mm") {
+    target.timeFormat.first() shouldBe "HH-mm"
+  }
+
+  test("Changes time format to the specified one") {
+    target.setTimeFormat("HH:mm")
+    target.timeFormat.first() shouldBe "HH:mm"
+  }
+
+  test("Persists specified time format to permanent storage") {
+    target.setDateFormat("HH:mm")
+    datastore.data.first().get(TimeFormat) shouldBe "HH:mm"
   }
 })
