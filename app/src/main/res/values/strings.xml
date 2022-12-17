@@ -109,4 +109,8 @@
     <string name="no">No</string>
     <string name="add_use_during_pause_alert">You scheduled this period to be a pause. Are you sure you want to add an use now?</string>
     <string name="grams_distribution_per_day_of_week">Grams distribution per day of week</string>
+    <string name="date_format_label">Date format</string>
+    <string name="what_date_format_should_be_used">What date format should be used</string>
+    <string name="time_format_label">Time format</string>
+    <string name="what_time_format_should_be_used">What time format should be used</string>
 </resources>

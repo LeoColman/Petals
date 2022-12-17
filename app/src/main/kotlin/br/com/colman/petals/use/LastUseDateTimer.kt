@@ -29,16 +29,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.colman.petals.R.string.*
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.TimeUnit.*
 import kotlinx.coroutines.delay
+import org.koin.androidx.compose.get
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import java.util.*
 
 @Composable
 fun LastUseDateTimer(lastUseDate: LocalDateTime) {
-  val dateString = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS").format(lastUseDate)
+  val settingsRepository = get<SettingsRepository>()
+  val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
+  val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
+  val dateString = DateTimeFormatter.ofPattern(
+    String.format(
+      Locale.US,
+      "%s %s",
+      dateFormat,
+      timeFormat
+    )
+  ).format(lastUseDate)
 
   var millis by remember { mutableStateOf(ChronoUnit.MILLIS.between(lastUseDate, now())) }
 
