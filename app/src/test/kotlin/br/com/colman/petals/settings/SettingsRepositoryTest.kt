@@ -67,7 +67,7 @@ class SettingsRepositoryTest : FunSpec({
   }
 
   test("Persists specified time format to permanent storage") {
-    target.setDateFormat("HH:mm")
+    target.setTimeFormat("HH:mm")
     datastore.data.first().get(TimeFormat) shouldBe "HH:mm"
   }
 })
