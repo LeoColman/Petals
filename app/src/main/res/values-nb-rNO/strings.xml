@@ -88,4 +88,9 @@
     <string name="delete">Slett</string>
     <string name="yes_timer">Ja (%ss)</string>
     <string name="no">Nei</string>
+    <string name="date_format_label">Datoformat</string>
+    <string name="what_date_format_should_be_used">Hvilket datoformat som brukes</string>
+    <string name="time_format_label">Tidsformat</string>
+    <string name="grams_distribution_per_day_of_week">Gram-distribusjon per ukedag</string>
+    <string name="what_time_format_should_be_used">Hvilket tidsformat som brukes</string>
 </resources>
