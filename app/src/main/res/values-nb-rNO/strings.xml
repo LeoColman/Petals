@@ -6,7 +6,7 @@
     <string name="days">År</string>
     <string name="start">Start</string>
     <string name="reset">Tilbakestill</string>
-    <string name="hittimer_why_ten_secs">Hvorfor 10 sekunder\?</string>
+    <string name="hittimer_why_ten_secs">Hvorfor 10 sekunder?</string>
     <string name="_175thc">1,17% THC</string>
     <string name="amount_grams_title">Mengde (g)</string>
     <string name="cost_per_gram_title">Kostnad per gram</string>
@@ -37,7 +37,7 @@
     <string name="export_export">Eksporter</string>
     <string name="end_date">Sluttdato</string>
     <string name="start_date">Startdato</string>
-    <string name="current_thc_concentration">Nåværende THC-konsentrasjon: %s \%%</string>
+    <string name="current_thc_concentration">Nåværende THC-konsentrasjon: %s %</string>
     <string name="date_at_time">%1$s klokken %2$s</string>
     <plurals name="amount_uses">
         <item quantity="one">%s brukstilfelle</item>
