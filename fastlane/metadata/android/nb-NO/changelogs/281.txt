@@ -1,1 +1,0 @@
-- Millisekunder fungerer nå alltid ved linjeskift

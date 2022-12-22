@@ -1,2 +1,0 @@
-- Add toggleable vibration at the end of hit timer
-- Add screen darkening on hit timer

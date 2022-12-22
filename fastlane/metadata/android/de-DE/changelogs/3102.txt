@@ -1,2 +1,0 @@
-- Verbesserte Leistung bei Details zur letzten Verwendung
-- Lokalisierung des Textes im Pause-Dialog

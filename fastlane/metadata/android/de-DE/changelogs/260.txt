@@ -1,1 +1,0 @@
-- Vibrationstimer für anhaltende Treffer

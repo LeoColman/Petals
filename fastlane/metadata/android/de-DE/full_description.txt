@@ -1,10 +1,10 @@
-Die Open-Source-App Petals soll ihren Nutzern helfen, entweder mit dem Kiffen aufzuhören, den Konsum zu reduzieren oder einfach zu wissen, wie viel sie konsumieren.
+The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're using.
 
-Funktionen
+Features
 
-- Konsum verfolgen
-- Zeitliche Erfassung des Konsums
-- Verfolgen Sie Ihren Verbrauch
-- Statistiken zum Verständnis Ihres Verbrauchs
-- Anweisungen zur Schadensbegrenzung
-- Export und Import als einfache CSV-Dateien
+- Track consumption
+- Time-gate your consumption
+- Track usage
+- See statistics to understand your consumption
+- Damage reduction instructions
+- Export and Import as simple CSV files

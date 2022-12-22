@@ -1,2 +1,0 @@
-- Behebt die UsePerDayOfWeek-Graphenlokalisierung
-- Korrektur des UsePerDayOfWeek-Diagramm-Farbschemas

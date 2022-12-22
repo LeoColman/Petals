@@ -1,1 +1,0 @@
-- Ersetzen des Datenbank-Backends durch eine FLOSS-Alternative

@@ -1,2 +1,0 @@
-- Conserta bug prevenindo alguns dispositivos de inserirem Usos
-- Adicionadas traduções do Weblate

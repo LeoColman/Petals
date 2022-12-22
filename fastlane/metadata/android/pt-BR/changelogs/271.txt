@@ -1,1 +1,0 @@
-- Adiciona contagem de uso estatisticas

@@ -1,1 +1,0 @@
-- Fehler behoben, bei dem einige übersetzte Sprachen auf der Symptomseite abstürzten

@@ -1,1 +1,0 @@
-- Konfigurationsoption zum Währungssymbol hinzufügen

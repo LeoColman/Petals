@@ -1,1 +1,0 @@
-- Arrumado problema em que às vezes os millisegundos quebravam linha

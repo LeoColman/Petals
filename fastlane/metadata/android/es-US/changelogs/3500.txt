@@ -1,2 +1,0 @@
-- Add setting for date and time format
-- Sync weblate translations

@@ -1,2 +1,0 @@
-- Sync translations from external contributors
-- Fix a bug causing uses to not be editable

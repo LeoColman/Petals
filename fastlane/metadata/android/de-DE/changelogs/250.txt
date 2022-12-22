@@ -1,2 +1,0 @@
-- Umschaltbare Vibration am Ende des Treffertimers hinzufügen
-- Bildschirmverdunkelung bei Treffer-Timer hinzufügen

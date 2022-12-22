@@ -1,2 +1,0 @@
-- Adiciona vibração configurável ao final do temporizador
-- Adiciona efeito escurecedor à tela do temporizador

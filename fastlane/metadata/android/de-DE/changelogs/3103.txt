@@ -1,2 +1,0 @@
-- Synchronisierung von Übersetzungen von externen Anbietern
-- Behebung eines Fehlers, der dazu führte, dass Verwendungen nicht editierbar waren

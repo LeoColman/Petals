@@ -1,1 +1,0 @@
-- Adiciona grafico com uso por dia da semana

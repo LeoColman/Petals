@@ -1,2 +1,0 @@
-- Fix bug preventing some devices from inserting Use
-- Added translations from Weblate

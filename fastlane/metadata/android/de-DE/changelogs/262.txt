@@ -1,2 +1,0 @@
-- Fix Datum verwenden in 2 Zeilen umbrechen
-- Datum- und Zeitfelder wurden so gestaltet, dass sie besser bearbeitbar sind

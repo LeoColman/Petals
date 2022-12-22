@@ -1,1 +1,0 @@
-- Add configuration option to currency icon

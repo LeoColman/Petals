@@ -1,2 +1,0 @@
-- Fixes UsePerDayOfWeek graph localization
-- Fixes UsePerDayOfWeek graph colorscheme

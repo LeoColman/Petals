@@ -1,2 +1,0 @@
-- Melhora performance na implementação da obtenção do último uso
-- Traduz texto no diálogo de pausa

@@ -1,7 +1,0 @@
-Fri programvare for brukere som vil slutte med hasj, redusere bruken, eller ta rede på hvor mye de bruker.
-
-- Spor mengde.
-- Spor bruk
-- Statistikk for å forstå inntaket
-- Skadereduserende instruksjoner
-- Eksport og import som enkle CSV-filer

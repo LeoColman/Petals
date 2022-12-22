@@ -1,1 +1,0 @@
-- Modifica a forma de armazenamento de dados para uma alternativa livre
