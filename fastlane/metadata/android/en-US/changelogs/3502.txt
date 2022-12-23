@@ -1,0 +1,3 @@
+* Sync translations
+* Fix Google Play Store publishing
+* Fix Abstinence Dot not aligning with the graph line
