@@ -74,7 +74,7 @@ class ThcConcentrationRepository(
 
     val target = interpolator.value(daysInSeconds(14).toDouble())
     val baseline = interpolator.value(0.0) - target
-    val current = interpolator.value(quitCalculate) - target
+    val current = interpolator.value(quitCalculate)
 
     val percentageValue = (current / baseline).coerceIn(0.0, 1.0)
     return ThcConcentration(percentageValue * 100)
