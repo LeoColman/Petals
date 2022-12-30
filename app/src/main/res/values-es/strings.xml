@@ -90,4 +90,9 @@
     <string name="yes">Si</string>
     <string name="yes_timer">Si (%ss)</string>
     <string name="no">No</string>
+    <string name="grams_distribution_per_day_of_week">Reparto de los gramos por los día de la semana</string>
+    <string name="date_format_label">Formato de la fecha</string>
+    <string name="what_date_format_should_be_used">Qué formato de fecha se debe utilizar</string>
+    <string name="time_format_label">Formato de la hora</string>
+    <string name="what_time_format_should_be_used">Qué formato de la hora debe utilizarse</string>
 </resources>
