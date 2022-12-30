@@ -1,0 +1,2 @@
+* Agregar configuración para el formato de la fecha y la hora
+* Sincronizar las traducciones de weblate

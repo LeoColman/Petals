@@ -1,0 +1,3 @@
+* Sincronizar traducciones
+* Arreglar la publicación de Google Play Store
+* Arreglar el punto de abstinencia que no se alinea con la línea del gráfico
