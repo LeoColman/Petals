@@ -22,3 +22,5 @@ keystore
 !*.secret
 keystore.properties
 google-play.json
+/fastlane/report.xml
+/Gemfile.lock
