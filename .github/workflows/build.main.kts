@@ -21,7 +21,7 @@ workflow(
   sourceFile = __FILE__.toPath()
 ) {
   job("build", runsOn = RunnerType.UbuntuLatest) {
-    uses(name = "Set up JDK", SetupJavaV3("11", SetupJavaV3.Distribution.Adopt))
+    uses(name = "Set up JDK", SetupJavaV3("11", distribution = SetupJavaV3.Distribution.Adopt))
     uses(CheckoutV3())
     uses(
       "reveal-secrets", CustomAction(
