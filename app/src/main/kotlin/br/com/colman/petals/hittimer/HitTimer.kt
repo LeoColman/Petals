@@ -1,16 +1,22 @@
 package br.com.colman.petals.hittimer
 
+import android.os.Parcelable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import org.apache.commons.lang3.time.DurationFormatUtils
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit.MILLIS
 
-class HitTimer(val durationMillis: Long = 10_000L) {
+@Parcelize
+class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
 
+  @IgnoredOnParcel
   private var startDate: LocalDateTime? = null
 
+  @IgnoredOnParcel
   val millisLeft = flow {
     while (true) {
       emit(calculateMillisLeft())

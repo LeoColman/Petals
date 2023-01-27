@@ -23,6 +23,7 @@ import java.util.Properties
 plugins {
   id("com.android.application")
   id("kotlin-android")
+  id("kotlin-parcelize")
   kotlin("kapt")
   alias(libs.plugins.detekt)
   alias(libs.plugins.sqldelight)
