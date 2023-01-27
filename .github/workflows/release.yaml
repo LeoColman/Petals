@@ -57,7 +57,7 @@ jobs:
         name: Version ${{ github.GITHUB_REF_NAME }}
         tag_name: ${{ github.GITHUB_REF_NAME }}
         draft: true
-        files: app/build/outputs/universal_apk/githubRelease/app-github-release-universal.apk
+        files: app/build/outputs/apk_from_bundle/githubRelease/app-github-release-universal.apk
     - id: step-5
       uses: ruby/setup-ruby@v1
       with:
