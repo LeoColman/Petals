@@ -45,6 +45,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -66,7 +67,7 @@ import org.koin.androidx.compose.get
 @Preview
 @Composable
 fun ComposeHitTimer(repository: HitTimerRepository = get()) {
-  val hitTimer = remember { HitTimer() }
+  val hitTimer = rememberSaveable { HitTimer() }
 
   val ctx = LocalContext.current
   val millisLeft by hitTimer.millisLeft.collectAsState(hitTimer.durationMillis)
