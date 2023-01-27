@@ -64,5 +64,4 @@ jobs:
         ruby-version: 2.6
     - id: step-6
       name: publish-playstore
-      run: bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 &&
-        bundle exec fastlane playstore
+      run: bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore
