@@ -1,0 +1,2 @@
+* Fix HitTimer resetting when screen orientation changes
+* Sync translations
