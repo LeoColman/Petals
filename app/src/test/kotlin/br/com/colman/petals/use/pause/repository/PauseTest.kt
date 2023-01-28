@@ -6,36 +6,49 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.localTime
 import io.kotest.property.checkAll
 import java.time.LocalTime
+import java.time.LocalTime.MAX
+import java.time.LocalTime.MIN
 import java.time.LocalTime.NOON
 
 class PauseTest : FunSpec({
-
   context("Is active calculation") {
-
     test("Full time pause") {
-      val pause = Pause(LocalTime.MIN, LocalTime.MAX)
+      val pause = Pause(startTime = MIN, endTime = MAX)
 
-      Arb.localTime().checkAll {
-        pause.isActive(it) shouldBe true
-      }
+      Arb.localTime().checkAll { pause shouldBeActiveAt it }
     }
 
     test("Immediately after end") {
-      val pause = Pause(LocalTime.MIN, NOON)
+      val pause = Pause(startTime = MIN, endTime = NOON)
 
-      pause.isActive(NOON.plusSeconds(1)) shouldBe false
+      pause shouldNotBeActiveAt NOON.plusSeconds(1)
     }
 
     test("Immediately before start") {
-      val pause = Pause(LocalTime.NOON, LocalTime.MAX)
-      pause.isActive(NOON.minusSeconds(1)) shouldBe false
+      val pause = Pause(startTime = NOON, endTime = MAX)
+      pause shouldNotBeActiveAt NOON.minusSeconds(1)
     }
 
-    test("Goes through midnight") {
-      val pause = Pause(LocalTime.of(23, 30), LocalTime.of(1, 30))
-      pause.isActive(LocalTime.of(0, 25)) shouldBe true
-      pause.isActive(LocalTime.of(1, 31)) shouldBe false
-      pause.isActive(LocalTime.of(23, 29)) shouldBe false
+    context("Passing through midnight") {
+      val pause = Pause(startTime = MAX, endTime = NOON)
+
+      test("Start time") {
+        pause shouldBeActiveAt MAX.plusSeconds(1)
+        pause shouldNotBeActiveAt MAX.minusSeconds(1)
+      }
+
+      test("End time") {
+        pause shouldBeActiveAt NOON.minusSeconds(1)
+        pause shouldNotBeActiveAt NOON.plusSeconds(1)
+      }
     }
   }
 })
+
+private infix fun Pause.shouldBeActiveAt(localTime: LocalTime) {
+  isActive(localTime) shouldBe true
+}
+
+private infix fun Pause.shouldNotBeActiveAt(localTime: LocalTime) {
+  isActive(localTime) shouldBe false
+}
