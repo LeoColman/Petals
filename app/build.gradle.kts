@@ -35,7 +35,6 @@ repositories {
   google()
   maven("https://jitpack.io/")
   maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
-  maven("https://androidx.dev/storage/compose-compiler/repository/")
 }
 
 android {
