@@ -31,7 +31,7 @@ buildscript {
 }
 
 plugins {
-  id("com.autonomousapps.dependency-analysis") version "1.18.0"
+  id("com.autonomousapps.dependency-analysis") version "1.19.0"
   id("com.github.ben-manes.versions") version "0.45.0"
   id("nl.littlerobots.version-catalog-update") version "0.7.0"
   id("com.github.jk1.dependency-license-report") version "2.1"
