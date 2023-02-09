@@ -107,4 +107,15 @@
     <string name="no">Não</string>
     <string name="add_use_during_pause_alert">Você marcou este horário como uma pause. Tem certeza que deseja adicionar um uso agora?</string>
     <string name="grams_distribution_per_day_of_week">Distribuição de gramas por dia da semana</string>
+    <string name="date_format_label">Formato da data</string>
+    <string name="what_date_format_should_be_used">Qual formato deve ser utilizado para a data</string>
+    <string name="time_format_label">Formato do Tempo</string>
+    <string name="what_time_format_should_be_used">Qual formato deve ser utilizado para tempo</string>
+    <string name="share_app_title">Compartilhar App</string>
+    <string name="share_app">Compartilhar app com amigos</string>
+    <string name="share_app_message">Olá, o app Petals me ajuda
+\nBaixar na Google Play Store:
+\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\nou Baixar no F-Droid
+\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
 </resources>
