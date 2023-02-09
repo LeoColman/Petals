@@ -146,11 +146,12 @@ fun ShareApp(
   shareIcon: ImageVector = Icons.Default.Share,
   context: Context = LocalContext.current
 ) {
-  val googlePlayLink = "https://play.google.com/store/apps/details?id=br.com.colman.petals"
-  val fDroidLink = "https://f-droid.org/packages/br.com.colman.petals/"
   val sendIntent: Intent = Intent().apply {
     action = Intent.ACTION_SEND
-    putExtra(Intent.EXTRA_TEXT, "Hey, this app helps me\nGet it on Google Play:\n${googlePlayLink}\nor Get it on F-Droid\n${fDroidLink}")
+    putExtra(
+      Intent.EXTRA_TEXT,
+      stringResource(R.string.share_app_message)
+    )
     type = "text/plain"
   }
   val shareIntent = Intent.createChooser(sendIntent, null)

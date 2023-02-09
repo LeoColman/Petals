@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Petals APP
   ~ Copyright (C) 2021 Leonardo Colman Lopes
   ~
@@ -15,7 +14,8 @@
   ~
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  --><resources>
+  -->
+<resources>
     <string name="app_name" translatable="false">Petals</string>
     <string name="quit_date_text">Last use date</string>
     <string name="years">Years</string>
@@ -115,4 +115,5 @@
     <string name="what_time_format_should_be_used">What time format should be used</string>
     <string name="share_app">Share app with your friends</string>
     <string name="share_app_title">Share App</string>
+    <string name="share_app_message">Hey, the Petals app helps me\nGet it on Google Play:\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals\nor Get it on F-Droid\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
 </resources>
