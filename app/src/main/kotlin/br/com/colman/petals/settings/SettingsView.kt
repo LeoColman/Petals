@@ -2,20 +2,13 @@
 
 package br.com.colman.petals.settings
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExposedDropdownMenuBox
-import androidx.compose.material.ExposedDropdownMenuDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.ListItem
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,10 +16,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import br.com.colman.petals.R
 import br.com.colman.petals.R.string.currency_icon
 import br.com.colman.petals.R.string.date_format_label
@@ -57,6 +53,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     RepositoryListItem()
     DateListItem(currentDateFormat, dateFormatList, setDateFormat)
     TimeListItem(currentTimeFormat, timeFormatList, setTimeFormat)
+    ShareApp()
   }
 }
 
@@ -140,6 +137,31 @@ fun TimeListItem(
 
   if (shouldShowDialog) {
     TimeDialog(timeFormat, timeFormatList, setTimeFormat) { shouldShowDialog = false }
+  }
+}
+
+@Preview
+@Composable
+fun ShareApp(
+  shareIcon: ImageVector = Icons.Default.Share,
+  context: Context = LocalContext.current
+) {
+  val googlePlayLink = "https://play.google.com/store/apps/details?id=br.com.colman.petals"
+  val fDroidLink = "https://f-droid.org/packages/br.com.colman.petals/"
+  val sendIntent: Intent = Intent().apply {
+    action = Intent.ACTION_SEND
+    putExtra(Intent.EXTRA_TEXT, "Hey, this app helps me\nGet it on Google Play:\n${googlePlayLink}\nor Get it on F-Droid\n${fDroidLink}")
+    type = "text/plain"
+  }
+  val shareIntent = Intent.createChooser(sendIntent, null)
+  ListItem(
+    modifier = Modifier.clickable {
+      ContextCompat.startActivity(context, shareIntent, null)
+    },
+    icon = { Icon(shareIcon, null, Modifier.size(42.dp)) },
+    secondaryText = { Text(stringResource(R.string.share_app)) }
+  ) {
+    Text(stringResource(R.string.share_app_title))
   }
 }
 
