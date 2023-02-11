@@ -40,12 +40,7 @@ jobs:
     - id: step-1
       uses: actions/checkout@v3
     - id: step-2
-      name: reveal-secrets
-      uses: entrostat/git-secret-action@v3.3.0
-      with:
-        gpg-private-key: ${{ secrets.GPG_KEY }}
-    - id: step-3
       name: Create APK
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: packageGithubReleaseUniversalApk
+        arguments: packageFdroidReleaseUniversalApk
