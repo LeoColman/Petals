@@ -77,7 +77,7 @@
     </plurals>
     <string name="year">año</string>
     <string name="repository_link_description">Esta app es software libre y de código abierto bajo la licencia AGPL-3.0. El código fuente está disponible en github.com/LeoColman/Petals</string>
-    <string name="add_use_during_pause_alert">Planeaste este período como un descanso. ¿Estás seguro de que quieres usarlo\?</string>
+    <string name="add_use_during_pause_alert">Planeaste este período como un descanso. ¿Estás seguro de que quieres usarlo?</string>
     <string name="pause_change_minutes">%+d min</string>
     <string name="start_time">Hora de inicio</string>
     <string name="end_time">Hora final</string>
@@ -93,13 +93,13 @@
     <string name="share_app">Comparte la aplicación con tus amigos</string>
     <string name="share_app_message">Ey, la aplicación Petals me ayuda
 \nConsíguela en Google Play:
-\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals
 \no Consíguela en F-Droid
 \nhttps://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="share_app_title">Compartir la aplicación</string>
     <string name="delete_use_title">Borrar lo usado</string>
     <string name="deleted_successfully">¡Lo utilizado fue borrado!</string>
-    <string name="confirm_to_delete">¿Estás seguro de que quieres borrar el uso añadido en %s\?</string>
+    <string name="confirm_to_delete">¿Estás seguro de que quieres borrar el uso añadido en %s?</string>
     <string name="app_pin">PIN de la aplicación</string>
     <string name="password_description">Para mayor privacidad, puedes establecer una contraseña para acceder a la aplicación. Establecer una contraseña vacía la elimina. ¡ATENCIÓN! No es posible recuperar una contraseña establecida</string>
     <string name="pin_main_screen">Esta aplicación está protegida por contraseña. Introduce la contraseña correcta para continuar.</string>
