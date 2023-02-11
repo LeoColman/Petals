@@ -1,0 +1,1 @@
+* Arreglada la implementación en F-Droid

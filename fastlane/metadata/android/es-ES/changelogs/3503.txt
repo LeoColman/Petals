@@ -1,0 +1,2 @@
+* Arreglado el reinicio de HitTimer cuando cambia la orientación de la pantalla
+* Sincronizar las nuevas traducciones

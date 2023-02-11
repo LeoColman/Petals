@@ -1,0 +1,1 @@
+* Agregada una función en la aplicación para compartir
