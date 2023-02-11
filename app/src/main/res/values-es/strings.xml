@@ -61,7 +61,7 @@
     <plurals name="amount_days">
         <item quantity="one">%s Día</item>
         <item quantity="many">%s Días</item>
-        <item quantity="other"/>
+        <item quantity="other">%s Días</item>
     </plurals>
     <string name="export_export">Exportar</string>
     <string name="years">Años</string>
@@ -76,9 +76,9 @@
     <string name="average_per">Promedio por %s</string>
     <string name="vibrate_on_timer_end">Vibrar al finalizar temporizador</string>
     <plurals name="amount_uses">
-        <item quantity="one">%s uso</item>
-        <item quantity="many">%s usos</item>
-        <item quantity="other"/>
+        <item quantity="one">uso %s</item>
+        <item quantity="many">usos %s</item>
+        <item quantity="other">usos %s</item>
     </plurals>
     <string name="year">año</string>
     <string name="repository_link_description">Esta app es software libre y de código abierto bajo la licencia AGPL-3.0. El código fuente está disponible en github.com/LeoColman/Petals</string>
@@ -95,4 +95,11 @@
     <string name="what_date_format_should_be_used">Qué formato de fecha se debe utilizar</string>
     <string name="time_format_label">Formato de la hora</string>
     <string name="what_time_format_should_be_used">Qué formato de la hora debe utilizarse</string>
+    <string name="share_app">Comparte la aplicación con tus amigos</string>
+    <string name="share_app_message">Ey, la aplicación Petals me ayuda
+\nConsíguela en Google Play:
+\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\no Consíguela en F-Droid
+\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
+    <string name="share_app_title">Compartir la aplicación</string>
 </resources>
