@@ -1,46 +1,32 @@
 package br.com.colman.petals.use
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.colman.petals.R.string.amount_grams
-import br.com.colman.petals.R.string.cost_per_gram
-import br.com.colman.petals.R.string.date_at_time
-import br.com.colman.petals.R.string.ok
-import br.com.colman.petals.R.string.see_more
-import br.com.colman.petals.R.string.total_spent
+import br.com.colman.petals.R.string.*
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.repository.Use
 import compose.icons.TablerIcons
-import compose.icons.tablericons.Cash
-import compose.icons.tablericons.ReportMoney
-import compose.icons.tablericons.Scale
-import compose.icons.tablericons.Smoking
-import compose.icons.tablericons.Trash
+import compose.icons.tablericons.*
 import org.koin.androidx.compose.get
 import java.math.BigDecimal
 import java.math.RoundingMode.HALF_UP
@@ -132,8 +118,37 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
 
 @Preview
 @Composable
-private fun DeleteUseButton(use: Use = Use(), onDeleteUse: (Use) -> Unit = {}) {
-  Icon(TablerIcons.Trash, null, Modifier.clickable { onDeleteUse(use) })
+private fun DeleteUseButton(use: Use = Use(), onDeleteUse: (Use) -> Unit = {}, context: Context = LocalContext.current) {
+  val showDialog = remember { mutableStateOf(false) }
+  val dateString = use.date.format(ofPattern("yyyy-MM-dd"))
+  val timeString = use.date.format(ofPattern("HH:mm"))
+  Icon(TablerIcons.Trash, null, Modifier.clickable { showDialog.value = true })
+
+  if(showDialog.value){
+    AlertDialog(
+      onDismissRequest = {showDialog.value = false},
+      confirmButton = {
+        Button(onClick = {
+          onDeleteUse(use)
+          showDialog.value = false
+          Toast.makeText(context, deleted_successfully, Toast.LENGTH_SHORT).show() }, colors = ButtonDefaults.buttonColors(Color.White)) {
+          Text(text = stringResource(yes))
+        }
+      },
+      title = {
+        Row(verticalAlignment = CenterVertically) {
+          Text(text = stringResource(delete))
+          Icon(imageVector = Icons.Outlined.Delete, contentDescription = stringResource(delete))
+        }
+      },
+      text = {
+        Text(
+          text = stringResource(confirm_to_delete) +" "+ stringResource(date_at_time, dateString, timeString)+"?"
+        )
+      },
+      dismissButton = { Button(onClick = { showDialog.value = false }, colors = ButtonDefaults.buttonColors(Color.White)) { Text(text = stringResource(no)) } }
+    )
+  }
 }
 
 @Composable
