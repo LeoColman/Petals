@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.api.JavaVersion.VERSION_1_8
 import java.util.Properties
+import org.gradle.api.JavaVersion.VERSION_11
 
 @Suppress("DSL_SCOPE_VIOLATION") //KTIJ-19369
 plugins {
@@ -112,13 +112,9 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility(VERSION_1_8)
-    targetCompatibility(VERSION_1_8)
+    sourceCompatibility(VERSION_11)
+    targetCompatibility(VERSION_11)
     isCoreLibraryDesugaringEnabled = true
-  }
-
-  kotlinOptions {
-    jvmTarget = "1.8"
   }
 
   buildFeatures {
