@@ -116,6 +116,7 @@
     <string name="share_app">Share app with your friends</string>
     <string name="share_app_title">Share App</string>
     <string name="share_app_message">Hey, the Petals app helps me\nGet it on Google Play:\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals\nor Get it on F-Droid\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
-    <string name="deleted_successfully">Deleted Successfully</string>
-    <string name="confirm_to_delete">Do you really want to delete Use added on</string>
+    <string name="delete_use_title">Delete Use</string>
+    <string name="deleted_successfully">Use deleted!</string>
+    <string name="confirm_to_delete">Are you sure you want to delete use added on %s?</string>
 </resources>

@@ -11,13 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -118,36 +116,37 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
 
 @Preview
 @Composable
-private fun DeleteUseButton(use: Use = Use(), onDeleteUse: (Use) -> Unit = {}, context: Context = LocalContext.current) {
+private fun DeleteUseButton(
+  use: Use = Use(),
+  onDeleteUse: (Use) -> Unit = {},
+  context: Context = LocalContext.current
+) {
   val showDialog = remember { mutableStateOf(false) }
   val dateString = use.date.format(ofPattern("yyyy-MM-dd"))
   val timeString = use.date.format(ofPattern("HH:mm"))
   Icon(TablerIcons.Trash, null, Modifier.clickable { showDialog.value = true })
 
-  if(showDialog.value){
-    AlertDialog(
-      onDismissRequest = {showDialog.value = false},
-      confirmButton = {
-        Button(onClick = {
-          onDeleteUse(use)
-          showDialog.value = false
-          Toast.makeText(context, deleted_successfully, Toast.LENGTH_SHORT).show() }, colors = ButtonDefaults.buttonColors(Color.White)) {
-          Text(text = stringResource(yes))
-        }
-      },
-      title = {
-        Row(verticalAlignment = CenterVertically) {
-          Text(text = stringResource(delete))
-          Icon(imageVector = Icons.Outlined.Delete, contentDescription = stringResource(delete))
-        }
-      },
-      text = {
+  if (showDialog.value) {
+    AlertDialog(onDismissRequest = { showDialog.value = false }, confirmButton = {
+      TextButton({
+        onDeleteUse(use)
+        showDialog.value = false
+        Toast.makeText(context, deleted_successfully, Toast.LENGTH_SHORT).show()
+      }) {
+        Text(text = stringResource(yes))
+      }
+    }, title = { Text(text = stringResource(delete_use_title)) }, text = {
         Text(
-          text = stringResource(confirm_to_delete) +" "+ stringResource(date_at_time, dateString, timeString)+"?"
+          text = stringResource(
+            confirm_to_delete,
+            stringResource(date_at_time, dateString, timeString)
+          )
         )
-      },
-      dismissButton = { Button(onClick = { showDialog.value = false }, colors = ButtonDefaults.buttonColors(Color.White)) { Text(text = stringResource(no)) } }
-    )
+      }, dismissButton = {
+        TextButton({ showDialog.value = false }) {
+          Text(text = stringResource(no))
+        }
+      })
   }
 }
 
