@@ -102,4 +102,7 @@
 \no Consíguela en F-Droid
 \nhttps://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="share_app_title">Compartir la aplicación</string>
+    <string name="delete_use_title">Borrar lo usado</string>
+    <string name="deleted_successfully">¡Lo utilizado fue borrado!</string>
+    <string name="confirm_to_delete">¿Estás seguro de que quieres borrar el uso añadido en %s\?</string>
 </resources>
