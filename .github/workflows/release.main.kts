@@ -1,13 +1,13 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.35.0")
+@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.37.0")
 
-import it.krzeminski.githubactions.actions.CustomAction
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
 import it.krzeminski.githubactions.actions.actions.SetupJavaV3
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.actions.ruby.SetupRubyV1
 import it.krzeminski.githubactions.actions.softprops.ActionGhReleaseV1
 import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
+import it.krzeminski.githubactions.domain.actions.CustomAction
 import it.krzeminski.githubactions.domain.triggers.Push
 import it.krzeminski.githubactions.dsl.expressions.Contexts
 import it.krzeminski.githubactions.dsl.expressions.expr
