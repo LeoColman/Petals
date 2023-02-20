@@ -29,7 +29,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
-import br.com.colman.petals.R.string.*
+import br.com.colman.petals.R.string.current_thc_concentration
+import br.com.colman.petals.R.string.days
+import br.com.colman.petals.R.string.thc_concentration
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
 import com.jjoe64.graphview.GraphView

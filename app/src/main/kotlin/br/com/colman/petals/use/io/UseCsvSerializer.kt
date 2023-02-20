@@ -19,7 +19,9 @@
 package br.com.colman.petals.use.io
 
 import android.content.res.Resources
-import br.com.colman.petals.R.string.*
+import br.com.colman.petals.R.string.amount_label
+import br.com.colman.petals.R.string.cost_per_gram_label
+import br.com.colman.petals.R.string.date_label
 import br.com.colman.petals.use.repository.UseRepository
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import kotlinx.coroutines.flow.first

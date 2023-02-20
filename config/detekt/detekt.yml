@@ -7,7 +7,7 @@ formatting:
     autoCorrect: true
     indentSize: 2
   NoWildcardImports:
-    active: false
+    active: true
 style:
   MagicNumber:
     active: false
