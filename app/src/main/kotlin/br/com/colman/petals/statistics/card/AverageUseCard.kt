@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R.plurals.amount_days
 import br.com.colman.petals.R.plurals.amount_uses
+import br.com.colman.petals.R.string.amount_grams
 import br.com.colman.petals.R.string.amount_grams_short
 import br.com.colman.petals.R.string.average_per
 import br.com.colman.petals.R.string.day
@@ -32,6 +33,7 @@ import br.com.colman.petals.utils.pluralResource
 import compose.icons.TablerIcons
 import compose.icons.tablericons.CalendarStats
 import compose.icons.tablericons.ChartPie
+import compose.icons.tablericons.Scale
 import me.moallemi.tools.daterange.localdate.LocalDateRange
 import org.koin.androidx.compose.get
 import java.math.BigDecimal
@@ -62,7 +64,7 @@ fun AverageUseCard(
   if (uses.isEmpty()) return
   Card(Modifier.padding(8.dp)) {
     Column(Modifier.padding(8.dp), spacedBy(8.dp)) {
-      Title(uses.count(), period)
+      Title(uses.count(), uses.totalGrams, period)
 
       AverageList(uses, period)
     }
@@ -70,12 +72,15 @@ fun AverageUseCard(
 }
 
 @Composable
-private fun Title(uses: Int, period: LocalDateRange) {
+private fun Title(uses: Int, grams: BigDecimal, period: LocalDateRange) {
   val amountDays = (period.count() - 1).coerceAtLeast(1)
 
   Row(Modifier, spacedBy(8.dp), CenterVertically) {
     Icon(TablerIcons.ChartPie, null)
     Text(pluralResource(amount_uses, uses, uses))
+
+    Icon(TablerIcons.Scale, null)
+    Text(stringResource(amount_grams, "%.2f".format(grams)))
 
     Icon(TablerIcons.CalendarStats, null)
     Text(pluralResource(amount_days, amountDays, amountDays))
