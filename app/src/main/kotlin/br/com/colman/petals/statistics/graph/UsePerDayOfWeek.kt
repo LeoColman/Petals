@@ -32,7 +32,7 @@ import java.util.Locale
 fun UsePerDayOfWeekGraphPreview() {
   val uses = List(293) {
     Use(
-      LocalDateTime.now().plusDays((0L..7L).toList().random()),
+      LocalDateTime.now().plusDays((1L..7L).toList().random()),
       "3.37".toBigDecimal(),
       (it % 4).toBigDecimal()
     )
@@ -92,9 +92,7 @@ fun UsePerDayOfWeekGraph(uses: List<Use>) {
 }
 
 private fun calculateGramDistributionPerDayOfWeek(uses: List<Use>): List<BarEntry> {
-  val daysOfWeek = DayOfWeek.values().toList()
-  val usesPerDayOfWeek =
-    daysOfWeek.associateWith { uses.filter { u -> u.localDate.dayOfWeek == it } }
+  val usesPerDayOfWeek = uses.groupBy { it.localDate.dayOfWeek }
 
   return usesPerDayOfWeek.mapValues { it.value.totalGrams }.toSortedMap()
     .map { (k, v) -> BarEntry(k.value.toFloat(), v.toFloat()) }
