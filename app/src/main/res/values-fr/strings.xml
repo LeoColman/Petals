@@ -95,4 +95,14 @@
     <string name="what_time_format_should_be_used">Quel format horaire doit être utilisé</string>
     <string name="date_format_label">Format de date</string>
     <string name="what_date_format_should_be_used">Quel format de date doit être utilisé</string>
+    <string name="delete_use_title">Supprimer l\'utilisation</string>
+    <string name="deleted_successfully">Utilisation supprimée !</string>
+    <string name="share_app">Partagez l\'application avec vos amis</string>
+    <string name="share_app_title">Partager l\'appli</string>
+    <string name="share_app_message">Hé, l\'application Petals m\'aide
+\nTéléchargez-la sur Google Play :
+\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\nou sur F-Droid
+\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
+    <string name="confirm_to_delete">Êtes-vous sûr·e de vouloir supprimer l\'utilisation ajoutée sur %s \?</string>
 </resources>
