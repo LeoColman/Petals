@@ -118,4 +118,7 @@
 \nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
 \nou Baixar no F-Droid
 \nhttps://f-droid.org/packages/br.com.colman.petals/</string>
+    <string name="confirm_to_delete">Você tem certeza que deseja remover o uso adicionado em %s\?</string>
+    <string name="delete_use_title">Remover Uso</string>
+    <string name="deleted_successfully">Uso removido!</string>
 </resources>
