@@ -36,9 +36,16 @@ class SettingsRepository(
     datastore.edit { it[TimeFormat] = value }
   }
 
+  fun setPin(pin: String?): Unit = runBlocking {
+    datastore.edit {
+      if (pin == null) it.remove(Pin) else it[Pin] = pin
+    }
+  }
+
   companion object {
     val CurrencyIcon = stringPreferencesKey("currency_icon")
     val DateFormat = stringPreferencesKey("date_format")
     val TimeFormat = stringPreferencesKey("time_format")
+    val Pin = stringPreferencesKey("pin")
   }
 }
