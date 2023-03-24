@@ -23,7 +23,7 @@ workflow(
   sourceFile = __FILE__.toPath(),
 ) {
   job("create-apk", runsOn = UbuntuLatest) {
-    uses(name = "Set up JDK", SetupJavaV3("11", distribution = SetupJavaV3.Distribution.Adopt))
+    uses(name = "Set up JDK", SetupJavaV3(javaVersion = "11", distribution = SetupJavaV3.Distribution.Adopt))
     uses(CheckoutV3())
     uses("reveal-secrets", CustomAction(
       "entrostat",
@@ -43,7 +43,7 @@ workflow(
       files = listOf("app/build/outputs/apk_from_bundle/githubRelease/app-github-release-universal.apk")
     ))
 
-    uses(SetupRubyV1("2.6"))
+    uses(SetupRubyV1(rubyVersion = "2.6"))
     run("publish-playstore", "bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore")
   }
 }.writeToFile()
