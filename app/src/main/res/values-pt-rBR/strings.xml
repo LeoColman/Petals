@@ -121,4 +121,7 @@
     <string name="confirm_to_delete">Você tem certeza que deseja remover o uso adicionado em %s\?</string>
     <string name="delete_use_title">Remover Uso</string>
     <string name="deleted_successfully">Uso removido!</string>
+    <string name="app_pin">Pin do App</string>
+    <string name="password_description">Para ter mais privacidade você pode configurar uma senha para acessar o app. Configurar uma senha vazia removerá a senha. ATENÇÃO! Não é possível recuperar a senha após sua configuração</string>
+    <string name="pin_main_screen">Essa aplicação é protegida por senha. Insira a senha correta para continuar.</string>
 </resources>
