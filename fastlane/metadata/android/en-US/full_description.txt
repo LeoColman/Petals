@@ -8,3 +8,4 @@ Features
 - See statistics to understand your consumption
 - Damage reduction instructions
 - Export and Import as simple CSV files
+- Extra privacy with a personal PIN
