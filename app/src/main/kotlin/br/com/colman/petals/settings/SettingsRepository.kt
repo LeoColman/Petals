@@ -21,7 +21,7 @@ class SettingsRepository(
     "MM-dd-yyyy"
   )
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
-  val timeFormatList = listOf("HH-mm", "HH:mm", "mm-HH", "mm:HH")
+  val timeFormatList = listOf("HH:mm", "KK:mm a", "HH:mm:ss", "KK:mm:ss a")
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
