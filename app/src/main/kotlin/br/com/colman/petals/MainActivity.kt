@@ -23,6 +23,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
@@ -32,27 +33,34 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import br.com.colman.petals.R.string.pin_main_screen
 import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
 import br.com.colman.petals.navigation.NavHostContainer
+import br.com.colman.petals.settings.SettingsRepository
 import java.time.LocalDateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 @Suppress("FunctionName")
 class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
   private var authorizedUntil = LocalDateTime.MIN
+  private val settingsRepository by inject<SettingsRepository>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -60,6 +68,8 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
       val navController = rememberNavController()
 
       var isAuthorized by remember { mutableStateOf(false) }
+      val correctPin by settingsRepository.pin.collectAsState(null)
+
 
       LaunchedEffect(authorizedUntil) {
         while (true) {
@@ -69,7 +79,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
       }
 
       MaterialTheme(if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-        if (isAuthorized) {
+        if (isAuthorized || correctPin == null) {
           Surface {
             Scaffold(
               topBar = { MyTopAppBar(navController) },
@@ -78,7 +88,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
             )
           }
         } else {
-          Authorization()
+          Authorization(correctPin)
         }
       }
     }
@@ -87,18 +97,18 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   fun isAuthorized() = authorizedUntil >= LocalDateTime.now()
 
   @Composable
-  fun Authorization() {
+  fun Authorization(correctPin: String?) {
     var pin by remember { mutableStateOf("") }
 
     LaunchedEffect(pin) {
-      if (pin == "abcd") {
+      if (pin == correctPin) {
         authorizedUntil = LocalDateTime.now().plusMinutes(30L)
       }
     }
 
-    Column {
+    Column(Modifier.padding(16.dp)) {
       Text(stringResource(pin_main_screen))
-      OutlinedTextField(pin, { pin = it })
+      OutlinedTextField(pin, { pin = it }, visualTransformation = PasswordVisualTransformation())
     }
   }
 }

@@ -352,7 +352,7 @@ private fun PinDialog(
     text = {
       OutlinedTextField(
         pin.orEmpty(),
-        { pin = if(it.isBlank()) null else "" },
+        { pin = it.ifBlank { null } },
         label = { Text(stringResource(app_pin)) },
         visualTransformation = PasswordVisualTransformation()
       )
