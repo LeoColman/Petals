@@ -30,7 +30,7 @@ datastore-android = { module = "androidx.datastore:datastore-preferences", versi
 datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 graph-view = "com.jjoe64:graphview:4.2.2"
-joda-time = "joda-time:joda-time:2.12.3"
+joda-time = "joda-time:joda-time:2.12.4"
 junit4 = "junit:junit:4.13.2"
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
