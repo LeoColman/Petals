@@ -37,7 +37,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -49,12 +48,11 @@ import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
 import br.com.colman.petals.navigation.NavHostContainer
 import br.com.colman.petals.settings.SettingsRepository
-import java.time.LocalDateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import java.time.LocalDateTime
 
 @Suppress("FunctionName")
 class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
@@ -69,7 +67,6 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
 
       var isAuthorized by remember { mutableStateOf(false) }
       val correctPin by settingsRepository.pin.collectAsState(null)
-
 
       LaunchedEffect(authorizedUntil) {
         while (true) {
