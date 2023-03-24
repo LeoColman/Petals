@@ -1,0 +1,2 @@
+* Add optional App PIN for additional privacy
+* Sync translations from Weblate
