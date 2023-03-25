@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
@@ -36,9 +37,19 @@ class SettingsRepository(
     datastore.edit { it[TimeFormat] = value }
   }
 
+  val pin: Flow<String?>
+    get() = datastore.data.map { it[Pin] }
+
+  fun setPin(pin: String?): Unit = runBlocking {
+    datastore.edit {
+      if (pin == null) it.remove(Pin) else it[Pin] = pin
+    }
+  }
+
   companion object {
     val CurrencyIcon = stringPreferencesKey("currency_icon")
     val DateFormat = stringPreferencesKey("date_format")
     val TimeFormat = stringPreferencesKey("time_format")
+    val Pin = stringPreferencesKey("pin")
   }
 }

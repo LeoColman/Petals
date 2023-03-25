@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalMaterialApi::class)
+@file:Suppress("TooManyFunctions")
 
 package br.com.colman.petals.settings
 
@@ -31,13 +32,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import br.com.colman.petals.R
+import br.com.colman.petals.R.string.app_pin
 import br.com.colman.petals.R.string.currency_icon
 import br.com.colman.petals.R.string.date_format_label
 import br.com.colman.petals.R.string.ok
+import br.com.colman.petals.R.string.password_description
+import br.com.colman.petals.R.string.repository_link_description
+import br.com.colman.petals.R.string.repository_link_title
+import br.com.colman.petals.R.string.share_app
+import br.com.colman.petals.R.string.share_app_message
+import br.com.colman.petals.R.string.share_app_title
 import br.com.colman.petals.R.string.time_format_label
 import br.com.colman.petals.R.string.what_date_format_should_be_used
 import br.com.colman.petals.R.string.what_icon_should_be_used_for_currency
@@ -47,6 +55,7 @@ import compose.icons.tablericons.BrandGithub
 import compose.icons.tablericons.Calendar
 import compose.icons.tablericons.Cash
 import compose.icons.tablericons.Clock
+import compose.icons.tablericons.Lock
 
 @Composable
 fun SettingsView(settingsRepository: SettingsRepository) {
@@ -58,9 +67,11 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val setTimeFormat = settingsRepository::setTimeFormat
   val timeFormatList = settingsRepository.timeFormatList
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(timeFormatList[0])
+  val setPin = settingsRepository::setPin
 
   Column {
     CurrencyListItem(currentCurrency, setCurrency)
+    PinListItem(setPin)
     RepositoryListItem()
     DateListItem(currentDateFormat, dateFormatList, setDateFormat)
     TimeListItem(currentTimeFormat, timeFormatList, setTimeFormat)
@@ -77,9 +88,9 @@ private fun RepositoryListItem() {
   ListItem(
     modifier = Modifier.clickable { openUrl() },
     icon = { Icon(TablerIcons.BrandGithub, null, Modifier.size(42.dp)) },
-    secondaryText = { Text(stringResource(R.string.repository_link_description)) }
+    secondaryText = { Text(stringResource(repository_link_description)) }
   ) {
-    Text(stringResource(R.string.repository_link_title))
+    Text(stringResource(repository_link_title))
   }
 }
 
@@ -102,6 +113,27 @@ private fun CurrencyListItem(
 
   if (shouldShowDialog) {
     CurrencyDialog(currency, setCurrency) { shouldShowDialog = false }
+  }
+}
+
+@Preview
+@Composable
+private fun PinListItem(
+  setPin: (String?) -> Unit = {}
+) {
+  var shouldShowDialog by remember { mutableStateOf(false) }
+
+  ListItem(
+    modifier = Modifier.clickable { shouldShowDialog = true },
+    icon = { Icon(TablerIcons.Lock, null, Modifier.size(42.dp)) },
+
+    secondaryText = { Text(stringResource(password_description)) }
+  ) {
+    Text(stringResource(app_pin))
+  }
+
+  if (shouldShowDialog) {
+    PinDialog(setPin) { shouldShowDialog = false }
   }
 }
 
@@ -161,7 +193,7 @@ fun ShareApp(
     action = Intent.ACTION_SEND
     putExtra(
       Intent.EXTRA_TEXT,
-      stringResource(R.string.share_app_message)
+      stringResource(share_app_message)
     )
     type = "text/plain"
   }
@@ -171,9 +203,9 @@ fun ShareApp(
       ContextCompat.startActivity(context, shareIntent, null)
     },
     icon = { Icon(shareIcon, null, Modifier.size(42.dp)) },
-    secondaryText = { Text(stringResource(R.string.share_app)) }
+    secondaryText = { Text(stringResource(share_app)) }
   ) {
-    Text(stringResource(R.string.share_app_title))
+    Text(stringResource(share_app_title))
   }
 }
 
@@ -303,7 +335,11 @@ private fun CurrencyDialog(
   AlertDialog(
     onDismissRequest = onDismiss,
     text = {
-      OutlinedTextField(currency, { currency = it }, label = { Text(stringResource(currency_icon)) })
+      OutlinedTextField(
+        currency,
+        { currency = it },
+        label = { Text(stringResource(currency_icon)) }
+      )
     },
     confirmButton = {
       Text(
@@ -311,6 +347,35 @@ private fun CurrencyDialog(
         Modifier
           .padding(8.dp)
           .clickable { setCurrency(currency); onDismiss() }
+      )
+    }
+  )
+}
+
+@Preview
+@Composable
+private fun PinDialog(
+  setPin: (String?) -> Unit = {},
+  onDismiss: () -> Unit = {},
+) {
+  var pin by remember { mutableStateOf(null as String?) }
+
+  AlertDialog(
+    onDismissRequest = onDismiss,
+    text = {
+      OutlinedTextField(
+        pin.orEmpty(),
+        { pin = it.ifBlank { null } },
+        label = { Text(stringResource(app_pin)) },
+        visualTransformation = PasswordVisualTransformation()
+      )
+    },
+    confirmButton = {
+      Text(
+        stringResource(ok),
+        Modifier
+          .padding(8.dp)
+          .clickable { setPin(pin); onDismiss() }
       )
     }
   )
