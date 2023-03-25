@@ -57,8 +57,8 @@ class SettingsRepositoryTest : FunSpec({
     datastore.data.first().get(DateFormat) shouldBe "yyyy/MM/dd"
   }
 
-  test("Defaults time format to HH-mm") {
-    target.timeFormat.first() shouldBe "HH-mm"
+  test("Defaults time format to HH:mm") {
+    target.timeFormat.first() shouldBe "HH:mm"
   }
 
   test("Changes time format to the specified one") {
