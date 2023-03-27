@@ -93,4 +93,17 @@
     <string name="time_format_label">Zeitformat</string>
     <string name="what_time_format_should_be_used">Welches Zeitformat sollte verwendet werden\?</string>
     <string name="grams_distribution_per_day_of_week">Gramm Verteilung pro Wochentag</string>
+    <string name="app_pin">App-PIN</string>
+    <string name="password_description">Für zusätzlichen Datenschutz können Sie ein Passwort für den Zugriff auf die Anwendung festlegen. Wenn Sie ein leeres Passwort festlegen, wird es entfernt. ACHTUNG! Es ist nicht möglich, ein gesetztes Passwort wiederherzustellen</string>
+    <string name="pin_main_screen">Diese Anwendung ist passwortgeschützt. Geben Sie das richtige Passwort ein, um fortzufahren.</string>
+    <string name="share_app">Teilen Sie die App mit Ihren Freunden</string>
+    <string name="share_app_title">App teilen</string>
+    <string name="share_app_message">Hallo, die Petals-App hilft mir
+\nHol sie dich bei Google Play:
+\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\noder Hol sie dir auf F-Droid
+\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
+    <string name="confirm_to_delete">Sind Sie sicher, dass Sie die auf %s hinzugefügte Nutzung löschen möchten\?</string>
+    <string name="delete_use_title">Verwendung löschen</string>
+    <string name="deleted_successfully">Verwendung gelöscht!</string>
 </resources>
