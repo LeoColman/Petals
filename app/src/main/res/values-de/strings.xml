@@ -95,10 +95,10 @@
     <string name="share_app_title">App teilen</string>
     <string name="share_app_message">Hallo, die Petals-App hilft mir
 \nHol sie dich bei Google Play:
-\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals
 \noder Hol sie dir auf F-Droid
 \nhttps://f-droid.org/packages/br.com.colman.petals/</string>
-    <string name="confirm_to_delete">Sind Sie sicher, dass Sie die auf %s hinzugefügte Nutzung löschen möchten\?</string>
+    <string name="confirm_to_delete">Sind Sie sicher, dass Sie die auf %s hinzugefügte Nutzung löschen möchten?</string>
     <string name="delete_use_title">Verwendung löschen</string>
     <string name="deleted_successfully">Verwendung gelöscht!</string>
     <plurals name="last_x_days">
