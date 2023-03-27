@@ -105,4 +105,7 @@
 \nou sur F-Droid
 \nhttps://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="confirm_to_delete">Êtes-vous sûr·e de vouloir supprimer l\'utilisation ajoutée sur %s \?</string>
+    <string name="app_pin">NIP de l\'appli</string>
+    <string name="pin_main_screen">Cette application est protégée par un mot de passe. Entrez le bon mot de passe pour continuer.</string>
+    <string name="password_description">Pour plus de confidentialité, vous pouvez définir un mot de passe pour accéder à l\'application. La définition d\'un mot de passe vide le supprime. ATTENTION ! Il n\'est pas possible de récupérer un mot de passe défini</string>
 </resources>
