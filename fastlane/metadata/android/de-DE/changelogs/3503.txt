@@ -1,0 +1,2 @@
+* Behebt das Zurücksetzen des HitTimers bei Änderung der Bildschirmausrichtung
+* Synchronisierung von Übersetzungen
