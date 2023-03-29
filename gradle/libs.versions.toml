@@ -38,7 +38,7 @@ koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
-kotlin-csv = "com.github.doyaaaaaken:kotlin-csv-jvm:1.8.0"
+kotlin-csv = "com.github.doyaaaaaken:kotlin-csv-jvm:1.9.0"
 kotlin-date-range = "me.moallemi.tools:kotlin-date-range:1.0.0"
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
