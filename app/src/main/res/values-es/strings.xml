@@ -105,4 +105,7 @@
     <string name="delete_use_title">Borrar lo usado</string>
     <string name="deleted_successfully">¡Lo utilizado fue borrado!</string>
     <string name="confirm_to_delete">¿Estás seguro de que quieres borrar el uso añadido en %s\?</string>
+    <string name="app_pin">PIN de la aplicación</string>
+    <string name="password_description">Para mayor privacidad, puedes establecer una contraseña para acceder a la aplicación. Establecer una contraseña vacía la elimina. ¡ATENCIÓN! No es posible recuperar una contraseña establecida</string>
+    <string name="pin_main_screen">Esta aplicación está protegida por contraseña. Introduce la contraseña correcta para continuar.</string>
 </resources>
