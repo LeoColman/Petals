@@ -1,0 +1,2 @@
+* Añade un PIN opcional a la aplicación para mayor privacidad
+* Sincronizar traducciones desde Weblate
