@@ -1,2 +1,2 @@
-- Add setting for date and time format
-- Sync weblate translations
+- Einstellung für Datums- und Zeitformat hinzugefügt
+- Weblate-Übersetzungen synchronisieren
