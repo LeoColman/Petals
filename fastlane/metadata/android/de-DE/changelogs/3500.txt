@@ -1,0 +1,2 @@
+- Einstellung für Datums- und Zeitformat hinzugefügt
+- Weblate-Übersetzungen synchronisieren

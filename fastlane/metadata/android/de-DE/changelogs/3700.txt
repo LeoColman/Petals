@@ -1,0 +1,3 @@
+* Toastnachricht bei Löschen verwenden hinzufügen
+* Total Grams zum Statistikblock hinzufügen
+* Behoben: Der Graph UsePerDayOfWeek zeigt die Daten nicht korrekt an

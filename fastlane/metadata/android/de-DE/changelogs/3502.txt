@@ -1,0 +1,3 @@
+* Übersetzungen synchronisieren
+* Veröffentlichung im Google Play Store korrigiert
+* Behebt, dass der Abstinenz-Punkt nicht mit der Diagrammlinie übereinstimmt

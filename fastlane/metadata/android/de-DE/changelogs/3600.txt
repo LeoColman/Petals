@@ -1,0 +1,1 @@
+* Funktion zur gemeinsamen Nutzung der App hinzufügen
