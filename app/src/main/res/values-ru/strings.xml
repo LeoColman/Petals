@@ -92,11 +92,11 @@
     <string name="share_app_title">Поделитесь приложением</string>
     <string name="share_app_message">Эй, приложение Petals помогает мне
 \nСкачайте его в Google Play:
-\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals
 \nили в F-Droid
 \nhttps://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="deleted_successfully">Употребление удалено!</string>
-    <string name="confirm_to_delete">Вы уверены что хотите удалить употребление, добавленное в %s\?</string>
+    <string name="confirm_to_delete">Вы уверены что хотите удалить употребление, добавленное в %s?</string>
     <string name="delete_use_title">Удалить употребление</string>
     <string name="date_format_label">Формат даты</string>
     <string name="what_date_format_should_be_used">Какой формат даты должен быть использован</string>
