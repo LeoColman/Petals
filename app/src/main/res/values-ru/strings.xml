@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="repository_link_description">Это приложение имеет открытый исходный код и является бесплатным программным обеспечением под лицензией AGPL-3.0. Исходный код доступен на Github (github.com/LeoColman/Petals)</string>
+    <string name="repository_link_description">Это приложение с открытым исходным кодом является свободным программным обеспечением под лицензией AGPL-3.0. Исходный код доступен на Github (github.com/LeoColman/Petals)</string>
     <string name="days">Дни</string>
     <string name="years">Годы</string>
     <string name="months">Месяцы</string>
@@ -12,7 +12,7 @@
     <string name="hit_timer">Таймер</string>
     <string name="start">Старт</string>
     <string name="reset">Перезапуск</string>
-    <string name="tenSecondsIntro">Удерживание больше чем на десять секунд не увеличит ваш кайф, а увеличит количество плохих вещей которая причиняет трава.</string>
+    <string name="tenSecondsIntro">Удерживание вдоха длительнее 10 секунд не увеличит ваш кайф, но повысит вред, причиняемый употреблением.</string>
     <string name="hittimer_why_ten_secs">Почему 10 секунд\?</string>
     <string name="subjectve_high">Субъективный \"кайф\"</string>
     <string name="breathhold_duration">Время задержки дыхания (в секундах)</string>
@@ -42,7 +42,7 @@
     <string name="last_ninety_days">Последние 90 дней</string>
     <string name="change_period">Изменить период</string>
     <string name="thc_concentration">Концентрация ТГК(%)</string>
-    <string name="current_withdrawal_discomfort">Текущий дискомфорт от наркотической ломки: %s</string>
+    <string name="current_withdrawal_discomfort">Текущий дискомфорт от отказа: %s</string>
     <string name="discomfort_strength">Интенсивность дискомфорта</string>
     <string name="date_at_time">%1$s в %2$s</string>
     <plurals name="amount_days">
@@ -77,7 +77,7 @@
     <string name="today">Сегодня</string>
     <string name="this_week">С понедельника</string>
     <string name="this_month">С первого числа</string>
-    <string name="cost_per_gram_label">cena_za_gramm</string>
+    <string name="cost_per_gram_label">цена_за_грамм</string>
     <string name="see_more">Увидеть больше</string>
     <string name="cost_per_gram_short">%s/г</string>
     <string name="import_import">Импортировать</string>
@@ -87,9 +87,27 @@
     <string name="last_thirty_days">Последние 30 дней</string>
     <string name="last_sixty_days">Последние 60 дней</string>
     <string name="grams">Граммы</string>
-    <string name="symptoms_introduction">Исследование проведенное Бадни (Budney) и другими из Университета Вермонта, показало, как быстро проходят симптомы наркотической ломки у потребителей каннабиса. Ниже вы увидите предположительную оценку вашей текущей ситуации, основанную на том, когда вы последний раз употребляли</string>
+    <string name="symptoms_introduction">Budney et al. (университет Вермонта) исследовал скорость облегчения симптомов абстиненции после отказа у потребителей каннабиса. Ниже вы увидите предположительную оценку вашей текущей ситуации, основанную на дате последнего употребления</string>
     <string name="month">месяц</string>
     <string name="day">день</string>
     <string name="vibrate_on_timer_end">Вибрировать по завершении таймера</string>
     <string name="yes">Да</string>
+    <string name="grams_distribution_per_day_of_week">Распределение граммов по дням недели</string>
+    <string name="share_app">Поделитесь приложением с друзьями</string>
+    <string name="share_app_title">Поделитесь приложением</string>
+    <string name="share_app_message">Эй, приложение Petals помогает мне
+\nСкачайте его в Google Play:
+\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\nили в F-Droid
+\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
+    <string name="deleted_successfully">Употребление удалено!</string>
+    <string name="confirm_to_delete">Вы уверены что хотите удалить употребление, добавленное в %s\?</string>
+    <string name="delete_use_title">Удалить употребление</string>
+    <string name="date_format_label">Формат даты</string>
+    <string name="what_date_format_should_be_used">Какой формат даты должен быть использован</string>
+    <string name="time_format_label">Формат времени</string>
+    <string name="app_pin">PIN приложения</string>
+    <string name="password_description">Для дополнительной приватности вы можете задать пароль для доступа к приложению. Задание в настройках пустого пароля удаляет прежде установленный пароль. ВНИМАНИЕ! Невозможно восстановить установленный пароль если он утрачен (забыт)</string>
+    <string name="pin_main_screen">Это приложение защищено паролем. Введите верный пароль для продолжения.</string>
+    <string name="what_time_format_should_be_used">Какой формат времени должен быть использован</string>
 </resources>
