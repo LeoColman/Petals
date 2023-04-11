@@ -134,7 +134,9 @@ android {
   }
 
   packagingOptions {
-    resources.excludes.add("META-INF/*")
+    resources.excludes.add("META-INF/**")
+    resources.excludes.add("win32-x86-64/attach_hotspot_windows.dll")
+    resources.excludes.add("win32-x86/attach_hotspot_windows.dll")
   }
 
 }
@@ -167,8 +169,10 @@ dependencies {
   androidTestImplementation(libs.koin.test)
 
   // Kotest
-  testImplementation(libs.bundles.kotest.all)
-  androidTestImplementation(libs.bundles.kotest.extras)
+  testImplementation(libs.bundles.kotest.jvm)
+  testImplementation(libs.bundles.kotest.common)
+  androidTestImplementation(libs.bundles.kotest.android)
+  androidTestImplementation(libs.bundles.kotest.common)
 
   // Mockk
   testImplementation(libs.mockk)

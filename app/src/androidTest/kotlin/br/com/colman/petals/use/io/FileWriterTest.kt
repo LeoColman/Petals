@@ -1,26 +1,24 @@
 package br.com.colman.petals.use.io
 
 import androidx.test.platform.app.InstrumentationRegistry
+import br.com.colman.kotest.FunSpec
+import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.matchers.file.shouldExist
 import io.kotest.matchers.file.shouldNotExist
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldEndWith
-import org.junit.Before
-import org.junit.Test
 import java.io.File
 
-class FileWriterTest {
+class FileWriterTest : FunSpec({
+
   val context = InstrumentationRegistry.getInstrumentation().targetContext
   val exportsDirectory = File(context.filesDir, "exports")
   val target = FileWriter(context)
 
-  @Before
-  fun deleteExportsDirectory() {
-    exportsDirectory.deleteRecursively()
-  }
+  beforeEach { exportsDirectory.deleteRecursively() }
+  isolationMode = InstancePerTest
 
-  @Test
-  fun createsExportsDirectory() {
+  test("Creates exports directory when it doesn't exist") {
     exportsDirectory.shouldNotExist()
 
     target.write("abc")
@@ -28,8 +26,7 @@ class FileWriterTest {
     exportsDirectory.shouldExist()
   }
 
-  @Test
-  fun replacesExistingFile() {
+  test("Replaces an existing file") {
     val uri1 = target.write("abc")
     val uri2 = target.write("def")
 
@@ -39,10 +36,9 @@ class FileWriterTest {
     content.bufferedReader().readText() shouldBe "def"
   }
 
-  @Test
-  fun defaultFIleName() {
+  test("Uses PetalsExport.csv as the default file name") {
     val uri = target.write("xxx")
 
     uri.path shouldEndWith "PetalsExport.csv"
   }
-}
+})

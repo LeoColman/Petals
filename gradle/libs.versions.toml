@@ -36,7 +36,9 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-assertions-android = { module = "br.com.colman:kotest-assertions-android", version = "1.0.0" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-runner-android = { module = "br.com.colman:kotest-runner-android", version = "1.0.0" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlin-csv = "com.github.doyaaaaaken:kotlin-csv-jvm:1.9.0"
 kotlin-date-range = "me.moallemi.tools:kotlin-date-range:1.0.0"
@@ -90,15 +92,11 @@ koin = [
     "koin-android",
     "koin-compose",
 ]
-kotest-all = [
-    "kotest-assertions",
-    "kotest-property",
-    "kotest-runner-junit5",
-]
-kotest-extras = [
-    "kotest-assertions",
-    "kotest-property",
-]
+kotest-jvm = ["kotest-runner-junit5"]
+
+kotest-android = ["kotest-runner-android", "kotest-assertions-android"]
+
+kotest-common = ["kotest-assertions", "kotest-property"]
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
