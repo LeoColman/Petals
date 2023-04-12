@@ -122,4 +122,6 @@
     <string name="app_pin">App Pin</string>
     <string name="password_description">For extra privacy you can setup a password to access the app. Setting an empty password removes it. ATTENTION! It\'s not possible to recover a set password</string>
     <string name="pin_main_screen">This application is password protected. Enter the right password to proceed.</string>
+    <string name="milliseconds_enabled">Toggle Milliseconds Bar</string>
+    <string name="enable_or_disable_milliseconds_bar_on_home_page">Enable or disable milliseconds bar on home page</string>
 </resources>
