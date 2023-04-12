@@ -50,8 +50,11 @@ import br.com.colman.petals.R.string.time_format_label
 import br.com.colman.petals.R.string.what_date_format_should_be_used
 import br.com.colman.petals.R.string.what_icon_should_be_used_for_currency
 import br.com.colman.petals.R.string.what_time_format_should_be_used
+import br.com.colman.petals.R.string.milliseconds_enabled
+import br.com.colman.petals.R.string.enable_or_disable_milliseconds_bar_on_home_page
 import compose.icons.TablerIcons
 import compose.icons.tablericons.BrandGithub
+import compose.icons.tablericons.CircleOff
 import compose.icons.tablericons.Calendar
 import compose.icons.tablericons.Cash
 import compose.icons.tablericons.Clock
@@ -68,6 +71,9 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val timeFormatList = settingsRepository.timeFormatList
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(timeFormatList[0])
   val setPin = settingsRepository::setPin
+  val setMillisecondsEnabled = settingsRepository::setMillisecondsEnabled
+  val millisecondsEnabledList = settingsRepository.millisecondsEnabledList
+  val currentMillisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(millisecondsEnabledList[0])
 
   Column {
     CurrencyListItem(currentCurrency, setCurrency)
@@ -75,6 +81,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     RepositoryListItem()
     DateListItem(currentDateFormat, dateFormatList, setDateFormat)
     TimeListItem(currentTimeFormat, timeFormatList, setTimeFormat)
+    MillisecondsEnabledListItem(currentMillisecondsEnabled, millisecondsEnabledList, setMillisecondsEnabled)
     ShareApp()
   }
 }
@@ -180,6 +187,29 @@ fun TimeListItem(
 
   if (shouldShowDialog) {
     TimeDialog(timeFormat, timeFormatList, setTimeFormat) { shouldShowDialog = false }
+  }
+}
+
+@Preview
+@Composable
+fun MillisecondsEnabledListItem(
+  millisecondsEnabled: String = "",
+  millisecondsEnabledList: List<String> = listOf(),
+  setMillisecondsEnabled: (String) -> Unit = {}
+) {
+  var shouldShowDialog by remember { mutableStateOf(false) }
+
+  ListItem(
+    modifier = Modifier.clickable { shouldShowDialog = true },
+    icon = { Icon(TablerIcons.CircleOff, null, Modifier.size(42.dp)) },
+
+    secondaryText = { Text(stringResource(enable_or_disable_milliseconds_bar_on_home_page)) }
+  ) {
+    Text(stringResource(milliseconds_enabled))
+  }
+
+  if (shouldShowDialog) {
+    MillisecondsEnabledDialog(millisecondsEnabled, millisecondsEnabledList, setMillisecondsEnabled) { shouldShowDialog = false }
   }
 }
 
@@ -376,6 +406,63 @@ private fun PinDialog(
         Modifier
           .padding(8.dp)
           .clickable { setPin(pin); onDismiss() }
+      )
+    }
+  )
+}
+
+@Preview
+@Composable
+private fun MillisecondsEnabledDialog(
+  millisecondsEnabled: String = "",
+  millisecondsEnabledList: List<String> = listOf(),
+  setMillisecondsEnabled: (String) -> Unit = {},
+  onDismiss: () -> Unit = {},
+) {
+  var millisecondsEnabled by remember { mutableStateOf(millisecondsEnabled) }
+  var expanded by remember { mutableStateOf(false) }
+
+  AlertDialog(
+    onDismissRequest = onDismiss,
+    text = {
+      ExposedDropdownMenuBox(
+        expanded = false,
+        onExpandedChange = { expanded = !expanded }
+      ) {
+        TextField(
+          value = millisecondsEnabled,
+          onValueChange = {},
+          readOnly = true,
+          label = { Text(text = stringResource(milliseconds_enabled)) },
+          trailingIcon = {
+            ExposedDropdownMenuDefaults.TrailingIcon(
+              expanded = expanded
+            )
+          },
+          colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+
+        ExposedDropdownMenu(
+          expanded = expanded,
+          onDismissRequest = { expanded = false }
+        ) {
+          millisecondsEnabledList.forEach { selectedOption ->
+            DropdownMenuItem(onClick = {
+              millisecondsEnabled = selectedOption
+              expanded = false
+            }) {
+              Text(text = selectedOption)
+            }
+          }
+        }
+      }
+    },
+    confirmButton = {
+      Text(
+        stringResource(ok),
+        Modifier
+          .padding(8.dp)
+          .clickable { setMillisecondsEnabled(millisecondsEnabled); onDismiss() }
       )
     }
   )

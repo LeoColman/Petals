@@ -24,6 +24,8 @@ class SettingsRepository(
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
   val timeFormatList = listOf("HH:mm", "KK:mm a", "HH:mm:ss", "KK:mm:ss a")
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
+  val millisecondsEnabledList = listOf("enabled", "disabled")
+  val millisecondsEnabled = datastore.data.map { it[MillisecondsEnabled] ?: millisecondsEnabledList.first() }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
     datastore.edit { it[CurrencyIcon] = value }
@@ -35,6 +37,10 @@ class SettingsRepository(
 
   fun setTimeFormat(value: String): Unit = runBlocking {
     datastore.edit { it[TimeFormat] = value }
+  }
+
+  fun setMillisecondsEnabled(value: String): Unit = runBlocking {
+    datastore.edit { it[MillisecondsEnabled] = value }
   }
 
   val pin: Flow<String?>
@@ -51,5 +57,6 @@ class SettingsRepository(
     val DateFormat = stringPreferencesKey("date_format")
     val TimeFormat = stringPreferencesKey("time_format")
     val Pin = stringPreferencesKey("pin")
+    val MillisecondsEnabled = stringPreferencesKey("milliseconds_enabled")
   }
 }
