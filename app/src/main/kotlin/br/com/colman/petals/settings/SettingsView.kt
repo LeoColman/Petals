@@ -9,6 +9,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
@@ -75,7 +77,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val millisecondsEnabledList = settingsRepository.millisecondsEnabledList
   val currentMillisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(millisecondsEnabledList[0])
 
-  Column {
+  Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, setCurrency)
     PinListItem(setPin)
     RepositoryListItem()

@@ -81,7 +81,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
             Scaffold(
               topBar = { MyTopAppBar(navController) },
               bottomBar = { BottomNavigationBar(navController) },
-              content = { NavHostContainer(navController) }
+              content = { NavHostContainer(navController, it) }
             )
           }
         } else {
