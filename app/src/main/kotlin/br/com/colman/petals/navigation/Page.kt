@@ -19,7 +19,7 @@
 package br.com.colman.petals.navigation
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -35,7 +35,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -60,13 +59,11 @@ enum class Page(
 }
 
 @Composable
-fun NavHostContainer(navController: NavHostController) {
-  NavHost(navController, Usage.name, Modifier.padding(8.dp)) {
+fun NavHostContainer(navController: NavHostController, paddingValues: PaddingValues) {
+  NavHost(navController, Usage.name, Modifier.padding(paddingValues)) {
     Page.values().forEach { page ->
       composable(page.name) {
-        Box(Modifier.padding(bottom = 60.dp)) {
-          page.ui()
-        }
+        page.ui()
       }
     }
 
