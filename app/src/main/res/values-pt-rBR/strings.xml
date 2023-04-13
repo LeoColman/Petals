@@ -124,4 +124,6 @@
     <string name="app_pin">Pin do App</string>
     <string name="password_description">Para ter mais privacidade você pode configurar uma senha para acessar o app. Configurar uma senha vazia removerá a senha. ATENÇÃO! Não é possível recuperar a senha após sua configuração</string>
     <string name="pin_main_screen">Essa aplicação é protegida por senha. Insira a senha correta para continuar.</string>
+    <string name="milliseconds_enabled">Habilitar Barra de Millisegundos</string>
+    <string name="enable_or_disable_milliseconds_bar_on_home_page">Habilita ou desabilita a barra de millisegundos da página inicial</string>
 </resources>
