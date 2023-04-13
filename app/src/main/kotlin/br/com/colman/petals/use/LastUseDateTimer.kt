@@ -69,7 +69,9 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
   val settingsRepository = get<SettingsRepository>()
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val millisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(settingsRepository.millisecondsEnabledList[0])
+  val millisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(
+    settingsRepository.millisecondsEnabledList[0]
+  )
   val dateString = DateTimeFormatter.ofPattern(
     String.format(
       Locale.US,
@@ -88,20 +90,14 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
     }
   }
 
-  var millisCopy = millis
-  var labels = listOf(Year, Month, Day, Hour, Minute, Second, Millisecond).map {
-    val unitsInTotal = millisCopy / it.millis
-    millisCopy -= unitsInTotal * it.millis
-    it to unitsInTotal
-  }
+  val allLabels = listOf(Year, Month, Day, Hour, Minute, Second, Millisecond)
+  val enabledLabels = if (millisecondsEnabled == "disabled") allLabels.dropLast(1) else allLabels
 
-  if (millisecondsEnabled == "disabled") {
-    var millisCopy = millis
-    labels = listOf(Year, Month, Day, Hour, Minute, Second).map {
-      val unitsInTotal = millisCopy / it.millis
-      millisCopy -= unitsInTotal * it.millis
-      it to unitsInTotal
-    }
+  var millisCopy = millis
+  val labels = enabledLabels.map {
+    val unitsTotal = millisCopy / it.millis
+    millisCopy -= unitsTotal * it.millis
+    it to unitsTotal
   }
 
   Column(Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {

@@ -39,6 +39,8 @@ import androidx.core.content.ContextCompat
 import br.com.colman.petals.R.string.app_pin
 import br.com.colman.petals.R.string.currency_icon
 import br.com.colman.petals.R.string.date_format_label
+import br.com.colman.petals.R.string.enable_or_disable_milliseconds_bar_on_home_page
+import br.com.colman.petals.R.string.milliseconds_enabled
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.password_description
 import br.com.colman.petals.R.string.repository_link_description
@@ -50,13 +52,11 @@ import br.com.colman.petals.R.string.time_format_label
 import br.com.colman.petals.R.string.what_date_format_should_be_used
 import br.com.colman.petals.R.string.what_icon_should_be_used_for_currency
 import br.com.colman.petals.R.string.what_time_format_should_be_used
-import br.com.colman.petals.R.string.milliseconds_enabled
-import br.com.colman.petals.R.string.enable_or_disable_milliseconds_bar_on_home_page
 import compose.icons.TablerIcons
 import compose.icons.tablericons.BrandGithub
-import compose.icons.tablericons.CircleOff
 import compose.icons.tablericons.Calendar
 import compose.icons.tablericons.Cash
+import compose.icons.tablericons.CircleOff
 import compose.icons.tablericons.Clock
 import compose.icons.tablericons.Lock
 
@@ -193,9 +193,9 @@ fun TimeListItem(
 @Preview
 @Composable
 fun MillisecondsEnabledListItem(
-  millisecondsEnabled: String = "",
-  millisecondsEnabledList: List<String> = listOf(),
-  setMillisecondsEnabled: (String) -> Unit = {}
+  millisEnabled: String = "",
+  millisOptions: List<String> = listOf(),
+  setMillisEnabled: (String) -> Unit = {}
 ) {
   var shouldShowDialog by remember { mutableStateOf(false) }
 
@@ -209,7 +209,9 @@ fun MillisecondsEnabledListItem(
   }
 
   if (shouldShowDialog) {
-    MillisecondsEnabledDialog(millisecondsEnabled, millisecondsEnabledList, setMillisecondsEnabled) { shouldShowDialog = false }
+    MillisecondsEnabledDialog(millisEnabled, millisOptions, setMillisEnabled) {
+      shouldShowDialog = false
+    }
   }
 }
 
