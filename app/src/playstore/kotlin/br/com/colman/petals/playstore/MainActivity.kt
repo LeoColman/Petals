@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
                 AdsView()
               }
             },
-            content = { NavHostContainer(navController) }
+            content = { NavHostContainer(navController, it) }
           )
         }
       }
