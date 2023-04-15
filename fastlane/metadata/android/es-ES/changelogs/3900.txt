@@ -1,0 +1,4 @@
+* Mejorar las opciones de formato de hora
+* Sincronizar traducciones desde Weblate
+* Añadir la opción de eliminar la barra de milisegundos
+* Hacer la página de la configuración desplazable
