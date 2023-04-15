@@ -108,4 +108,6 @@
     <string name="app_pin">PIN de la aplicación</string>
     <string name="password_description">Para mayor privacidad, puedes establecer una contraseña para acceder a la aplicación. Establecer una contraseña vacía la elimina. ¡ATENCIÓN! No es posible recuperar una contraseña establecida</string>
     <string name="pin_main_screen">Esta aplicación está protegida por contraseña. Introduce la contraseña correcta para continuar.</string>
+    <string name="milliseconds_enabled">Alternar la barra de los milisegundos</string>
+    <string name="enable_or_disable_milliseconds_bar_on_home_page">Activar o desactivar la barra de los milisegundos en la página de inicio</string>
 </resources>
