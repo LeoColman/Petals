@@ -61,6 +61,7 @@ import br.com.colman.petals.R.color.smokeColor
 import br.com.colman.petals.R.string.reset
 import br.com.colman.petals.R.string.start
 import br.com.colman.petals.R.string.vibrate_on_timer_end
+import br.com.colman.petals.settings.SettingsRepository
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.get
 
@@ -115,6 +116,9 @@ private fun TimerText(millisLeft: Long) {
   val isTimerRunning = millisLeft > 0L
   var blinking by remember { mutableStateOf(false) }
 
+  val settingsRepository = get<SettingsRepository>()
+  val hitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(settingsRepository.hitTimerMillisecondsEnabledList[0])
+
   LaunchedEffect(isTimerRunning) {
     if (isTimerRunning) {
       blinking = false; return@LaunchedEffect
@@ -126,7 +130,10 @@ private fun TimerText(millisLeft: Long) {
     }
   }
 
-  val duration = HitTimer.duration(millisLeft)
+  var duration = HitTimer.duration(millisLeft)
+  if (hitTimerMillisecondsEnabled == "disabled") {
+    duration = HitTimer.durationMillisecondsDisabled(millisLeft)
+  }
 
   if (blinking) BlinkingText(duration) else NonBlinkingText(duration)
 }
