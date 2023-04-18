@@ -9,8 +9,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
@@ -41,8 +39,6 @@ import androidx.core.content.ContextCompat
 import br.com.colman.petals.R.string.app_pin
 import br.com.colman.petals.R.string.currency_icon
 import br.com.colman.petals.R.string.date_format_label
-import br.com.colman.petals.R.string.enable_or_disable_milliseconds_bar_on_home_page
-import br.com.colman.petals.R.string.milliseconds_enabled
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.password_description
 import br.com.colman.petals.R.string.repository_link_description
@@ -54,6 +50,10 @@ import br.com.colman.petals.R.string.time_format_label
 import br.com.colman.petals.R.string.what_date_format_should_be_used
 import br.com.colman.petals.R.string.what_icon_should_be_used_for_currency
 import br.com.colman.petals.R.string.what_time_format_should_be_used
+import br.com.colman.petals.R.string.milliseconds_enabled
+import br.com.colman.petals.R.string.enable_or_disable_milliseconds_bar_on_home_page
+import br.com.colman.petals.R.string.hit_timer_milliseconds_enabled
+import br.com.colman.petals.R.string.enable_or_disable_milliseconds_on_hit_timer_page
 import compose.icons.TablerIcons
 import compose.icons.tablericons.BrandGithub
 import compose.icons.tablericons.Calendar
@@ -61,6 +61,7 @@ import compose.icons.tablericons.Cash
 import compose.icons.tablericons.CircleOff
 import compose.icons.tablericons.Clock
 import compose.icons.tablericons.Lock
+import compose.icons.tablericons.ToggleLeft
 
 @Composable
 fun SettingsView(settingsRepository: SettingsRepository) {
@@ -76,14 +77,18 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val setMillisecondsEnabled = settingsRepository::setMillisecondsEnabled
   val millisecondsEnabledList = settingsRepository.millisecondsEnabledList
   val currentMillisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(millisecondsEnabledList[0])
+  val setHitTimerMillisecondsEnabled = settingsRepository::setHitTimerMillisecondsEnabled
+  val hitTimerMillisecondsEnabledList = settingsRepository.hitTimerMillisecondsEnabledList
+  val currentHitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(hitTimerMillisecondsEnabledList[0])
 
-  Column(Modifier.verticalScroll(rememberScrollState())) {
+  Column {
     CurrencyListItem(currentCurrency, setCurrency)
     PinListItem(setPin)
     RepositoryListItem()
     DateListItem(currentDateFormat, dateFormatList, setDateFormat)
     TimeListItem(currentTimeFormat, timeFormatList, setTimeFormat)
     MillisecondsEnabledListItem(currentMillisecondsEnabled, millisecondsEnabledList, setMillisecondsEnabled)
+    HitTimerMillisecondsEnabledListItem(currentHitTimerMillisecondsEnabled, hitTimerMillisecondsEnabledList, setHitTimerMillisecondsEnabled)
     ShareApp()
   }
 }
@@ -214,6 +219,29 @@ fun MillisecondsEnabledListItem(
     MillisecondsEnabledDialog(millisEnabled, millisOptions, setMillisEnabled) {
       shouldShowDialog = false
     }
+  }
+}
+
+@Preview
+@Composable
+fun HitTimerMillisecondsEnabledListItem(
+  hitTimerMillisecondsEnabled: String = "",
+  hitTimerMillisecondsEnabledList: List<String> = listOf(),
+  setHitTimerMillisecondsEnabled: (String) -> Unit = {}
+) {
+  var shouldShowDialog by remember { mutableStateOf(false) }
+
+  ListItem(
+    modifier = Modifier.clickable { shouldShowDialog = true },
+    icon = { Icon(TablerIcons.ToggleLeft, null, Modifier.size(42.dp)) },
+
+    secondaryText = { Text(stringResource(enable_or_disable_milliseconds_on_hit_timer_page)) }
+  ) {
+    Text(stringResource(hit_timer_milliseconds_enabled))
+  }
+
+  if (shouldShowDialog) {
+    HitTimerMillisecondsEnabledDialog(hitTimerMillisecondsEnabled, hitTimerMillisecondsEnabledList, setHitTimerMillisecondsEnabled) { shouldShowDialog = false }
   }
 }
 
@@ -467,6 +495,63 @@ private fun MillisecondsEnabledDialog(
         Modifier
           .padding(8.dp)
           .clickable { setMillisecondsEnabled(millisecondsEnabled); onDismiss() }
+      )
+    }
+  )
+}
+
+@Preview
+@Composable
+private fun HitTimerMillisecondsEnabledDialog(
+  hitTimerMillisecondsEnabled: String = "",
+  hitTimerMillisecondsEnabledList: List<String> = listOf(),
+  setHitTimerMillisecondsEnabled: (String) -> Unit = {},
+  onDismiss: () -> Unit = {},
+) {
+  var hitTimerMillisecondsEnabled by remember { mutableStateOf(hitTimerMillisecondsEnabled) }
+  var expanded by remember { mutableStateOf(false) }
+
+  AlertDialog(
+    onDismissRequest = onDismiss,
+    text = {
+      ExposedDropdownMenuBox(
+        expanded = false,
+        onExpandedChange = { expanded = !expanded }
+      ) {
+        TextField(
+          value = hitTimerMillisecondsEnabled,
+          onValueChange = {},
+          readOnly = true,
+          label = { Text(text = stringResource(hit_timer_milliseconds_enabled)) },
+          trailingIcon = {
+            ExposedDropdownMenuDefaults.TrailingIcon(
+              expanded = expanded
+            )
+          },
+          colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+
+        ExposedDropdownMenu(
+          expanded = expanded,
+          onDismissRequest = { expanded = false }
+        ) {
+          hitTimerMillisecondsEnabledList.forEach { selectedOption ->
+            DropdownMenuItem(onClick = {
+              hitTimerMillisecondsEnabled = selectedOption
+              expanded = false
+            }) {
+              Text(text = selectedOption)
+            }
+          }
+        }
+      }
+    },
+    confirmButton = {
+      Text(
+        stringResource(ok),
+        Modifier
+          .padding(8.dp)
+          .clickable { setHitTimerMillisecondsEnabled(hitTimerMillisecondsEnabled); onDismiss() }
       )
     }
   )

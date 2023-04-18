@@ -40,5 +40,6 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
 
   companion object {
     fun duration(millis: Long): String = DurationFormatUtils.formatDuration(millis, "ss:SSS")
+    fun durationMillisecondsDisabled(millis: Long): String = DurationFormatUtils.formatDuration(millis, "s")
   }
 }

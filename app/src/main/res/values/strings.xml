@@ -124,4 +124,6 @@
     <string name="pin_main_screen">This application is password protected. Enter the right password to proceed.</string>
     <string name="milliseconds_enabled">Toggle Milliseconds Bar</string>
     <string name="enable_or_disable_milliseconds_bar_on_home_page">Enable or disable milliseconds bar on home page</string>
+    <string name="hit_timer_milliseconds_enabled">Toggle Milliseconds on Hit Timer Page</string>
+    <string name="enable_or_disable_milliseconds_on_hit_timer_page">Enable or disable milliseconds on Hit Timer page</string>
 </resources>
