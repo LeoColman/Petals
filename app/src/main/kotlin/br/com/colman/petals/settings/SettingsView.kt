@@ -39,6 +39,10 @@ import androidx.core.content.ContextCompat
 import br.com.colman.petals.R.string.app_pin
 import br.com.colman.petals.R.string.currency_icon
 import br.com.colman.petals.R.string.date_format_label
+import br.com.colman.petals.R.string.enable_or_disable_milliseconds_bar_on_home_page
+import br.com.colman.petals.R.string.enable_or_disable_milliseconds_on_hit_timer_page
+import br.com.colman.petals.R.string.hit_timer_milliseconds_enabled
+import br.com.colman.petals.R.string.milliseconds_enabled
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.password_description
 import br.com.colman.petals.R.string.repository_link_description
@@ -50,10 +54,6 @@ import br.com.colman.petals.R.string.time_format_label
 import br.com.colman.petals.R.string.what_date_format_should_be_used
 import br.com.colman.petals.R.string.what_icon_should_be_used_for_currency
 import br.com.colman.petals.R.string.what_time_format_should_be_used
-import br.com.colman.petals.R.string.milliseconds_enabled
-import br.com.colman.petals.R.string.enable_or_disable_milliseconds_bar_on_home_page
-import br.com.colman.petals.R.string.hit_timer_milliseconds_enabled
-import br.com.colman.petals.R.string.enable_or_disable_milliseconds_on_hit_timer_page
 import compose.icons.TablerIcons
 import compose.icons.tablericons.BrandGithub
 import compose.icons.tablericons.Calendar
@@ -79,7 +79,9 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentMillisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(millisecondsEnabledList[0])
   val setHitTimerMillisecondsEnabled = settingsRepository::setHitTimerMillisecondsEnabled
   val hitTimerMillisecondsEnabledList = settingsRepository.hitTimerMillisecondsEnabledList
-  val currentHitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(hitTimerMillisecondsEnabledList[0])
+  val currentHitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(
+    hitTimerMillisecondsEnabledList[0]
+  )
 
   Column {
     CurrencyListItem(currentCurrency, setCurrency)
@@ -88,7 +90,11 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     DateListItem(currentDateFormat, dateFormatList, setDateFormat)
     TimeListItem(currentTimeFormat, timeFormatList, setTimeFormat)
     MillisecondsEnabledListItem(currentMillisecondsEnabled, millisecondsEnabledList, setMillisecondsEnabled)
-    HitTimerMillisecondsEnabledListItem(currentHitTimerMillisecondsEnabled, hitTimerMillisecondsEnabledList, setHitTimerMillisecondsEnabled)
+    HitTimerMillisecondsEnabledListItem(
+      currentHitTimerMillisecondsEnabled,
+      hitTimerMillisecondsEnabledList,
+      setHitTimerMillisecondsEnabled
+    )
     ShareApp()
   }
 }
@@ -241,7 +247,11 @@ fun HitTimerMillisecondsEnabledListItem(
   }
 
   if (shouldShowDialog) {
-    HitTimerMillisecondsEnabledDialog(hitTimerMillisecondsEnabled, hitTimerMillisecondsEnabledList, setHitTimerMillisecondsEnabled) { shouldShowDialog = false }
+    HitTimerMillisecondsEnabledDialog(
+      hitTimerMillisecondsEnabled,
+      hitTimerMillisecondsEnabledList,
+      setHitTimerMillisecondsEnabled
+    ) { shouldShowDialog = false }
   }
 }
 

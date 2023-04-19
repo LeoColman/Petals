@@ -27,7 +27,9 @@ class SettingsRepository(
   val millisecondsEnabledList = listOf("enabled", "disabled")
   val millisecondsEnabled = datastore.data.map { it[MillisecondsEnabled] ?: millisecondsEnabledList.first() }
   val hitTimerMillisecondsEnabledList = listOf("enabled", "disabled")
-  val hitTimerMillisecondsEnabled = datastore.data.map { it[HitTimerMillisecondsEnabled] ?: hitTimerMillisecondsEnabledList.first() }
+  val hitTimerMillisecondsEnabled = datastore.data.map {
+    it[HitTimerMillisecondsEnabled] ?: hitTimerMillisecondsEnabledList.first()
+  }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
     datastore.edit { it[CurrencyIcon] = value }
