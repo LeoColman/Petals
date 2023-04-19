@@ -117,7 +117,9 @@ private fun TimerText(millisLeft: Long) {
   var blinking by remember { mutableStateOf(false) }
 
   val settingsRepository = get<SettingsRepository>()
-  val hitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(settingsRepository.hitTimerMillisecondsEnabledList[0])
+  val hitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(
+    settingsRepository.hitTimerMillisecondsEnabledList[0]
+  )
 
   LaunchedEffect(isTimerRunning) {
     if (isTimerRunning) {
