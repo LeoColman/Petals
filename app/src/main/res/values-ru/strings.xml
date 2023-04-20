@@ -110,4 +110,8 @@
     <string name="password_description">Для дополнительной приватности вы можете задать пароль для доступа к приложению. Задание в настройках пустого пароля удаляет прежде установленный пароль. ВНИМАНИЕ! Невозможно восстановить установленный пароль если он утрачен (забыт)</string>
     <string name="pin_main_screen">Это приложение защищено паролем. Введите верный пароль для продолжения.</string>
     <string name="what_time_format_should_be_used">Какой формат времени должен быть использован</string>
+    <string name="milliseconds_enabled">Включить строку миллисекунд</string>
+    <string name="enable_or_disable_milliseconds_bar_on_home_page">Включить или выключить строку миллисекунд на домашней странице</string>
+    <string name="hit_timer_milliseconds_enabled">Включить миллисекунды на странице Таймера</string>
+    <string name="enable_or_disable_milliseconds_on_hit_timer_page">Включить или выключить миллисекунды на странице Таймера</string>
 </resources>
