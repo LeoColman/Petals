@@ -110,4 +110,6 @@
     <string name="pin_main_screen">Esta aplicación está protegida por contraseña. Introduce la contraseña correcta para continuar.</string>
     <string name="milliseconds_enabled">Alternar la barra de los milisegundos</string>
     <string name="enable_or_disable_milliseconds_bar_on_home_page">Activar o desactivar la barra de los milisegundos en la página de inicio</string>
+    <string name="hit_timer_milliseconds_enabled">Alternar milisegundos en la página golpear el temporizador</string>
+    <string name="enable_or_disable_milliseconds_on_hit_timer_page">Activar o desactivar milisegundos en la página Temporizador de impactos</string>
 </resources>
