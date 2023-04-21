@@ -26,7 +26,6 @@ import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.compose.get
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
