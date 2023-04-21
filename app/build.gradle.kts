@@ -206,7 +206,7 @@ dependencies {
   implementation(libs.requery.sqlite)
 
   // Google Ads
-  "playstoreImplementation"("com.google.android.gms:play-services-ads:21.5.0")
+  "playstoreImplementation"("com.google.android.gms:play-services-ads:22.0.0")
 
 }
 
