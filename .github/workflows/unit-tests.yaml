@@ -26,8 +26,14 @@ jobs:
     - check_yaml_consistency
     steps:
     - id: step-0
-      uses: actions/checkout@v3
+      name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+        distribution: adopt
     - id: step-1
+      uses: actions/checkout@v3
+    - id: step-2
       uses: gradle/gradle-build-action@v2
       with:
         arguments: test

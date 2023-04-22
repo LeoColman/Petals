@@ -2,6 +2,8 @@
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.40.0")
 
 import it.krzeminski.githubactions.actions.actions.CheckoutV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3
+import it.krzeminski.githubactions.actions.actions.SetupJavaV3.Distribution.Adopt
 import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
 import it.krzeminski.githubactions.domain.RunnerType
 import it.krzeminski.githubactions.domain.triggers.PullRequest
@@ -16,6 +18,7 @@ workflow(
   sourceFile = __FILE__.toPath()
 ) {
   job("unit-test", runsOn = RunnerType.UbuntuLatest) {
+    uses(name = "Set up JDK", SetupJavaV3(javaVersion = "17", distribution = Adopt))
     uses(CheckoutV3())
     uses(GradleBuildActionV2(arguments = "test"))
   }
