@@ -1,0 +1,3 @@
+* Agregada la opción para eliminar los milisegundos de HitTimer
+* Sincronizadas las traducciones de Weblate
+* Actualizadas muchas otras dependencias
