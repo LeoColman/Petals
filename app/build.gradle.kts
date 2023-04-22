@@ -17,7 +17,7 @@
  */
 
 import java.util.Properties
-import org.gradle.api.JavaVersion.VERSION_11
+import org.gradle.api.JavaVersion.VERSION_17
 
 @Suppress("DSL_SCOPE_VIOLATION") //KTIJ-19369
 plugins {
@@ -102,6 +102,7 @@ android {
   buildTypes {
     named("release") {
       isMinifyEnabled = true
+      proguardFile("proguard-android-optimize.txt")
     }
 
     named("debug") {
@@ -112,8 +113,8 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility(VERSION_11)
-    targetCompatibility(VERSION_11)
+    sourceCompatibility(VERSION_17)
+    targetCompatibility(VERSION_17)
     isCoreLibraryDesugaringEnabled = true
   }
 
