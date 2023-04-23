@@ -85,6 +85,7 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
   val timeString = date.format(ofPattern(timeFormat))
   val currencySymbol by get<SettingsRepository>().currencyIcon.collectAsState("$")
+  val decimalPrecision by settingsRepository.decimalPrecision.collectAsState(settingsRepository.decimalPrecisionList[2])
 
   Card(
     Modifier
@@ -106,19 +107,19 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.Cash, null)
-          val costPerGramString = costPerGram.setScale(3, HALF_UP).toString()
+          val costPerGramString = costPerGram.setScale(decimalPrecision, HALF_UP).toString()
           Text("$currencySymbol " + stringResource(cost_per_gram, costPerGramString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.Scale, null)
-          val amountGramsString = amountGrams.setScale(3, HALF_UP).toString()
+          val amountGramsString = amountGrams.setScale(decimalPrecision, HALF_UP).toString()
           Text(stringResource(amount_grams, amountGramsString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.ReportMoney, null)
-          val total = (amountGrams * costPerGram).setScale(3, HALF_UP)
+          val total = (amountGrams * costPerGram).setScale(decimalPrecision, HALF_UP)
           Text("$currencySymbol " + stringResource(total_spent, total))
         }
       }

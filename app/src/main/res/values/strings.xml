@@ -123,7 +123,9 @@
     <string name="password_description">For extra privacy you can setup a password to access the app. Setting an empty password removes it. ATTENTION! It\'s not possible to recover a set password</string>
     <string name="pin_main_screen">This application is password protected. Enter the right password to proceed.</string>
     <string name="milliseconds_enabled">Toggle Milliseconds Bar</string>
-    <string name="enable_or_disable_milliseconds_bar_on_home_page">Enable or disable milliseconds bar on home page</string>
+    <string name="enable_or_disable_milliseconds_bar_on_home_page">Enable or disable milliseconds bar on Usage page</string>
     <string name="hit_timer_milliseconds_enabled">Toggle Milliseconds on Hit Timer Page</string>
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Enable or disable milliseconds on Hit Timer page</string>
+    <string name="decimal_precision">Decimal Precision</string>
+    <string name="what_decimal_precision_should_be_used">What decimal precision should be displayed on Usage page</string>
 </resources>
