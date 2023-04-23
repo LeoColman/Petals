@@ -37,6 +37,11 @@
       "moduleLicense": null,
       "moduleName": "com.squareup.sqldelight:runtime",
       "comment": "SQLDelight is Apache 2 https://github.com/cashapp/sqldelight/blob/master/LICENSE.txt"
+    },
+    {
+      "moduleLicense": null,
+      "moduleName": "com.github.requery:sqlite-android",
+      "comment": "SQLIte-Android is Apache 2 https://github.com/requery/sqlite-android/blob/master/LICENSE"
     }
   ]
 }

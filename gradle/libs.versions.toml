@@ -51,7 +51,7 @@ timber = "com.jakewharton.timber:timber:5.0.1"
 sqldelight-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
-requery-sqlite = "com.github.requery:sqlite-android:3.39.2"
+requery-sqlite = "com.github.requery:sqlite-android:3.41.1"
 play-services-ads = "com.google.android.gms:play-services-ads:22.0.0"
 
 [bundles]
