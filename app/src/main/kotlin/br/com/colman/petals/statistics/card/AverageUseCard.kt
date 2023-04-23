@@ -139,7 +139,7 @@ private fun AverageListItem(label: String, grams: BigDecimal, cost: BigDecimal, 
   Row {
     Text(stringResource(average_per, label), Modifier.weight(0.4f))
     Text(stringResource(amount_grams_short, grams), Modifier.weight(0.6f / 3f))
-    Text(currencyIcon + cost, Modifier.weight(0.6f / 3f))
+    Text(currencyIcon + "%.2f".format(cost), Modifier.weight(0.6f / 3f))
     Text(pluralResource(amount_uses, uses.toInt(), uses.setScale(2, RoundingMode.CEILING)))
   }
 }
