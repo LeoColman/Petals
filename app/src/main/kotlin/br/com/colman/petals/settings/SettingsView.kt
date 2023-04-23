@@ -41,6 +41,7 @@ import androidx.core.content.ContextCompat
 import br.com.colman.petals.R.string.app_pin
 import br.com.colman.petals.R.string.currency_icon
 import br.com.colman.petals.R.string.date_format_label
+import br.com.colman.petals.R.string.decimal_precision
 import br.com.colman.petals.R.string.enable_or_disable_milliseconds_bar_on_home_page
 import br.com.colman.petals.R.string.enable_or_disable_milliseconds_on_hit_timer_page
 import br.com.colman.petals.R.string.hit_timer_milliseconds_enabled
@@ -54,10 +55,13 @@ import br.com.colman.petals.R.string.share_app_message
 import br.com.colman.petals.R.string.share_app_title
 import br.com.colman.petals.R.string.time_format_label
 import br.com.colman.petals.R.string.what_date_format_should_be_used
+import br.com.colman.petals.R.string.what_decimal_precision_should_be_used
 import br.com.colman.petals.R.string.what_icon_should_be_used_for_currency
 import br.com.colman.petals.R.string.what_time_format_should_be_used
+
 import compose.icons.TablerIcons
 import compose.icons.tablericons.BrandGithub
+import compose.icons.tablericons.Calculator
 import compose.icons.tablericons.Calendar
 import compose.icons.tablericons.Cash
 import compose.icons.tablericons.CircleOff
@@ -84,6 +88,9 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentHitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(
     hitTimerMillisecondsEnabledList[0]
   )
+  val setDecimalPrecision = settingsRepository::setDecimalPrecision
+  val decimalPrecisionList = settingsRepository.decimalPrecisionList
+  val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(decimalPrecisionList[2])
 
   Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, setCurrency)
@@ -97,6 +104,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
       hitTimerMillisecondsEnabledList,
       setHitTimerMillisecondsEnabled
     )
+    PrecisionListItem(currentDecimalPrecision, decimalPrecisionList, setDecimalPrecision)
     ShareApp()
   }
 }
@@ -254,6 +262,29 @@ fun HitTimerMillisecondsEnabledListItem(
       hitTimerMillisecondsEnabledList,
       setHitTimerMillisecondsEnabled
     ) { shouldShowDialog = false }
+  }
+}
+
+@Preview
+@Composable
+fun PrecisionListItem(
+  decimalPrecision: Int = 2,
+  decimalPrecisionList: List<Int> = listOf(),
+  setDecimalPrecision: (Int) -> Unit = {}
+) {
+  var shouldShowDialog by remember { mutableStateOf(false) }
+
+  ListItem(
+    modifier = Modifier.clickable { shouldShowDialog = true },
+    icon = { Icon(TablerIcons.Calculator, null, Modifier.size(42.dp)) },
+
+    secondaryText = { Text(stringResource(what_decimal_precision_should_be_used)) }
+  ) {
+    Text(stringResource(decimal_precision))
+  }
+
+  if (shouldShowDialog) {
+    PrecisionDialog(decimalPrecision, decimalPrecisionList, setDecimalPrecision) { shouldShowDialog = false }
   }
 }
 
@@ -564,6 +595,63 @@ private fun HitTimerMillisecondsEnabledDialog(
         Modifier
           .padding(8.dp)
           .clickable { setHitTimerMillisecondsEnabled(hitTimerMillisecondsEnabled); onDismiss() }
+      )
+    }
+  )
+}
+
+@Preview
+@Composable
+private fun PrecisionDialog(
+  decimalPrecision: Int = 2,
+  decimalPrecisionList: List<Int> = listOf(),
+  setDecimalPrecision: (Int) -> Unit = {},
+  onDismiss: () -> Unit = {},
+) {
+  var decimalPrecision by remember { mutableStateOf(decimalPrecision) }
+  var expanded by remember { mutableStateOf(false) }
+
+  AlertDialog(
+    onDismissRequest = onDismiss,
+    text = {
+      ExposedDropdownMenuBox(
+        expanded = false,
+        onExpandedChange = { expanded = !expanded }
+      ) {
+        TextField(
+          value = decimalPrecision.toString(),
+          onValueChange = {},
+          readOnly = true,
+          label = { Text(text = stringResource(decimal_precision)) },
+          trailingIcon = {
+            ExposedDropdownMenuDefaults.TrailingIcon(
+              expanded = expanded
+            )
+          },
+          colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+
+        ExposedDropdownMenu(
+          expanded = expanded,
+          onDismissRequest = { expanded = false }
+        ) {
+          decimalPrecisionList.forEach { selectedOption ->
+            DropdownMenuItem(onClick = {
+              decimalPrecision = selectedOption
+              expanded = false
+            }) {
+              Text(text = selectedOption.toString())
+            }
+          }
+        }
+      }
+    },
+    confirmButton = {
+      Text(
+        stringResource(ok),
+        Modifier
+          .padding(8.dp)
+          .clickable { setDecimalPrecision(decimalPrecision); onDismiss() }
       )
     }
   )

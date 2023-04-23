@@ -3,6 +3,7 @@ package br.com.colman.petals.settings
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -30,6 +31,8 @@ class SettingsRepository(
   val hitTimerMillisecondsEnabled = datastore.data.map {
     it[HitTimerMillisecondsEnabled] ?: hitTimerMillisecondsEnabledList.first()
   }
+  val decimalPrecisionList = listOf(0, 1, 2, 3)
+  val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
     datastore.edit { it[CurrencyIcon] = value }
@@ -51,6 +54,10 @@ class SettingsRepository(
     datastore.edit { it[HitTimerMillisecondsEnabled] = value }
   }
 
+  fun setDecimalPrecision(value: Int): Unit = runBlocking {
+    datastore.edit { it[DecimalPrecision] = value }
+  }
+
   val pin: Flow<String?>
     get() = datastore.data.map { it[Pin] }
 
@@ -67,5 +74,6 @@ class SettingsRepository(
     val Pin = stringPreferencesKey("pin")
     val MillisecondsEnabled = stringPreferencesKey("milliseconds_enabled")
     val HitTimerMillisecondsEnabled = stringPreferencesKey("hit_timer_milliseconds_enabled")
+    val DecimalPrecision = intPreferencesKey("decimal_precision")
   }
 }

@@ -88,11 +88,14 @@ private fun UseBlock(title: String, uses: List<Use>) {
   var totalGrams by remember { mutableStateOf("") }
   var totalCost by remember { mutableStateOf("") }
 
+  val settingsRepository = get<SettingsRepository>()
+  val decimalPrecision by settingsRepository.decimalPrecision.collectAsState(settingsRepository.decimalPrecisionList[2])
+
   // HALF_UP is necessary because the default rounding
   // mode is "throw an exception".
   LaunchedEffect(uses) {
-    totalGrams = uses.sumOf { it.amountGrams }.setScale(3, HALF_UP).toString()
-    totalCost = uses.sumOf { it.costPerGram * it.amountGrams }.setScale(3, HALF_UP).toString()
+    totalGrams = uses.sumOf { it.amountGrams }.setScale(decimalPrecision, HALF_UP).toString()
+    totalCost = uses.sumOf { it.costPerGram * it.amountGrams }.setScale(decimalPrecision, HALF_UP).toString()
   }
 
   UseBlock(title, totalGrams, totalCost)
