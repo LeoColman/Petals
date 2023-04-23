@@ -58,7 +58,6 @@ import br.com.colman.petals.R.string.what_date_format_should_be_used
 import br.com.colman.petals.R.string.what_decimal_precision_should_be_used
 import br.com.colman.petals.R.string.what_icon_should_be_used_for_currency
 import br.com.colman.petals.R.string.what_time_format_should_be_used
-
 import compose.icons.TablerIcons
 import compose.icons.tablericons.BrandGithub
 import compose.icons.tablericons.Calculator
