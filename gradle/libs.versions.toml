@@ -30,7 +30,6 @@ datastore-android = { module = "androidx.datastore:datastore-preferences", versi
 datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 graph-view = "com.jjoe64:graphview:4.2.2"
-joda-time = "joda-time:joda-time:2.12.5"
 junit4 = "junit:junit:4.13.2"
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
@@ -40,6 +39,8 @@ kotest-assertions-android = { module = "br.com.colman:kotest-assertions-android"
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 kotest-runner-android = { module = "br.com.colman:kotest-runner-android", version = "1.0.0" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
+kotest-extensions-now = { module = "io.kotest:kotest-extensions-now", version.ref = "kotest" }
 kotlin-csv = "com.github.doyaaaaaken:kotlin-csv-jvm:1.9.0"
 kotlin-date-range = "me.moallemi.tools:kotlin-date-range:1.0.0"
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
@@ -82,7 +83,6 @@ datastore = [
     "datastore-core",
 ]
 date-time = [
-    "joda-time",
     "kotlin-date-range",
 ]
 graph-view = [
@@ -93,11 +93,11 @@ koin = [
     "koin-android",
     "koin-compose",
 ]
-kotest-jvm = ["kotest-runner-junit5"]
+kotest-jvm = ["kotest-runner-junit5", "kotest-extensions-now"]
 
 kotest-android = ["kotest-runner-android", "kotest-assertions-android"]
 
-kotest-common = ["kotest-assertions", "kotest-property"]
+kotest-common = ["kotest-assertions", "kotest-property", "kotest-framework-datatest"]
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
