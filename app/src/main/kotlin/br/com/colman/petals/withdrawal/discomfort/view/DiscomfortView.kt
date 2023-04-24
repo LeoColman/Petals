@@ -34,6 +34,7 @@ import br.com.colman.petals.R.string.days
 import br.com.colman.petals.R.string.discomfort_strength
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepository
+import br.com.colman.petals.withdrawal.interpolator.DiscomfortDataPoints
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
@@ -46,14 +47,14 @@ import java.time.temporal.ChronoUnit
 @Suppress("FunctionName")
 class DiscomfortView(
   private val useRepository: UseRepository,
-  private val repository: DiscomfortRepository,
+  private val discomfortRepository: DiscomfortRepository,
 ) {
 
   @SuppressLint("FlowOperatorInvokedInComposition")
   @Composable
   fun Content() {
     val quitDate by useRepository.getLastUseDate().filterNotNull().collectAsState(now())
-    val currentPercentage by repository.discomfort.map { it.discomfortStrength }.collectAsState(8.0)
+    val currentPercentage by discomfortRepository.discomfort.map { it.strength }.collectAsState(8.0)
     val quitDays = ChronoUnit.SECONDS.between(quitDate, now()).toDouble().div(86400)
     val colors = MaterialTheme.colors
 
@@ -94,8 +95,8 @@ class DiscomfortView(
     }
 
   private fun discomfortSeries(): LineGraphSeries<DataPoint> {
-    val dataPoints = repository.discomfortDays.map {
-      DataPoint(it.key.days.toDouble(), it.value)
+    val dataPoints = DiscomfortDataPoints.map { (key, value) ->
+      DataPoint(key.toDays().toDouble(), value.strength)
     }
 
     return LineGraphSeries(dataPoints.toTypedArray()).apply {

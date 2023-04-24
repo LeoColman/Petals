@@ -33,6 +33,7 @@ import br.com.colman.petals.R.string.current_thc_concentration
 import br.com.colman.petals.R.string.days
 import br.com.colman.petals.R.string.thc_concentration
 import br.com.colman.petals.use.repository.UseRepository
+import br.com.colman.petals.withdrawal.interpolator.ThcConcentrationDataPoints
 import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
@@ -40,7 +41,7 @@ import com.jjoe64.graphview.series.LineGraphSeries
 import com.jjoe64.graphview.series.PointsGraphSeries
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
-import org.joda.time.Days
+import java.time.Duration
 import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit
 
@@ -54,7 +55,7 @@ class ThcConcentrationView(
   @Composable
   fun Content() {
     val quitDate by useRepository.getLastUseDate().filterNotNull().collectAsState(now())
-    val currentPercentage by repository.concentration.map { it.percentageOnBodyFromStart }.collectAsState(100.0)
+    val currentPercentage by repository.concentration.map { it * 100 }.collectAsState(100.0)
     val quitDays = ChronoUnit.SECONDS.between(quitDate, now()).toDouble().div(86400)
 
     val graphTitle = stringResource(current_thc_concentration, "%.3f".format(currentPercentage))
@@ -97,7 +98,7 @@ class ThcConcentrationView(
 
   private fun concentrationSeries(): LineGraphSeries<DataPoint> {
     val dataPoints = abstinenceThcPercentages().map {
-      DataPoint(it.key.days.toDouble(), it.value)
+      DataPoint(it.key.toDays().toDouble(), it.value)
     }
 
     return LineGraphSeries(dataPoints.toTypedArray()).apply {
@@ -105,9 +106,9 @@ class ThcConcentrationView(
     }
   }
 
-  private fun abstinenceThcPercentages(): Map<Days, Double> {
-    val maxValue = repository.abstinenceThc.values.maxOrNull()!!
-    return repository.abstinenceThc.mapValues { it.value / maxValue * 100 }
+  private fun abstinenceThcPercentages(): Map<Duration, Double> {
+    val maxValue = ThcConcentrationDataPoints.values.maxOf { it.nanoGramPerMilliliter }
+    return ThcConcentrationDataPoints.mapValues { it.value.nanoGramPerMilliliter / maxValue * 100 }
   }
 
   private fun currentPercentagePoint(percentage: Double, day: Double) =
