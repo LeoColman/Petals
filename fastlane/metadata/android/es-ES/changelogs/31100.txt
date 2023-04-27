@@ -1,0 +1,1 @@
+* Agregar la configuración para especificar la precisión en números decimales
