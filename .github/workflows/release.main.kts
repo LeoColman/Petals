@@ -40,7 +40,14 @@ workflow(
       tagName = expr { GITHUB_REF_NAME },
       name = "Version " + expr { GITHUB_REF_NAME },
       draft = true,
-      files = listOf("app/build/outputs/apk_from_bundle/githubRelease/app-github-release-universal.apk")
+      files = listOf(
+        "app/build/outputs/apk_from_bundle/githubRelease/app-github-release-universal.apk",
+        "app/build/outputs/mappings/githubRelease/mappings.txt",
+        "app/build/outputs/mappings/githubRelease/configuration.txt",
+        "app/build/outputs/mappings/githubRelease/seeds.txt",
+        "app/build/outputs/mappings/githubRelease/usage.txt",
+
+      )
     ))
 
     uses(SetupRubyV1(rubyVersion = "2.6"))
