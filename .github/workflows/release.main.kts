@@ -42,7 +42,7 @@ workflow(
       draft = true,
       files = listOf(
         "app/build/outputs/apk_from_bundle/githubRelease/app-github-release-universal.apk",
-        "app/build/outputs/mapping/githubRelease/mappings.txt",
+        "app/build/outputs/mapping/githubRelease/mapping.txt",
         "app/build/outputs/mapping/githubRelease/configuration.txt",
         "app/build/outputs/mapping/githubRelease/seeds.txt",
         "app/build/outputs/mapping/githubRelease/usage.txt",
