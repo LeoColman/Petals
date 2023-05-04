@@ -1,17 +1,13 @@
 package br.com.colman.petals.use.io
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager.GET_META_DATA
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.result.ActivityResult
-import timber.log.Timber
 
 class UseExporter(
   private val useCsvSerializer: UseCsvSerializer,
-  private val fileWriter: FileWriter,
-  private val context: Context
+  private val fileWriter: FileWriter
 ) {
 
   suspend fun exportUses(launcher: ManagedActivityResultLauncher<Intent, ActivityResult>) {
@@ -23,16 +19,11 @@ class UseExporter(
 
   private fun ManagedActivityResultLauncher<Intent, ActivityResult>.launchShareFile(uri: Uri) {
     val intent = Intent().apply {
-      data = uri
+      type = "text/plain"
       flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
       action = Intent.ACTION_SEND
       putExtra(Intent.EXTRA_STREAM, uri)
     }
-    val activityInfo = intent.resolveActivityInfo(context.packageManager, GET_META_DATA)
-    if (activityInfo?.exported == true) {
-      launch(intent)
-    } else {
-      Timber.e("No application for this context exists")
-    }
+    launch(intent)
   }
 }
