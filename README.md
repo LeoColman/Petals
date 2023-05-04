@@ -17,8 +17,10 @@
 The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're
 using.
 
-Download from the [Releases Page](https://github.com/LeoColman/Petals/releases) or from any of the options below
 
+[<img src="https://user-images.githubusercontent.com/1577251/236347752-5c312036-27d1-4515-ab86-dc2aa9a09e66.png"
+alt="Get it on Github"
+height="80">](https://github.com/LeoColman/Petals/releases)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
 alt="Get it on F-Droid"
 height="80">](https://f-droid.org/packages/br.com.colman.petals/)
