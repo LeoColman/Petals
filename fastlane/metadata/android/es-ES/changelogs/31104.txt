@@ -1,0 +1,1 @@
+* Corrección de un error por el que el botón de exportar a veces no funcionaba
