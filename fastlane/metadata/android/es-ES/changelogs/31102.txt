@@ -1,0 +1,2 @@
+* Corregido error tipográfico
+* Sincronizar traducción desde weblate
