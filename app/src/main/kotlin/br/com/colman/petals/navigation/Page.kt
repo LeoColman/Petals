@@ -55,7 +55,7 @@ enum class Page(
   Usage(R.string.usage, Default.SmokingRooms, { Usage() }),
   HitTimer(R.string.hit_timer, Default.LockClock, { ComposeHitTimer() }),
   Symptoms(R.string.symptoms, Default.MedicalServices, { Symptoms() }),
-  Stats(R.string.stats, Default.GraphicEq, { StatisticsPage(get(), get()) });
+  Stats(R.string.stats, Default.GraphicEq, { StatisticsPage(get(), get()) })
 }
 
 @Composable

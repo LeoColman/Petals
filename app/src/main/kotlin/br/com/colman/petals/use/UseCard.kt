@@ -161,17 +161,17 @@ private fun DeleteUseButton(
         Text(text = stringResource(yes))
       }
     }, title = { Text(text = stringResource(delete_use_title)) }, text = {
-        Text(
-          text = stringResource(
-            confirm_to_delete,
-            stringResource(date_at_time, dateString, timeString)
-          )
+      Text(
+        text = stringResource(
+          confirm_to_delete,
+          stringResource(date_at_time, dateString, timeString)
         )
-      }, dismissButton = {
-        TextButton({ showDialog.value = false }) {
-          Text(text = stringResource(no))
-        }
-      })
+      )
+    }, dismissButton = {
+      TextButton({ showDialog.value = false }) {
+        Text(text = stringResource(no))
+      }
+    })
   }
 }
 
