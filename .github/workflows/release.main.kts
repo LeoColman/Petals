@@ -4,11 +4,11 @@
 import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3.Distribution.Adopt
+import io.github.typesafegithub.workflows.actions.entrostat.GitSecretActionV4
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
 import io.github.typesafegithub.workflows.actions.ruby.SetupRubyV1
 import io.github.typesafegithub.workflows.actions.softprops.ActionGhReleaseV1
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
-import io.github.typesafegithub.workflows.domain.actions.CustomAction
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
@@ -27,14 +27,7 @@ workflow(
   job(id = "create-apk", runsOn = UbuntuLatest) {
     uses(name = "Set up JDK", action = SetupJavaV3(javaVersion = "17", distribution = Adopt))
     uses(action = CheckoutV3())
-    uses(
-      name = "reveal-secrets", action = CustomAction(
-        "entrostat",
-        "git-secret-action",
-        "v3.3.0",
-        mapOf("gpg-private-key" to expr { GPG_KEY })
-      )
-    )
+    uses(name = "reveal-secrets", action = GitSecretActionV4(gpgPrivateKey = expr { GPG_KEY }))
 
     uses(name = "Create APK", action = GradleBuildActionV2(arguments = "packageGithubReleaseUniversalApk"))
 
