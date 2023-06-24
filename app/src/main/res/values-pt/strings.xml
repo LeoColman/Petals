@@ -126,4 +126,8 @@
     <string name="pin_main_screen">Essa aplicação é protegida por senha. Insira a senha correta para continuar.</string>
     <string name="milliseconds_enabled">Habilitar Barra de Millisegundos</string>
     <string name="enable_or_disable_milliseconds_bar_on_home_page">Habilita ou desabilita a barra de millisegundos da página inicial</string>
+    <string name="hit_timer_milliseconds_enabled">Habilitar Milissegundos na Página do Timer</string>
+    <string name="enable_or_disable_milliseconds_on_hit_timer_page">Habilitar ou desabilitar milissegundos na página do Temporizador</string>
+    <string name="decimal_precision">Precisão Decimal</string>
+    <string name="what_decimal_precision_should_be_used">Qual precisão deve ser utilizada para mostrar na página de uso</string>
 </resources>
