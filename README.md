@@ -37,13 +37,13 @@ For an ad free experience download the app either from F-Droid or from the Relea
 Translations are hosted at Weblate. You can contribute to your language [here](https://hosted.weblate.org/engage/petals-app)
 
 <a href="https://hosted.weblate.org/engage/petals-app/">
-<img src="https://hosted.weblate.org/widgets/petals-app/-/287x66-white.png" alt="Translation status" />
+<img src="https://hosted.weblate.org/widgets/petals-app/-/287x66-grey.png" alt="Translation status" />
 </a>
 
 <br>
 
 <a href="https://hosted.weblate.org/engage/petals-app/">
-<img src="https://hosted.weblate.org/widgets/petals-app/-/multi-green.svg" alt="Translation status" />
+<img src="https://hosted.weblate.org/widgets/petals-app/-/multi-red.svg" alt="Translation status" />
 </a>
 
 ## Screenshots
