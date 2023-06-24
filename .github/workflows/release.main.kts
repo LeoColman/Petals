@@ -1,18 +1,20 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.40.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.46.0")
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3
-import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
-import it.krzeminski.githubactions.actions.ruby.SetupRubyV1
-import it.krzeminski.githubactions.actions.softprops.ActionGhReleaseV1
-import it.krzeminski.githubactions.domain.RunnerType.UbuntuLatest
-import it.krzeminski.githubactions.domain.actions.CustomAction
-import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.expressions.Contexts
-import it.krzeminski.githubactions.dsl.expressions.expr
-import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.writeToFile
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
+import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3.Distribution.Adopt
+import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
+import io.github.typesafegithub.workflows.actions.ruby.SetupRubyV1
+import io.github.typesafegithub.workflows.actions.softprops.ActionGhReleaseV1
+import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
+import io.github.typesafegithub.workflows.domain.actions.CustomAction
+import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.expressions.Contexts
+import io.github.typesafegithub.workflows.dsl.expressions.expr
+import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.writeToFile
+
 
 val GPG_KEY by Contexts.secrets
 val GITHUB_REF_NAME by Contexts.github
@@ -22,35 +24,40 @@ workflow(
   on = listOf(Push(tags = listOf("*"))),
   sourceFile = __FILE__.toPath(),
 ) {
-  job("create-apk", runsOn = UbuntuLatest) {
-    uses(name = "Set up JDK", SetupJavaV3(javaVersion = "17", distribution = SetupJavaV3.Distribution.Adopt))
-    uses(CheckoutV3())
-    uses("reveal-secrets", CustomAction(
-      "entrostat",
-      "git-secret-action",
-      "v3.3.0",
-      mapOf("gpg-private-key" to expr { GPG_KEY })
-    ))
-
-    uses("Create APK", GradleBuildActionV2(
-      arguments = "packageGithubReleaseUniversalApk"
-    ))
-
-    uses("Create release", ActionGhReleaseV1(
-      tagName = expr { GITHUB_REF_NAME },
-      name = "Version " + expr { GITHUB_REF_NAME },
-      draft = true,
-      files = listOf(
-        "app/build/outputs/apk_from_bundle/githubRelease/app-github-release-universal.apk",
-        "app/build/outputs/mapping/githubRelease/mapping.txt",
-        "app/build/outputs/mapping/githubRelease/configuration.txt",
-        "app/build/outputs/mapping/githubRelease/seeds.txt",
-        "app/build/outputs/mapping/githubRelease/usage.txt",
-
+  job(id = "create-apk", runsOn = UbuntuLatest) {
+    uses(name = "Set up JDK", action = SetupJavaV3(javaVersion = "17", distribution = Adopt))
+    uses(action = CheckoutV3())
+    uses(
+      name = "reveal-secrets", action = CustomAction(
+        "entrostat",
+        "git-secret-action",
+        "v3.3.0",
+        mapOf("gpg-private-key" to expr { GPG_KEY })
       )
-    ))
+    )
 
-    uses(SetupRubyV1(rubyVersion = "2.6"))
-    run("publish-playstore", "bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore")
+    uses(name = "Create APK", action = GradleBuildActionV2(arguments = "packageGithubReleaseUniversalApk"))
+
+    uses(
+      name = "Create release", action = ActionGhReleaseV1(
+        tagName = expr { GITHUB_REF_NAME },
+        name = "Version " + expr { GITHUB_REF_NAME },
+        draft = true,
+        files = listOf(
+          "app/build/outputs/apk_from_bundle/githubRelease/app-github-release-universal.apk",
+          "app/build/outputs/mapping/githubRelease/mapping.txt",
+          "app/build/outputs/mapping/githubRelease/configuration.txt",
+          "app/build/outputs/mapping/githubRelease/seeds.txt",
+          "app/build/outputs/mapping/githubRelease/usage.txt",
+
+          )
+      )
+    )
+
+    uses(action = SetupRubyV1(rubyVersion = "2.6"))
+    run(
+      name = "publish-playstore",
+      command = "bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore"
+    )
   }
 }.writeToFile()

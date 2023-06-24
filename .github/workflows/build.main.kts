@@ -1,15 +1,17 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.40.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.46.0")
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3
-import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
-import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.triggers.PullRequest
-import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.expressions.Contexts
-import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.writeToFile
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
+import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3.Distribution.Adopt
+import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
+import io.github.typesafegithub.workflows.domain.RunnerType
+import io.github.typesafegithub.workflows.domain.triggers.PullRequest
+import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.expressions.Contexts
+import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.writeToFile
+
 
 val GPG_KEY by Contexts.secrets
 
@@ -18,13 +20,9 @@ workflow(
   on = listOf(Push(), PullRequest()),
   sourceFile = __FILE__.toPath()
 ) {
-  job("build", runsOn = RunnerType.UbuntuLatest) {
-    uses(name = "Set up JDK", SetupJavaV3(javaVersion = "17", distribution = SetupJavaV3.Distribution.Adopt))
-    uses(CheckoutV3())
-        uses(
-      "Create APK", GradleBuildActionV2(
-        arguments = "packageFdroidReleaseUniversalApk"
-      )
-    )
+  job(id = "build", runsOn = RunnerType.UbuntuLatest) {
+    uses(name = "Set up JDK", action = SetupJavaV3(javaVersion = "17", distribution = Adopt))
+    uses(action = CheckoutV3())
+    uses(name = "Create APK", action = GradleBuildActionV2(arguments = "packageFdroidReleaseUniversalApk"))
   }
 }.writeToFile()

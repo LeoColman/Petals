@@ -1,15 +1,15 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.40.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:0.46.0")
 
-import it.krzeminski.githubactions.actions.actions.CheckoutV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3
-import it.krzeminski.githubactions.actions.actions.SetupJavaV3.Distribution.Adopt
-import it.krzeminski.githubactions.actions.gradle.GradleBuildActionV2
-import it.krzeminski.githubactions.domain.RunnerType
-import it.krzeminski.githubactions.domain.triggers.PullRequest
-import it.krzeminski.githubactions.domain.triggers.Push
-import it.krzeminski.githubactions.dsl.workflow
-import it.krzeminski.githubactions.yaml.writeToFile
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
+import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3.Distribution.Adopt
+import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
+import io.github.typesafegithub.workflows.domain.RunnerType
+import io.github.typesafegithub.workflows.domain.triggers.PullRequest
+import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.workflow
+import io.github.typesafegithub.workflows.yaml.writeToFile
 
 
 workflow(
@@ -17,9 +17,9 @@ workflow(
   on = listOf(Push(), PullRequest()),
   sourceFile = __FILE__.toPath()
 ) {
-  job("unit-test", runsOn = RunnerType.UbuntuLatest) {
-    uses(name = "Set up JDK", SetupJavaV3(javaVersion = "17", distribution = Adopt))
-    uses(CheckoutV3())
-    uses(GradleBuildActionV2(arguments = "test"))
+  job(id = "unit-test", runsOn = RunnerType.UbuntuLatest) {
+    uses(name = "Set up JDK", action = SetupJavaV3(javaVersion = "17", distribution = Adopt))
+    uses(action = CheckoutV3())
+    uses(action = GradleBuildActionV2(arguments = "test"))
   }
 }.writeToFile()
