@@ -30,7 +30,7 @@
     <string name="this_week">Sinds maandag</string>
     <string name="this_year">Dit jaar</string>
     <string name="all_time">Alle tijd</string>
-    <string name="cost_per_gram">%s per gram</string>
+    <string name="cost_per_gram"></string>
     <string name="cost_per_gram_short">%s/g</string>
     <string name="date_label">datum</string>
     <string name="amount_grams">%s grammen</string>
