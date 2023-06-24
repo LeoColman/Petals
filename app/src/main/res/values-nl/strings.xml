@@ -121,4 +121,5 @@
     <string name="general_knowledge"></string>
     <string name="what_date_format_should_be_used"></string>
     <string name="deleted_successfully"></string>
+    <string name="cost_per_gram"></string>
 </resources>
