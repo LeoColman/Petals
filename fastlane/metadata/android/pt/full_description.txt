@@ -8,3 +8,4 @@ Funcionalidades:
 - Estatísticas para entender melhor seu consumo
 - Instruções para redução de danos
 - Exportar e importar com arquivos CSV simples
+- Privacidade extra com um PIN pessoal
