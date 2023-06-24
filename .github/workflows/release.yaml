@@ -36,7 +36,7 @@ jobs:
       uses: 'actions/checkout@v3'
     - id: 'step-2'
       name: 'reveal-secrets'
-      uses: 'entrostat/git-secret-action@v3.3.0'
+      uses: 'entrostat/git-secret-action@v4'
       with:
         gpg-private-key: '${{ secrets.GPG_KEY }}'
     - id: 'step-3'
