@@ -1,0 +1,3 @@
+* Sincroniza traduções do Weblate
+* Publica novamente na Google Play Store
+* Arruma ponto no gráfico de Abstinência não alinhando
