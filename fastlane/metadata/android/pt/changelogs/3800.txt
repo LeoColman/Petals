@@ -1,0 +1,2 @@
+* Adiciona pin opcional para mais privacidade
+* Sincroniza traduções do Weblate

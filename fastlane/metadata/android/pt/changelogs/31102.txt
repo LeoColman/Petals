@@ -1,0 +1,2 @@
+* Conserta typo
+* Sincroniza traduções do Weblate

@@ -1,0 +1,2 @@
+* Arruma reorientação do HitTimer
+* Sincroniza traduções do Weblate
