@@ -1,0 +1,1 @@
+- Refaz tela de estatísticas para facilitar comparação entre períodos
