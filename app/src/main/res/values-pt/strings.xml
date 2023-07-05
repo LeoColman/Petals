@@ -64,11 +64,6 @@
     <string name="stats">Dados</string>
     <string name="end_date">Data Fim</string>
     <string name="start_date">Data Início</string>
-    <string name="last_seven_days">Últimos 7 dias</string>
-    <string name="last_fourteen_days">Últimos 14 dias</string>
-    <string name="last_thirty_days">Últimos 30 dias</string>
-    <string name="last_sixty_days">Últimos 60 dias</string>
-    <string name="last_ninety_days">Últimos 90 dias</string>
     <string name="change_period">Mudar período</string>
     <string name="grams">Gramas</string>
     <string name="grams_distribution_per_hour_of_day">Distribuição de gramas por hora do dia</string>
@@ -130,4 +125,8 @@
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Habilitar ou desabilitar milissegundos na página do Temporizador</string>
     <string name="decimal_precision">Precisão Decimal</string>
     <string name="what_decimal_precision_should_be_used">Qual precisão deve ser utilizada para mostrar na página de uso</string>
+    <plurals name="last_x_days">
+        <item quantity="one">Último %s dia</item>
+        <item quantity="other">Últimos %s dias</item>
+    </plurals>
 </resources>

@@ -64,7 +64,6 @@
     <string name="current_withdrawal_discomfort">Nåværende abstinensubehag: %s</string>
     <string name="symptoms">Symptomer</string>
     <string name="_355thc">3,55% THC</string>
-    <string name="last_fourteen_days">Siste 14 dager</string>
     <string name="hours">Timer</string>
     <string name="minutes">Minutter</string>
     <string name="milliseconds">Millisekunder</string>
@@ -72,11 +71,7 @@
     <string name="date_label">dato</string>
     <string name="add_use">Legg til bruk</string>
     <string name="amount_label">mengde</string>
-    <string name="last_thirty_days">Siste 30 dager</string>
-    <string name="last_seven_days">Siste syv dager</string>
-    <string name="last_ninety_days">Siste 90 dager</string>
     <string name="change_period">Endre periode</string>
-    <string name="last_sixty_days">Siste 60 dager</string>
     <string name="grams">Gram</string>
     <string name="hittime_source">Kilde: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
     <string name="subjectve_high">Subjektiv «ruseffekt»</string>
@@ -93,4 +88,8 @@
     <string name="time_format_label">Tidsformat</string>
     <string name="grams_distribution_per_day_of_week">Gram-distribusjon per ukedag</string>
     <string name="what_time_format_should_be_used">Hvilket tidsformat som brukes</string>
+    <plurals name="last_x_days">
+        <item quantity="one">Siste %s dager</item>
+        <item quantity="other">Siste %s dager</item>
+    </plurals>
 </resources>

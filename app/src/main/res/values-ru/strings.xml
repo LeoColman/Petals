@@ -37,9 +37,6 @@
     <string name="export_export">Экспортировать</string>
     <string name="end_date">Дата конца</string>
     <string name="start_date">Дата начала</string>
-    <string name="last_seven_days">Последние 7 дней</string>
-    <string name="last_fourteen_days">Последние 14 дней</string>
-    <string name="last_ninety_days">Последние 90 дней</string>
     <string name="change_period">Изменить период</string>
     <string name="thc_concentration">Концентрация ТГК(%)</string>
     <string name="current_withdrawal_discomfort">Текущий дискомфорт от отказа: %s</string>
@@ -84,8 +81,6 @@
     <string name="current_thc_concentration">Текущая концентрация ТГК: %s %</string>
     <string name="grams_distribution_per_hour_of_day">Распределение граммов по часам дня</string>
     <string name="week">неделю</string>
-    <string name="last_thirty_days">Последние 30 дней</string>
-    <string name="last_sixty_days">Последние 60 дней</string>
     <string name="grams">Граммы</string>
     <string name="symptoms_introduction">Budney et al. (университет Вермонта) исследовал скорость облегчения симптомов абстиненции после отказа у потребителей каннабиса. Ниже вы увидите предположительную оценку вашей текущей ситуации, основанную на дате последнего употребления</string>
     <string name="month">месяц</string>
@@ -114,4 +109,8 @@
     <string name="enable_or_disable_milliseconds_bar_on_home_page">Включить или выключить строку миллисекунд на домашней странице</string>
     <string name="hit_timer_milliseconds_enabled">Включить миллисекунды на странице Таймера</string>
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Включить или выключить миллисекунды на странице Таймера</string>
+    <plurals name="last_x_days">
+        <item quantity="one">Последние %s дней</item>
+        <item quantity="other">Последние %s дней</item>
+    </plurals>
 </resources>

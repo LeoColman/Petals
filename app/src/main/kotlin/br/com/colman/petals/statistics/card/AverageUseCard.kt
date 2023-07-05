@@ -1,10 +1,13 @@
 
 package br.com.colman.petals.statistics.card
 
+import androidx.compose.foundation.gestures.Orientation.Horizontal
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -13,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,9 +39,9 @@ import compose.icons.tablericons.CalendarStats
 import compose.icons.tablericons.ChartPie
 import compose.icons.tablericons.Scale
 import me.moallemi.tools.daterange.localdate.LocalDateRange
+import me.moallemi.tools.daterange.localdate.rangeTo
 import org.koin.androidx.compose.get
 import java.math.BigDecimal
-import java.math.RoundingMode
 import java.time.LocalDate.now
 
 @Preview
@@ -57,89 +61,89 @@ fun AverageUseCardPreview() {
 }
 
 @Composable
-fun AverageUseCard(
-  uses: List<Use>,
-  period: LocalDateRange
-) {
+fun AverageUseCard(uses: List<Use>, period: LocalDateRange) {
   if (uses.isEmpty()) return
+
   Card(Modifier.padding(8.dp)) {
     Column(Modifier.padding(8.dp), spacedBy(8.dp)) {
-      Title(uses.count(), uses.totalGrams, period)
-
-      AverageList(uses, period)
+      AverageUseCardTitle(uses.count(), uses.totalGrams, period)
+      AverageUseList(uses, period)
     }
   }
 }
 
+@Preview
 @Composable
-private fun Title(uses: Int, grams: BigDecimal, period: LocalDateRange) {
-  val amountDays = (period.count() - 1).coerceAtLeast(1)
-
-  Row(Modifier, spacedBy(8.dp), CenterVertically) {
-    Icon(TablerIcons.ChartPie, null)
-    Text(pluralResource(amount_uses, uses, uses))
-
-    Icon(TablerIcons.Scale, null)
-    Text(stringResource(amount_grams, "%.2f".format(grams)))
-
-    Icon(TablerIcons.CalendarStats, null)
-    Text(pluralResource(amount_days, amountDays, amountDays))
+private fun AverageUseCardTitlePreview() {
+  val now = now()
+  Column {
+    AverageUseCardTitle(1, 1.toBigDecimal(), now..now)
+    AverageUseCardTitle(5, 5.toBigDecimal(), now.minusDays(1L)..now)
+    AverageUseCardTitle(32, 32.25.toBigDecimal(), now.minusDays(3L)..now)
   }
 }
 
 @Composable
-private fun AverageList(uses: List<Use>, period: LocalDateRange) {
-  val totalGrams = uses.totalGrams
-  val totalCost = uses.totalCost
+private fun AverageUseCardTitle(uses: Int, grams: BigDecimal, period: LocalDateRange) {
+  val amountDays = (period.count() - 1).coerceAtLeast(1)
 
-  val days = (period.count() - 1).coerceAtLeast(1).toDouble()
+  Row(Modifier.scrollable(rememberScrollState(), Horizontal), spacedBy(8.dp), CenterVertically) {
+    IconText(TablerIcons.ChartPie, pluralResource(amount_uses, uses, uses))
+    IconText(TablerIcons.Scale, stringResource(amount_grams, "%.2f".format(grams)))
+    IconText(TablerIcons.CalendarStats, pluralResource(amount_days, amountDays, amountDays))
+  }
+}
+
+@Preview
+@Composable
+private fun IconTextPreview() {
+  IconText(TablerIcons.ChartPie, "25 uses")
+}
+
+@Composable
+private fun IconText(icon: ImageVector, text: String) {
+  Row(Modifier, spacedBy(8.dp), CenterVertically) {
+    Icon(icon, text)
+    Text(text)
+  }
+}
+
+@Composable
+private fun AverageUseList(uses: List<Use>, period: LocalDateRange) {
+  val totalGrams = uses.totalGrams.toDouble()
+  val totalCost = uses.totalCost.toDouble()
+
+  val days = period.count().toDouble()
   val weeks = days / 7.0
   val months = days / 30.0
   val years = days / 365.25
 
-  AverageListItem(
-    stringResource(day),
-    totalGrams / days.toBigDecimal(),
-    totalCost / days.toBigDecimal(),
-    (uses.size / days).toBigDecimal()
-  )
-  if (weeks >= 1.0) {
-    AverageListItem(
-      stringResource(week),
-      totalGrams / weeks.toBigDecimal(),
-      totalCost / weeks.toBigDecimal(),
-      (uses.size / weeks).toBigDecimal()
-    )
+  @Composable
+  fun AverageListItem(label: String, value: Double) {
+    if (value >= 1.0) {
+      AverageListItem(label, totalGrams / value, totalCost / value, uses.size / value)
+    }
   }
 
-  if (months >= 1.0) {
-    AverageListItem(
-      stringResource(month),
-      totalGrams / months.toBigDecimal(),
-      totalCost / months.toBigDecimal(),
-      (uses.size / months).toBigDecimal()
-    )
-  }
+  AverageListItem(stringResource(day), days)
+  AverageListItem(stringResource(week), weeks)
+  AverageListItem(stringResource(month), months)
+  AverageListItem(stringResource(year), years)
+}
 
-  if (years >= 1.0) {
-    AverageListItem(
-      stringResource(year),
-      totalGrams / years.toBigDecimal(),
-      totalCost / years.toBigDecimal(),
-      (uses.size / years).toBigDecimal()
-    )
+@Composable
+private fun AverageListItem(label: String, grams: Double, cost: Double, uses: Double) {
+  Row {
+    Text(stringResource(average_per, label), Modifier.weight(0.4f))
+    Text(stringResource(amount_grams_short, "%.2f".format(grams)), Modifier.weight(0.6f / 3f))
+    Text(getCurrencyIcon() + "%.2f".format(cost), Modifier.weight(0.6f / 3f))
+    Text(pluralResource(amount_uses, uses.toInt(), uses.toInt()))
   }
 }
 
 @Composable
-private fun AverageListItem(label: String, grams: BigDecimal, cost: BigDecimal, uses: BigDecimal) {
+private fun getCurrencyIcon(): String {
   val settingsRepository = get<SettingsRepository>()
   val currencyIcon by settingsRepository.currencyIcon.collectAsState("$")
-
-  Row {
-    Text(stringResource(average_per, label), Modifier.weight(0.4f))
-    Text(stringResource(amount_grams_short, grams), Modifier.weight(0.6f / 3f))
-    Text(currencyIcon + "%.2f".format(cost), Modifier.weight(0.6f / 3f))
-    Text(pluralResource(amount_uses, uses.toInt(), uses.setScale(2, RoundingMode.CEILING)))
-  }
+  return currencyIcon
 }

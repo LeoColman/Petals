@@ -68,11 +68,6 @@
     <!-- We should match import_import, so it's cute. -->
     <string name="end_date">End Date</string>
     <string name="start_date">Start Date</string>
-    <string name="last_seven_days">Last 7 days</string>
-    <string name="last_fourteen_days">Last 14 days</string>
-    <string name="last_thirty_days">Last 30 days</string>
-    <string name="last_sixty_days">Last 60 days</string>
-    <string name="last_ninety_days">Last 90 days</string>
     <string name="change_period">Change period</string>
     <string name="grams">Grams</string>
     <string name="grams_distribution_per_hour_of_day">Grams distribution per hour of day</string>
@@ -128,4 +123,9 @@
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Enable or disable milliseconds on Hit Timer page</string>
     <string name="decimal_precision">Decimal Precision</string>
     <string name="what_decimal_precision_should_be_used">What decimal precision should be displayed on Usage page</string>
+    <string name="custom">Custom</string>
+    <plurals name="last_x_days">
+        <item quantity="one">Last %s day</item>
+        <item quantity="other">Last %s days</item>
+    </plurals>
 </resources>
