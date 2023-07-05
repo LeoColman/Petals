@@ -8,13 +8,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import br.com.colman.petals.R.string.grams
+import br.com.colman.petals.R.plurals.last_x_days
 import br.com.colman.petals.R.string.grams_distribution_per_hour_of_day
+import br.com.colman.petals.statistics.component.Period
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.totalGrams
 import com.github.mikephil.charting.charts.LineChart
@@ -23,7 +25,8 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.formatter.IValueFormatter
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
@@ -40,23 +43,43 @@ fun UsePerHourGraphPreview() {
     )
   }
 
-  UsePerHourGraph(uses)
+  UsePerHourGraph(mapOf(Period.TwoWeek to uses))
 }
 
-val GramsFormatter = object : ValueFormatter() {
-  override fun getPointLabel(entry: Entry): String {
-    return "%.1f".format(entry.y) + "g"
+@Composable
+@Preview
+fun UsePerHourGraphPreview2() {
+  val hoursInDay = (0..23).toList()
+  val minutesInHour = (0..59).toList()
+  val uses = List(293) {
+    Use(
+      LocalDate.now().minusDays(hoursInDay.random().toLong()).atTime(hoursInDay.random(), minutesInHour.random()),
+      "3.37".toBigDecimal(),
+      (it % 4).toBigDecimal()
+    )
+  }
+  val uses2 = List(29) {
+    Use(
+      LocalDate.now().atTime(hoursInDay.random(), minutesInHour.random()),
+      "3.37".toBigDecimal(),
+      (it % 4).toBigDecimal()
+    )
   }
 
-  override fun getAxisLabel(value: Float, axis: AxisBase): String {
+  UsePerHourGraph(mapOf(Period.Week to uses, Period.TwoWeek to uses2, Period.Month to uses + uses2))
+}
+
+val GramsValueFormatter = IValueFormatter { _, entry, _, _ -> "%.1f".format(entry.y) + "g" }
+
+val GramsFormatter = object : IAxisValueFormatter {
+  override fun getFormattedValue(value: Float, axis: AxisBase?): String {
     if (value.roundToInt() == 12) return "12"
     return (value.roundToInt() % 12).toString()
   }
 }
 
 @Composable
-fun UsePerHourGraph(uses: List<Use>) {
-  val grams = stringResource(grams)
+fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
   val description = stringResource(grams_distribution_per_hour_of_day)
   val colors = MaterialTheme.colors
 
@@ -67,20 +90,16 @@ fun UsePerHourGraph(uses: List<Use>) {
       .padding(8.dp)
   ) {
     AndroidView(::LineChart, Modifier.fillMaxSize()) { chart ->
-      val gramsPerHour = calculateGramDistributionPerHour(uses)
-      val gramsData = LineDataSet(gramsPerHour, grams).apply {
-        valueFormatter = GramsFormatter
-        setDrawFilled(true)
-        setDrawCircles(true)
-        setDrawValues(false)
-        lineWidth = 3f
+      val gramsDatas = useGroups.map { (period, uses) ->
+        val label = chart.context.resources.getQuantityString(last_x_days, period.days ?: 0, period.days ?: 0)
+        createDataset(period.days ?: 0, uses, label)
       }
 
       chart.description.text = description
       chart.description.textColor = colors.primary.toArgb()
       chart.legend.textColor = colors.primary.toArgb()
 
-      chart.data = LineData(gramsData)
+      chart.data = LineData(gramsDatas)
       chart.notifyDataSetChanged()
       chart.invalidate()
 
@@ -108,9 +127,34 @@ fun UsePerHourGraph(uses: List<Use>) {
   }
 }
 
-fun calculateGramDistributionPerHour(uses: List<Use>): List<Entry> {
+private fun calculateGramDistributionPerHour(uses: List<Use>): List<Entry> {
   val hoursInDay = (0..23)
   val usesPerHourOfDay = hoursInDay.associateWith { uses.filter { a -> a.date.hour == it } }
   return usesPerHourOfDay.mapValues { it.value.totalGrams }
     .toSortedMap().map { (k, v) -> Entry(k.toFloat(), v.toFloat()) }
+}
+
+private fun createDataset(days: Int, uses: List<Use>, label: String): LineDataSet {
+  return LineDataSet(calculateGramDistributionPerHour(uses), label).apply {
+    valueFormatter = GramsValueFormatter
+    setDrawCircles(true)
+    setDrawFilled(true)
+    setDrawValues(false)
+    fillColor = createColor(days).toArgb()
+    color = createColor(days).toArgb()
+    setCircleColor(createColor(days).toArgb())
+  }
+}
+
+val colors = mapOf(
+  0 to Color.Green,
+  7 to Color.Blue,
+  14 to Color.Yellow,
+  30 to Color.Red,
+  60 to Color.Gray,
+  90 to Color.DarkGray
+).withDefault { Color.Red }
+
+fun createColor(days: Int): Color {
+  return colors.getValue(days)
 }

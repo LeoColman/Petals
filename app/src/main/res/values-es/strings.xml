@@ -41,9 +41,6 @@
     <string name="import_import">Importar</string>
     <string name="end_date">Fecha final</string>
     <string name="start_date">Fecha inicio</string>
-    <string name="last_seven_days">Últimos 7 días</string>
-    <string name="last_sixty_days">Últimos 60 días</string>
-    <string name="last_ninety_days">Últimos 90 días</string>
     <string name="change_period">Cambiar periodo</string>
     <string name="grams_distribution_per_hour_of_day">Distribución de gramos por hora del día</string>
     <string name="current_thc_concentration">Concentración actual de THC: %s \\%%</string>
@@ -67,10 +64,8 @@
     <string name="years">Años</string>
     <string name="minutes">Minutos</string>
     <string name="symptoms_introduction">Un estudio de Budney et al. de la Universidad de Vermont estableció cómo afectan y decaen los síntomas de abstinencia en los consumidores de cannabis. A continuación verás una estimación de tu situación actual en función de tu última fecha de consumo</string>
-    <string name="last_fourteen_days">Últimos 14 días</string>
     <string name="hittime_source">Fuente: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
     <string name="this_year">Este año</string>
-    <string name="last_thirty_days">Últimos 30 días</string>
     <string name="grams">Gramos</string>
     <string name="thc_concentration">Concentración de THC (%)</string>
     <string name="average_per">Promedio por %s</string>
@@ -114,4 +109,8 @@
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Activar o desactivar milisegundos en la página Temporizador de impactos</string>
     <string name="what_decimal_precision_should_be_used">Qué precisión decimal debe mostrarse en la página de uso</string>
     <string name="decimal_precision">Precisión decimal</string>
+    <plurals name="last_x_days">
+        <item quantity="one">Último %s día</item>
+        <item quantity="other">Últimos %s días</item>
+    </plurals>
 </resources>

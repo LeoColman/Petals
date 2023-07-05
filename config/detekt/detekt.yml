@@ -11,3 +11,5 @@ formatting:
 style:
   MagicNumber:
     active: false
+  UnusedPrivateMember:
+    ignoreAnnotated: [Preview]

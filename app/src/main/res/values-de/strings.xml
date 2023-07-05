@@ -40,14 +40,9 @@
     <string name="amount_label">Menge</string>
     <string name="import_import">Importieren</string>
     <string name="export_export">Exportieren</string>
-    <string name="last_seven_days">Letzte 7 Tage</string>
-    <string name="last_fourteen_days">Letzte 14 Tage</string>
-    <string name="last_thirty_days">Letzte 30 Tage</string>
     <string name="end_date">Enddatum</string>
     <string name="start_date">Startdatum</string>
     <string name="cost_per_gram_label">kosten_pro_gramm</string>
-    <string name="last_sixty_days">Letzte 60 Tage</string>
-    <string name="last_ninety_days">Letzte 90 Tage</string>
     <string name="change_period">Zeitraum ändern</string>
     <string name="grams">Gramm</string>
     <string name="grams_distribution_per_hour_of_day">Verteilung in Gramm pro Stunde des Tages</string>
@@ -106,4 +101,8 @@
     <string name="confirm_to_delete">Sind Sie sicher, dass Sie die auf %s hinzugefügte Nutzung löschen möchten\?</string>
     <string name="delete_use_title">Verwendung löschen</string>
     <string name="deleted_successfully">Verwendung gelöscht!</string>
+    <plurals name="last_x_days">
+        <item quantity="one">Letzte %s Tage</item>
+        <item quantity="other">Letzte %s Tage</item>
+    </plurals>
 </resources>

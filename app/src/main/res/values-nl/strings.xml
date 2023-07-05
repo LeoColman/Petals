@@ -36,8 +36,6 @@
     <string name="cost_per_gram_label">kost_per_gram</string>
     <string name="import_import">Importeren</string>
     <string name="end_date">Einddatum</string>
-    <string name="last_fourteen_days">Laatste 14 dagen</string>
-    <string name="last_ninety_days">Laatste 90 dagen</string>
     <string name="grams">Grammen</string>
     <string name="grams_distribution_per_hour_of_day">Gram distributie per uur van de dag</string>
     <string name="thc_concentration">THC-concentratie (%)</string>
@@ -68,12 +66,9 @@
     <string name="time">Tijd</string>
     <string name="amount_grams_short">%sg</string>
     <string name="total_spent">%s totaal</string>
-    <string name="last_seven_days">Laatste 7 dagen</string>
     <string name="change_period">Periode wijzigen</string>
     <string name="start_date">Startdatum</string>
     <string name="export_export">Exporteren</string>
-    <string name="last_thirty_days">Laatste 30 dagen</string>
-    <string name="last_sixty_days">Laatste 60 dagen</string>
     <string name="current_thc_concentration">Huidige THC-concentratie: %s %</string>
     <string name="vibrate_on_timer_end">Trillen bij einde timer</string>
     <string name="repository_link_title">Toegang tot de broncode</string>
@@ -87,4 +82,8 @@
     <string name="average_per">Gemiddeld per %s</string>
     <string name="week">week</string>
     <string name="what_icon_should_be_used_for_currency">Welk pictogram moet worden gebruikt voor valuta</string>
+    <plurals name="last_x_days">
+        <item quantity="one">Laatste %s dagen</item>
+        <item quantity="other">Laatste %s dagen</item>
+    </plurals>
 </resources>

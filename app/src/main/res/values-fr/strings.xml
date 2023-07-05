@@ -31,7 +31,6 @@
     <string name="milliseconds">Millisecondes</string>
     <string name="stats">Stats</string>
     <string name="cost_per_gram_short">%s/g</string>
-    <string name="last_fourteen_days">Les 14 derniers jours</string>
     <string name="months">Mois</string>
     <string name="minutes">Minutes</string>
     <string name="seconds">Secondes</string>
@@ -58,13 +57,9 @@
     <string name="cost_per_gram_label">cout_par_gramme</string>
     <string name="export_export">Exporter</string>
     <string name="start_date">Date de début</string>
-    <string name="last_seven_days">Les 7 derniers jours</string>
     <string name="grams_distribution_per_hour_of_day">Distribution de grammes par heure de la journée</string>
     <string name="end_date">Date de fin</string>
-    <string name="last_sixty_days">Les 60 derniers jours</string>
-    <string name="last_thirty_days">Les 30 derniers jours</string>
     <string name="change_period">Période de changement</string>
-    <string name="last_ninety_days">Les 90 derniers jours</string>
     <string name="grams">Grammes</string>
     <string name="current_thc_concentration">Concentration actuelle en THC : %s \\%%</string>
     <plurals name="amount_days">
@@ -108,4 +103,8 @@
     <string name="app_pin">NIP de l\'appli</string>
     <string name="pin_main_screen">Cette application est protégée par un mot de passe. Entrez le bon mot de passe pour continuer.</string>
     <string name="password_description">Pour plus de confidentialité, vous pouvez définir un mot de passe pour accéder à l\'application. La définition d\'un mot de passe vide le supprime. ATTENTION ! Il n\'est pas possible de récupérer un mot de passe défini</string>
+    <plurals name="last_x_days">
+        <item quantity="one">Les %s derniers jours</item>
+        <item quantity="other">Les %s derniers jours</item>
+    </plurals>
 </resources>
