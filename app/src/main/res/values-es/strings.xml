@@ -113,4 +113,5 @@
         <item quantity="one">Último %s día</item>
         <item quantity="other">Últimos %s días</item>
     </plurals>
+    <string name="custom">A medida</string>
 </resources>
