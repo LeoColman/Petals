@@ -107,4 +107,9 @@
         <item quantity="one">Les %s derniers jours</item>
         <item quantity="other">Les %s derniers jours</item>
     </plurals>
+    <string name="milliseconds_enabled">Basculer la barre des millisecondes</string>
+    <string name="enable_or_disable_milliseconds_bar_on_home_page">Activer ou désactiver la barre des millisecondes sur la page Utilisation</string>
+    <string name="enable_or_disable_milliseconds_on_hit_timer_page">Activer ou désactiver les millisecondes sur la page Minuteur</string>
+    <string name="hit_timer_milliseconds_enabled">Basculer en millisecondes sur la page du compteur de visites</string>
+    <string name="decimal_precision">Précision décimale</string>
 </resources>
