@@ -39,12 +39,12 @@ repositories {
 
 android {
   namespace = "br.com.colman.petals"
-  compileSdk = 33
+  compileSdk = 34
 
   defaultConfig {
     applicationId = "br.com.colman.petals"
     minSdk = 21
-    targetSdk = 33
+    targetSdk = 34
     versionCode = 31200
     versionName = "3.12.0"
 

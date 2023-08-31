@@ -1,10 +1,10 @@
 [versions]
 androidx = "1.5.0"
-composeCompiler = "1.4.6"
+composeCompiler = "1.5.3"
 compose = "1.5.0"
 datastore = "1.0.0"
 detekt = "1.23.1"
-koin = "3.4.2"
+koin = "3.4.1"
 kotest = "5.6.2"
 kotlin = "1.9.10"
 vanpra-material-dialogs = "0.9.0"
