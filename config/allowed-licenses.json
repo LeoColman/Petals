@@ -11,6 +11,11 @@
     },
 
     {
+      "moduleName": "androidx.*",
+      "comment": "MPAndroidChart is APACHE 2 https://github.com/PhilJay/MPAndroidChart/blob/master/LICENSE"
+    },
+
+    {
       "moduleLicense": null,
       "moduleVersion": "v3.1.0",
       "moduleName": "com.github.PhilJay:MPAndroidChart",

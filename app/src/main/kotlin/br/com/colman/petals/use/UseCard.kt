@@ -217,7 +217,10 @@ private fun ConfirmEdit(
   use: Use = Use(),
   onDismiss: () -> Unit = {},
 ) {
-  TextButton({ onAddUse(use); onDismiss() }) {
+  TextButton({
+    onAddUse(use)
+    onDismiss()
+  }) {
     Text(stringResource(ok))
   }
 }

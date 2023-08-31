@@ -123,7 +123,8 @@ private fun TimerText(millisLeft: Long) {
 
   LaunchedEffect(isTimerRunning) {
     if (isTimerRunning) {
-      blinking = false; return@LaunchedEffect
+      blinking = false
+      return@LaunchedEffect
     }
 
     repeat(7) {

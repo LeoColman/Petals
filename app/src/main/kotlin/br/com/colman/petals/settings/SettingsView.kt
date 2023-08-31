@@ -364,7 +364,10 @@ private fun TimeDialog(
         stringResource(ok),
         Modifier
           .padding(8.dp)
-          .clickable { setTimeFormat(timeFormat); onDismiss() }
+          .clickable {
+            setTimeFormat(timeFormat)
+            onDismiss()
+          }
       )
     }
   )
@@ -421,7 +424,10 @@ private fun DateDialog(
         stringResource(ok),
         Modifier
           .padding(8.dp)
-          .clickable { setDateFormat(dateFormat); onDismiss() }
+          .clickable {
+            setDateFormat(dateFormat)
+            onDismiss()
+          }
       )
     }
   )
@@ -450,7 +456,10 @@ private fun CurrencyDialog(
         stringResource(ok),
         Modifier
           .padding(8.dp)
-          .clickable { setCurrency(currency); onDismiss() }
+          .clickable {
+            setCurrency(currency)
+            onDismiss()
+          }
       )
     }
   )
@@ -479,7 +488,10 @@ private fun PinDialog(
         stringResource(ok),
         Modifier
           .padding(8.dp)
-          .clickable { setPin(pin); onDismiss() }
+          .clickable {
+            setPin(pin)
+            onDismiss()
+          }
       )
     }
   )
@@ -536,7 +548,10 @@ private fun MillisecondsEnabledDialog(
         stringResource(ok),
         Modifier
           .padding(8.dp)
-          .clickable { setMillisecondsEnabled(millisecondsEnabled); onDismiss() }
+          .clickable {
+            setMillisecondsEnabled(millisecondsEnabled)
+            onDismiss()
+          }
       )
     }
   )
@@ -593,7 +608,10 @@ private fun HitTimerMillisecondsEnabledDialog(
         stringResource(ok),
         Modifier
           .padding(8.dp)
-          .clickable { setHitTimerMillisecondsEnabled(hitTimerMillisecondsEnabled); onDismiss() }
+          .clickable {
+            setHitTimerMillisecondsEnabled(hitTimerMillisecondsEnabled)
+            onDismiss()
+          }
       )
     }
   )
@@ -650,7 +668,10 @@ private fun PrecisionDialog(
         stringResource(ok),
         Modifier
           .padding(8.dp)
-          .clickable { setDecimalPrecision(decimalPrecision); onDismiss() }
+          .clickable {
+            setDecimalPrecision(decimalPrecision)
+            onDismiss()
+          }
       )
     }
   )

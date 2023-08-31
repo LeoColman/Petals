@@ -108,7 +108,10 @@ private fun ConfirmPauseButton(
   setPause: (Pause) -> Unit = {},
   onDismiss: () -> Unit = {}
 ) {
-  TextButton({ setPause(pause); onDismiss() }) {
+  TextButton({
+    setPause(pause)
+    onDismiss()
+  }) {
     Text(stringResource(R.string.ok))
   }
 }
@@ -118,7 +121,10 @@ private fun DeletePauseButton(
   setPause: (Pause?) -> Unit = {},
   onDismiss: () -> Unit = {}
 ) {
-  TextButton({ setPause(null); onDismiss() }) {
+  TextButton({
+    setPause(null)
+    onDismiss()
+  }) {
     Text(stringResource(R.string.delete))
   }
 }
