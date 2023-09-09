@@ -87,7 +87,7 @@ This approach doesn't require secrets.
 ## Git Secrets
 
 The **Keystore**, **Keystore Properties** and **Google Play deploy json** files are included in the repository using
-[git secret](https://git-secret.io/). The current secret owners are:
+[git secret](https://sobolevn.me/git-secret/). The current secret owners are:
 
 - Leonardo Colman Lopes
     - Fingerprint `B3A5 9909 9ECC 4DB4 FD40 896F 7706 1922 C587 2792`
