@@ -112,7 +112,6 @@ private fun ConfirmAddUseDuringPauseDialog(
   )
 }
 
-@Suppress("NAME_SHADOWING")
 @Composable
 @Preview
 private fun AddUseDialog(

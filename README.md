@@ -23,7 +23,7 @@ using.
 
 
 [<img src="https://user-images.githubusercontent.com/1577251/236347752-5c312036-27d1-4515-ab86-dc2aa9a09e66.png"
-alt="Get it on Github"
+alt="Get it on GitHub"
 height="80">](https://github.com/LeoColman/Petals/releases)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
 alt="Get it on F-Droid"
@@ -66,7 +66,7 @@ Translations are hosted at Weblate. You can contribute to your language [here](h
 
 ### Signed
 
-The signed version (the one published to Github and PlayStore) can be built with:
+The signed version (the one published to GitHub and PlayStore) can be built with:
 
 ```
 ./gradlew packageGithubReleaseUniversalApk
@@ -93,9 +93,9 @@ The **Keystore**, **Keystore Properties** and **Google Play deploy json** files 
     - Fingerprint `B3A5 9909 9ECC 4DB4 FD40 896F 7706 1922 C587 2792`
     - Original Author
 
-- Github Actions
+- GitHub Actions
     - Fingerprint `1FF0 67E9 C75F A1BC 51D2 FC75 BA87 7D2B 9560 920A`
-    - Auto-publishing signed app to github
+    - Auto-publishing signed app to GitHub
     - Expires on 2024-07-29
     - Available on environment secret `GPG_KEY`
 

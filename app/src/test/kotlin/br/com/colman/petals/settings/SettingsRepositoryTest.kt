@@ -26,7 +26,7 @@ class SettingsRepositoryTest : FunSpec({
 
   test("Persists specified currency to permanent storage") {
     target.setCurrencyIcon("R$")
-    datastore.data.first().get(CurrencyIcon) shouldBe "R$"
+    datastore.data.first()[CurrencyIcon] shouldBe "R$"
   }
 
   test("Validate date formats") {
@@ -52,9 +52,9 @@ class SettingsRepositoryTest : FunSpec({
     target.dateFormat.first() shouldBe "yyyy/MM/dd"
   }
 
-  test("Persists specified time format to permanent storage") {
+  test("Persists specified date format to permanent storage") {
     target.setDateFormat("yyyy/MM/dd")
-    datastore.data.first().get(DateFormat) shouldBe "yyyy/MM/dd"
+    datastore.data.first()[DateFormat] shouldBe "yyyy/MM/dd"
   }
 
   test("Defaults time format to HH:mm") {
@@ -68,6 +68,6 @@ class SettingsRepositoryTest : FunSpec({
 
   test("Persists specified time format to permanent storage") {
     target.setTimeFormat("HH:mm")
-    datastore.data.first().get(TimeFormat) shouldBe "HH:mm"
+    datastore.data.first()[TimeFormat] shouldBe "HH:mm"
   }
 })

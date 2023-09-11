@@ -20,7 +20,6 @@ import br.com.colman.petals.use.pause.repository.Pause
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Alarm
-import org.koin.androidx.compose.get
 
 @Composable
 fun PauseButton(

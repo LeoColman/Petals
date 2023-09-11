@@ -1,6 +1,7 @@
 package br.com.colman.petals.use.repository
 
 import java.math.BigDecimal
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.UUID
@@ -16,7 +17,7 @@ data class Use(
 ) {
 
   @Transient
-  val localDate = date.toLocalDate()
+  val localDate: LocalDate = date.toLocalDate()
 
   fun columns(): List<String> = listOf(
     date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
@@ -46,17 +47,9 @@ data class Use(
   }
 }
 
-val List<Use>.totalGrams
+val List<Use>.totalGrams: BigDecimal
   get() = map { it.amountGrams }.fold(BigDecimal.ZERO, BigDecimal::add)
 
-val List<Use>.totalCost
+val List<Use>.totalCost: BigDecimal
   get() = map { it.costPerGram * it.amountGrams }.fold(BigDecimal.ZERO, BigDecimal::add)
 
-val List<Use>.minGrams
-  get() = minOfOrNull { it.amountGrams }?.toDouble() ?: 0.0
-
-val List<Use>.maxGrams
-  get() = maxOfOrNull { it.amountGrams }?.toDouble() ?: 0.0
-
-val List<Use>.averageGrams
-  get() = map { it.amountGrams.toDouble() }.average()

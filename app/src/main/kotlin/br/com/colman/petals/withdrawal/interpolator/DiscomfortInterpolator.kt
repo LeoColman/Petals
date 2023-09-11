@@ -50,7 +50,7 @@ value class Discomfort(val strength: Double)
 
 class DiscomfortInterpolator : UnivariateInterpolator, UnivariateFunction {
 
-  val discomfortSeconds =
+  private val discomfortSeconds =
     DiscomfortDataPoints.mapKeys { it.key.seconds.toDouble() }.mapValues { it.value.strength }
 
   private val splineFunction: PolynomialSplineFunction = SplineInterpolator().interpolate(

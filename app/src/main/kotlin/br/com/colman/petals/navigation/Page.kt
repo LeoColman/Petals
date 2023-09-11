@@ -61,7 +61,7 @@ enum class Page(
 @Composable
 fun NavHostContainer(navController: NavHostController, paddingValues: PaddingValues) {
   NavHost(navController, Usage.name, Modifier.padding(paddingValues)) {
-    Page.values().forEach { page ->
+    Page.entries.forEach { page ->
       composable(page.name) {
         page.ui()
       }
@@ -79,7 +79,7 @@ fun BottomNavigationBar(navController: NavHostController) {
   val currentRoute = navBackStackEntry?.destination?.route
 
   BottomNavigation {
-    Page.values().forEach { page ->
+    Page.entries.forEach { page ->
       BottomNavigationItem(
         selected = currentRoute == page.name,
 

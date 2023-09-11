@@ -102,7 +102,7 @@
     <string name="yes">Yes</string>
     <string name="yes_timer">Yes (%ss)</string>
     <string name="no">No</string>
-    <string name="add_use_during_pause_alert">You scheduled this period to be a pause. Are you sure you want to add an use now?</string>
+    <string name="add_use_during_pause_alert">You scheduled this period to be a pause. Are you sure you want to add a use now?</string>
     <string name="grams_distribution_per_day_of_week">Grams distribution per day of week</string>
     <string name="date_format_label">Date format</string>
     <string name="what_date_format_should_be_used">What date format should be used</string>
@@ -115,7 +115,7 @@
     <string name="deleted_successfully">Use deleted!</string>
     <string name="confirm_to_delete">Are you sure you want to delete use added on %s?</string>
     <string name="app_pin">App Pin</string>
-    <string name="password_description">For extra privacy you can setup a password to access the app. Setting an empty password removes it. ATTENTION! It\'s not possible to recover a set password</string>
+    <string name="password_description">For extra privacy you can set up a password to access the app. Setting an empty password removes it. ATTENTION! It\'s not possible to recover a set password</string>
     <string name="pin_main_screen">This application is password protected. Enter the right password to proceed.</string>
     <string name="milliseconds_enabled">Toggle Milliseconds Bar</string>
     <string name="enable_or_disable_milliseconds_bar_on_home_page">Enable or disable milliseconds bar on Usage page</string>

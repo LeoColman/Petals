@@ -91,7 +91,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
     }
   }
 
-  fun isAuthorized() = authorizedUntil >= LocalDateTime.now()
+  private fun isAuthorized() = authorizedUntil >= LocalDateTime.now()
 
   @Composable
   fun Authorization(correctPin: String?) {
