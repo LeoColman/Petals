@@ -52,4 +52,3 @@ val List<Use>.totalGrams: BigDecimal
 
 val List<Use>.totalCost: BigDecimal
   get() = map { it.costPerGram * it.amountGrams }.fold(BigDecimal.ZERO, BigDecimal::add)
-
