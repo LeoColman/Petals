@@ -77,7 +77,7 @@
     </plurals>
     <string name="year">año</string>
     <string name="repository_link_description">Esta app es software libre y de código abierto bajo la licencia AGPL-3.0. El código fuente está disponible en github.com/LeoColman/Petals</string>
-    <string name="add_use_during_pause_alert">Has programado este periodo para que sea una pausa. ¿Estás seguro de que quieres añadir un uso ahora\?</string>
+    <string name="add_use_during_pause_alert">Planeaste este período como un descanso. ¿Estás seguro de que quieres usarlo\?</string>
     <string name="pause_change_minutes">%+d min</string>
     <string name="start_time">Hora de inicio</string>
     <string name="end_time">Hora final</string>
@@ -111,6 +111,7 @@
     <string name="decimal_precision">Precisión decimal</string>
     <plurals name="last_x_days">
         <item quantity="one">Último %s día</item>
+        <item quantity="many">Últimos %s días</item>
         <item quantity="other">Últimos %s días</item>
     </plurals>
     <string name="custom">A medida</string>
