@@ -1,7 +1,7 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.1.0")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3.Distribution.Adopt
 import io.github.typesafegithub.workflows.actions.entrostat.GitSecretActionV4
@@ -26,7 +26,7 @@ workflow(
 ) {
   job(id = "create-apk", runsOn = UbuntuLatest) {
     uses(name = "Set up JDK", action = SetupJavaV3(javaVersion = "17", distribution = Adopt))
-    uses(action = CheckoutV3())
+    uses(action = CheckoutV4())
     uses(name = "reveal-secrets", action = GitSecretActionV4(gpgPrivateKey = expr { GPG_KEY }))
 
     uses(name = "Create APK", action = GradleBuildActionV2(arguments = "packageGithubReleaseUniversalApk"))

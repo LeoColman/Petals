@@ -13,7 +13,7 @@ jobs:
     steps:
     - id: 'step-0'
       name: 'Check out'
-      uses: 'actions/checkout@v3'
+      uses: 'actions/checkout@v4'
     - id: 'step-1'
       name: 'Execute script'
       run: 'rm ''.github/workflows/dependency-license-analysis.yaml'' && ''.github/workflows/dependency-license-analysis.main.kts'''
@@ -32,7 +32,7 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
     - id: 'step-1'
-      uses: 'actions/checkout@v3'
+      uses: 'actions/checkout@v4'
     - id: 'step-2'
       uses: 'gradle/gradle-build-action@v2'
       with:

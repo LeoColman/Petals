@@ -1,7 +1,7 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.1.0")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV3
+import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
 import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3.Distribution.Adopt
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
@@ -22,7 +22,7 @@ workflow(
 ) {
   job(id = "build", runsOn = RunnerType.UbuntuLatest) {
     uses(name = "Set up JDK", action = SetupJavaV3(javaVersion = "17", distribution = Adopt))
-    uses(action = CheckoutV3())
+    uses(action = CheckoutV4())
     uses(name = "Create APK", action = GradleBuildActionV2(arguments = "packageFdroidReleaseUniversalApk"))
   }
 }.writeToFile()
