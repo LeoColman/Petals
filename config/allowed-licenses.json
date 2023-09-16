@@ -9,12 +9,10 @@
     {
       "moduleLicense": "GNU GENERAL PUBLIC LICENSE including GPL linking exception"
     },
-
     {
       "moduleName": "androidx.*",
       "comment": "MPAndroidChart is APACHE 2 https://github.com/PhilJay/MPAndroidChart/blob/master/LICENSE"
     },
-
     {
       "moduleLicense": null,
       "moduleVersion": "v3.1.0",
@@ -23,6 +21,13 @@
     },
     {
       "moduleLicense": null,
+      "moduleVersion": "1.1.0",
+      "moduleName": "io.insert-koin:koin-compose",
+      "comment": "Koin is Apache 2 https://github.com/InsertKoinIO/koin/blob/main/LICENSE"
+    },
+    {
+      "moduleLicense": null,
+      "moduleVersion": "3.5.0",
       "moduleName": "io.insert-koin:koin-core",
       "comment": "Koin is Apache 2 https://github.com/InsertKoinIO/koin/blob/main/LICENSE"
     },
@@ -30,9 +35,7 @@
       "moduleLicense": null,
       "moduleName": "org.jetbrains.kotlinx:kotlinx-coroutines-core",
       "comment": "Coroutines is Apache 2 https://github.com/Kotlin/kotlinx.coroutines/blob/master/LICENSE.txt"
-
     },
-
     {
       "moduleLicense": null,
       "moduleName": "com.squareup.sqldelight:coroutines-extensions",
@@ -47,6 +50,11 @@
       "moduleLicense": null,
       "moduleName": "com.github.requery:sqlite-android",
       "comment": "SQLIte-Android is Apache 2 https://github.com/requery/sqlite-android/blob/master/LICENSE"
+    },
+    {
+      "moduleLicense": null,
+      "moduleName": "org.jetbrains.compose.runtime:runtime",
+      "comment": "Compose runtime is Apache 2 https://github.com/JetBrains/compose-multiplatform-core/blob/jb-main/LICENSE.txt"
     }
   ]
 }
