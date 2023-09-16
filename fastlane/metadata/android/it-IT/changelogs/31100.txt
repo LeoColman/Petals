@@ -1,0 +1,1 @@
+* Aggiunto un'impostazione per specificare la precisione sui numeri decimali

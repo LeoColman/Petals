@@ -1,0 +1,11 @@
+L'app Open Source Petals mira ad aiutare i suoi utenti a smettere di fumare, a ridurne l'uso o semplicemente a sapere quanta ne stanno usando.
+
+Caratteristiche
+
+- Monitorare i consumi
+- Limita il tempo ai tuoi consumi
+- Tieni traccia dell'utilizzo
+- Visualizza le statistiche per comprendere i tuoi consumi
+- Istruzioni per la riduzione dei danni
+- Esporta e importa come semplici file CSV
+- Extra privacy con un PIN personale
