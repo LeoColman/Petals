@@ -1,0 +1,3 @@
+* Aggiunta l'opzione per rimuovere i millisecondi da HitTimer
+* Sincronizza le traduzioni da Weblate
+* Aggiornato molte dipendenze
