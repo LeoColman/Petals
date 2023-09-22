@@ -121,9 +121,11 @@ fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
         labelCount = 24
         granularity = 1.0f
         valueFormatter = GramsFormatter
-        addLimitLine(LimitLine(LocalTime.now().hour.toFloat()).apply {
-          lineWidth = 2f
-        })
+        addLimitLine(
+          LimitLine(LocalTime.now().hour.toFloat()).apply {
+            lineWidth = 2f
+          }
+        )
         setDrawLimitLinesBehindData(true)
 
         textColor = colors.primary.toArgb()
