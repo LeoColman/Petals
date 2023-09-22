@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="hours">Ore</string>
+    <string name="reset">Ripristina</string>
+    <string name="days">Giorni</string>
+    <string name="tenSecondsIntro">Trattenere per più di 10 secondi non aumenterà il tuo effetto, ma aumenterà gli effetti negativi che l\'erba ti causa.</string>
+    <string name="hit_timer">Premi il timer</string>
+    <string name="years">Anni</string>
+    <string name="seconds">Secondi</string>
+    <string name="start">Avvia</string>
+    <string name="milliseconds">Millisecondi</string>
+    <string name="hittime_source">Fonte: Azorlosa JL, Greenwald MK, Stitzer ML. Fumo di marijuana: effetti della variazione del volume della boccata e della durata dell\'apnea. J Pharmacol Exp lì. 1995. Febbraio;272(2):560–9. PMID: 7853169.</string>
+    <string name="symptoms_introduction">Uno studio di Budney et al. dell\'Università del Vermont ha stabilito come i sintomi di astinenza influiscono e decadono sui consumatori di cannabis. Di seguito vedrai una stima della tua situazione attuale in base alla data del tuo ultimo utilizzo</string>
+    <string name="symptoms">Sintomi</string>
+    <string name="stats">Stati</string>
+    <string name="usage">Utilizzo</string>
+    <string name="minutes">Minuti</string>
+    <string name="quit_date_text">Data dell\'ultimo uso</string>
+    <string name="months">Mesi</string>
+    <string name="hittimer_why_ten_secs">Perché 10 secondi\?</string>
+</resources>
