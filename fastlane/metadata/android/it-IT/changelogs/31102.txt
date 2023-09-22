@@ -1,0 +1,2 @@
+* Corretto errore di battitura
+* Sincronizzato la traduzione da weblate

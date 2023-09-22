@@ -1,0 +1,3 @@
+* Sincronizzato le traduzioni
+* Corretto la pubblicazione su Google Play Store
+* Risolto il problema con il punto di astinenza che non si allineava con la linea del grafico

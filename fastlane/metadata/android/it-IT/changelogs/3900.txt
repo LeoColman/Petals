@@ -1,0 +1,4 @@
+* Migliorato le opzioni del formato dell'ora
+* Sincronizzato le traduzioni da Weblate
+* Aggiunto l'opzione per rimuovere la barra dei millisecondi
+* Reso scorrevole la pagina delle impostazioni

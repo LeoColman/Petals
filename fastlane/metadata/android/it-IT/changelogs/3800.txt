@@ -1,0 +1,2 @@
+* Aggiunto il PIN per l'app opzionale per una maggiore privacy
+* Sincronizzato le traduzioni da Weblate
