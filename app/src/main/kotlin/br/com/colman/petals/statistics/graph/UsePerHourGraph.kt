@@ -21,6 +21,7 @@ import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.totalGrams
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -28,6 +29,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IValueFormatter
 import java.time.LocalDate
+import java.time.LocalTime
 import kotlin.math.roundToInt
 
 @Composable
@@ -119,6 +121,10 @@ fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
         labelCount = 24
         granularity = 1.0f
         valueFormatter = GramsFormatter
+        addLimitLine(LimitLine(LocalTime.now().hour.toFloat()).apply {
+          lineWidth = 2f
+        })
+        setDrawLimitLinesBehindData(true)
 
         textColor = colors.primary.toArgb()
         axisLineColor = colors.primary.toArgb()
