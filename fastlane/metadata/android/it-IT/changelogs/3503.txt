@@ -1,0 +1,2 @@
+* Risolto il problema con il ripristino di HitTimer quando cambia l'orientamento dello schermo
+* Sincronizzato le traduzioni

@@ -1,0 +1,1 @@
+* Aggiunto la funzionalità di condivisione dell'app
