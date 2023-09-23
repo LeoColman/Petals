@@ -134,7 +134,7 @@ android {
     }
   }
 
-  packagingOptions {
+  packaging {
     resources.excludes.add("META-INF/**")
     resources.excludes.add("win32-x86-64/attach_hotspot_windows.dll")
     resources.excludes.add("win32-x86/attach_hotspot_windows.dll")
