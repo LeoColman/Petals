@@ -1,0 +1,2 @@
+- Añadida la traducción al italiano
+- Actualizaciones menores de las dependencias
