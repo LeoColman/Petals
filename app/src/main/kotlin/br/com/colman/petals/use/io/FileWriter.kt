@@ -10,8 +10,8 @@ import java.time.LocalDate
 class FileWriter(private val context: Context) {
 
   private fun generateFileName(): String {
-   val date = LocalDate.now()
-   return "PetalsExport-$date.csv"
+    val date = LocalDate.now()
+    return "PetalsExport-$date.csv"
   }
   private val exportsDir by lazy {
     File(context.filesDir, "exports").apply {

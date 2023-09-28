@@ -8,6 +8,7 @@ import io.kotest.matchers.file.shouldNotExist
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldEndWith
 import java.io.File
+import java.time.LocalDate
 
 class FileWriterTest : FunSpec({
 
@@ -39,6 +40,6 @@ class FileWriterTest : FunSpec({
   test("Uses PetalsExport.csv as the default file name") {
     val uri = target.write("xxx")
 
-    uri.path shouldEndWith "PetalsExport.csv"
+    uri.path shouldEndWith "PetalsExport-${LocalDate.now()}.csv"
   }
 })
