@@ -1,0 +1,2 @@
+- Aggiunto una linea che indica l'ora del giorno al grafico
+- Correzioni minori
