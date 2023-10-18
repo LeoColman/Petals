@@ -11,7 +11,7 @@ vanpra-material-dialogs = "0.9.0"
 sqldelight = "1.5.5"
 
 [libraries]
-android-desugar-jdk = "com.android.tools:desugar_jdk_libs:1.2.3"
+android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.0.3"
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx" }
 androidx-test-runner = "androidx.test:runner:1.5.2"
 apache-commons-lang = "org.apache.commons:commons-lang3:3.13.0"
