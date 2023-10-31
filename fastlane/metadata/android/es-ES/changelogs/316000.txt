@@ -1,0 +1,1 @@
+- Solucionar el problema de que la aplicación se bloquee al volver a abrirla
