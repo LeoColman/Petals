@@ -209,6 +209,13 @@ dependencies {
   // Google Ads
   "playstoreImplementation"(libs.play.services.ads)
 
+  //Glance for widgets
+  // For Glance support
+  implementation("androidx.glance:glance:1.0.0")
+
+  // For AppWidgets support
+  implementation("androidx.glance:glance-appwidget:1.0.0")
+
 }
 
 tasks.withType<Test> {
