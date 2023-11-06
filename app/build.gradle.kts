@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import java.util.Properties
 import org.gradle.api.JavaVersion.VERSION_17
+import java.util.Properties
 
 @Suppress("DSL_SCOPE_VIOLATION") //KTIJ-19369
 plugins {
@@ -28,6 +28,7 @@ plugins {
   alias(libs.plugins.detekt)
   alias(libs.plugins.sqldelight)
   id("org.jetbrains.kotlinx.kover") version "0.7.4"
+  kotlin("plugin.serialization") version "1.9.20"
 }
 
 repositories {
@@ -146,6 +147,7 @@ dependencies {
   // Kotlin
   testRuntimeOnly(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
   // Compose
   implementation(libs.bundles.compose)
@@ -205,6 +207,9 @@ dependencies {
   implementation(libs.sqldelight.coroutines.extensions)
   testImplementation(libs.sqldelight.sqlite.driver)
   implementation(libs.requery.sqlite)
+
+  // Google
+  implementation ("com.google.code.gson:gson:2.8.6")
 
   // Google Ads
   "playstoreImplementation"(libs.play.services.ads)
