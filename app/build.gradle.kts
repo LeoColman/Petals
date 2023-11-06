@@ -147,7 +147,6 @@ dependencies {
   // Kotlin
   testRuntimeOnly(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
-  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
   // Compose
   implementation(libs.bundles.compose)
@@ -208,8 +207,6 @@ dependencies {
   testImplementation(libs.sqldelight.sqlite.driver)
   implementation(libs.requery.sqlite)
 
-  // Google
-  implementation ("com.google.code.gson:gson:2.8.6")
 
   // Google Ads
   "playstoreImplementation"(libs.play.services.ads)
