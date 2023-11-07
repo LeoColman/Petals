@@ -1,7 +1,11 @@
 package br.com.colman.petals.widget
 
+import android.util.Log
 import android.annotation.SuppressLint
+import android.appwidget.AppWidgetManager
 import android.content.Context
+import android.preference.PreferenceManager
+import android.widget.RemoteViews
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -11,7 +15,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.MutablePreferences
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.TimeUnit.Day
 import br.com.colman.petals.use.TimeUnit.Hour
@@ -24,9 +32,12 @@ import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.LocalContext
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.provideContent
+import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.background
+import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
@@ -44,13 +55,15 @@ import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime
 
 import org.koin.androidx.compose.get
+import timber.log.Timber
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.Locale
+import kotlin.math.log
 
 object PetalsAppWidget : GlanceAppWidget() {
 
-  val secondsFromLastUseKey = intPreferencesKey("secondsFromLastUse")
+  val millishaha = longPreferencesKey("millishaha")
 
 
   override suspend fun provideGlance(context: Context, id: GlanceId) {
@@ -58,43 +71,47 @@ object PetalsAppWidget : GlanceAppWidget() {
     provideContent {
       val settingsRepository = get<SettingsRepository>()
       val useRepository: UseRepository = get()
-      val pauseRepository: PauseRepository = get()
 
-      val lastUseDateState = remember { mutableStateOf<LocalDateTime?>(null) }
+//      val lastUseDateState = remember { mutableStateOf<LocalDateTime?>(null) }
+      val lastUseDate = useRepository.getLastUseDate().collectAsState(LocalDateTime.now())
       val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
       val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
 
-      val isInitialDataFetched = remember { mutableStateOf(false) }
+//      val isInitialDataFetched = remember { mutableStateOf(false) }
       val millisecondsEnabled = "disabled"
 
-      LaunchedEffect(isInitialDataFetched.value) {
-        useRepository.getLastUseDate().collect { lastUseDate ->
-          lastUseDateState.value = lastUseDate
-          isInitialDataFetched.value = true
-        }
-      }
+//      LaunchedEffect(isInitialDataFetched.value) {
+//        useRepository.getLastUseDate().collect { lastUseDate ->
+//          lastUseDateState.value = lastUseDate
+//          isInitialDataFetched.value = true
+//        }
+//      }
 
-      val lastUseDate = lastUseDateState.value ?: LocalDateTime.now()
+//      val lastUseDate = lastUseDateState.value ?: LocalDateTime.now()
 
       val dateString = DateTimeFormatter.ofPattern(
         String.format(
           Locale.US, "%s %s", dateFormat, timeFormat
         )
-      ).format(lastUseDate)
+      ).format(lastUseDate.value)
 
       var millis by remember {
         mutableStateOf(
           ChronoUnit.MILLIS.between(
-            lastUseDate, LocalDateTime.now()
+            lastUseDate.value, LocalDateTime.now()
           )
         )
       }
+
       LaunchedEffect(millis) {
         while (true) {
           delay(11)
-          millis = ChronoUnit.MILLIS.between(lastUseDate, LocalDateTime.now())
+          millis = ChronoUnit.MILLIS.between(lastUseDate.value, LocalDateTime.now())
         }
       }
+
+      Timber.tag("millis: ").d(millis.toString())
+
       val allLabels = listOf(Year, Month, Day, Hour, Minute, Second, Millisecond)
       val enabledLabels =
         if (millisecondsEnabled == "disabled") allLabels.dropLast(1) else allLabels
@@ -112,8 +129,9 @@ object PetalsAppWidget : GlanceAppWidget() {
         verticalAlignment = Alignment.Vertical.CenterVertically,
         horizontalAlignment = Alignment.Horizontal.CenterHorizontally
       ) {
-        WidgetUsagePart(lastUseDate, dateString, labels)
+        WidgetUsagePart(lastUseDate.value, dateString, labels)
         WidgetConcentrationDiscomfortPart()
+        WidgetBreakPeriodPart()
       }
     }
   }
@@ -143,6 +161,7 @@ class SimplePetalsAppWidgetReceiver : GlanceAppWidgetReceiver() {
     get() = PetalsAppWidget
 }
 
+
 //class IncrementActionCallback : ActionCallback {
 //  override suspend fun onAction(
 //    context: Context,
@@ -163,4 +182,4 @@ class SimplePetalsAppWidgetReceiver : GlanceAppWidgetReceiver() {
 //    }
 //  }
 //}
-
+//
