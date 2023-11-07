@@ -1,3 +1,8 @@
+<!--For the correct parsing please keep the structure-->
+<!--information - just the outer tag-->
+<!--title - title of the foldable component -->
+<!--content - content of the foldable component in bullet points -->
+<!--If you want to add new bullet point in the app then start a new line in the content tag-->
 <information>
     <item>
         <title>Know the local laws</title>

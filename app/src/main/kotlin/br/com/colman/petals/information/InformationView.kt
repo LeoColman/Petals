@@ -44,11 +44,9 @@ import br.com.colman.petals.R.string.select_country
 
 @Composable
 fun InformationView() {
-
   val context = LocalContext.current
   val generalKnowledgeList = parseXmlGenKnowledge(context)
   Column (modifier = Modifier.verticalScroll(rememberScrollState())){
-
         SectionHeader(text = stringResource(general_knowledge))
         generalKnowledgeList.forEach { generalKnowledge ->
           ExpandableComponent(
@@ -57,10 +55,8 @@ fun InformationView() {
         }
         SectionHeader(text = stringResource(legislation_and_rights))
         CountryPicker(context)
-
     }
   }
-
 
 @Composable
 fun ParseGenContent(text: String) {

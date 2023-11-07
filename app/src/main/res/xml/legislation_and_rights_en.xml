@@ -1,3 +1,6 @@
+<!--For the correct parsing please keep the structure-->
+<!--item - every item tag represents the legislation and rights for a country-->
+<!--If you want to add new bullet point in the app then start a new line-->
 <information>
     <item>
         <country>Slovakia</country>
