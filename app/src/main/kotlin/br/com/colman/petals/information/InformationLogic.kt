@@ -9,19 +9,20 @@ import java.util.Locale
 // Retrieving the content of the general_knowledge xml
 data class InfoItem(val title: String, val content: String)
 
+fun getXmlGKResId(context: Context): Int {
+  val locale = context.resources.configuration.locale ?: Locale.getDefault()
+  val localizeXmlResId = when (locale.language) {
+    Locale.ENGLISH.language -> R.xml.general_knowledge_en
+    else -> R.xml.general_knowledge_en
+  }
+  return localizeXmlResId
+}
+
 fun parseXmlGenKnowledge(context: Context): List<InfoItem> {
   val infoItems = mutableListOf<InfoItem>()
   val locale = context.resources.configuration.locale ?: Locale.getDefault()
-
-  // Localization manually
-  val localizeXmlResId = when (locale.language) {
-    Locale.ENGLISH.language -> R.xml.general_knowledge_en
-
-    else -> R.xml.general_knowledge_en
-  }
-
+  val localizeXmlResId = getXmlGKResId(context)
   val parser: XmlResourceParser = context.resources.getXml(localizeXmlResId)
-
   var eventType = parser.eventType
   var currentTag: String? = null
   var currentTitle: String? = null
@@ -41,10 +42,10 @@ fun parseXmlGenKnowledge(context: Context): List<InfoItem> {
       }
 
       XmlPullParser.END_TAG -> {
+        if (parser.name == "item" && currentTitle != null && currentContent != null) {
+          infoItems.add(InfoItem(currentTitle, currentContent))
+        }
         if (parser.name == "item") {
-          if (currentTitle != null && currentContent != null) {
-            infoItems.add(InfoItem(currentTitle, currentContent))
-          }
           currentTitle = null
           currentContent = null
         }
@@ -113,7 +114,7 @@ data class CountryInformation(
   val lastUpdate: String
 )
 
-fun getXmlResId(context: Context): Int {
+fun getXmlCIResId(context: Context): Int {
   val locale = context.resources.configuration.locale ?: Locale.getDefault()
   val localizeXmlResId = when (locale.language) {
     Locale.ENGLISH.language -> R.xml.legislation_and_rights_en
@@ -123,7 +124,7 @@ fun getXmlResId(context: Context): Int {
 }
 
 fun getCountryInformation(context: Context, countryNameToFind: String): CountryInformation? {
-  val localizeXmlResId = getXmlResId(context)
+  val localizeXmlResId = getXmlCIResId(context)
   val parser: XmlResourceParser = context.resources.getXml(localizeXmlResId)
   var eventType = parser.eventType
   var foundCountry = false

@@ -134,10 +134,7 @@ fun CountryPicker(context: Context) {
     if (selectedCountry == "") {
       Card(
         elevation = 4.dp,
-        modifier = Modifier
-          .fillMaxWidth()
-          .padding(top = 8.dp)
-          .padding(horizontal = 16.dp)
+        modifier = Modifier.fillMaxWidth().padding(top = 8.dp).padding(horizontal = 16.dp)
       ) {
         Text(
           text = stringResource(no_country_selected),
