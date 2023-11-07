@@ -43,8 +43,17 @@ fun WidgetUsagePart() {
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
   val millisecondsEnabled = "disabled"
-  val dateString = DateTimeFormatter.ofPattern(String.format(Locale.US, "%s %s", dateFormat, timeFormat)).format(lastUseDate.value)
-  var millis by remember { mutableStateOf(ChronoUnit.MILLIS.between(lastUseDate.value, LocalDateTime.now())) }
+  val dateString =
+    DateTimeFormatter.ofPattern(String.format(Locale.US, "%s %s", dateFormat, timeFormat))
+      .format(lastUseDate.value)
+  var millis by remember {
+    mutableStateOf(
+      ChronoUnit.MILLIS.between(
+        lastUseDate.value,
+        LocalDateTime.now()
+      )
+    )
+  }
 
   LaunchedEffect(millis) {
     while (true) {
@@ -64,9 +73,16 @@ fun WidgetUsagePart() {
     it to unitsTotal
   }
 
-  Column(modifier = GlanceModifier.padding(4.dp), verticalAlignment = Alignment.Vertical.CenterVertically, horizontalAlignment = Alignment.Horizontal.CenterHorizontally) {
+  Column(
+    modifier = GlanceModifier.padding(4.dp),
+    verticalAlignment = Alignment.Vertical.CenterVertically,
+    horizontalAlignment = Alignment.Horizontal.CenterHorizontally
+  ) {
     LastUseDateView(lastUseDate, dateString)
-    Column(verticalAlignment = Alignment.CenterVertically, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalAlignment = Alignment.CenterHorizontally
+    ) {
       YearsMonthsDaysView(labels)
       HoursMinutesSecondsView(labels)
     }
@@ -78,21 +94,56 @@ private fun LastUseDateView(
   lastUseDate: State<LocalDateTime?>,
   dateString: String?
 ) {
-  Column(verticalAlignment = Alignment.CenterVertically, horizontalAlignment = Alignment.CenterHorizontally) {
-    Text(text = LocalContext.current.getString(R.string.quit_date_text), style = TextStyle(fontWeight = FontWeight.Medium, color = ColorProvider(Color.White), fontSize = 20.sp))
+  Column(
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalAlignment = Alignment.CenterHorizontally
+  ) {
+    Text(
+      text = LocalContext.current.getString(R.string.quit_date_text),
+      style = TextStyle(
+        fontWeight = FontWeight.Medium,
+        color = ColorProvider(Color.White),
+        fontSize = 20.sp
+      )
+    )
     val dateStringWithExtras = if (!lastUseDate.value!!.is420()) dateString else "$dateString 🥦🥦"
-    Text(text = dateStringWithExtras!!, style = TextStyle(fontWeight = FontWeight.Medium, color = ColorProvider(Color.White), fontSize = 20.sp))
+    Text(
+      text = dateStringWithExtras!!,
+      style = TextStyle(
+        fontWeight = FontWeight.Medium,
+        color = ColorProvider(Color.White),
+        fontSize = 20.sp
+      )
+    )
   }
 }
 
 @Composable
 private fun YearsMonthsDaysView(labels: List<Pair<TimeUnit, Long>>) {
-  Row(modifier = GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalAlignment = Alignment.CenterHorizontally) {
+  Row(
+    modifier = GlanceModifier.fillMaxWidth(),
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalAlignment = Alignment.CenterHorizontally
+  ) {
     labels.filter { it.first in listOf(TimeUnit.Year, TimeUnit.Month, TimeUnit.Day) }
       .forEach { (label, amount) ->
         Row {
-          Text(text = LocalContext.current.getString(label.unitName), style = TextStyle(fontWeight = FontWeight.Normal, color = ColorProvider(Color.White), fontSize = 16.sp))
-          Text(text = ": $amount ", style = TextStyle(fontWeight = FontWeight.Normal, color = ColorProvider(Color.White), fontSize = 16.sp))
+          Text(
+            text = LocalContext.current.getString(label.unitName),
+            style = TextStyle(
+              fontWeight = FontWeight.Normal,
+              color = ColorProvider(Color.White),
+              fontSize = 16.sp
+            )
+          )
+          Text(
+            text = ": $amount ",
+            style = TextStyle(
+              fontWeight = FontWeight.Normal,
+              color = ColorProvider(Color.White),
+              fontSize = 16.sp
+            )
+          )
         }
       }
   }
@@ -100,17 +151,42 @@ private fun YearsMonthsDaysView(labels: List<Pair<TimeUnit, Long>>) {
 
 @Composable
 private fun HoursMinutesSecondsView(labels: List<Pair<TimeUnit, Long>>) {
-  Row(modifier = GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalAlignment = Alignment.CenterHorizontally) {
+  Row(
+    modifier = GlanceModifier.fillMaxWidth(),
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalAlignment = Alignment.CenterHorizontally
+  ) {
     labels.filter { it.first in listOf(TimeUnit.Hour, TimeUnit.Minute, TimeUnit.Second) }
       .forEach { (label, amount) ->
         Row {
           if (!LocalContext.current.getString(label.unitName).equals("Hours")) {
-            Text(text = formatLongAsTwoDigitString(amount), style = TextStyle(fontWeight = FontWeight.Normal, color = ColorProvider(Color.White), fontSize = 16.sp))
+            Text(
+              text = formatLongAsTwoDigitString(amount),
+              style = TextStyle(
+                fontWeight = FontWeight.Normal,
+                color = ColorProvider(Color.White),
+                fontSize = 16.sp
+              )
+            )
           } else {
-            Text(text = "$amount", style = TextStyle(fontWeight = FontWeight.Normal, color = ColorProvider(Color.White), fontSize = 16.sp))
+            Text(
+              text = "$amount",
+              style = TextStyle(
+                fontWeight = FontWeight.Normal,
+                color = ColorProvider(Color.White),
+                fontSize = 16.sp
+              )
+            )
           }
           if (!LocalContext.current.getString(label.unitName).equals("Seconds")) {
-            Text(text = ":", style = TextStyle(fontWeight = FontWeight.Normal, color = ColorProvider(Color.White), fontSize = 16.sp))
+            Text(
+              text = ":",
+              style = TextStyle(
+                fontWeight = FontWeight.Normal,
+                color = ColorProvider(Color.White),
+                fontSize = 16.sp
+              )
+            )
           }
         }
       }
