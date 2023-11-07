@@ -51,7 +51,8 @@ fun InformationView() {
     generalKnowledgeList.forEach { generalKnowledge ->
       ExpandableComponent(
         title = generalKnowledge.title,
-        content = { ParseGenContent(generalKnowledge.content) })
+        content = { ParseGenContent(generalKnowledge.content) }
+      )
     }
     SectionHeader(text = stringResource(legislation_and_rights))
     CountryPicker(context)
@@ -86,12 +87,11 @@ fun SectionHeader(text: String) {
 
 @Composable
 fun CountryPicker(context: Context) {
-
   var expanded by remember { mutableStateOf(false) }
   var selectedCountry by remember { mutableStateOf("") }
   val countries = getCountriesList(context)
 
-  Column() {
+  Column {
     OutlinedButton(
       onClick = { expanded = true },
       modifier = Modifier
@@ -157,25 +157,32 @@ fun CountryLegislationAndRights(context: Context, country: String) {
 
   ExpandableComponent(
     title = stringResource(legal_status),
-    { ParseGenContent(countryInformation!!.legalStatus) })
+    { ParseGenContent(countryInformation!!.legalStatus) }
+  )
   ExpandableComponent(
     title = stringResource(possession),
-    { ParseGenContent(countryInformation!!.possession) })
+    { ParseGenContent(countryInformation!!.possession) }
+  )
   ExpandableComponent(
     title = stringResource(consumption),
-    { ParseGenContent(countryInformation!!.consumption) })
+    { ParseGenContent(countryInformation!!.consumption) }
+  )
   ExpandableComponent(
     title = stringResource(medical_use),
-    { ParseGenContent(countryInformation!!.medicalUse) })
+    { ParseGenContent(countryInformation!!.medicalUse) }
+  )
   ExpandableComponent(
     title = stringResource(cultivation),
-    { ParseGenContent(countryInformation!!.cultivation) })
+    { ParseGenContent(countryInformation!!.cultivation) }
+  )
   ExpandableComponent(
     title = stringResource(purchase_and_sale),
-    { ParseGenContent(countryInformation!!.purchaseAndSale) })
+    { ParseGenContent(countryInformation!!.purchaseAndSale) }
+  )
   ExpandableComponent(
     title = stringResource(enforcement),
-    { ParseGenContent(countryInformation!!.enforcement) })
+    { ParseGenContent(countryInformation!!.enforcement) }
+  )
 
   Text(
     text = stringResource(R.string.keep_in_mind_that_laws_can_change),

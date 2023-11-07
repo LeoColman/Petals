@@ -74,7 +74,6 @@ fun NavHostContainer(navController: NavHostController, paddingValues: PaddingVal
     composable("information") {
       InformationView()
     }
-
   }
 }
 

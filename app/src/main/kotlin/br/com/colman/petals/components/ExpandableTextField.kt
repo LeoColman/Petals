@@ -52,7 +52,7 @@ fun ExpandableComponent(title: String, content: @Composable () -> Unit) {
         }
         Text(
           text = title,
-          style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp), //MaterialTheme.typography.subtitle1,
+          style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
           modifier = Modifier.weight(1f) // This makes the Text occupy the remaining space
         )
       }
