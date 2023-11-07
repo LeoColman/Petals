@@ -150,13 +150,7 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
           }
         }
       }
-
-      XmlPullParser.END_TAG -> {
-        if (foundCountry && parser.name == "item") {
-          break
-        }
-      }
-
+      XmlPullParser.END_TAG -> {}
       else -> {}
     }
     if (!foundCountry) {
@@ -164,13 +158,12 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
     }
   }
   // If the country has been found, continue parsing the rest of the information
-  if (foundCountry) {
-    eventType = parser.next() // Move to the next element after the country tag
+  if (foundCountry) {}
+    eventType = parser.next()
     while (eventType != XmlPullParser.END_DOCUMENT && parser.name != "item") {
       when (eventType) {
         XmlPullParser.START_TAG -> {
-          val tagName = parser.name
-          when (tagName) {
+          when (parser.name) {
             "legalstatus" -> legalStatus = parser.nextText()
             "possession" -> possession = parser.nextText()
             "consumption" -> consumption = parser.nextText()
@@ -184,16 +177,7 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
       }
       eventType = parser.next()
     }
-  }
-  return CountryInformation(
-    countryName,
-    legalStatus,
-    possession,
-    consumption,
-    medicalUse,
-    cultivation,
-    purchaseAndSale,
-    enforcement,
-    lastUpdate
+  return CountryInformation(countryName, legalStatus, possession, consumption, medicalUse,
+    cultivation, purchaseAndSale, enforcement, lastUpdate
   )
 }
