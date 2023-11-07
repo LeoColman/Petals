@@ -8,6 +8,7 @@ import java.util.Locale
 
 // Retrieving the content of the general_knowledge xml
 data class InfoItem(val title: String, val content: String)
+
 fun parseXmlGenKnowledge(context: Context): List<InfoItem> {
   val infoItems = mutableListOf<InfoItem>()
   val locale = context.resources.configuration.locale ?: Locale.getDefault()
@@ -31,12 +32,14 @@ fun parseXmlGenKnowledge(context: Context): List<InfoItem> {
       XmlPullParser.START_TAG -> {
         currentTag = parser.name
       }
+
       XmlPullParser.TEXT -> {
         when (currentTag) {
           "title" -> currentTitle = parser.text
           "content" -> currentContent = parser.text
         }
       }
+
       XmlPullParser.END_TAG -> {
         if (parser.name == "item") {
           if (currentTitle != null && currentContent != null) {
@@ -55,10 +58,10 @@ fun parseXmlGenKnowledge(context: Context): List<InfoItem> {
 
 // Retrieving all the countries that are in the legislation_and_rights xml
 data class CountryItem(val name: String)
+
 fun getCountriesList(context: Context): List<CountryItem> {
   val countries = mutableListOf<CountryItem>()
 
-  try {
     val locale = context.resources.configuration.locale ?: Locale.getDefault()
     val localizeXmlResId = when (locale.language) {
       Locale.ENGLISH.language -> R.xml.legislation_and_rights_en
@@ -76,11 +79,13 @@ fun getCountriesList(context: Context): List<CountryItem> {
         XmlPullParser.START_TAG -> {
           currentTag = parser.name
         }
+
         XmlPullParser.TEXT -> {
           if (currentTag == "country") {
             countryName = parser.text.trim()
           }
         }
+
         XmlPullParser.END_TAG -> {
           if (parser.name == "country" && countryName != null) {
             countries.add(CountryItem(name = countryName))
@@ -91,10 +96,7 @@ fun getCountriesList(context: Context): List<CountryItem> {
       }
       eventType = parser.next()
     }
-  } catch (e: Exception) {
-    // Log the exception or handle it as needed
-    e.printStackTrace()
-  }
+
 
   return countries
 }
@@ -113,8 +115,8 @@ data class CountryInformation(
   val enforcement: String,
   val lastUpdate: String
 )
-fun getXmlResId(context: Context): Int {
 
+fun getXmlResId(context: Context): Int {
   val locale = context.resources.configuration.locale ?: Locale.getDefault()
   val localizeXmlResId = when (locale.language) {
     Locale.ENGLISH.language -> R.xml.legislation_and_rights_en
@@ -122,6 +124,7 @@ fun getXmlResId(context: Context): Int {
   }
   return localizeXmlResId
 }
+
 fun getCountryInformation(context: Context, countryNameToFind: String): CountryInformation? {
 
   val localizeXmlResId = getXmlResId(context)
@@ -144,16 +147,24 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
         when (parser.name) {
           "country" -> {
             countryName = parser.nextText()
-            if (countryName.equals(countryNameToFind, ignoreCase = true)) { foundCountry = true }
+            if (countryName.equals(countryNameToFind, ignoreCase = true)) {
+              foundCountry = true
+            }
           }
         }
       }
+
       XmlPullParser.END_TAG -> {
-        if (foundCountry && parser.name == "item") { break }
+        if (foundCountry && parser.name == "item") {
+          break
+        }
       }
+
       else -> {}
     }
-    if (!foundCountry) { eventType = parser.next() }
+    if (!foundCountry) {
+      eventType = parser.next()
+    }
   }
   // If the country has been found, continue parsing the rest of the information
   if (foundCountry) {
@@ -165,7 +176,8 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
           when (tagName) {
             "legalstatus" -> legalStatus = parser.nextText()
             "possession" -> possession = parser.nextText()
-            "consumption" -> consumption = parser.nextText() // Note: should be "consumption" if there's a typo in the XML
+            "consumption" -> consumption =
+              parser.nextText() // Note: should be "consumption" if there's a typo in the XML
             "medicaluse" -> medicalUse = parser.nextText()
             "cultivation" -> cultivation = parser.nextText()
             "purchaseandsale" -> purchaseAndSale = parser.nextText()
@@ -177,5 +189,19 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
       eventType = parser.next()
     }
   }
-  return if (foundCountry) { CountryInformation(countryName, legalStatus, possession, consumption, medicalUse, cultivation, purchaseAndSale, enforcement, lastUpdate) } else { null }
+  return if (foundCountry) {
+    CountryInformation(
+      countryName,
+      legalStatus,
+      possession,
+      consumption,
+      medicalUse,
+      cultivation,
+      purchaseAndSale,
+      enforcement,
+      lastUpdate
+    )
+  } else {
+    null
+  }
 }
