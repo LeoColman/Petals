@@ -54,6 +54,7 @@ fun WidgetUsagePart() {
   }
 
   val allLabels = listOf(TimeUnit.Year, TimeUnit.Month, TimeUnit.Day, TimeUnit.Hour, TimeUnit.Minute, TimeUnit.Second, TimeUnit.Millisecond)
+
   val enabledLabels = if (millisecondsEnabled == "disabled") allLabels.dropLast(1) else allLabels
 
   var millisCopy = millis
