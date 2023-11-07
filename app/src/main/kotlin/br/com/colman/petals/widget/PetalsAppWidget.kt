@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.preference.PreferenceManager
 import android.widget.RemoteViews
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -69,6 +71,7 @@ object PetalsAppWidget : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) {
 
     provideContent {
+      val colors = colors
       val settingsRepository = get<SettingsRepository>()
       val useRepository: UseRepository = get()
 
@@ -125,13 +128,16 @@ object PetalsAppWidget : GlanceAppWidget() {
       }
 
       Column(
-        modifier = GlanceModifier.fillMaxSize().background(Color.DarkGray),
+        modifier = GlanceModifier.fillMaxSize().background(colors.onBackground),
         verticalAlignment = Alignment.Vertical.CenterVertically,
         horizontalAlignment = Alignment.Horizontal.CenterHorizontally
       ) {
         WidgetUsagePart(lastUseDate.value, dateString, labels)
         WidgetConcentrationDiscomfortPart()
         WidgetBreakPeriodPart()
+        Column {
+
+        }
       }
     }
   }

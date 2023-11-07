@@ -5,9 +5,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.glance.GlanceModifier
 import androidx.glance.LocalContext
+import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
+import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
@@ -38,7 +42,11 @@ fun WidgetConcentrationDiscomfortPart() {
     "%.3f".format(currentDiscomfort)
   )
 
-  Column {
+  Column (
+    modifier = GlanceModifier.padding(4.dp),
+    verticalAlignment = Alignment.Vertical.CenterVertically,
+    horizontalAlignment = Alignment.Horizontal.CenterHorizontally
+  ){
     Text(
       text = thcConcentrationString,
       style = TextStyle(

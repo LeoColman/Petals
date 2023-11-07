@@ -4,8 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.glance.GlanceModifier
+import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
+import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
@@ -14,7 +18,7 @@ import br.com.colman.petals.use.pause.repository.PauseRepository
 import org.koin.androidx.compose.get
 
 @Composable
- fun WidgetBreakPeriodPart() {
+fun WidgetBreakPeriodPart() {
   val pauseRepository: PauseRepository = get()
   val pause by pauseRepository.get().collectAsState(null)
   var isPause = true;
@@ -22,7 +26,11 @@ import org.koin.androidx.compose.get
     isPause = false;
   }
 
-  Column {
+  Column(
+    modifier = GlanceModifier.padding(4.dp),
+    verticalAlignment = Alignment.Vertical.CenterVertically,
+    horizontalAlignment = Alignment.Horizontal.CenterHorizontally
+  ) {
     if (isPause) {
       Text(
         text = "Break period",
