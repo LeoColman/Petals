@@ -123,7 +123,6 @@ fun getXmlResId(context: Context): Int {
 }
 
 fun getCountryInformation(context: Context, countryNameToFind: String): CountryInformation? {
-
   val localizeXmlResId = getXmlResId(context)
   val parser: XmlResourceParser = context.resources.getXml(localizeXmlResId)
   var eventType = parser.eventType
@@ -173,8 +172,7 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
           when (tagName) {
             "legalstatus" -> legalStatus = parser.nextText()
             "possession" -> possession = parser.nextText()
-            "consumption" -> consumption =
-              parser.nextText() // Note: should be "consumption" if there's a typo in the XML
+            "consumption" -> consumption = parser.nextText()
             "medicaluse" -> medicalUse = parser.nextText()
             "cultivation" -> cultivation = parser.nextText()
             "purchaseandsale" -> purchaseAndSale = parser.nextText()
@@ -186,19 +184,15 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
       eventType = parser.next()
     }
   }
-  return if (foundCountry) {
-    CountryInformation(
-      countryName,
-      legalStatus,
-      possession,
-      consumption,
-      medicalUse,
-      cultivation,
-      purchaseAndSale,
-      enforcement,
-      lastUpdate
-    )
-  } else {
-    null
-  }
+  return CountryInformation(
+    countryName,
+    legalStatus,
+    possession,
+    consumption,
+    medicalUse,
+    cultivation,
+    purchaseAndSale,
+    enforcement,
+    lastUpdate
+  )
 }
