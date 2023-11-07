@@ -113,18 +113,21 @@ data class CountryInformation(
   val enforcement: String,
   val lastUpdate: String
 )
+fun getXmlResId(context: Context): Int {
 
-fun getCountryInformation(context: Context, countryNameToFind: String): CountryInformation? {
   val locale = context.resources.configuration.locale ?: Locale.getDefault()
   val localizeXmlResId = when (locale.language) {
     Locale.ENGLISH.language -> R.xml.legislation_and_rights_en
     else -> R.xml.legislation_and_rights_en
   }
+  return localizeXmlResId
+}
+fun getCountryInformation(context: Context, countryNameToFind: String): CountryInformation? {
 
+  val localizeXmlResId = getXmlResId(context)
   val parser: XmlResourceParser = context.resources.getXml(localizeXmlResId)
   var eventType = parser.eventType
   var foundCountry = false
-
   var countryName = ""
   var legalStatus = ""
   var possession = ""
@@ -141,25 +144,17 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
         when (parser.name) {
           "country" -> {
             countryName = parser.nextText()
-            if (countryName.equals(countryNameToFind, ignoreCase = true)) {
-              foundCountry = true
-            }
+            if (countryName.equals(countryNameToFind, ignoreCase = true)) { foundCountry = true }
           }
         }
       }
       XmlPullParser.END_TAG -> {
-        if (foundCountry && parser.name == "item") {
-          // Exit the loop if the closing tag of the item is reached after finding the country
-          break
-        }
+        if (foundCountry && parser.name == "item") { break }
       }
       else -> {}
     }
-    if (!foundCountry) {
-      eventType = parser.next()
-    }
+    if (!foundCountry) { eventType = parser.next() }
   }
-
   // If the country has been found, continue parsing the rest of the information
   if (foundCountry) {
     eventType = parser.next() // Move to the next element after the country tag
@@ -182,21 +177,5 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
       eventType = parser.next()
     }
   }
-
-  return if (foundCountry) {
-    CountryInformation(
-      countryName,
-      legalStatus,
-      possession,
-      consumption,
-      medicalUse,
-      cultivation,
-      purchaseAndSale,
-      enforcement,
-      lastUpdate
-    )
-  } else {
-    null
-  }
+  return if (foundCountry) { CountryInformation(countryName, legalStatus, possession, consumption, medicalUse, cultivation, purchaseAndSale, enforcement, lastUpdate) } else { null }
 }
-

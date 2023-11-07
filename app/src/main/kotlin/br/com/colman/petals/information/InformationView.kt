@@ -46,17 +46,17 @@ import br.com.colman.petals.R.string.select_country
 fun InformationView() {
   val context = LocalContext.current
   val generalKnowledgeList = parseXmlGenKnowledge(context)
-  Column (modifier = Modifier.verticalScroll(rememberScrollState())){
-        SectionHeader(text = stringResource(general_knowledge))
-        generalKnowledgeList.forEach { generalKnowledge ->
-          ExpandableComponent(
-            title = generalKnowledge.title,
-            content = { ParseGenContent(generalKnowledge.content) })
-        }
-        SectionHeader(text = stringResource(legislation_and_rights))
-        CountryPicker(context)
+  Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+    SectionHeader(text = stringResource(general_knowledge))
+    generalKnowledgeList.forEach { generalKnowledge ->
+      ExpandableComponent(
+        title = generalKnowledge.title,
+        content = { ParseGenContent(generalKnowledge.content) })
     }
+    SectionHeader(text = stringResource(legislation_and_rights))
+    CountryPicker(context)
   }
+}
 
 @Composable
 fun ParseGenContent(text: String) {
@@ -152,16 +152,30 @@ fun CountryPicker(context: Context) {
 }
 
 @Composable
-fun CountryLegislationAndRights(context:Context ,country: String) {
+fun CountryLegislationAndRights(context: Context, country: String) {
   val countryInformation = getCountryInformation(context, country)
 
-  ExpandableComponent(title = stringResource(legal_status), {ParseGenContent(countryInformation!!.legalStatus)})
-  ExpandableComponent(title = stringResource(possession), {ParseGenContent(countryInformation!!.possession)})
-  ExpandableComponent(title = stringResource(consumption), {ParseGenContent(countryInformation!!.consumption)})
-  ExpandableComponent(title = stringResource(medical_use), {ParseGenContent(countryInformation!!.medicalUse)})
-  ExpandableComponent(title = stringResource(cultivation), {ParseGenContent(countryInformation!!.cultivation)})
-  ExpandableComponent(title = stringResource(purchase_and_sale), {ParseGenContent(countryInformation!!.purchaseAndSale)})
-  ExpandableComponent(title = stringResource(enforcement), {ParseGenContent(countryInformation!!.enforcement)})
+  ExpandableComponent(
+    title = stringResource(legal_status),
+    { ParseGenContent(countryInformation!!.legalStatus) })
+  ExpandableComponent(
+    title = stringResource(possession),
+    { ParseGenContent(countryInformation!!.possession) })
+  ExpandableComponent(
+    title = stringResource(consumption),
+    { ParseGenContent(countryInformation!!.consumption) })
+  ExpandableComponent(
+    title = stringResource(medical_use),
+    { ParseGenContent(countryInformation!!.medicalUse) })
+  ExpandableComponent(
+    title = stringResource(cultivation),
+    { ParseGenContent(countryInformation!!.cultivation) })
+  ExpandableComponent(
+    title = stringResource(purchase_and_sale),
+    { ParseGenContent(countryInformation!!.purchaseAndSale) })
+  ExpandableComponent(
+    title = stringResource(enforcement),
+    { ParseGenContent(countryInformation!!.enforcement) })
 
   Text(
     text = stringResource(R.string.keep_in_mind_that_laws_can_change),
