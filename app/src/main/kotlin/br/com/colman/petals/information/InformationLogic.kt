@@ -61,43 +61,40 @@ data class CountryItem(val name: String)
 
 fun getCountriesList(context: Context): List<CountryItem> {
   val countries = mutableListOf<CountryItem>()
+  val locale = context.resources.configuration.locale ?: Locale.getDefault()
+  val localizeXmlResId = when (locale.language) {
+    Locale.ENGLISH.language -> R.xml.legislation_and_rights_en
+    else -> R.xml.legislation_and_rights_en
+  }
 
-    val locale = context.resources.configuration.locale ?: Locale.getDefault()
-    val localizeXmlResId = when (locale.language) {
-      Locale.ENGLISH.language -> R.xml.legislation_and_rights_en
-      else -> R.xml.legislation_and_rights_en
-    }
+  val parser: XmlResourceParser = context.resources.getXml(localizeXmlResId)
 
-    val parser: XmlResourceParser = context.resources.getXml(localizeXmlResId)
+  var eventType = parser.eventType
+  var currentTag: String? = null
+  var countryName: String? = null
 
-    var eventType = parser.eventType
-    var currentTag: String? = null
-    var countryName: String? = null
+  while (eventType != XmlPullParser.END_DOCUMENT) {
+    when (eventType) {
+      XmlPullParser.START_TAG -> {
+        currentTag = parser.name
+      }
 
-    while (eventType != XmlPullParser.END_DOCUMENT) {
-      when (eventType) {
-        XmlPullParser.START_TAG -> {
-          currentTag = parser.name
-        }
-
-        XmlPullParser.TEXT -> {
-          if (currentTag == "country") {
-            countryName = parser.text.trim()
-          }
-        }
-
-        XmlPullParser.END_TAG -> {
-          if (parser.name == "country" && countryName != null) {
-            countries.add(CountryItem(name = countryName))
-            countryName = null
-          }
-          currentTag = null
+      XmlPullParser.TEXT -> {
+        if (currentTag == "country") {
+          countryName = parser.text.trim()
         }
       }
-      eventType = parser.next()
+
+      XmlPullParser.END_TAG -> {
+        if (parser.name == "country" && countryName != null) {
+          countries.add(CountryItem(name = countryName))
+          countryName = null
+        }
+        currentTag = null
+      }
     }
-
-
+    eventType = parser.next()
+  }
   return countries
 }
 
