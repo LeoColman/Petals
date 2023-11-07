@@ -1,16 +1,20 @@
 package br.com.colman.petals.widget
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceModifier
 import androidx.glance.LocalContext
-import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
-import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
@@ -18,17 +22,72 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import br.com.colman.petals.R
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.TimeUnit
+import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.utils.truncatedToMinute
+import kotlinx.coroutines.delay
+import org.koin.androidx.compose.get
+import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
+import java.util.Locale
 
 @Composable
 fun WidgetUsagePart(
-  lastUseDate: LocalDateTime?,
-  dateString: String,
-  labels: List<Pair<TimeUnit, Long>>
 ) {
+  val settingsRepository = get<SettingsRepository>()
+  val useRepository: UseRepository = get()
+
+  val lastUseDate = useRepository.getLastUseDate().collectAsState(LocalDateTime.now())
+  val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
+  val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
+  val millisecondsEnabled = "disabled"
+
+  val dateString = DateTimeFormatter.ofPattern(
+    String.format(
+      Locale.US, "%s %s", dateFormat, timeFormat
+    )
+  ).format(lastUseDate.value)
+
+  var millis by remember {
+    mutableStateOf(
+      ChronoUnit.MILLIS.between(
+        lastUseDate.value, LocalDateTime.now()
+      )
+    )
+  }
+
+  LaunchedEffect(millis) {
+    while (true) {
+      delay(11)
+      millis = ChronoUnit.MILLIS.between(lastUseDate.value, LocalDateTime.now())
+    }
+  }
+
+  Timber.tag("millis: ").d(millis.toString())
+
+  val allLabels = listOf(
+    TimeUnit.Year,
+    TimeUnit.Month,
+    TimeUnit.Day,
+    TimeUnit.Hour,
+    TimeUnit.Minute,
+    TimeUnit.Second,
+    TimeUnit.Millisecond
+  )
+  val enabledLabels =
+    if (millisecondsEnabled == "disabled") allLabels.dropLast(1) else allLabels
+
+
+  var millisCopy = millis
+  val labels = enabledLabels.map {
+    val unitsTotal = millisCopy / it.millis
+    millisCopy -= unitsTotal * it.millis
+    it to unitsTotal
+  }
   Column(
     modifier = GlanceModifier.padding(4.dp),
     verticalAlignment = Alignment.Vertical.CenterVertically,
@@ -46,7 +105,7 @@ fun WidgetUsagePart(
           fontSize = 20.sp
         )
       )
-      val dateStringWithExtras = if (!lastUseDate!!.is420()) dateString else "$dateString 🥦🥦"
+      val dateStringWithExtras = if (!lastUseDate.value!!.is420()) dateString else "$dateString 🥦🥦"
       Text(
         text = dateStringWithExtras,
         style = TextStyle(
