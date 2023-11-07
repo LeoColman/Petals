@@ -42,11 +42,11 @@ fun WidgetConcentrationDiscomfortPart() {
     "%.3f".format(currentDiscomfort)
   )
 
-  Column (
+  Column(
     modifier = GlanceModifier.padding(4.dp),
     verticalAlignment = Alignment.Vertical.CenterVertically,
     horizontalAlignment = Alignment.Horizontal.CenterHorizontally
-  ){
+  ) {
     Text(
       text = thcConcentrationString,
       style = TextStyle(

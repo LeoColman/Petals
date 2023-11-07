@@ -21,9 +21,9 @@ import org.koin.androidx.compose.get
 fun WidgetBreakPeriodPart() {
   val pauseRepository: PauseRepository = get()
   val pause by pauseRepository.get().collectAsState(null)
-  var isPause = true;
+  var isPause = true
   if (pause == null || !pause!!.isActive()) {
-    isPause = false;
+    isPause = false
   }
 
   Column(

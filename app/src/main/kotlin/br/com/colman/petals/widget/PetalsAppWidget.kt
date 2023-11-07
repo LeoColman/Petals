@@ -13,9 +13,7 @@ import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
 
 object PetalsAppWidget : GlanceAppWidget() {
-
   override suspend fun provideGlance(context: Context, id: GlanceId) {
-
     provideContent {
       val colors = colors
       Column(
