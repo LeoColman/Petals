@@ -103,15 +103,15 @@ fun getCountriesList(context: Context): List<CountryItem> {
 // Returning the information for the specific country
 
 data class CountryInformation(
-  val countryName: String,
-  val legalStatus: String,
-  val possession: String,
-  val consumption: String,
-  val medicalUse: String,
-  val cultivation: String,
-  val purchaseAndSale: String,
-  val enforcement: String,
-  val lastUpdate: String
+  var countryName: String,
+  var legalStatus: String,
+  var possession: String,
+  var consumption: String,
+  var medicalUse: String,
+  var cultivation: String,
+  var purchaseAndSale: String,
+  var enforcement: String,
+  var lastUpdate: String
 )
 
 fun getXmlCIResId(context: Context): Int {
@@ -128,16 +128,8 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
   val parser: XmlResourceParser = context.resources.getXml(localizeXmlResId)
   var eventType = parser.eventType
   var foundCountry = false
+  val countryInformation = CountryInformation("","","","","","","","","")
   var countryName = ""
-  var legalStatus = ""
-  var possession = ""
-  var consumption = ""
-  var medicalUse = ""
-  var cultivation = ""
-  var purchaseAndSale = ""
-  var enforcement = ""
-  var lastUpdate = ""
-
   while (eventType != XmlPullParser.END_DOCUMENT && !foundCountry) {
     when (eventType) {
       XmlPullParser.START_TAG -> {
@@ -145,6 +137,7 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
           "country" -> {
             countryName = parser.nextText()
             if (countryName.equals(countryNameToFind, ignoreCase = true)) {
+              countryInformation.countryName = countryName
               foundCountry = true
             }
           }
@@ -157,37 +150,23 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
       eventType = parser.next()
     }
   }
-  // If the country has been found, continue parsing the rest of the information
-  if (foundCountry) {
-    eventType = parser.next()
-    while (eventType != XmlPullParser.END_DOCUMENT && parser.name != "item") {
-      when (eventType) {
-        XmlPullParser.START_TAG -> {
-          val tagName = parser.name
-          when (tagName) {
-            "legalstatus" -> legalStatus = parser.nextText()
-            "possession" -> possession = parser.nextText()
-            "consumption" -> consumption = parser.nextText()
-            "medicaluse" -> medicalUse = parser.nextText()
-            "cultivation" -> cultivation = parser.nextText()
-            "purchaseandsale" -> purchaseAndSale = parser.nextText()
-            "enforcement" -> enforcement = parser.nextText()
-            "lastupdate" -> lastUpdate = parser.nextText()
-          }
+  eventType = parser.next()
+  while (eventType != XmlPullParser.END_DOCUMENT && parser.name != "item") {
+    when (eventType) {
+      XmlPullParser.START_TAG -> {
+        when (parser.name) {
+          "legalstatus" -> countryInformation.legalStatus = parser.nextText()
+          "possession" -> countryInformation.possession = parser.nextText()
+          "consumption" -> countryInformation.consumption = parser.nextText()
+          "medicaluse" -> countryInformation.medicalUse = parser.nextText()
+          "cultivation" -> countryInformation.cultivation = parser.nextText()
+          "purchaseandsale" -> countryInformation.purchaseAndSale = parser.nextText()
+          "enforcement" -> countryInformation.enforcement = parser.nextText()
+          "lastupdate" -> countryInformation.lastUpdate = parser.nextText()
         }
       }
-      eventType = parser.next()
     }
+    eventType = parser.next()
   }
-  return CountryInformation(
-    countryName,
-    legalStatus,
-    possession,
-    consumption,
-    medicalUse,
-    cultivation,
-    purchaseAndSale,
-    enforcement,
-    lastUpdate
-  )
+  return countryInformation
 }
