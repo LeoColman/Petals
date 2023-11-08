@@ -131,21 +131,16 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
   val countryInformation = CountryInformation("", "", "", "", "", "", "", "", "")
   var countryName = ""
   while (eventType != XmlPullParser.END_DOCUMENT && !foundCountry) {
-    when (eventType) {
-      XmlPullParser.START_TAG -> {
-        when (parser.name) {
-          "country" -> {
-            countryName = parser.nextText()
-            if (countryName.equals(countryNameToFind, ignoreCase = true)) {
-              countryInformation.countryName = countryName
-              foundCountry = true
-            }
+    if(eventType == XmlPullParser.START_TAG){
+      when (parser.name) {
+        "country" -> {
+          countryName = parser.nextText()
+          if (countryName.equals(countryNameToFind, ignoreCase = true)) {
+            countryInformation.countryName = countryName
+            foundCountry = true
           }
         }
       }
-
-      XmlPullParser.END_TAG -> {}
-      else -> {}
     }
     if (!foundCountry) {
       eventType = parser.next()
