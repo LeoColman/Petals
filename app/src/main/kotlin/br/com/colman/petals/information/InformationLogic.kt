@@ -127,39 +127,34 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
   val localizeXmlResId = getXmlCIResId(context)
   val parser: XmlResourceParser = context.resources.getXml(localizeXmlResId)
   var eventType = parser.eventType
-  var foundCountry = false
   val countryInformation = CountryInformation("", "", "", "", "", "", "", "", "")
   var countryName = ""
-  while (eventType != XmlPullParser.END_DOCUMENT && !foundCountry) {
-    if(eventType == XmlPullParser.START_TAG){
+  while (eventType != XmlPullParser.END_DOCUMENT) {
+    if (eventType == XmlPullParser.START_TAG) {
       when (parser.name) {
         "country" -> {
           countryName = parser.nextText()
           if (countryName.equals(countryNameToFind, ignoreCase = true)) {
             countryInformation.countryName = countryName
-            foundCountry = true
+            break
           }
         }
       }
     }
-    if (!foundCountry) {
-      eventType = parser.next()
-    }
+    eventType = parser.next()
   }
   eventType = parser.next()
   while (eventType != XmlPullParser.END_DOCUMENT && parser.name != "item") {
-    when (eventType) {
-      XmlPullParser.START_TAG -> {
-        when (parser.name) {
-          "legalstatus" -> countryInformation.legalStatus = parser.nextText()
-          "possession" -> countryInformation.possession = parser.nextText()
-          "consumption" -> countryInformation.consumption = parser.nextText()
-          "medicaluse" -> countryInformation.medicalUse = parser.nextText()
-          "cultivation" -> countryInformation.cultivation = parser.nextText()
-          "purchaseandsale" -> countryInformation.purchaseAndSale = parser.nextText()
-          "enforcement" -> countryInformation.enforcement = parser.nextText()
-          "lastupdate" -> countryInformation.lastUpdate = parser.nextText()
-        }
+    if (eventType == XmlPullParser.START_TAG) {
+      when (parser.name) {
+        "legalstatus" -> countryInformation.legalStatus = parser.nextText()
+        "possession" -> countryInformation.possession = parser.nextText()
+        "consumption" -> countryInformation.consumption = parser.nextText()
+        "medicaluse" -> countryInformation.medicalUse = parser.nextText()
+        "cultivation" -> countryInformation.cultivation = parser.nextText()
+        "purchaseandsale" -> countryInformation.purchaseAndSale = parser.nextText()
+        "enforcement" -> countryInformation.enforcement = parser.nextText()
+        "lastupdate" -> countryInformation.lastUpdate = parser.nextText()
       }
     }
     eventType = parser.next()
