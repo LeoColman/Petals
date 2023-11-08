@@ -139,7 +139,14 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
     }
     eventType = parser.next()
   }
-  eventType = parser.next()
+  return buildCountryInformation(parser, countryInformation)
+}
+
+fun buildCountryInformation(
+  parser: XmlResourceParser,
+  countryInformation: CountryInformation
+): CountryInformation {
+  var eventType = parser.next()
   while (eventType != XmlPullParser.END_DOCUMENT && parser.name != "item") {
     if (eventType == XmlPullParser.START_TAG) {
       when (parser.name) {
