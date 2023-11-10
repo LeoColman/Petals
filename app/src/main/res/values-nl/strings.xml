@@ -69,7 +69,7 @@
     <string name="change_period">Periode wijzigen</string>
     <string name="start_date">Startdatum</string>
     <string name="export_export">Exporteren</string>
-    <string name="current_thc_concentration">Huidige THC-concentratie: %s %</string>
+    <string name="current_thc_concentration">Huidige THC-concentratie: %s \%%</string>
     <string name="vibrate_on_timer_end">Trillen bij einde timer</string>
     <string name="repository_link_title">Toegang tot de broncode</string>
     <string name="start_time">Starttijd</string>
