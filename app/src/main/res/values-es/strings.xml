@@ -43,7 +43,7 @@
     <string name="start_date">Fecha inicio</string>
     <string name="change_period">Cambiar periodo</string>
     <string name="grams_distribution_per_hour_of_day">Distribución de gramos por hora del día</string>
-    <string name="current_thc_concentration">Concentración actual de THC: %s \\%%</string>
+    <string name="current_thc_concentration">Concentración actual de THC: %s \%%</string>
     <string name="current_withdrawal_discomfort">Malestar actual por la abstinencia: %s</string>
     <string name="discomfort_strength">Intensidad del malestar</string>
     <string name="day">día</string>

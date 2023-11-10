@@ -100,7 +100,7 @@
     <string name="settings">Impostazioni</string>
     <string name="all_time">Tutto il tempo</string>
     <string name="change_period">Cambia periodo</string>
-    <string name="current_thc_concentration">Concentrazione attuale di THC: %s %</string>
+    <string name="current_thc_concentration">Concentrazione attuale di THC: %s \%%</string>
     <string name="confirm_to_delete">Sei sicuro di voler eliminare l\'uso aggiunto su %s\?</string>
     <string name="time">Orario</string>
     <string name="_175thc">1.75% THC</string>
