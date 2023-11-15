@@ -43,16 +43,24 @@ fun WidgetConcentrationDiscomfortPart() {
   )
 
   Column(
-    GlanceModifier.padding(4.dp), CenterVertically, CenterHorizontally
+    GlanceModifier.padding(4.dp),
+    CenterVertically,
+    CenterHorizontally
   ) {
     Text(
-      thcConcentrationString, style = TextStyle(
-        fontWeight = FontWeight.Normal, color = ColorProvider(Color.White), fontSize = 14.sp
+      thcConcentrationString,
+      style = TextStyle(
+        fontWeight = FontWeight.Normal,
+        color = ColorProvider(Color.White),
+        fontSize = 14.sp
       )
     )
     Text(
-      discomfortString, style = TextStyle(
-        fontWeight = FontWeight.Normal, color = ColorProvider(Color.White), fontSize = 14.sp
+      discomfortString,
+      style = TextStyle(
+        fontWeight = FontWeight.Normal,
+        color = ColorProvider(Color.White),
+        fontSize = 14.sp
       )
     )
   }
