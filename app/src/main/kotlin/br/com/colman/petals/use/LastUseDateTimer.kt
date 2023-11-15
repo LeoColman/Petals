@@ -127,7 +127,7 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
   }
 }
 
-private enum class TimeUnit(@StringRes val unitName: Int, val max: Long, val millis: Long) {
+enum class TimeUnit(@StringRes val unitName: Int, val max: Long, val millis: Long) {
   Millisecond(milliseconds, 1000L, 1),
   Second(seconds, 60L, Millisecond.max),
   Minute(minutes, 60L, Second.max * Millisecond.max),
