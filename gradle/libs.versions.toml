@@ -9,6 +9,7 @@ kotest = "5.8.0"
 kotlin = "1.9.10"
 vanpra-material-dialogs = "0.9.0"
 sqldelight = "1.5.5"
+glance = "1.0.0"
 
 [libraries]
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.0.4"
@@ -54,6 +55,8 @@ sqldelight-coroutines-extensions = { module = "com.squareup.sqldelight:coroutine
 sqldelight-sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 requery-sqlite = "com.github.requery:sqlite-android:3.43.0"
 play-services-ads = "com.google.android.gms:play-services-ads:22.5.0"
+glance = { module = "androidx.glance:glance", version.ref = "glance" }
+glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 
 [bundles]
 androidx-test = [
@@ -85,6 +88,7 @@ datastore = [
 date-time = [
     "kotlin-date-range",
 ]
+glance = ["glance", "glance-widgets"]
 graph-view = [
     "graph-view",
     "mp-android-chart",

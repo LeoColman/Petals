@@ -209,6 +209,9 @@ dependencies {
   // Google Ads
   "playstoreImplementation"(libs.play.services.ads)
 
+  // Glance
+  implementation(libs.bundles.glance)
+
 }
 
 tasks.withType<Test> {
