@@ -26,7 +26,8 @@ fun BreakPeriodPart() {
 
   Column(GlanceModifier.padding(4.dp), CenterVertically, CenterHorizontally) {
     if (isPaused) {
-      Text("Break period",
+      Text(
+        "Break period",
         style = TextStyle(
           fontWeight = FontWeight.Bold,
           color = ColorProvider(Color.Red),
