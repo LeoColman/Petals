@@ -1,13 +1,13 @@
 #!/usr/bin/env kotlin
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.5.0")
+@file:Import("generated/actions/checkout.kt")
+@file:Import("generated/actions/setup-java.kt")
+@file:Import("generated/gradle/gradle-build-action.kt")
+@file:Import("generated/entrostat/git-secret-action.kt")
+@file:Import("generated/ruby/setup-ruby.kt")
+@file:Import("generated/softprops/action-gh-release.kt")
 
-import io.github.typesafegithub.workflows.actions.actions.CheckoutV4
-import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3
-import io.github.typesafegithub.workflows.actions.actions.SetupJavaV3.Distribution.Adopt
-import io.github.typesafegithub.workflows.actions.entrostat.GitSecretActionV4
-import io.github.typesafegithub.workflows.actions.gradle.GradleBuildActionV2
-import io.github.typesafegithub.workflows.actions.ruby.SetupRubyV1
-import io.github.typesafegithub.workflows.actions.softprops.ActionGhReleaseV1
+
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
@@ -25,14 +25,14 @@ workflow(
   sourceFile = __FILE__.toPath(),
 ) {
   job(id = "create-apk", runsOn = UbuntuLatest) {
-    uses(name = "Set up JDK", action = SetupJavaV3(javaVersion = "17", distribution = Adopt))
-    uses(action = CheckoutV4())
-    uses(name = "reveal-secrets", action = GitSecretActionV4(gpgPrivateKey = expr { GPG_KEY }))
+    uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
+    uses(action = Checkout())
+    uses(name = "reveal-secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
 
-    uses(name = "Create APK", action = GradleBuildActionV2(arguments = "packageGithubReleaseUniversalApk"))
+    uses(name = "Create APK", action = GradleBuildAction(arguments = "packageGithubReleaseUniversalApk"))
 
     uses(
-      name = "Create release", action = ActionGhReleaseV1(
+      name = "Create release", action = ActionGhRelease(
         tagName = expr { GITHUB_REF_NAME },
         name = "Version " + expr { GITHUB_REF_NAME },
         draft = true,
@@ -47,10 +47,10 @@ workflow(
       )
     )
 
-    uses(action = SetupRubyV1(rubyVersion = "2.6"))
+    uses(action = SetupRuby(rubyVersion = "2.6"))
     run(
       name = "publish-playstore",
       command = "bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore"
     )
   }
-}.writeToFile()
+}.writeToFile(generateActionBindings = true)
