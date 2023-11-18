@@ -1,0 +1,1 @@
+- Risolto il problema con l'arresto anomalo dell'app una volta alla riapertura
