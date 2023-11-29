@@ -27,7 +27,7 @@ plugins {
   kotlin("kapt")
   alias(libs.plugins.detekt)
   alias(libs.plugins.sqldelight)
-  id("org.jetbrains.kotlinx.kover") version "0.7.4"
+  id("org.jetbrains.kotlinx.kover") version "0.7.5"
 }
 
 repositories {
