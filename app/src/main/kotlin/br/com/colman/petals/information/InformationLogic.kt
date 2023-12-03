@@ -50,13 +50,8 @@ data class CountryItem(val name: String)
 
 fun getCountriesList(context: Context): List<CountryItem> {
   val countries = mutableListOf<CountryItem>()
-  val locale = context.resources.configuration.locale ?: Locale.getDefault()
-  val localizeXmlResId = when (locale.language) {
-    Locale.ENGLISH.language -> legislation_and_rights
-    else -> legislation_and_rights
-  }
 
-  val parser: XmlResourceParser = context.resources.getXml(localizeXmlResId)
+  val parser: XmlResourceParser = context.resources.getXml(legislation_and_rights)
 
   var eventType = parser.eventType
   var currentTag: String? = null
