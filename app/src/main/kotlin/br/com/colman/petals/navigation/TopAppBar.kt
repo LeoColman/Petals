@@ -49,6 +49,7 @@ import br.com.colman.petals.R.string.settings
 import br.com.colman.petals.use.io.UseCsvFileImporter
 import br.com.colman.petals.use.io.UseExporter
 import compose.icons.TablerIcons
+import compose.icons.tablericons.InfoCircle
 import compose.icons.tablericons.Settings
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
@@ -82,6 +83,7 @@ fun MyTopAppBarContent(navController: NavController) {
       Row(Modifier, spacedBy(16.dp)) {
         ImportButton()
         ExportButton(get())
+        InfoButton(navController)
         SettingsButton(navController)
       }
     }
@@ -131,6 +133,19 @@ private fun SettingsButton(
     stringResource(settings),
     Modifier.clickable {
       navController.navigate("settings")
+    }
+  )
+}
+
+@Composable
+private fun InfoButton(
+  navController: NavController
+) {
+  Icon(
+    TablerIcons.InfoCircle,
+    stringResource(settings),
+    Modifier.clickable {
+      navController.navigate("information")
     }
   )
 }
