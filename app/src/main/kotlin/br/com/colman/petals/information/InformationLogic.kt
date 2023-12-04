@@ -5,7 +5,6 @@ import android.content.res.XmlResourceParser
 import br.com.colman.petals.R.xml.general_knowledge
 import br.com.colman.petals.R.xml.legislation_and_rights
 import org.xmlpull.v1.XmlPullParser
-import java.util.Locale
 
 data class InfoItem(val title: String, val content: String)
 
