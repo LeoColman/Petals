@@ -28,13 +28,12 @@ import br.com.colman.petals.use.TimeUnit
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.utils.truncatedToMinute
 import kotlinx.coroutines.delay
-import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import java.util.Locale
-import org.koin.compose.koinInject
+import java.util.*
 
 @Composable
 fun WidgetUsagePart() {
