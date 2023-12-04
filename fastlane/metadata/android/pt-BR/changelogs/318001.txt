@@ -1,0 +1,2 @@
+- Adiciona tela de informações sobre Leis e Direitos
+- Mudanças menores

@@ -1,0 +1,2 @@
+- Add information screen about Legislation and Rights
+- Minor fixes
