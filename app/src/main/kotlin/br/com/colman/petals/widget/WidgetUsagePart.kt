@@ -34,11 +34,12 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.Locale
+import org.koin.compose.koinInject
 
 @Composable
 fun WidgetUsagePart() {
-  val settingsRepository = get<SettingsRepository>()
-  val useRepository: UseRepository = get()
+  val settingsRepository = koinInject<SettingsRepository>()
+  val useRepository: UseRepository = koinInject()
   val lastUseDate = useRepository.getLastUseDate().collectAsState(LocalDateTime.now())
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
@@ -167,7 +168,7 @@ private fun HoursMinutesSecondsView(labels: List<Pair<TimeUnit, Long>>) {
     labels.filter { it.first in listOf(TimeUnit.Hour, TimeUnit.Minute, TimeUnit.Second) }
       .forEach { (label, amount) ->
         Row {
-          if (!LocalContext.current.getString(label.unitName).equals("Hours")) {
+          if (LocalContext.current.getString(label.unitName) != "Hours") {
             Text(
               text = formatLongAsTwoDigitString(amount),
               style = TextStyle(
@@ -186,7 +187,7 @@ private fun HoursMinutesSecondsView(labels: List<Pair<TimeUnit, Long>>) {
               )
             )
           }
-          if (!LocalContext.current.getString(label.unitName).equals("Seconds")) {
+          if (LocalContext.current.getString(label.unitName) != "Seconds") {
             Text(
               text = ":",
               style = TextStyle(

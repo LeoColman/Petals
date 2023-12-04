@@ -93,7 +93,7 @@ data class CountryInformation(
   var lastUpdate: String
 )
 
-fun getCountryInformation(context: Context, countryNameToFind: String): CountryInformation? {
+fun getCountryInformation(context: Context, countryNameToFind: String): CountryInformation {
   val parser: XmlResourceParser = context.resources.getXml(legislation_and_rights)
   var eventType = parser.eventType
   val countryInformation = CountryInformation("", "", "", "", "", "", "", "", "")

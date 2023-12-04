@@ -136,7 +136,7 @@
     <string name="cultivation">Cultivation</string>
     <string name="purchase_and_sale">Purchase and Sale</string>
     <string name="enforcement">Enforcement</string>
-    <string name="keep_in_mind_that_laws_can_change">Keep in mind that laws can change, so its important to consult the latest legal sources or local legal counsel for the most current information.</string>
+    <string name="keep_in_mind_that_laws_can_change">Keep in mind that laws can change, so it's important to consult the latest legal sources or local legal counsel for the most current information.</string>
     <plurals name="last_x_days">
         <item quantity="one">Last %s day</item>
         <item quantity="other">Last %s days</item>
