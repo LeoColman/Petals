@@ -22,6 +22,8 @@ workflow(
   job(id = "build", runsOn = RunnerType.UbuntuLatest) {
     uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
     uses(action = Checkout())
-    uses(name = "Create APK", action = GradleBuildAction(arguments = "packageFdroidReleaseUniversalApk"))
+    uses(name = "Create Fdroid APK", action = GradleBuildAction(arguments = "packageFdroidReleaseUniversalApk"))
+    uses(name = "Create Playstore APK", action = GradleBuildAction(arguments = "packagePlaystoreReleaseUniversalApk"))
+    uses(name = "Create Github APK", action = GradleBuildAction(arguments = "packageGithubReleaseUniversalApk"))
   }
 }.writeToFile(generateActionBindings = true)
