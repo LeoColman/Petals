@@ -17,7 +17,9 @@ import java.time.Duration.ofDays as days
  * Values approximated from Figure 2
  */
 val DiscomfortDataPoints = mapOf(
-  days(0) to Discomfort(8.0),
+  days(-2) to Discomfort(3.0),
+  days(-1) to Discomfort(3.0),
+  days(0) to Discomfort(3.0),
   days(1) to Discomfort(8.0),
   days(2) to Discomfort(8.0),
   days(3) to Discomfort(8.0),
@@ -43,6 +45,7 @@ val DiscomfortDataPoints = mapOf(
   days(23) to Discomfort(3.5),
   days(24) to Discomfort(3.5),
   days(25) to Discomfort(3.0),
+  days(45) to Discomfort(3.0),
 )
 
 @JvmInline

@@ -79,7 +79,7 @@ class DiscomfortView(
         setMinY(0.0)
         isXAxisBoundsManual = true
         setMaxX(27.0)
-        setMinX(0.0)
+        setMinX(-2.0)
       }
 
       gridLabelRenderer.apply {
