@@ -1,0 +1,1 @@
+- Fix Withdrawal Discomfort chart not starting at the correct strenght
