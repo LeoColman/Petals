@@ -29,17 +29,18 @@ import androidx.compose.material.icons.Icons.Default
 import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.LockClock
 import androidx.compose.material.icons.filled.MedicalServices
-import androidx.compose.material.icons.filled.SmokingRooms
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import br.com.colman.petals.R
+import br.com.colman.petals.R.drawable.ic_cannabis
 import br.com.colman.petals.hittimer.ComposeHitTimer
 import br.com.colman.petals.information.InformationView
 import br.com.colman.petals.navigation.Page.Usage
@@ -50,13 +51,13 @@ import org.koin.androidx.compose.get
 
 enum class Page(
   @StringRes val nameRes: Int,
-  val icon: ImageVector,
+  val icon: @Composable () -> ImageVector,
   val ui: @Composable () -> Unit
 ) {
-  Usage(R.string.usage, Default.SmokingRooms, { Usage() }),
-  HitTimer(R.string.hit_timer, Default.LockClock, { ComposeHitTimer() }),
-  Symptoms(R.string.symptoms, Default.MedicalServices, { Symptoms() }),
-  Stats(R.string.stats, Default.GraphicEq, { StatisticsPage(get()) })
+  Usage(R.string.usage, { ImageVector.vectorResource(ic_cannabis) }, { Usage() }),
+  HitTimer(R.string.hit_timer, { Default.LockClock }, { ComposeHitTimer() }),
+  Symptoms(R.string.symptoms, { Default.MedicalServices }, { Symptoms() }),
+  Stats(R.string.stats, { Default.GraphicEq }, { StatisticsPage(get()) })
 }
 
 @Composable
@@ -91,7 +92,7 @@ fun BottomNavigationBar(navController: NavHostController) {
           navController.navigate(page.name)
         },
 
-        icon = { Icon(page.icon, stringResource(page.nameRes)) },
+        icon = { Icon(page.icon(), stringResource(page.nameRes)) },
 
         label = { Text(stringResource(page.nameRes)) }
       )

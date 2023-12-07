@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -26,10 +27,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.colman.petals.R.drawable.ic_cannabis
 import br.com.colman.petals.R.string.amount_grams
 import br.com.colman.petals.R.string.confirm_to_delete
 import br.com.colman.petals.R.string.cost_per_gram
@@ -47,9 +51,8 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.Cash
 import compose.icons.tablericons.ReportMoney
 import compose.icons.tablericons.Scale
-import compose.icons.tablericons.Smoking
 import compose.icons.tablericons.Trash
-import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 import java.math.BigDecimal
 import java.math.RoundingMode.HALF_UP
 import java.time.LocalDateTime
@@ -62,7 +65,7 @@ fun UseCards(
   onEditUse: (Use) -> Unit = {},
   onDeleteUse: (Use) -> Unit = {},
 ) {
-  var usesToShow by remember { mutableStateOf(5) }
+  var usesToShow by remember { mutableIntStateOf(5) }
 
   Column(Modifier.fillMaxWidth(), spacedBy(8.dp)) {
     uses.sortedByDescending { it.date }.take(usesToShow).forEach {
@@ -79,12 +82,12 @@ fun UseCards(
 @Composable
 fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use) -> Unit = {}) {
   val (date, amountGrams, costPerGram) = use
-  val settingsRepository = get<SettingsRepository>()
+  val settingsRepository = koinInject<SettingsRepository>()
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val dateString = date.format(ofPattern(dateFormat))
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
   val timeString = date.format(ofPattern(timeFormat))
-  val currencySymbol by get<SettingsRepository>().currencyIcon.collectAsState("$")
+  val currencySymbol by koinInject<SettingsRepository>().currencyIcon.collectAsState("$")
   val decimalPrecision by settingsRepository.decimalPrecision.collectAsState(settingsRepository.decimalPrecisionList[2])
 
   Card(
@@ -101,7 +104,7 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
         spacedBy(16.dp)
       ) {
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
-          Icon(TablerIcons.Smoking, null)
+          Icon(ImageVector.vectorResource(ic_cannabis), null)
           Text(stringResource(date_at_time, dateString, timeString))
         }
 
