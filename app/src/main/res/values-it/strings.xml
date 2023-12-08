@@ -115,4 +115,7 @@
     <string name="deleted_successfully">Uso eliminato!</string>
     <string name="enable_or_disable_milliseconds_bar_on_home_page">Abilita o disabilita la barra dei millisecondi nella pagina di utilizzo</string>
     <string name="app_pin">Pin App</string>
+    <string name="select_country">Seleziona il Paese</string>
+    <string name="legislation_and_rights">Legislazione e Diritti</string>
+    <string name="general_knowledge">Conoscenza generale</string>
 </resources>
