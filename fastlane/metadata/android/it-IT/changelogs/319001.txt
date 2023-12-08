@@ -1,0 +1,1 @@
+- Risolto il problema con il grafico del disagio di astinenza che non iniziava con la forza corretta
