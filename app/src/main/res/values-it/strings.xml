@@ -118,4 +118,13 @@
     <string name="select_country">Seleziona il Paese</string>
     <string name="legislation_and_rights">Legislazione e Diritti</string>
     <string name="general_knowledge">Conoscenza generale</string>
+    <string name="last_updated">Ultimo aggiornamento: %s</string>
+    <string name="possession">Possesso</string>
+    <string name="consumption">Consumo</string>
+    <string name="purchase_and_sale">Acquisto e Vendita</string>
+    <string name="medical_use">Uso medico</string>
+    <string name="keep_in_mind_that_laws_can_change">Tieni presente che le leggi possono cambiare, quindi è importante consultare le fonti legali più recenti o il consulente legale locale per le informazioni più aggiornate.</string>
+    <string name="cultivation">Coltivazione</string>
+    <string name="legal_status">Stato giuridico</string>
+    <string name="no_country_selected">Nessun paese selezionato</string>
 </resources>
