@@ -54,10 +54,10 @@ value class Discomfort(val strength: Double)
 class DiscomfortInterpolator : UnivariateInterpolator, UnivariateFunction {
 
   private val discomfortSeconds =
-    DiscomfortDataPoints.mapKeys { it.key.seconds.toDouble() }.mapValues { it.value.strength }
+    DiscomfortDataPoints.mapKeys { it.key.seconds }.mapValues { it.value.strength }
 
   private val splineFunction: PolynomialSplineFunction = SplineInterpolator().interpolate(
-    discomfortSeconds.keys.toDoubleArray(),
+    discomfortSeconds.keys.map { it.toDouble() }.toDoubleArray(),
     discomfortSeconds.values.toDoubleArray()
   )
 
@@ -66,5 +66,5 @@ class DiscomfortInterpolator : UnivariateInterpolator, UnivariateFunction {
   override fun value(x: Double): Double = splineFunction.value(x)
 
   fun calculateDiscomfort(secondsQuit: Long) =
-    value(secondsQuit.toDouble().coerceAtMost(discomfortSeconds.keys.max()))
+    value(secondsQuit.toDouble().coerceAtMost(discomfortSeconds.keys.max().toDouble()))
 }
