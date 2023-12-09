@@ -28,10 +28,13 @@ import kotlinx.coroutines.flow.first
 import java.io.ByteArrayOutputStream
 import kotlin.text.Charsets.UTF_8
 
-fun UseCsvHeadersFactory(resources: Resources) = with(resources) {
-  UseCsvHeaders(getString(date_label), getString(amount_label), getString(cost_per_gram_label))
+data class UseCsvHeaders(val date: String, val amount: String, val costPerGram: String) {
+  constructor(resources: Resources) : this(
+    resources.getString(date_label),
+    resources.getString(amount_label),
+    resources.getString(cost_per_gram_label)
+  )
 }
-data class UseCsvHeaders(val date: String, val amount: String, val costPerGram: String)
 
 class UseCsvSerializer(
   private val useRepository: UseRepository,

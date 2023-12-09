@@ -9,7 +9,7 @@ private val inputModule = module {
 }
 
 private val exportModule = module {
-  singleOf(::UseCsvHeadersFactory)
+  single { UseCsvHeaders(get()) }
   singleOf(::UseCsvSerializer)
   singleOf(::FileWriter)
   singleOf(::UseExporter)
