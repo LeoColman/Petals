@@ -3,37 +3,42 @@
 <!--If you want to add new bullet point in the app then start a new line-->
 <information>
     <item>
-        <country>Eslovaquia</country>
+        <country>Brasil</country>
         <legalstatus>
-            Cannabis é ilegal para uso recreativo.
+            A maconha é ilegal para uso recreativo.
+            O uso médico é fortemente regulamentado.
+            O uso científico é fortemente regulamentado.
         </legalstatus>
         <possession>
-            A posse de qualquer quantidade de cannabis para uso pessoal é ilegal.
-            A lei não faz distinção entre a quantidade para uso pessoal e tráfico, portanto qualquer posse pode ser vista como tráfico.
+            A posse de qualquer quantidade de maconha para uso pessoal é ilegal e sujeita a penalidades legais.
+            A lei não distingue a quantidade para uso pessoal, qualquer posse pode levar a acusações.
         </possession>
         <consumption>
-            O consumo de Cannabis é ilegal em qualquer forma em se tratando de uso recreativo/adulto.
-            Uso médico é permitido se prescrito por um agente de saúde e deve ser utilizado e acompanhado como orientado por este.
+            O consumo de maconha em qualquer forma é ilegal quando se trata de uso recreativo.
+            O uso médico é permitido dentro dos limites de uma prescrição e deve ser consumido conforme orientação de um profissional de saúde.
         </consumption>
         <medicaluse>
-            O uso médico de cannabis foi legalizado em 2011, porém é estritamente controlado.
-            Está disponível apenas para pacientes dotados de uma prescrição médica e de condições específicas.
-            A gama de produtos disponíveis é li  mitada, e a Eslováquia possui uma regulação estrita quanto aos tipos de produtos que podem ser prescritos.
+            A maconha medicinal foi legalizada em 2006 sob a lei 11.343 "Lei das Drogas", mas é estritamente controlada.
+            Está disponível apenas para pacientes com certas condições qualificativas e requer receita.
+            O caminho usual é para os brasileiros obterem um Habeas Corpus e serem autorizados a plantar.
+            A gama de produtos disponíveis é limitada e cara.
         </medicaluse>
         <cultivation>
-            O cultivo de plantas de cannabis para uso pessoal, recreativo ou adulto é ilegal.
-            O cultivo para fins médicos é permitido sob licenciamento governamental estrito e para propósitos farmacêuticos.
+            O cultivo de plantas de maconha para uso pessoal ou recreativo é ilegal.
+            O cultivo para fins médicos é permitido sob licenças governamentais estritas e para fins farmacêuticos.
         </cultivation>
         <purchaseandsale>
-            A venda e distribuição de cannabis é ilegal e punida severamente pela lei.
-            Cannabis medicinal só pode ser obtida por farmácias licenciadas, com uma prescrição válida feita por um profissional médico qualificado.
+            A venda e distribuição de maconha são ilegais e associadas a penalidades severas.
+            A maconha medicinal pode ser obtida em farmácias licenciadas com uma receita válida de um profissional médico qualificado.
+            A maconha medicinal pode ser obtida cultivando-a você mesmo se tiver uma licença válida.
         </purchaseandsale>
         <enforcement>
-            A lei eslovacas contra crimes envolvendo drogas são severas, e incluem quaisquer crimes envolvendo cannabis.
-            A pena para a posse, venda ou cultivo de cannabis pode variar entre multas, programas de tratamento obrigatórios e prisão.
+            A aplicação da lei no Brasil é bastante séria e violenta.
+            "Minorias" como negros ou pessoas pobres são mais perseguidas e, portanto, correm maior risco de situações de aplicação da lei.
+            As penalidades por posse, venda ou cultivo de maconha podem incluir multas, programas de tratamento obrigatório e prisão.
         </enforcement>
         <lastupdate>
-            Novembro 2023
+            Dezembro de 2023
         </lastupdate>
     </item>
     <item>
@@ -65,6 +70,40 @@
         <enforcement>
             O cumprimento de leis relacionadas a cannabis é de responsabilidade compartilhada entre governos municipais, provinciais e federal.
             Penalidades para posse, distribuição ou cultivo ilegal dependerá da severidade do crime.
+        </enforcement>
+        <lastupdate>
+            Novembro 2023
+        </lastupdate>
+    </item>
+    <item>
+        <country>Eslovaquia</country>
+        <legalstatus>
+            Cannabis é ilegal para uso recreativo.
+        </legalstatus>
+        <possession>
+            A posse de qualquer quantidade de cannabis para uso pessoal é ilegal.
+            A lei não faz distinção entre a quantidade para uso pessoal e tráfico, portanto qualquer posse pode ser vista como tráfico.
+        </possession>
+        <consumption>
+            O consumo de Cannabis é ilegal em qualquer forma em se tratando de uso recreativo/adulto.
+            Uso médico é permitido se prescrito por um agente de saúde e deve ser utilizado e acompanhado como orientado por este.
+        </consumption>
+        <medicaluse>
+            O uso médico de cannabis foi legalizado em 2011, porém é estritamente controlado.
+            Está disponível apenas para pacientes dotados de uma prescrição médica e de condições específicas.
+            A gama de produtos disponíveis é li  mitada, e a Eslováquia possui uma regulação estrita quanto aos tipos de produtos que podem ser prescritos.
+        </medicaluse>
+        <cultivation>
+            O cultivo de plantas de cannabis para uso pessoal, recreativo ou adulto é ilegal.
+            O cultivo para fins médicos é permitido sob licenciamento governamental estrito e para propósitos farmacêuticos.
+        </cultivation>
+        <purchaseandsale>
+            A venda e distribuição de cannabis é ilegal e punida severamente pela lei.
+            Cannabis medicinal só pode ser obtida por farmácias licenciadas, com uma prescrição válida feita por um profissional médico qualificado.
+        </purchaseandsale>
+        <enforcement>
+            A lei eslovacas contra crimes envolvendo drogas são severas, e incluem quaisquer crimes envolvendo cannabis.
+            A pena para a posse, venda ou cultivo de cannabis pode variar entre multas, programas de tratamento obrigatórios e prisão.
         </enforcement>
         <lastupdate>
             Novembro 2023
