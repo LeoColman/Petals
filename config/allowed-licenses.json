@@ -52,6 +52,11 @@
       "moduleLicense": null,
       "moduleName": "org.jetbrains.compose.runtime:runtime",
       "comment": "Compose runtime is Apache 2 https://github.com/JetBrains/compose-multiplatform-core/blob/jb-main/LICENSE.txt"
+    },
+    {
+      "moduleLicense": null,
+      "moduleName": "org.jetbrains.kotlin:kotlin-stdlib-common",
+      "comment": "Kotlin is Apache 2 https://github.com/JetBrains/kotlin/blob/master/license/LICENSE.txt"
     }
   ]
 }
