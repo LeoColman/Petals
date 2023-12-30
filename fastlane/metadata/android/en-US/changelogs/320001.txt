@@ -1,0 +1,1 @@
+-  Fixes statistics not always being calculated in selected range

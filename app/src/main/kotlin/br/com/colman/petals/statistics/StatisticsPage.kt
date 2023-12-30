@@ -17,7 +17,6 @@ import br.com.colman.petals.statistics.component.Period.Zero
 import br.com.colman.petals.statistics.graph.UsePerHourGraph
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
-import java.time.LocalDate.now
 
 @Composable
 fun StatisticsPage(useRepository: UseRepository) {
@@ -37,5 +36,5 @@ fun StatisticsPage(useRepository: UseRepository) {
 }
 
 private fun List<Period>.associateWith(uses: List<Use>) = associateWith { period ->
-  uses.filter { it.localDate >= now().minusDays(period.days?.toLong() ?: 0) }
+  uses.filter { it.localDate in period.toDateRange() }
 }.toSortedMap()
