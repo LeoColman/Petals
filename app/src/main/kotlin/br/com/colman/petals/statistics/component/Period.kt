@@ -5,8 +5,8 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import br.com.colman.petals.R.plurals.last_x_days
 import br.com.colman.petals.R.string.today
-import java.time.LocalDate
 import me.moallemi.tools.daterange.localdate.LocalDateRange
+import java.time.LocalDate
 
 sealed class Period(val days: Int) : Comparable<Period> {
   @Composable
@@ -17,7 +17,10 @@ sealed class Period(val days: Int) : Comparable<Period> {
     }
   }
 
-  fun toDateRange(end: LocalDate = LocalDate.now()) = LocalDateRange(end.minusDays((if(days == 0) 0 else days + 1).toLong()), end)
+  fun toDateRange(end: LocalDate = LocalDate.now()) = LocalDateRange(
+    end.minusDays((if (days == 0) 0 else days + 1).toLong()),
+    end
+  )
 
   override fun compareTo(other: Period): Int = compareValues(days, other.days)
 
