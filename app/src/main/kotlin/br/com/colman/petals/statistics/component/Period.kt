@@ -4,22 +4,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import br.com.colman.petals.R.plurals.last_x_days
-import br.com.colman.petals.R.string.custom
 import br.com.colman.petals.R.string.today
-import me.moallemi.tools.daterange.localdate.LocalDateRange
 import java.time.LocalDate
+import me.moallemi.tools.daterange.localdate.LocalDateRange
 
-sealed class Period(val days: Int?) : Comparable<Period> {
+sealed class Period(val days: Int) : Comparable<Period> {
   @Composable
   fun label(): String {
     return when (days) {
-      null -> stringResource(custom)
       0 -> stringResource(today)
       else -> pluralStringResource(last_x_days, days, days)
     }
   }
 
-  fun toDateRange(end: LocalDate = LocalDate.now()) = LocalDateRange(end.minusDays(days?.toLong() ?: 0), end)
+  fun toDateRange(end: LocalDate = LocalDate.now()) = LocalDateRange(end.minusDays(days.toLong()), end)
 
   override fun compareTo(other: Period): Int = compareValues(days, other.days)
 
