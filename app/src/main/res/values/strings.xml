@@ -48,7 +48,6 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="today">Today</string>
-    <!--FIXME Since Monday?-->
     <string name="this_week">Since Monday</string>
     <string name="this_month">Since the 1st</string>
     <string name="this_year">This year</string>
