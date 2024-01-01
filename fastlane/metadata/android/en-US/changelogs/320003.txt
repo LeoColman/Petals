@@ -1,0 +1,1 @@
+-  Revert: Fixes statistics being calculated with an extra day -- Caused new issues
