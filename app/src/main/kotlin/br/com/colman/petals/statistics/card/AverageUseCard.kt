@@ -38,11 +38,11 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.CalendarStats
 import compose.icons.tablericons.ChartPie
 import compose.icons.tablericons.Scale
-import me.moallemi.tools.daterange.localdate.LocalDateRange
-import me.moallemi.tools.daterange.localdate.rangeTo
-import org.koin.androidx.compose.get
 import java.math.BigDecimal
 import java.time.LocalDate.now
+import me.moallemi.tools.daterange.localdate.LocalDateRange
+import me.moallemi.tools.daterange.localdate.rangeTo
+import org.koin.compose.koinInject
 
 @Preview
 @Composable
@@ -143,7 +143,7 @@ private fun AverageListItem(label: String, grams: Double, cost: Double, uses: Do
 
 @Composable
 private fun getCurrencyIcon(): String {
-  val settingsRepository = get<SettingsRepository>()
+  val settingsRepository = koinInject<SettingsRepository>()
   val currencyIcon by settingsRepository.currencyIcon.collectAsState("$")
   return currencyIcon
 }
