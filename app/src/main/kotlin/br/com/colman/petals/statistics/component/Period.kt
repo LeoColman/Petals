@@ -18,7 +18,7 @@ sealed class Period(val days: Int) : Comparable<Period> {
   }
 
   fun toDateRange(end: LocalDate = LocalDate.now()) = LocalDateRange(
-    end.minusDays((if (days == 0) 0 else days + 1).toLong()),
+    end.minusDays(days.toLong()),
     end
   )
 
