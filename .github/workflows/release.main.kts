@@ -1,5 +1,5 @@
 #!/usr/bin/env kotlin
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.8.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.10.0")
 @file:Import("generated/actions/checkout.kt")
 @file:Import("generated/actions/setup-java.kt")
 @file:Import("generated/gradle/gradle-build-action.kt")
@@ -7,7 +7,7 @@
 @file:Import("generated/ruby/setup-ruby.kt")
 @file:Import("generated/softprops/action-gh-release.kt")
 
-
+import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
@@ -19,6 +19,7 @@ import io.github.typesafegithub.workflows.yaml.writeToFile
 val GPG_KEY by Contexts.secrets
 val GITHUB_REF_NAME by Contexts.github
 
+@OptIn(ExperimentalClientSideBindings::class)
 workflow(
   name = "Release",
   on = listOf(Push(tags = listOf("*"))),
