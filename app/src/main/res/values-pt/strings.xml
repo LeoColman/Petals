@@ -142,8 +142,5 @@
     <string name="cultivation">Cultivo</string>
     <string name="purchase_and_sale">Compra e Venda</string>
     <string name="enforcement">Policiamento</string>
-    <string name="keep_in_mind_that_laws_can_change">Lembre-se sempre que leis mudam e aplicam-se de maneira diferente a
-        pessoas a depender de cor da pele, gênero, credo e classe social. Verifique as fontes legais mais recentes ou
-        busque um especialista para informação mais acurada.
-    </string>
+    <string name="keep_in_mind_that_laws_can_change">Lembre-se sempre que leis mudam e aplicam-se de maneira diferente a pessoas a depender de cor da pele, gênero, credo e classe social. Verifique as fontes legais mais recentes ou busque um especialista para informação mais acurada.</string>
 </resources>
