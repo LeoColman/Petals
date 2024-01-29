@@ -1,0 +1,112 @@
+<!--For the correct parsing please keep the structure-->
+<!--item - every item tag represents the legislation and rights for a country-->
+<!--If you want to add new bullet point in the app then start a new line-->
+<information>
+    <item>
+        <country>Brazil</country>
+        <legalstatus>
+            Marijuana is illegal for recreational use.
+            Medical use is heavily regulated.
+            Scientific use is heavily regulated.
+        </legalstatus>
+        <possession>
+            Possession of any amount of marijuana for personal use is illegal and subject to legal penalties.
+            The law does not distinguish the amount for personal use, any possession can lead to charges.
+        </possession>
+        <consumption>
+            Consumption of marijuana in any form is illegal when it comes to recreational use.
+            Medical use is permitted within the confines of a prescription and should be consumed as directed by a healthcare provider.
+        </consumption>
+        <medicaluse>
+            Medical marijuana was legalized in 2006 under law 11.343 "Lei das Drogas" but is strictly controlled.
+            It is only available to patients with certain qualifying conditions and requires a prescription.
+            The usual path is for Brazilians to obtain a Habeas Corpus and be allowed to plant.
+            The range of products available is limited and expensive
+        </medicaluse>
+        <cultivation>
+            The cultivation of marijuana plants for personal or recreational use is illegal.
+            Cultivation for medical purposes is allowed under strict government licenses and for pharmaceutical purposes.
+        </cultivation>
+        <purchaseandsale>
+            The sale and distribution of marijuana are illegal and associated with severe penalties.
+            Medical marijuana can be obtained from licensed pharmacies with a valid prescription from a qualified medical professional.
+            Medical marijuana can be obtained by cultivating it yourself if you have a valid license.
+        </purchaseandsale>
+        <enforcement>
+            Law Enforcement in Brazil is pretty serious and violent.
+            "Minorities" such as black or poor people are more persecuted and thus are at a greater risk of law enforcement situations.
+            Penalties for marijuana possession, sale, or cultivation can include fines, mandatory treatment programs, and imprisonment.
+        </enforcement>
+        <lastupdate>
+            December 2023
+        </lastupdate>
+    </item>
+    <item>
+        <country>Canada</country>
+        <legalstatus>
+            Cannabis is legal in Canada for both recreational and medical purposes.
+            Provincial and territorial regulations complement the federal Cannabis Act, with some variations in rules such as the legal age and personal cultivation.
+        </legalstatus>
+        <possession>
+            Adults are allowed to carry and share up to 30 grams of legal cannabis in public.
+            Cannabis must be purchased from licensed stores or provincial/territorial online platforms.
+        </possession>
+        <consumption>
+            Cannabis can be consumed in private residences or in designated public spaces where tobacco smoking is permitted, but this varies by province/territory.
+            Some provinces and territories have specific restrictions on where cannabis can be consumed, such as in vehicles or parks.
+        </consumption>
+        <medicaluse>
+            Medical use of cannabis was legalized in Canada in 2001.
+            Patients with a prescription from a healthcare provider can purchase medical cannabis from licensed producers, grow their own, or designate someone to grow it for them.
+        </medicaluse>
+        <cultivation>
+            Adults are allowed to grow up to four cannabis plants per household for personal use, but this is subject to provincial or territorial restrictions.
+            Not all provinces allow home cultivation.
+        </cultivation>
+        <purchaseandsale>
+            Cannabis can be purchased from retailers licensed by the provinces and territories.
+            The minimum age for purchase and use varies by province and territory, generally ranging between 18 and 21 years.
+        </purchaseandsale>
+        <enforcement>
+            Enforcement of cannabis-related laws is a shared responsibility between federal, provincial, and municipal governments.
+            Penalties for illegal possession, distribution, or cultivation vary depending on the severity of the offense.
+        </enforcement>
+        <lastupdate>
+            November 2023
+        </lastupdate>
+    </item>
+    <item>
+        <country>Slovakia</country>
+        <legalstatus>
+            Marijuana is illegal for recreational use.
+        </legalstatus>
+        <possession>
+            Possession of any amount of marijuana for personal use is illegal and subject to legal penalties.
+            The law does not distinguish the amount for personal use, any possession can lead to charges.
+        </possession>
+        <consumption>
+            Consumption of marijuana in any form is illegal when it comes to recreational use.
+            Medical use is permitted within the confines of a prescription and should be consumed as directed by a healthcare provider.
+        </consumption>
+        <medicaluse>
+            Medical marijuana was legalized in 2011 but is strictly controlled.
+            It is only available to patients with certain qualifying conditions and requires a prescription.
+            The range of products available is limited, and Slovakia has strict regulations on the types of products that can be prescribed.
+        </medicaluse>
+        <cultivation>
+            The cultivation of marijuana plants for personal or recreational use is illegal.
+            Cultivation for medical purposes is allowed under strict government licenses and for pharmaceutical purposes.
+        </cultivation>
+        <purchaseandsale>
+            The sale and distribution of marijuana are illegal and associated with severe penalties.
+            Medical marijuana can only be obtained from licensed pharmacies with a valid prescription from a qualified medical professional.
+        </purchaseandsale>
+        <enforcement>
+            Slovak law enforcement agencies take drug offenses seriously, and this includes offenses involving marijuana.
+            Penalties for marijuana possession, sale, or cultivation can include fines, mandatory treatment programs, and imprisonment.
+        </enforcement>
+        <lastupdate>
+            November 2023
+        </lastupdate>
+    </item>
+</information>
