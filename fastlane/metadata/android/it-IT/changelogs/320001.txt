@@ -1,0 +1,1 @@
+- Risolti i problemi relativi alle statistiche che non venivano sempre calcolate nell'intervallo selezionato
