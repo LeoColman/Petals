@@ -1,0 +1,1 @@
+- Corrette le statistiche calcolate con un giorno in più

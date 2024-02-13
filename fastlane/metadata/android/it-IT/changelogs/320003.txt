@@ -1,0 +1,1 @@
+- Ripristina: corregge le statistiche calcolate con un giorno in più - Causando nuovi problemi
