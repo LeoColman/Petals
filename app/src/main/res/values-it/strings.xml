@@ -17,7 +17,7 @@
     <string name="minutes">Minuti</string>
     <string name="quit_date_text">Data dell\'ultimo uso</string>
     <string name="months">Mesi</string>
-    <string name="hittimer_why_ten_secs">Perché 10 secondi\?</string>
+    <string name="hittimer_why_ten_secs">Perché 10 secondi?</string>
     <string name="month">mese</string>
     <string name="amount_label">quantità</string>
     <string name="date_at_time">%1$s a %2$s</string>
@@ -69,7 +69,7 @@
     <string name="date_label">data</string>
     <string name="ok">OK</string>
     <string name="pin_main_screen">Questa applicazione è protetta da password. Inserisci la password corretta per procedere.</string>
-    <string name="add_use_during_pause_alert">Hai programmato che questo periodo fosse una pausa. Sei sicuro di voler aggiungere un utilizzo adesso\?</string>
+    <string name="add_use_during_pause_alert">Hai programmato che questo periodo fosse una pausa. Sei sicuro di voler aggiungere un utilizzo adesso?</string>
     <string name="currency_icon">Icona di valuta</string>
     <string name="average_per">Media per %s</string>
     <string name="subjectve_high">Soggettivo \"Alto\"</string>
@@ -78,7 +78,7 @@
     <string name="what_decimal_precision_should_be_used">Quale precisione decimale deve essere visualizzata nella pagina di utilizzo</string>
     <string name="share_app_message">Ehi, l\'app Petals mi aiuta
 \nOttienilo su Google Play:
-\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals
 \noppure scaricalo su F-Droid
 \nhttps://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="cost_per_gram_title">Prezzo al grammo</string>
@@ -100,8 +100,8 @@
     <string name="settings">Impostazioni</string>
     <string name="all_time">Tutto il tempo</string>
     <string name="change_period">Cambia periodo</string>
-    <string name="current_thc_concentration">Concentrazione attuale di THC: %s \%%</string>
-    <string name="confirm_to_delete">Sei sicuro di voler eliminare l\'uso aggiunto su %s\?</string>
+    <string name="current_thc_concentration">Concentrazione attuale di THC: %s %</string>
+    <string name="confirm_to_delete">Sei sicuro di voler eliminare l\'uso aggiunto su %s?</string>
     <string name="time">Orario</string>
     <string name="_175thc">1.75% THC</string>
     <string name="custom">Personalizzato</string>
