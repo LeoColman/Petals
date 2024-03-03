@@ -1,0 +1,1 @@
+- Corrige las estadísticas que no siempre se calculan en el rango seleccionado
