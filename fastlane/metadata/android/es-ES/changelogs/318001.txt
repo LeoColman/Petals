@@ -1,0 +1,2 @@
+- Añadir pantalla de información sobre Legislación y Derechos
+- Correcciones menores

@@ -1,0 +1,1 @@
+- Revertir: Corrige las estadísticas que se calculan con un día extra -- Causó nuevos problemas
