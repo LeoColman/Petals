@@ -115,4 +115,17 @@
         <item quantity="other">Últimos %s días</item>
     </plurals>
     <string name="custom">A medida</string>
+    <string name="legislation_and_rights">Legislación y derechos</string>
+    <string name="select_country">Seleccione un país</string>
+    <string name="no_country_selected">Ningún país seleccionado</string>
+    <string name="last_updated">Última actualización: %s</string>
+    <string name="legal_status">Situación legal</string>
+    <string name="general_knowledge">Conocimientos generales</string>
+    <string name="possession">Posesión</string>
+    <string name="consumption">Consumo</string>
+    <string name="medical_use">Uso medicinal</string>
+    <string name="cultivation">Cultivo</string>
+    <string name="purchase_and_sale">Compraventa</string>
+    <string name="enforcement">Aplicación</string>
+    <string name="keep_in_mind_that_laws_can_change">Tenga en cuenta que las leyes pueden cambiar, por lo que es importante consultar las fuentes legales más recientes o al asesor jurídico local para obtener la información más actualizada.</string>
 </resources>
