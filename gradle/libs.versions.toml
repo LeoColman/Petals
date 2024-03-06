@@ -47,7 +47,7 @@ kotlin-date-range = "me.moallemi.tools:kotlin-date-range:1.0.0"
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0"
 mockk = "io.mockk:mockk:1.13.10"
-mp-android-chart = "com.github.AppDevNext:AndroidChart:3.1.0.18"
+mp-android-chart = "com.github.AppDevNext:AndroidChart:3.1.0.21"
 snodge = "com.natpryce:snodge:3.7.0.0"
 timber = "com.jakewharton.timber:timber:5.0.1"
 sqldelight-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
