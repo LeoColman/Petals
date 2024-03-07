@@ -1,0 +1,2 @@
+- Adicionar linha indicando o tempo do dia para o gráfico
+- Pequenas correções
