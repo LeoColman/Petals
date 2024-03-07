@@ -1,0 +1,2 @@
+- Adicionar tela de informação sobre Legislação e Direitos
+- Pequenas correções

@@ -1,0 +1,4 @@
+* Melhora opções de formato de tempo
+* Sincroniza traduções do Weblate
+* Adiciona opção de remover barra de milissegundos
+* Torna a página de configurações scrollável

@@ -1,0 +1,1 @@
+- Retirada fixa Desconforto gráfico não começando no strenght correto
