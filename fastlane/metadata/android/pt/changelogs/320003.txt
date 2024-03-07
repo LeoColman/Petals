@@ -1,0 +1,1 @@
+- Reverter: Corrige estatísticas sendo calculadas com um dia extra -- Causado novos problemas
