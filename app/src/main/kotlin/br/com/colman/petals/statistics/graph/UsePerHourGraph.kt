@@ -28,6 +28,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IValueFormatter
+import com.github.mikephil.charting.utils.ViewPortHandler
 import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.math.roundToInt
@@ -71,7 +72,16 @@ fun UsePerHourGraphPreview2() {
   UsePerHourGraph(mapOf(Period.Week to uses, Period.TwoWeek to uses2, Period.Month to uses + uses2))
 }
 
-val GramsValueFormatter = IValueFormatter { _, entry, _, _ -> "%.1f".format(entry.y) + "g" }
+val GramsValueFormatter = object : IValueFormatter {
+  override fun getFormattedValue(
+    value: Float,
+    entry: Entry?,
+    dataSetIndex: Int,
+    viewPortHandler: ViewPortHandler?
+  ): String {
+    return "%.1f".format(entry?.y) + "g"
+  }
+}
 
 val GramsFormatter = object : IAxisValueFormatter {
   override fun getFormattedValue(value: Float, axis: AxisBase?): String {

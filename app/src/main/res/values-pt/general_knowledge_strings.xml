@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Petals APP
+  ~ Copyright (C) 2021 Leonardo Colman Lopes
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <string name="know_the_local_laws_title">Saiba as Leis Locais</string>
+    <string name="know_the_local_laws_content">Estude a situação jurídica da cannabis na sua jurisdição\nAtente-se à quantidade que você legalmente pode carregar\nSaiba a diferença entre cannabis medicinal e recreativa, se aplicável</string>
+
+    <string name="carrying_marijuana_title">Portando Cannabis</string>
+    <string name="carrying_marijuana_content">Carregue sempre em um compartimento fechado, se possível oculto ou de difícil acesso.\nTenha sua documentação de cannabis medicinal sempre disponível caso seja um paciente.\nConheça as áreas onde posse é ilegal (ex: prédios governamentais, escolas, certos locais públicos).</string>
+
+    <string name="use_of_marijuana_title">Use de Cannabis</string>
+    <string name="use_of_marijuana_content">Não utilize Cannabis em locais públicos a não ser que seja explicitamente permitido pela legislação local.\nEvite dirigir ou operar maquinário pesado após consumir cannabis.</string>
+
+    <string name="medical_use_title">Uso Médico</string>
+    <string name="medical_use_content">Tenha sempre a documentação de cannabis medicinal disponível caso seja um paciente.\nSe familizarize com seus direitos a uso, posse e cultivo de cannabis para uso médico.</string>
+
+    <string name="interacting_with_police_title">Interagindo com a Polícia</string>
+    <string name="interacting_with_police_content">Se abordado pela polícia, seja sempre educado e respeitoso.\nVocê não é obrigado a consentir a uma revista, exceto quando o agente policial possuir um mandado ou identificar comportamento suspeito.\nSaiba seus direitos, mas também entenda as consequências de defender o seu direito perante uma força maior que a sua.</string>
+
+    <string name="detained_or_arrested_title">Prisão ou Apreensão</string>
+    <string name="detained_or_arrested_content">Mantenha a calma e nunca resista.\nVocê pode permanecer em silêncio e na maioria dos países o direito a um defensor público.\nNão dê detalhes ou admita nada relacionado a seu uso, consumo ou posse de cannabis até que esteja com seu representante legal.</string>
+</resources>
