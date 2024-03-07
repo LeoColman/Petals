@@ -127,6 +127,7 @@
     <string name="what_decimal_precision_should_be_used">Qual precisão deve ser utilizada para mostrar na página de uso</string>
     <plurals name="last_x_days">
         <item quantity="one">Último %s dia</item>
+        <item quantity="many">Últimos %s dias</item>
         <item quantity="other">Últimos %s dias</item>
     </plurals>
     <string name="custom">Personalizado</string>
