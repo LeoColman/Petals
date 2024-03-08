@@ -1,0 +1,2 @@
+- Sync translations from Weblate
+- Refactor information code to be easier to add countries and translations by contributors

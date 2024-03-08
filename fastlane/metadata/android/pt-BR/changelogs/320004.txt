@@ -1,0 +1,2 @@
+- Sincronize traduções do Weblate
+- Refatore o código de informação para facilitar a adição de países e traduções pelos colaboradores
