@@ -128,4 +128,5 @@
     <string name="legal_status">Stato giuridico</string>
     <string name="no_country_selected">Nessun paese selezionato</string>
     <string name="enforcement">Rinforzo</string>
+    <string name="app_name" translatable="false"></string>
 </resources>
