@@ -105,7 +105,7 @@
     <string name="password_description">Pour plus de confidentialité, vous pouvez définir un mot de passe pour accéder à l\'application. La définition d\'un mot de passe vide le supprime. ATTENTION ! Il n\'est pas possible de récupérer un mot de passe défini</string>
     <plurals name="last_x_days">
         <item quantity="one">Les %s derniers jours</item>
-        <item quantity="many"/>
+        <item quantity="many"></item>
         <item quantity="other">Les %s derniers jours</item>
     </plurals>
     <string name="milliseconds_enabled">Basculer la barre des millisecondes</string>
@@ -113,4 +113,20 @@
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Activer ou désactiver les millisecondes sur la page Minuteur</string>
     <string name="hit_timer_milliseconds_enabled">Basculer en millisecondes sur la page du compteur de visites</string>
     <string name="decimal_precision">Précision décimale</string>
+    <string name="consumption"></string>
+    <string name="select_country"></string>
+    <string name="possession"></string>
+    <string name="legal_status"></string>
+    <string name="last_updated"></string>
+    <string name="cultivation"></string>
+    <string name="general_knowledge"></string>
+    <string name="legislation_and_rights"></string>
+    <string name="app_name" translatable="false"></string>
+    <string name="no_country_selected"></string>
+    <string name="what_decimal_precision_should_be_used"></string>
+    <string name="enforcement"></string>
+    <string name="custom"></string>
+    <string name="medical_use"></string>
+    <string name="purchase_and_sale"></string>
+    <string name="keep_in_mind_that_laws_can_change"></string>
 </resources>
