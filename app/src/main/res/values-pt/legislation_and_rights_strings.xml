@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Petals APP
   ~ Copyright (C) 2021 Leonardo Colman Lopes
   ~
@@ -20,12 +21,14 @@
     <string name="brazil_legalstatus">A maconha é ilegal para uso recreativo.\nO uso médico é fortemente regulamentado.\nO uso científico é fortemente regulamentado.</string>
     <string name="brazil_possession">A posse de qualquer quantidade de maconha para uso pessoal é ilegal e sujeita a penalidades legais.\nA lei não distingue a quantidade para uso pessoal, qualquer posse pode levar a acusações.</string>
     <string name="brazil_consumption">O consumo de maconha em qualquer forma é ilegal quando se trata de uso recreativo.\nO uso médico é permitido dentro dos limites de uma prescrição e deve ser consumido conforme orientação de um profissional de saúde.</string>
-    <string name="brazil_medicaluse">A maconha medicinal foi legalizada em 2006 sob a lei 11.343 "Lei das Drogas", mas é estritamente controlada.\nEstá disponível apenas para pacientes com certas condições qualificativas e requer receita.\nO caminho usual é para os brasileiros obterem um Habeas Corpus e serem autorizados a plantar.\nA gama de produtos disponíveis é limitada e cara.</string>
+    <string name="brazil_medicaluse">A maconha medicinal foi legalizada em 2006 sob a lei 11.343 Lei das Drogas, mas é estritamente controlada.
+\nEstá disponível apenas para pacientes com certas condições qualificativas e requer receita.
+\nO caminho usual é para os brasileiros obterem um Habeas Corpus e serem autorizados a plantar.
+\nA gama de produtos disponíveis é limitada e cara.</string>
     <string name="brazil_cultivation">O cultivo de plantas de maconha para uso pessoal ou recreativo é ilegal.\nO cultivo para fins médicos é permitido sob licenças governamentais estritas e para fins farmacêuticos.</string>
     <string name="brazil_purchaseandsale">A venda e distribuição de maconha são ilegais e associadas a penalidades severas.\nA maconha medicinal pode ser obtida em farmácias licenciadas com uma receita válida de um profissional médico qualificado.\nA maconha medicinal pode ser obtida cultivando-a você mesmo se tiver uma licença válida.</string>
     <string name="brazil_enforcement">A aplicação da lei no Brasil é bastante séria e violenta.\n"Minorias" como negros ou pessoas pobres são mais perseguidas e, portanto, correm maior risco de situações de aplicação da lei.\nAs penalidades por posse, venda ou cultivo de maconha podem incluir multas, programas de tratamento obrigatório e prisão.</string>
     <string name="brazil_lastupdate">Dezembro de 2023</string>
-
     <!-- Canada -->
     <string name="canada_country">Canadá</string>
     <string name="canada_legalstatus">Cannabis é legalizada no Canadá, tanto para uso recreativo quanto uso médico.\nRegulações provinciais e estaduais complementam a lei federal Cannabis Act, sendo possível alguma variação na legislação como idade para consumo e quantidade de cultivo próprio.</string>
@@ -36,7 +39,6 @@
     <string name="canada_purchaseandsale">Cannabis pode ser comprada de vendedores licenciados pelas províncias.\nA idade mínima para compra varia de acordo com a província, normalmente entre 18 e 21 anos de idade.</string>
     <string name="canada_enforcement">O cumprimento de leis relacionadas a cannabis é de responsabilidade compartilhada entre governos municipais, provinciais e federal.\nPenalidades para posse, distribuição ou cultivo ilegal dependerá da severidade do crime.</string>
     <string name="canada_lastupdate">Novembro 2023</string>
-
     <!-- Slovakia -->
     <string name="slovakia_country">Eslovaquia</string>
     <string name="slovakia_legalstatus">Cannabis é ilegal para uso recreativo.</string>
