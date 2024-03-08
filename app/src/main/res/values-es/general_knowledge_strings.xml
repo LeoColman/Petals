@@ -1,0 +1,19 @@
+<resources>
+    <string name="know_the_local_laws_title">Conozca las leyes locales</string>
+    <string name="know_the_local_laws_content">Comprenda el estado legal de la marihuana en su jurisdicción.\nTenga en cuenta la cantidad que legalmente puede llevar.\nConozca la diferencia entre posesión médica y recreativa, cuando corresponda.</string>
+
+    <string name="carrying_marijuana_title">Portar marihuana</string>
+    <string name="carrying_marijuana_content">Llévelo en un recipiente cerrado y no accesible cuando viaje.\nTenga su tarjeta de marihuana medicinal con usted si es un paciente registrado.\nTenga en cuenta las áreas donde la posesión es ilegal (por ejemplo, tierras federales, escuelas, ciertos lugares públicos).</string>
+
+    <string name="use_of_marijuana_title">Consumo de marihuana</string>
+    <string name="use_of_marijuana_content">No consuma marihuana en lugares públicos a menos que la ley local lo permita explícitamente.\nEvite conducir u operar maquinaria pesada después de consumir marihuana.</string>
+
+    <string name="medical_use_title">Uso médico</string>
+    <string name="medical_use_content">Ten siempre a mano tu documentación si eres un usuario médico.\nFamiliarícese con sus derechos de uso, posesión y posiblemente cultivo de marihuana con fines médicos.</string>
+
+    <string name="interacting_with_police_title">Interacción con la policía</string>
+    <string name="interacting_with_police_content">Si la policía lo detiene, sea cortés y respetuoso.\nNo está obligado a dar su consentimiento para un registro a menos que el oficial tenga una orden judicial o una causa probable.\nConozca sus derechos, pero también comprenda las posibles consecuencias de hacer valer esos derechos (consulte "Legislación y derechos" a continuación).</string>
+
+    <string name="detained_or_arrested_title">Detenido o arrestado</string>
+    <string name="detained_or_arrested_content">Mantén la calma y no te resistas.\nUsted tiene derecho a permanecer en silencio y derecho a un abogado.\nNo proporcione ningún detalle ni admita nada con respecto a su uso o posesión de marihuana hasta que tenga representación legal.</string>
+</resources>
