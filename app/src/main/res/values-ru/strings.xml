@@ -111,8 +111,25 @@
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Включить или выключить миллисекунды на странице Таймера</string>
     <plurals name="last_x_days">
         <item quantity="one">Последние %s дней</item>
-        <item quantity="few"/>
-        <item quantity="many"/>
-        <item quantity="other"/>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
     </plurals>
+    <string name="what_decimal_precision_should_be_used"></string>
+    <string name="custom"></string>
+    <string name="keep_in_mind_that_laws_can_change"></string>
+    <string name="app_name" translatable="false"></string>
+    <string name="no_country_selected"></string>
+    <string name="legal_status"></string>
+    <string name="purchase_and_sale"></string>
+    <string name="general_knowledge"></string>
+    <string name="select_country"></string>
+    <string name="consumption"></string>
+    <string name="enforcement"></string>
+    <string name="medical_use"></string>
+    <string name="decimal_precision"></string>
+    <string name="possession"></string>
+    <string name="legislation_and_rights"></string>
+    <string name="last_updated"></string>
+    <string name="cultivation"></string>
 </resources>
