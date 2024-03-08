@@ -67,7 +67,7 @@
     <string name="change_period">Mudar período</string>
     <string name="grams">Gramas</string>
     <string name="grams_distribution_per_hour_of_day">Distribuição de gramas por hora do dia</string>
-    <string name="current_thc_concentration">Concentração atual de THC: %s \%%</string>
+    <string name="current_thc_concentration">Concentração atual de THC: %s %</string>
     <string name="thc_concentration">Concentração de THC (%)</string>
     <string name="current_withdrawal_discomfort">Desconforto atual de abstinência: %s</string>
     <string name="discomfort_strength">Intensidade de desconforto</string>
@@ -110,10 +110,10 @@
     <string name="share_app">Compartilhar app com amigos</string>
     <string name="share_app_message">Olá, o app Petals me ajuda
 \nBaixar na Google Play Store:
-\nhttps://play.google.com/store/apps/details\?id=br.com.colman.petals
+\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals
 \nou Baixar no F-Droid
 \nhttps://f-droid.org/packages/br.com.colman.petals/</string>
-    <string name="confirm_to_delete">Você tem certeza que deseja remover o uso adicionado em %s\?</string>
+    <string name="confirm_to_delete">Você tem certeza que deseja remover o uso adicionado em %s?</string>
     <string name="delete_use_title">Remover Uso</string>
     <string name="deleted_successfully">Uso removido!</string>
     <string name="app_pin">Pin do App</string>
@@ -144,4 +144,5 @@
     <string name="purchase_and_sale">Compra e Venda</string>
     <string name="enforcement">Policiamento</string>
     <string name="keep_in_mind_that_laws_can_change">Lembre-se sempre que leis mudam e aplicam-se de maneira diferente a pessoas a depender de cor da pele, gênero, credo e classe social. Verifique as fontes legais mais recentes ou busque um especialista para informação mais acurada.</string>
+    <string name="app_name" translatable="false"></string>
 </resources>
