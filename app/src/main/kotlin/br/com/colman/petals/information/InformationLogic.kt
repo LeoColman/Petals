@@ -135,7 +135,6 @@ private fun buildCountryInformation(
   return countryInformation
 }
 
-
 fun getResourceString(context: Context, resourceId: String): String {
   return if (resourceId.startsWith("@string/")) {
     val resName = resourceId.substring(8)
