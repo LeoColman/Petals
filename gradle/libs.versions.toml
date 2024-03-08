@@ -36,7 +36,7 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
-kotest-assertions-android = { module = "br.com.colman:kotest-assertions-android", version = "1.1.0" }
+kotest-assertions-android = { module = "br.com.colman:kotest-assertions-android", version = "1.1.1" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 kotest-runner-android = { module = "br.com.colman:kotest-runner-android", version = "1.1.0" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
