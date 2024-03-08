@@ -105,25 +105,4 @@
         <item quantity="one">Letzte %s Tage</item>
         <item quantity="other">Letzte %s Tage</item>
     </plurals>
-    <string name="app_name" translatable="false"></string>
-    <string name="keep_in_mind_that_laws_can_change"></string>
-    <string name="no_country_selected"></string>
-    <string name="medical_use"></string>
-    <string name="hit_timer_milliseconds_enabled"></string>
-    <string name="enable_or_disable_milliseconds_on_hit_timer_page"></string>
-    <string name="possession"></string>
-    <string name="enforcement"></string>
-    <string name="consumption"></string>
-    <string name="cultivation"></string>
-    <string name="milliseconds_enabled"></string>
-    <string name="general_knowledge"></string>
-    <string name="custom"></string>
-    <string name="decimal_precision"></string>
-    <string name="legislation_and_rights"></string>
-    <string name="enable_or_disable_milliseconds_bar_on_home_page"></string>
-    <string name="select_country"></string>
-    <string name="last_updated"></string>
-    <string name="what_decimal_precision_should_be_used"></string>
-    <string name="legal_status"></string>
-    <string name="purchase_and_sale"></string>
 </resources>
