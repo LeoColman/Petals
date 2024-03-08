@@ -54,7 +54,7 @@
     <string name="yes">Ja</string>
     <string name="yes_timer">Ja (%ss)</string>
     <string name="no">Nee</string>
-    <string name="add_use_during_pause_alert">Je hebt deze periode ingepland als een pauze. Weet je zeker dat je nu een gebruik wilt toevoegen\?</string>
+    <string name="add_use_during_pause_alert">Je hebt deze periode ingepland als een pauze. Weet je zeker dat je nu een gebruik wilt toevoegen?</string>
     <string name="hours">Uren</string>
     <string name="date">Datum</string>
     <string name="hittime_source">Bron: Azorlosa JL, Greenwald MK, Stitzer ML. Roken van marihuana: effecten van wisselend rookvolume en ademhalingsduur. J Pharmacol Exp Ther. 1995. Feb;272(2):560-9. PMID: 7853169.</string>
@@ -86,4 +86,39 @@
         <item quantity="one">Laatste %s dagen</item>
         <item quantity="other">Laatste %s dagen</item>
     </plurals>
+    <string name="app_name" translatable="false"></string>
+    <string name="grams_distribution_per_day_of_week"></string>
+    <string name="select_country"></string>
+    <string name="keep_in_mind_that_laws_can_change"></string>
+    <string name="time_format_label"></string>
+    <string name="share_app_title"></string>
+    <string name="hit_timer_milliseconds_enabled"></string>
+    <string name="date_format_label"></string>
+    <string name="consumption"></string>
+    <string name="legal_status"></string>
+    <string name="decimal_precision"></string>
+    <string name="password_description"></string>
+    <string name="confirm_to_delete"></string>
+    <string name="possession"></string>
+    <string name="share_app_message"></string>
+    <string name="last_updated"></string>
+    <string name="milliseconds_enabled"></string>
+    <string name="enforcement"></string>
+    <string name="enable_or_disable_milliseconds_on_hit_timer_page"></string>
+    <string name="delete_use_title"></string>
+    <string name="legislation_and_rights"></string>
+    <string name="medical_use"></string>
+    <string name="share_app"></string>
+    <string name="enable_or_disable_milliseconds_bar_on_home_page"></string>
+    <string name="cultivation"></string>
+    <string name="no_country_selected"></string>
+    <string name="pin_main_screen"></string>
+    <string name="purchase_and_sale"></string>
+    <string name="what_decimal_precision_should_be_used"></string>
+    <string name="app_pin"></string>
+    <string name="custom"></string>
+    <string name="what_time_format_should_be_used"></string>
+    <string name="general_knowledge"></string>
+    <string name="what_date_format_should_be_used"></string>
+    <string name="deleted_successfully"></string>
 </resources>
