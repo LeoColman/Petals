@@ -1,0 +1,2 @@
+- Sincronizar las traducciones de Weblate
+- Refactorizar el código de la información para que sea más fácil añadir países y traducciones de los colaboradores
