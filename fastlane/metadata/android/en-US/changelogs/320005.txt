@@ -1,0 +1,2 @@
+- Sync translations from Weblate
+- Fix date range calculation in statistics component

@@ -6,10 +6,10 @@ import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.comparables.shouldBeLessThan
 import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
-import java.time.LocalDate
 import me.moallemi.tools.daterange.localdate.LocalDateRange
+import java.time.LocalDate
 
-class PeriodTest: FunSpec({
+class PeriodTest : FunSpec({
   val now = LocalDate.now()
   val week = Period.Week
   val twoWeek = Period.TwoWeek
