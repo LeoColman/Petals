@@ -85,7 +85,7 @@ private fun AverageUseCardTitlePreview() {
 
 @Composable
 private fun AverageUseCardTitle(uses: Int, grams: BigDecimal, period: LocalDateRange) {
-  val amountDays = (period.count() - 1).coerceAtLeast(1)
+  val amountDays = period.count()
 
   Row(Modifier.scrollable(rememberScrollState(), Horizontal), spacedBy(8.dp), CenterVertically) {
     IconText(TablerIcons.ChartPie, pluralResource(amount_uses, uses, uses))
