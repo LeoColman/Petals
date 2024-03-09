@@ -1,3 +1,0 @@
-* Adiciona opção de remover millisegundos do HitTimer
-* Sincroniza traduções do Weblate
-* Atualiza dependências

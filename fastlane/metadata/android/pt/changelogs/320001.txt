@@ -1,1 +1,0 @@
-- Corrige estatísticas nem sempre sendo calculadas em intervalo selecionado

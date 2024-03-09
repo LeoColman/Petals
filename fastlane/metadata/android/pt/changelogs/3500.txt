@@ -1,2 +1,0 @@
-* Adiciona configuração para formato de data e tempo
-* Sincroniza traduções do Weblate

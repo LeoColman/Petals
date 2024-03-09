@@ -1,2 +1,0 @@
-- Adicionar tradução italiana
-- Pequenas atualizações de dependência
