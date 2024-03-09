@@ -1,1 +1,0 @@
-* Conserta bug onde o botão de exportar às vezes não funcionava

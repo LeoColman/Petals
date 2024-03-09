@@ -1,3 +1,0 @@
-* Adiciona mensagem para confirmação de remoção de uso
-* Adiciona total de gramas consumidos ao bloco de estatísticas
-* Arruma gráfico de usos por dia da semana não mostrando dados corretamente

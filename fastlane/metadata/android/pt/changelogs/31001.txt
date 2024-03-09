@@ -1,1 +1,0 @@
-* Arruma configurações não serem scrolláveis
