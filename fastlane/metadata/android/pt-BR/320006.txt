@@ -1,0 +1,1 @@
+- Corrige alguns erros de tradução que poderiam causar uma falha na página de Sintomas.

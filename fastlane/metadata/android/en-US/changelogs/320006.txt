@@ -1,0 +1,1 @@
+- Correct some translations errors that would cause a crash in Symptoms page
