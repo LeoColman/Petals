@@ -1,0 +1,2 @@
+- Sincronizar traducciones desde Weblate
+- Corrección del cálculo del intervalo de fechas en el componente de estadísticas
