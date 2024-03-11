@@ -37,8 +37,8 @@
     <string name="hittimer_why_ten_secs">Why 10 seconds?</string>
     <string name="subjectve_high">Subjective \"High\"</string>
     <string name="breathhold_duration">Breathhold Duration (seconds)</string>
-    <string name="_175thc">1.75% THC</string>
-    <string name="_355thc">3.55% THC</string>
+    <string name="_175thc" formatted="false">1.75% THC</string>
+    <string name="_355thc" formatted="false">3.55% THC</string>
     <string name="add_use">Add Use</string>
     <string name="amount_grams_title">Amount (g)</string>
     <string name="cost_per_gram_title">Cost per gram</string>
@@ -70,8 +70,8 @@
     <string name="change_period">Change period</string>
     <string name="grams">Grams</string>
     <string name="grams_distribution_per_hour_of_day">Grams distribution per hour of day</string>
-    <string name="current_thc_concentration">Current THC concentration: %s \%%</string>
-    <string name="thc_concentration">THC Concentration(%)</string>
+    <string name="current_thc_concentration">Current THC concentration: %s %%</string>
+    <string name="thc_concentration">THC Concentration(%%)</string>
     <string name="current_withdrawal_discomfort">Current withdrawal discomfort: %s</string>
     <string name="discomfort_strength">Discomfort strength</string>
     <string name="date_at_time">%1$s at %2$s</string>

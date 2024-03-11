@@ -29,8 +29,8 @@
     <string name="reset">Reiniciar</string>
     <string name="symptoms">Sintomas</string>
     <string name="symptoms_introduction">Um estudo de Budney et al. da Universidade de Vermont estabelece como sintomas de abstinência afetam usuários de cannabis. Abaixo você verá uma estimativa da sua situação baseado no seu último uso</string>
-    <string name="_355thc">3.55% THC</string>
-    <string name="_175thc">1.75% THC</string>
+    <string name="_355thc" formatted="false">3.55% THC</string>
+    <string name="_175thc" formatted="false">1.75% THC</string>
     <string name="breathhold_duration">Tempo Segurando (segundos)</string>
     <string name="subjectve_high">\"Brisa\" subjetiva</string>
     <string name="hittimer_why_ten_secs">Por que 10 segundos?</string>
@@ -67,7 +67,7 @@
     <string name="change_period">Mudar período</string>
     <string name="grams">Gramas</string>
     <string name="grams_distribution_per_hour_of_day">Distribuição de gramas por hora do dia</string>
-    <string name="current_thc_concentration">Concentração atual de THC: %s %</string>
+    <string name="current_thc_concentration">Concentração atual de THC: %s %%</string>
     <string name="thc_concentration">Concentração de THC (%)</string>
     <string name="current_withdrawal_discomfort">Desconforto atual de abstinência: %s</string>
     <string name="discomfort_strength">Intensidade de desconforto</string>
