@@ -1,0 +1,2 @@
+- Sincronizza le traduzioni da Weblate
+- Correzione del calcolo dell'intervallo di date nel componente statistico

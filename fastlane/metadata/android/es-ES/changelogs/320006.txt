@@ -1,0 +1,1 @@
+- Corregir algunos errores de traducción que podrían causar una caída en la página síntomas

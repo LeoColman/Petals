@@ -1,0 +1,1 @@
+- Corretto alcuni errori di traduzione che potrebbero causare un arresto anomalo nella pagina Sintomi
