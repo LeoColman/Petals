@@ -1,0 +1,2 @@
+- Sincronizza le traduzioni da Weblate
+- Refactoring del codice delle informazioni per facilitare l'aggiunta di paesi e traduzioni da parte dei contributori

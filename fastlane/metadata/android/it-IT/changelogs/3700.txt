@@ -1,0 +1,3 @@
+* Aggiunto messaggio toast su usa elimina
+* Aggiunti i grammi totali al blocco delle statistiche
+* Risolto il problema con il grafico di utilizzo per giorno della settimana che non visualizzava correttamente i dati
