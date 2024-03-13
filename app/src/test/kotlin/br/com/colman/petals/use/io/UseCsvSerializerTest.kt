@@ -32,8 +32,8 @@ import io.kotest.property.arbitrary.next
 import io.kotest.property.arbitrary.take
 import io.mockk.every
 import io.mockk.mockk
-import java.math.BigDecimal.ZERO
 import kotlinx.coroutines.flow.flowOf
+import java.math.BigDecimal.ZERO
 
 class UseCsvSerializerTest : FunSpec({
   val useRepository = mockk<UseRepository>()
@@ -67,4 +67,3 @@ val useArb = arbitrary {
 }
 
 val useCsvArb = useArb.map { it.columns().joinToString(",") }
-

@@ -43,7 +43,6 @@ class UseCsvSerializer(
   private val useCsvHeaders: UseCsvHeaders
 ) {
 
-
   suspend fun computeUseCsv(): String {
     val uses = useRepository.all().first().map { it.columns() }
     val content = listOf(useCsvHeaders.toList()) + uses

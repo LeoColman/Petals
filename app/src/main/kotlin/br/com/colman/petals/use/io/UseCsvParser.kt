@@ -5,7 +5,6 @@ import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@Suppress("DestructuringDeclarationWithTooManyEntries")
 object UseCsvParser {
   private val csvReader = csvReader()
 
