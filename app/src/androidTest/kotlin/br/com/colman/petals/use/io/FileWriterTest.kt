@@ -17,29 +17,33 @@ class FileWriterTest : FunSpec({
   val target = FileWriter(context)
 
   beforeEach { exportsDirectory.deleteRecursively() }
-  isolationMode = InstancePerTest
 
   test("Creates exports directory when it doesn't exist") {
     exportsDirectory.shouldNotExist()
 
-    target.write("abc")
+    target.write(FakeContent1)
 
     exportsDirectory.shouldExist()
   }
 
   test("Replaces an existing file") {
-    val uri1 = target.write("abc")
-    val uri2 = target.write("def")
+    val uri1 = target.write(FakeContent1)
+    val uri2 = target.write(FakeContent2)
 
     uri1 shouldBe uri2
 
     val content = context.contentResolver.openInputStream(uri2)!!
-    content.bufferedReader().readText() shouldBe "def"
+    content.bufferedReader().readText() shouldBe FakeContent2
   }
 
-  test("Uses PetalsExport.csv as the default file name") {
-    val uri = target.write("xxx")
+  test("Uses PetalsExport-date.csv as the default file name") {
+    val uri = target.write(FakeContent1)
 
     uri.path shouldEndWith "PetalsExport-${LocalDate.now()}.csv"
   }
+
+  isolationMode = InstancePerTest
 })
+
+private val FakeContent1 = "abc"
+private val FakeContent2 = "def"
