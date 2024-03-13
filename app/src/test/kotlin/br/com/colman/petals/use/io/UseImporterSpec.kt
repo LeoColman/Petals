@@ -1,14 +1,18 @@
 package br.com.colman.petals.use.io
 
 import br.com.colman.petals.use.repository.UseRepository
+import com.natpryce.snodge.mutants
+import com.natpryce.snodge.text.replaceWithPossiblyMeaningfulText
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.result.shouldBeFailure
 import io.kotest.matchers.result.shouldBeSuccess
+import io.kotest.property.arbitrary.map
 import io.kotest.property.arbitrary.take
 import io.mockk.Called
 import io.mockk.mockk
 import io.mockk.verify
+import kotlin.random.Random
 
 class UseImporterSpec : FunSpec({
   val useRepository = mockk<UseRepository>(relaxed = true)
@@ -96,3 +100,7 @@ class UseImporterSpec : FunSpec({
     }
   }
 })
+
+val invalidUseCsvArb = useCsvArb.map {
+  Random.mutants(replaceWithPossiblyMeaningfulText(), 1, it)
+}.map { it.single() }

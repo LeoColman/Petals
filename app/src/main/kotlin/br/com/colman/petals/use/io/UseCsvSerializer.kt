@@ -34,18 +34,19 @@ data class UseCsvHeaders(val date: String, val amount: String, val costPerGram: 
     resources.getString(amount_label),
     resources.getString(cost_per_gram_label)
   )
+
+  fun toList() = listOf(date, amount, costPerGram)
 }
 
 class UseCsvSerializer(
   private val useRepository: UseRepository,
-  useCsvHeaders: UseCsvHeaders
+  private val useCsvHeaders: UseCsvHeaders
 ) {
 
-  private val headers = useCsvHeaders.run { listOf(date, amount, costPerGram) }
 
   suspend fun computeUseCsv(): String {
     val uses = useRepository.all().first().map { it.columns() }
-    val content = listOf(headers) + uses
+    val content = listOf(useCsvHeaders.toList()) + uses
 
     return serialize(content)
   }

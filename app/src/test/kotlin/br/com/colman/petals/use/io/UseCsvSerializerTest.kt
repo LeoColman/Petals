@@ -20,8 +20,6 @@ package br.com.colman.petals.use.io
 
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
-import com.natpryce.snodge.mutants
-import com.natpryce.snodge.text.replaceWithPossiblyMeaningfulText
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldStartWith
@@ -34,11 +32,10 @@ import io.kotest.property.arbitrary.next
 import io.kotest.property.arbitrary.take
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.flow.flowOf
 import java.math.BigDecimal.ZERO
-import kotlin.random.Random
+import kotlinx.coroutines.flow.flowOf
 
-class UseExporterSpec : FunSpec({
+class UseCsvSerializerTest : FunSpec({
   val useRepository = mockk<UseRepository>()
   val useCsvHeaders = UseCsvHeaders("date", "amount", "cost")
   val target = UseCsvSerializer(useRepository, useCsvHeaders)
@@ -54,7 +51,7 @@ class UseExporterSpec : FunSpec({
       file shouldContain usesCsv.joinToString("\n")
     }
 
-    test("Included the headers at the start of the file") {
+    test("Includes the headers at the start of the file") {
       file shouldStartWith "date,amount,cost\n"
     }
   }
@@ -71,6 +68,3 @@ val useArb = arbitrary {
 
 val useCsvArb = useArb.map { it.columns().joinToString(",") }
 
-val invalidUseCsvArb = useCsvArb.map {
-  Random.mutants(replaceWithPossiblyMeaningfulText(), 1, it)
-}.map { it.single() }
