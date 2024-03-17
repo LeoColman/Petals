@@ -14,6 +14,7 @@ import br.com.colman.petals.statistics.card.AverageUseCard
 import br.com.colman.petals.statistics.component.MultiPeriodSelect
 import br.com.colman.petals.statistics.component.Period
 import br.com.colman.petals.statistics.component.Period.Zero
+import br.com.colman.petals.statistics.graph.UsePerDayOfWeekGraph
 import br.com.colman.petals.statistics.graph.UsePerHourGraph
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
@@ -29,6 +30,7 @@ fun StatisticsPage(useRepository: UseRepository) {
     if (selectedPeriods.isEmpty()) return
 
     UsePerHourGraph(usesInPeriod)
+    UsePerDayOfWeekGraph(usesInPeriod)
     usesInPeriod.forEach { (period, uses) ->
       AverageUseCard(uses, period.toDateRange())
     }
