@@ -1,10 +1,8 @@
 package br.com.colman.petals.statistics.graph
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.colman.petals.R.plurals.last_x_days
 import br.com.colman.petals.R.string.grams_distribution_per_hour_of_day
 import br.com.colman.petals.statistics.component.Period
 import br.com.colman.petals.statistics.graph.component.LineChart
@@ -58,7 +56,7 @@ fun UsePerHourGraphPreview2() {
 fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
   val description = stringResource(grams_distribution_per_hour_of_day)
   val gramsData = useGroups.map { (period, uses) ->
-    val label = pluralStringResource(last_x_days, period.days, period.days)
+    val label = period.label()
     createDistributionPerHourDataset(period.days, uses, label)
   }
 
