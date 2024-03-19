@@ -1,0 +1,1 @@
+- Adiciona gráfico de Usos por Dia da Semana para tela de estatísticas

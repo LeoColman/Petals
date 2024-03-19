@@ -1,0 +1,1 @@
+- Añadir nuevo gráfico de usos por día de la semana a la página de estadísticas

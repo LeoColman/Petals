@@ -1,0 +1,1 @@
+- Corrigir alguns erros de tradução que causaria um crash na página Sintomas
