@@ -17,7 +17,6 @@ private fun calculateGramDistributionPerHour(uses: List<Use>): List<Entry> {
 
 fun createDistributionPerHourDataset(days: Int, uses: List<Use>, label: String): LineDataSet {
   return LineDataSet(calculateGramDistributionPerHour(uses), label).apply {
-    valueFormatter = GramsValueFormatter
     setDrawCircles(true)
     setDrawFilled(true)
     setDrawValues(false)

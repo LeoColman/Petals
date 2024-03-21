@@ -11,6 +11,6 @@ val GramsValueFormatter = object : IValueFormatter {
     dataSetIndex: Int,
     viewPortHandler: ViewPortHandler?
   ): String {
-    return "%.1f".format(entry?.y) + "g"
+    return "%.2f".format(entry?.y) + "g"
   }
 }
