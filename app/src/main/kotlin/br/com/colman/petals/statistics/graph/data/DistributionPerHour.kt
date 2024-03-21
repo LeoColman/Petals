@@ -2,7 +2,6 @@ package br.com.colman.petals.statistics.graph.data
 
 import androidx.compose.ui.graphics.toArgb
 import br.com.colman.petals.statistics.graph.color.createColor
-import br.com.colman.petals.statistics.graph.formatter.GramsValueFormatter
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.totalGrams
 import com.github.mikephil.charting.data.Entry
