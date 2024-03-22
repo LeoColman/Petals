@@ -1,0 +1,2 @@
+- Ajusta casas decimais dos "Usos por dia da semana"
+- Substitui "Últimos 0 dias" por "Hoje"
