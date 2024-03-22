@@ -1,0 +1,2 @@
+- Ajustar el gráfico "Usos por día de la semana" redondeando los decimales
+- Sustituir "Últimos 0 días" por "Hoy"
