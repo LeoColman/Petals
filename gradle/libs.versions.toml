@@ -15,7 +15,7 @@ glance = "1.0.0"
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.0.4"
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx" }
 androidx-test-runner = "androidx.test:runner:1.5.2"
-apache-commons-lang = "org.apache.commons:commons-lang3:3.13.0"
+apache-commons-lang = "org.apache.commons:commons-lang3:3.14.0"
 apache-commons-math = "org.apache.commons:commons-math3:3.6.1"
 compose-activity = "androidx.activity:activity-compose:1.8.2"
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
