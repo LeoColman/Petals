@@ -53,6 +53,7 @@ import compose.icons.tablericons.InfoCircle
 import compose.icons.tablericons.Settings
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 
 @Composable
 fun MyTopAppBar(navController: NavController) {
@@ -82,7 +83,7 @@ fun MyTopAppBarContent(navController: NavController) {
     ) {
       Row(Modifier, spacedBy(16.dp)) {
         ImportButton()
-        ExportButton(get())
+        ExportButton(koinInject())
         InfoButton(navController)
         SettingsButton(navController)
       }
@@ -93,7 +94,7 @@ fun MyTopAppBarContent(navController: NavController) {
 @Preview
 @Composable
 private fun ImportButton(
-  useCsvFileImporter: UseCsvFileImporter = get()
+  useCsvFileImporter: UseCsvFileImporter = koinInject()
 ) {
   val launcher = rememberLauncherForActivityResult(GetContent()) {
     if (it != null) {

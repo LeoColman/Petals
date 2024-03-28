@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import br.com.colman.petals.R
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
@@ -96,7 +97,7 @@ private fun subjectiveHighWeakSeries(context: Context): LineGraphSeries<DataPoin
   )
 
   return LineGraphSeries(datapoints).apply {
-    color = context.resources.getColor(R.color.lightGreen)
+    color = ContextCompat.getColor(context, R.color.lightGreen)
     isDrawDataPoints = true
     title = context.getString(R.string._175thc)
   }
@@ -110,7 +111,7 @@ private fun subjectiveHighStrongSeries(context: Context): LineGraphSeries<DataPo
   )
 
   return LineGraphSeries(datapoints).apply {
-    color = context.resources.getColor(R.color.darkGreen)
+    color = ContextCompat.getColor(context, R.color.darkGreen)
     isDrawDataPoints = true
     title = context.getString(R.string._355thc)
   }

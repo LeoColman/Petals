@@ -64,10 +64,11 @@ import br.com.colman.petals.R.string.vibrate_on_timer_end
 import br.com.colman.petals.settings.SettingsRepository
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 
 @Preview
 @Composable
-fun ComposeHitTimer(repository: HitTimerRepository = get()) {
+fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
   val hitTimer = rememberSaveable { HitTimer() }
 
   val ctx = LocalContext.current
@@ -116,7 +117,7 @@ private fun TimerText(millisLeft: Long) {
   val isTimerRunning = millisLeft > 0L
   var blinking by remember { mutableStateOf(false) }
 
-  val settingsRepository = get<SettingsRepository>()
+  val settingsRepository = koinInject<SettingsRepository>()
   val hitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(
     settingsRepository.hitTimerMillisecondsEnabledList[0]
   )

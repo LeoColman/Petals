@@ -35,12 +35,13 @@ import br.com.colman.petals.R
 import br.com.colman.petals.withdrawal.discomfort.view.DiscomfortView
 import br.com.colman.petals.withdrawal.thc.view.ThcConcentrationView
 import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 
 @Composable
 @Preview
 fun Symptoms(
-  thcConcentrationView: ThcConcentrationView = get(),
-  discomfortView: DiscomfortView = get()
+  thcConcentrationView: ThcConcentrationView = koinInject(),
+  discomfortView: DiscomfortView = koinInject()
 ) {
   val scrollState = rememberScrollState()
 

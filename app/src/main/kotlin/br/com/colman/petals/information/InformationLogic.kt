@@ -97,7 +97,7 @@ fun getCountryInformation(context: Context, countryNameToFind: String): CountryI
   val parser: XmlResourceParser = context.resources.getXml(legislation_and_rights)
   var eventType = parser.eventType
   val countryInformation = CountryInformation("", "", "", "", "", "", "", "", "")
-  var countryName = ""
+  var countryName: String
   while (eventType != XmlPullParser.END_DOCUMENT) {
     if (eventType == XmlPullParser.START_TAG && parser.name == "country") {
       countryName = getResourceString(context, parser.nextText())

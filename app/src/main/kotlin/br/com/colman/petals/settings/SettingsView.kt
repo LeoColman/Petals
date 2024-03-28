@@ -316,12 +316,12 @@ fun ShareApp(
 @Preview
 @Composable
 private fun TimeDialog(
-  timeFormat: String = "",
+  initialTimeFormat: String = "",
   timeFormatList: List<String> = listOf(),
   setTimeFormat: (String) -> Unit = {},
   onDismiss: () -> Unit = {},
 ) {
-  var timeFormat by remember { mutableStateOf(timeFormat) }
+  var timeFormat by remember { mutableStateOf(initialTimeFormat) }
   var expanded by remember { mutableStateOf(false) }
 
   AlertDialog(
@@ -376,12 +376,12 @@ private fun TimeDialog(
 @Preview
 @Composable
 private fun DateDialog(
-  dateFormat: String = "",
+  initialDateFormat: String = "",
   dateFormatList: List<String> = listOf(),
   setDateFormat: (String) -> Unit = {},
   onDismiss: () -> Unit = {},
 ) {
-  var dateFormat by remember { mutableStateOf(dateFormat) }
+  var dateFormat by remember { mutableStateOf(initialDateFormat) }
   var expanded by remember { mutableStateOf(false) }
 
   AlertDialog(
@@ -436,11 +436,11 @@ private fun DateDialog(
 @Preview
 @Composable
 private fun CurrencyDialog(
-  currency: String = "$",
+  initialCurrency: String = "$",
   setCurrency: (String) -> Unit = {},
   onDismiss: () -> Unit = {},
 ) {
-  var currency by remember { mutableStateOf(currency) }
+  var currency by remember { mutableStateOf(initialCurrency) }
 
   AlertDialog(
     onDismissRequest = onDismiss,
@@ -500,12 +500,12 @@ private fun PinDialog(
 @Preview
 @Composable
 private fun MillisecondsEnabledDialog(
-  millisecondsEnabled: String = "",
+  initialMillisecondsEnabled: String = "",
   millisecondsEnabledList: List<String> = listOf(),
   setMillisecondsEnabled: (String) -> Unit = {},
   onDismiss: () -> Unit = {},
 ) {
-  var millisecondsEnabled by remember { mutableStateOf(millisecondsEnabled) }
+  var millisecondsEnabled by remember { mutableStateOf(initialMillisecondsEnabled) }
   var expanded by remember { mutableStateOf(false) }
 
   AlertDialog(
@@ -560,12 +560,12 @@ private fun MillisecondsEnabledDialog(
 @Preview
 @Composable
 private fun HitTimerMillisecondsEnabledDialog(
-  hitTimerMillisecondsEnabled: String = "",
+  initialHitTimerMillisecondsEnabled: String = "",
   hitTimerMillisecondsEnabledList: List<String> = listOf(),
   setHitTimerMillisecondsEnabled: (String) -> Unit = {},
   onDismiss: () -> Unit = {},
 ) {
-  var hitTimerMillisecondsEnabled by remember { mutableStateOf(hitTimerMillisecondsEnabled) }
+  var hitTimerMillisecondsEnabled by remember { mutableStateOf(initialHitTimerMillisecondsEnabled) }
   var expanded by remember { mutableStateOf(false) }
 
   AlertDialog(
@@ -620,12 +620,12 @@ private fun HitTimerMillisecondsEnabledDialog(
 @Preview
 @Composable
 private fun PrecisionDialog(
-  decimalPrecision: Int = 2,
+  initialDecimalPrecision: Int = 2,
   decimalPrecisionList: List<Int> = listOf(),
   setDecimalPrecision: (Int) -> Unit = {},
   onDismiss: () -> Unit = {},
 ) {
-  var decimalPrecision by remember { mutableStateOf(decimalPrecision) }
+  var decimalPrecision by remember { mutableStateOf(initialDecimalPrecision) }
   var expanded by remember { mutableStateOf(false) }
 
   AlertDialog(

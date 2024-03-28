@@ -56,7 +56,7 @@ import br.com.colman.petals.use.TimeUnit.Second
 import br.com.colman.petals.use.TimeUnit.Year
 import br.com.colman.petals.utils.truncatedToMinute
 import kotlinx.coroutines.delay
-import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 import java.time.LocalTime
@@ -66,7 +66,7 @@ import java.util.Locale
 
 @Composable
 fun LastUseDateTimer(lastUseDate: LocalDateTime) {
-  val settingsRepository = get<SettingsRepository>()
+  val settingsRepository = koinInject<SettingsRepository>()
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
   val millisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(

@@ -124,7 +124,7 @@ fun CountryPicker(context: Context) {
 
 @Composable
 fun CountryLegislationAndRights(context: Context, country: String) {
-  val countryInformation = getCountryInformation(context, country)!!
+  val countryInformation = getCountryInformation(context, country)
 
   ExpandableComponent(stringResource(legal_status)) { KnowledgeContent(countryInformation.legalStatus) }
 

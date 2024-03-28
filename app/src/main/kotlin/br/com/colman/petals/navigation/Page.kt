@@ -48,6 +48,7 @@ import br.com.colman.petals.settings.SettingsView
 import br.com.colman.petals.statistics.StatisticsPage
 import br.com.colman.petals.withdrawal.Symptoms
 import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 
 enum class Page(
   @StringRes val nameRes: Int,
@@ -57,7 +58,7 @@ enum class Page(
   Usage(R.string.usage, { ImageVector.vectorResource(ic_cannabis) }, { Usage() }),
   HitTimer(R.string.hit_timer, { Default.LockClock }, { ComposeHitTimer() }),
   Symptoms(R.string.symptoms, { Default.MedicalServices }, { Symptoms() }),
-  Stats(R.string.stats, { Default.GraphicEq }, { StatisticsPage(get()) })
+  Stats(R.string.stats, { Default.GraphicEq }, { StatisticsPage(koinInject()) })
 }
 
 @Composable
@@ -70,7 +71,7 @@ fun NavHostContainer(navController: NavHostController, paddingValues: PaddingVal
     }
 
     composable("settings") {
-      SettingsView(get())
+      SettingsView(koinInject())
     }
     composable("information") {
       InformationView()

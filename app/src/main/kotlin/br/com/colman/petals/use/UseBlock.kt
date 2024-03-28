@@ -54,6 +54,7 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.Scale
 import compose.icons.tablericons.ZoomMoney
 import org.koin.androidx.compose.get
+import org.koin.compose.koinInject
 import java.math.RoundingMode.HALF_UP
 import java.time.DayOfWeek.MONDAY
 import java.time.LocalDate.now
@@ -88,7 +89,7 @@ private fun UseBlock(title: String, uses: List<Use>) {
   var totalGrams by remember { mutableStateOf("") }
   var totalCost by remember { mutableStateOf("") }
 
-  val settingsRepository = get<SettingsRepository>()
+  val settingsRepository = koinInject<SettingsRepository>()
   val decimalPrecision by settingsRepository.decimalPrecision.collectAsState(settingsRepository.decimalPrecisionList[2])
 
   // HALF_UP is necessary because the default rounding
@@ -108,7 +109,7 @@ private fun UseBlock(
   totalGrams: String = "12.345",
   totalValue: String = "54.321"
 ) {
-  val settingsRepository = get<SettingsRepository>()
+  val settingsRepository = koinInject<SettingsRepository>()
   val currencyIcon by settingsRepository.currencyIcon.collectAsState("$")
 
   Card(
