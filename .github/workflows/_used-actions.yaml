@@ -16,4 +16,4 @@ jobs:
       - uses: gradle/gradle-build-action@v2
       - uses: entrostat/git-secret-action@v4
       - uses: ruby/setup-ruby@v1
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v2
