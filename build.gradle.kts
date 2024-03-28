@@ -27,7 +27,7 @@ buildscript {
   dependencies {
     classpath("com.android.tools.build:gradle") {
       version {
-        strictly("8.0.0")
+        strictly("8.2.0")
       }
     }
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
