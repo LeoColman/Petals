@@ -47,7 +47,7 @@
     <string name="grams">Gramm</string>
     <string name="grams_distribution_per_hour_of_day">Verteilung in Gramm pro Stunde des Tages</string>
     <string name="current_thc_concentration">Aktuelle THC-Konzentration: %s %%</string>
-    <string name="thc_concentration">THC-Konzentration(%)</string>
+    <string name="thc_concentration">THC-Konzentration(%%)</string>
     <string name="current_withdrawal_discomfort">Aktuelle Entzugsbeschwerden: %s</string>
     <string name="discomfort_strength">Stärke des Unbehagens</string>
     <string name="date_at_time">%1$s um %2$s</string>
@@ -106,7 +106,7 @@
         <item quantity="other">Letzte %s Tage</item>
     </plurals>
     <string name="keep_in_mind_that_laws_can_change">Denken Sie daran, dass Gesetze sich ändern können, so ist es wichtig, die neuesten rechtlichen Quellen oder lokale Rechtsberatung für die aktuellsten Informationen zu fragen.</string>
-    <string name="hit_timer_milliseconds_enabled">Umschalten Millisekunden auf der Hit Timer Seite</string>
+    <string name="hit_timer_milliseconds_enabled">Aktivieren/deaktivieren Millisekunden auf der Hit Timer Seite</string>
     <string name="no_country_selected">Kein Land ausgewählt</string>
     <string name="medical_use">Medizinische Verwendung</string>
     <string name="cultivation">Anbau</string>
@@ -124,4 +124,5 @@
     <string name="consumption">Verbrauch</string>
     <string name="enforcement">Durchsetzung</string>
     <string name="purchase_and_sale">Kauf und Verkauf</string>
+    <string name="milliseconds_enabled">Aktivieren/deaktivieren der millisekunden Leiste</string>
 </resources>
