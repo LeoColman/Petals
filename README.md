@@ -96,9 +96,9 @@ The **Keystore**, **Keystore Properties** and **Google Play deploy json** files 
     - Original Author
 
 - GitHub Actions
-    - Fingerprint `1FF0 67E9 C75F A1BC 51D2 FC75 BA87 7D2B 9560 920A`
+    - Fingerprint `882E 409C 71F4 565B 1698 B947 A992 5FF4 75B3 5E07`
     - Auto-publishing signed app to GitHub
-    - Expires on 2024-07-29
+    - Expires on 2027-04-05
     - Available on environment secret `GPG_KEY`
 
 ## Releasing
