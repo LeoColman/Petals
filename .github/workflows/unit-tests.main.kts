@@ -1,10 +1,15 @@
 #!/usr/bin/env kotlin
+@file:Repository("https://repo1.maven.org/maven2/")
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.13.0")
-@file:Import("generated/actions/checkout.kt")
-@file:Import("generated/actions/setup-java.kt")
-@file:Import("generated/gradle/gradle-build-action.kt")
 
-import io.github.typesafegithub.workflows.annotations.ExperimentalClientSideBindings
+@file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
+@file:DependsOn("actions:checkout:v4")
+@file:DependsOn("actions:setup-java:v4")
+@file:DependsOn("gradle:gradle-build-action:v2")
+
+import io.github.typesafegithub.workflows.actions.actions.Checkout
+import io.github.typesafegithub.workflows.actions.actions.SetupJava
+import io.github.typesafegithub.workflows.actions.gradle.GradleBuildAction
 import io.github.typesafegithub.workflows.domain.RunnerType
 import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
@@ -12,7 +17,6 @@ import io.github.typesafegithub.workflows.dsl.workflow
 import io.github.typesafegithub.workflows.yaml.writeToFile
 
 
-@OptIn(ExperimentalClientSideBindings::class)
 workflow(
   name = "Unit Tests",
   on = listOf(Push(), PullRequest()),
@@ -23,4 +27,4 @@ workflow(
     uses(action = Checkout())
     uses(action = GradleBuildAction(arguments = "test"))
   }
-}.writeToFile(generateActionBindings = true)
+}.writeToFile()
