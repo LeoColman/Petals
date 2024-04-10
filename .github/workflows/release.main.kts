@@ -5,10 +5,10 @@
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:setup-java:v4")
-@file:DependsOn("gradle:gradle-build-action:v2")
+@file:DependsOn("gradle:gradle-build-action:v3")
 @file:DependsOn("entrostat:git-secret-action:v4")
 @file:DependsOn("ruby:setup-ruby:v1")
-@file:DependsOn("softprops:action-gh-release:v1")
+@file:DependsOn("softprops:action-gh-release:v2")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
