@@ -35,16 +35,16 @@ jobs:
       uses: 'actions/checkout@v4'
     - id: 'step-2'
       name: 'Create Fdroid APK'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'packageFdroidReleaseUniversalApk'
     - id: 'step-3'
       name: 'Create Playstore APK'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'packagePlaystoreReleaseUniversalApk'
     - id: 'step-4'
       name: 'Create Github APK'
-      uses: 'gradle/gradle-build-action@v2'
+      uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'packageGithubReleaseUniversalApk'
