@@ -34,16 +34,21 @@ jobs:
     - id: 'step-1'
       uses: 'actions/checkout@v4'
     - id: 'step-2'
+      name: 'reveal-secrets'
+      uses: 'entrostat/git-secret-action@v4'
+      with:
+        gpg-private-key: '${{ secrets.GPG_KEY }}'
+    - id: 'step-3'
       name: 'Create Fdroid APK'
       uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'packageFdroidReleaseUniversalApk'
-    - id: 'step-3'
+    - id: 'step-4'
       name: 'Create Playstore APK'
       uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'packagePlaystoreReleaseUniversalApk'
-    - id: 'step-4'
+    - id: 'step-5'
       name: 'Create Github APK'
       uses: 'gradle/gradle-build-action@v3'
       with:
