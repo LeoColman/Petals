@@ -1,0 +1,1 @@
+- Add check to avoid 0 in HitTimer when milliseconds are disabled
