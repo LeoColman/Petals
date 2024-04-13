@@ -33,4 +33,10 @@ class HitTimerTest : FunSpec({
     val allResults = flow.take(300).toList()
     allResults.size shouldBeGreaterThanOrEqual (duration / 10).toInt()
   }
+
+  test("Duration with milliseconds disabled should not show 0 while there are still milliseconds") {
+    val durationMillisecondsDisabled = HitTimer.durationMillisecondsDisabled(1)
+
+    durationMillisecondsDisabled shouldBe "1"
+  }
 })
