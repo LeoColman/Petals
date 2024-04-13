@@ -1,6 +1,7 @@
 package br.com.colman.petals.hittimer
 
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.datatest.withData
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldBeMonotonicallyDecreasing
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
@@ -32,5 +33,19 @@ class HitTimerTest : FunSpec({
     target.start()
     val allResults = flow.take(300).toList()
     allResults.size shouldBeGreaterThanOrEqual (duration / 10).toInt()
+  }
+
+  context("Duration with milliseconds disabled should not show 0 while there are still milliseconds") {
+    withData(
+      nameFn = { (millis, string) -> "$millis milliseconds should be converted to $string" },
+      0L to "0.0",
+      100L to "0.1",
+      249L to "0.2",
+      250L to "0.3",
+      666L to "0.7",
+      1200L to "1"
+    ) { (millis, string) ->
+      HitTimer.durationMillisecondsDisabled(millis) shouldBe string
+    }
   }
 })

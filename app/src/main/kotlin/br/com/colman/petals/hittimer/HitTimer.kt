@@ -9,6 +9,7 @@ import org.apache.commons.lang3.time.DurationFormatUtils
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit.MILLIS
+import java.util.Locale
 
 @Parcelize
 class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
@@ -40,6 +41,10 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
 
   companion object {
     fun duration(millis: Long): String = DurationFormatUtils.formatDuration(millis, "ss:SSS")
-    fun durationMillisecondsDisabled(millis: Long): String = DurationFormatUtils.formatDuration(millis, "s")
+    fun durationMillisecondsDisabled(millis: Long): String = when {
+      millis > 1000 -> (millis / 1000).toString()
+      millis > 0 -> "%.1f".format(Locale.US, millis / 1000.0)
+      else -> "0.0"
+    }
   }
 }
