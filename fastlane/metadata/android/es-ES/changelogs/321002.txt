@@ -1,0 +1,1 @@
+- Agregar verificación para evitar 0 en HitTimer cuando los milisegundos están deshabilitados
