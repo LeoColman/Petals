@@ -8,7 +8,7 @@ import br.com.colman.petals.R.string.today
 import me.moallemi.tools.daterange.localdate.LocalDateRange
 import java.time.LocalDate
 
-sealed class Period(val days: Int) : Comparable<Period> {
+open class Period(val days: Int) : Comparable<Period> {
   @Composable
   fun label(): String {
     return when (days) {
@@ -16,6 +16,8 @@ sealed class Period(val days: Int) : Comparable<Period> {
       else -> pluralStringResource(last_x_days, days, days)
     }
   }
+
+  fun minusDays(amount: Int) = Period(days - amount)
 
   fun toDateRange(end: LocalDate = LocalDate.now()): LocalDateRange {
     val start = end.minusDays(days.toLong())
