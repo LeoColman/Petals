@@ -1,7 +1,8 @@
 package br.com.colman.petals.withdrawal.thc.repository
 
 import br.com.colman.petals.use.repository.UseRepository
-import br.com.colman.petals.withdrawal.interpolator.ThcConcentrationInterpolator
+import br.com.colman.petals.withdrawal.interpolator.Interpolator
+import br.com.colman.petals.withdrawal.interpolator.ThcConcentrationDataPoints
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.extensions.time.ConstantNowTestListener
 import io.kotest.matchers.collections.shouldHaveSize
@@ -25,9 +26,9 @@ class ThcConcentrationRepositoryTest : FunSpec({
   val useRepository = mockk<UseRepository> {
     every { getLastUseDate() } returns flowOf(foreverNow.minusDays(3))
   }
-  val interpolator = mockk<ThcConcentrationInterpolator>(relaxed = true)
 
-  val target = ThcConcentrationRepository(useRepository, interpolator)
+  val target = ThcConcentrationRepository(useRepository)
+  val interpolator = Interpolator(ThcConcentrationDataPoints)
 
   test("Emits the concentration value constantly") {
     target.concentration.take(10).toList() shouldHaveSize 10

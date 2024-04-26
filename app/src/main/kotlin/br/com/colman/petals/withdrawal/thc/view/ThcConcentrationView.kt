@@ -107,8 +107,8 @@ class ThcConcentrationView(
   }
 
   private fun abstinenceThcPercentages(): Map<Duration, Double> {
-    val maxValue = ThcConcentrationDataPoints.values.maxOf { it.nanoGramPerMilliliter }
-    return ThcConcentrationDataPoints.mapValues { it.value.nanoGramPerMilliliter / maxValue * 100 }
+    val maxValue = ThcConcentrationDataPoints.values.max()
+    return ThcConcentrationDataPoints.mapValues { it.value / maxValue * 100 }
   }
 
   private fun currentPercentagePoint(percentage: Double, day: Double) =

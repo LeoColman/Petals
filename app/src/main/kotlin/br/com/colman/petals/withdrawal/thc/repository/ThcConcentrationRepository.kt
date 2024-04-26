@@ -19,7 +19,8 @@
 package br.com.colman.petals.withdrawal.thc.repository
 
 import br.com.colman.petals.use.repository.UseRepository
-import br.com.colman.petals.withdrawal.interpolator.ThcConcentrationInterpolator
+import br.com.colman.petals.withdrawal.interpolator.Interpolator
+import br.com.colman.petals.withdrawal.interpolator.ThcConcentrationDataPoints
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
@@ -27,9 +28,10 @@ import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit
 
 class ThcConcentrationRepository(
-  private val useRepository: UseRepository,
-  private val interpolator: ThcConcentrationInterpolator
+  private val useRepository: UseRepository
 ) {
+
+  private val interpolator = Interpolator(ThcConcentrationDataPoints)
 
   val concentration = flow {
     while (true) {

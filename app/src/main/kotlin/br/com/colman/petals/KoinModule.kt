@@ -26,8 +26,6 @@ import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepository
 import br.com.colman.petals.withdrawal.discomfort.view.DiscomfortView
-import br.com.colman.petals.withdrawal.interpolator.DiscomfortInterpolator
-import br.com.colman.petals.withdrawal.interpolator.ThcConcentrationInterpolator
 import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
 import br.com.colman.petals.withdrawal.thc.view.ThcConcentrationView
 import org.koin.dsl.module
@@ -40,11 +38,9 @@ val KoinModule = module {
   single { HitTimerRepository(get()) }
   single { SettingsRepository(get<Context>().settingsDatastore) }
 
-  single { ThcConcentrationInterpolator() }
-  single { ThcConcentrationRepository(get(), get()) }
+  single { ThcConcentrationRepository(get()) }
   single { ThcConcentrationView(get(), get()) }
 
-  single { DiscomfortInterpolator() }
-  single { DiscomfortRepository(get(), get()) }
+  single { DiscomfortRepository(get()) }
   single { DiscomfortView(get(), get()) }
 }

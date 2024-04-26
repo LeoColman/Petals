@@ -1,7 +1,8 @@
 package br.com.colman.petals.withdrawal.discomfort.repository
 
 import br.com.colman.petals.use.repository.UseRepository
-import br.com.colman.petals.withdrawal.interpolator.DiscomfortInterpolator
+import br.com.colman.petals.withdrawal.interpolator.DiscomfortDataPoints
+import br.com.colman.petals.withdrawal.interpolator.Interpolator
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.extensions.time.ConstantNowTestListener
 import io.kotest.matchers.collections.shouldHaveSize
@@ -25,9 +26,9 @@ class DiscomfortRepositoryTest : FunSpec({
   val useRepository = mockk<UseRepository> {
     every { getLastUseDate() } returns flowOf(foreverNow.minusDays(3))
   }
-  val interpolator = mockk<DiscomfortInterpolator>(relaxed = true)
 
-  val target = DiscomfortRepository(useRepository, interpolator)
+  val target = DiscomfortRepository(useRepository)
+  val interpolator = Interpolator(DiscomfortDataPoints)
 
   test("Emits the concentration value constantly") {
     target.discomfort.take(10).toList() shouldHaveSize 10
@@ -35,12 +36,12 @@ class DiscomfortRepositoryTest : FunSpec({
 
   test("Does not emit discomfort if no uses") {
     every { useRepository.getLastUseDate() } returns emptyFlow()
-    target.discomfort.firstOrNull()?.strength shouldBe 0.0
+    target.discomfort.firstOrNull() shouldBe 0.0
   }
 
   test("Calculate discomfort using last use and interpolator") {
     val returnedValue = target.discomfort.first()
 
-    returnedValue.strength shouldBe interpolator.calculateDiscomfort(3.days.inWholeSeconds)
+    returnedValue shouldBe interpolator.value(3.days.inWholeSeconds.toDouble())
   }
 })

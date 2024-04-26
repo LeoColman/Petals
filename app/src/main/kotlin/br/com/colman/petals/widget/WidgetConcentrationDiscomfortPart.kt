@@ -29,7 +29,7 @@ fun WidgetConcentrationDiscomfortPart() {
 
   val currentPercentageTHC by thcConcentrationRepository.concentration.map { it * 100 }
     .collectAsState(100.0)
-  val currentDiscomfort by discomfortRepository.discomfort.map { it.strength }
+  val currentDiscomfort by discomfortRepository.discomfort
     .collectAsState(8.0)
 
   val thcConcentrationString = LocalContext.current.getString(
