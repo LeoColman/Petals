@@ -1,0 +1,1 @@
+- Modify weekly stats graph to display a round amount of weeks
