@@ -17,7 +17,7 @@ import kotlin.time.DurationUnit.SECONDS
 
 class DiscomfortInterpolatorTest : FunSpec({
 
-  val target = DiscomfortInterpolator()
+  val target = Interpolator(DiscomfortDataPoints)
 
   test("Must be an increasing function until day 1") {
     val sortedDurations =
@@ -34,6 +34,6 @@ class DiscomfortInterpolatorTest : FunSpec({
   }
 
   test("Coerces inputs greater than 25 days to 3.0") {
-    target.calculateDiscomfort((25.days + 1.seconds).inWholeSeconds) shouldBe (3.0 plusOrMinus 1.percent)
+    target.value((25.days + 1.seconds).inWholeSeconds.toDouble()) shouldBe (3.0 plusOrMinus 1.percent)
   }
 })

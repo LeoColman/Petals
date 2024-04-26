@@ -19,8 +19,8 @@
 package br.com.colman.petals.withdrawal.discomfort.repository
 
 import br.com.colman.petals.use.repository.UseRepository
-import br.com.colman.petals.withdrawal.interpolator.Discomfort
-import br.com.colman.petals.withdrawal.interpolator.DiscomfortInterpolator
+import br.com.colman.petals.withdrawal.interpolator.DiscomfortDataPoints
+import br.com.colman.petals.withdrawal.interpolator.Interpolator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
@@ -28,9 +28,9 @@ import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit
 
 class DiscomfortRepository(
-  private val useRepository: UseRepository,
-  private val interpolator: DiscomfortInterpolator
+  private val useRepository: UseRepository
 ) {
+  private val interpolator = Interpolator(DiscomfortDataPoints)
 
   val discomfort = flow {
     while (true) {
@@ -39,10 +39,10 @@ class DiscomfortRepository(
     }
   }
 
-  private suspend fun calculateDiscomfort(): Discomfort {
-    val quitDate = useRepository.getLastUseDate().firstOrNull() ?: return Discomfort(0.0)
+  private suspend fun calculateDiscomfort(): Double {
+    val quitDate = useRepository.getLastUseDate().firstOrNull() ?: return 0.0
     val secondsQuit = ChronoUnit.SECONDS.between(quitDate, now()).coerceAtLeast(0)
 
-    return Discomfort(interpolator.calculateDiscomfort(secondsQuit))
+    return interpolator.value(secondsQuit.toDouble())
   }
 }

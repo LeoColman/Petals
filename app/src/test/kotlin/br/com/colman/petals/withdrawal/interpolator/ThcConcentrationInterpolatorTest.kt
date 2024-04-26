@@ -18,7 +18,7 @@ import kotlin.time.DurationUnit.SECONDS
 
 class ThcConcentrationInterpolatorTest : FunSpec({
 
-  val target = ThcConcentrationInterpolator()
+  val target = Interpolator(ThcConcentrationDataPoints)
 
   test("Must be a descending function") {
     val sortedDurations = Arb.duration(0.days..20.days, DAYS)

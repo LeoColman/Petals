@@ -40,7 +40,6 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.jjoe64.graphview.series.PointsGraphSeries
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit
 
@@ -54,7 +53,7 @@ class DiscomfortView(
   @Composable
   fun Content() {
     val quitDate by useRepository.getLastUseDate().filterNotNull().collectAsState(now())
-    val currentPercentage by discomfortRepository.discomfort.map { it.strength }.collectAsState(8.0)
+    val currentPercentage by discomfortRepository.discomfort.collectAsState(8.0)
     val quitDays = ChronoUnit.SECONDS.between(quitDate, now()).toDouble().div(86400)
     val colors = MaterialTheme.colors
 
@@ -96,7 +95,7 @@ class DiscomfortView(
 
   private fun discomfortSeries(): LineGraphSeries<DataPoint> {
     val dataPoints = DiscomfortDataPoints.map { (key, value) ->
-      DataPoint(key.toDays().toDouble(), value.strength)
+      DataPoint(key.toDays().toDouble(), value)
     }
 
     return LineGraphSeries(dataPoints.toTypedArray()).apply {
