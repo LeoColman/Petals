@@ -69,7 +69,7 @@ fun UsePerDayOfWeekGraphPreview2() {
 fun UsePerDayOfWeekGraphPreview3() {
   val uses = List(2930) {
     Use(
-      LocalDate.now().minusDays(Random.nextLong(1, 30)).atStartOfDay(),
+      LocalDate.now().minusDays(Random.nextLong(0, 30)).atStartOfDay(),
       "3.37".toBigDecimal(),
       1.toBigDecimal()
     )
@@ -85,7 +85,7 @@ fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
   val gramsData = useGroups.map { (period, uses) ->
     val daysExceedingWeek = period.days % 7
     val weekPeriod = period.minusDays(daysExceedingWeek)
-    val weekUses = uses.filter { it.localDate >= LocalDate.now().minusDays(weekPeriod.days.toLong()) }
+    val weekUses = uses.filter { it.localDate > LocalDate.now().minusDays(weekPeriod.days.toLong()) }
 
     val label = weekPeriod.label()
     createDistributionPerDayOfWeekDataset(weekPeriod.days, weekUses, label, colors)
