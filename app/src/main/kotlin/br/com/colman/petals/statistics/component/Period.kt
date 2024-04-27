@@ -39,7 +39,6 @@ open class Period(val days: Int) : Comparable<Period> {
     return days
   }
 
-
   data object Zero : Period(0)
   data object Week : Period(7)
   data object TwoWeek : Period(14)

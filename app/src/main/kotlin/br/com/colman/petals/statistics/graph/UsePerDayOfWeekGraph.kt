@@ -99,8 +99,12 @@ fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
   val gramsData = useGroups.map { (period, uses) ->
     val daysExceedingWeek = period.days % 7
     val weekPeriod = period.minusDays(daysExceedingWeek)
-    val weekUses = if (weekPeriod == Period.Zero) uses else uses.filter {
-      it.localDate > LocalDate.now().minusDays(weekPeriod.days.toLong())
+    val weekUses = if (weekPeriod == Period.Zero) {
+      uses
+    } else {
+      uses.filter {
+        it.localDate > LocalDate.now().minusDays(weekPeriod.days.toLong())
+      }
     }
 
     val label = weekPeriod.label()
