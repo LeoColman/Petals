@@ -79,13 +79,29 @@ fun UsePerDayOfWeekGraphPreview3() {
 }
 
 @Composable
+@Preview
+fun UsePerDayOfWeekGraphPreview4() {
+  val uses = List(2930) {
+    Use(
+      LocalDate.now().minusDays(0).atStartOfDay(),
+      "3.37".toBigDecimal(),
+      1.toBigDecimal()
+    )
+  }
+
+  UsePerDayOfWeekGraph(mapOf(Period.Zero to uses))
+}
+
+@Composable
 fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
   val description = stringResource(string.grams_distribution_per_day_of_week)
   val colors = MaterialTheme.colors
   val gramsData = useGroups.map { (period, uses) ->
     val daysExceedingWeek = period.days % 7
     val weekPeriod = period.minusDays(daysExceedingWeek)
-    val weekUses = uses.filter { it.localDate > LocalDate.now().minusDays(weekPeriod.days.toLong()) }
+    val weekUses = if (weekPeriod == Period.Zero) uses else uses.filter {
+      it.localDate > LocalDate.now().minusDays(weekPeriod.days.toLong())
+    }
 
     val label = weekPeriod.label()
     createDistributionPerDayOfWeekDataset(weekPeriod.days, weekUses, label, colors)

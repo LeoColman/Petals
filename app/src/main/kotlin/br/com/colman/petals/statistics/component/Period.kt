@@ -26,6 +26,19 @@ open class Period(val days: Int) : Comparable<Period> {
   }
 
   override fun compareTo(other: Period): Int = compareValues(days, other.days)
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (other !is Period) return false
+
+    if (days != other.days) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    return days
+  }
+
 
   data object Zero : Period(0)
   data object Week : Period(7)
