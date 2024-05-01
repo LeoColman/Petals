@@ -1,10 +1,10 @@
 package br.com.colman.petals.withdrawal.interpolator
 
-import java.time.Duration
 import org.apache.commons.math3.analysis.UnivariateFunction
 import org.apache.commons.math3.analysis.interpolation.LinearInterpolator
 import org.apache.commons.math3.analysis.interpolation.UnivariateInterpolator
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction
+import java.time.Duration
 
 // TODO Add tests
 class Interpolator(

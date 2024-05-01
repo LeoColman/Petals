@@ -22,11 +22,10 @@ import br.com.colman.petals.withdrawal.data.DiscomfortDataPoints
 import br.com.colman.petals.withdrawal.data.ThcConcentrationDataPoints
 import br.com.colman.petals.withdrawal.interpolator.Interpolator
 import br.com.colman.petals.withdrawal.view.SecondsPerDay
-import java.time.Duration
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 import kotlinx.coroutines.flow.filterNotNull
 import org.koin.compose.koinInject
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 @Composable
 fun WidgetConcentrationDiscomfortPart() {
@@ -36,10 +35,14 @@ fun WidgetConcentrationDiscomfortPart() {
   val thcInterpolator = Interpolator(ThcConcentrationDataPoints)
   val discomfortInterpolator = Interpolator(DiscomfortDataPoints)
 
-  val currentPercentageTHC = thcInterpolator.calculatePercentage(ChronoUnit.SECONDS.between(lastUseDate, LocalDateTime.now())) * 100
+  val currentPercentageTHC =
+    thcInterpolator.calculatePercentage(ChronoUnit.SECONDS.between(lastUseDate, LocalDateTime.now())) * 100
 
-  val currentDiscomfort = discomfortInterpolator.value(ChronoUnit.SECONDS.between(lastUseDate, LocalDateTime.now()).toDouble().div(
-    SecondsPerDay))
+  val currentDiscomfort = discomfortInterpolator.value(
+    ChronoUnit.SECONDS.between(lastUseDate, LocalDateTime.now()).toDouble().div(
+      SecondsPerDay
+    )
+  )
 
   val thcConcentrationString = LocalContext.current.getString(
     R.string.current_thc_concentration,
