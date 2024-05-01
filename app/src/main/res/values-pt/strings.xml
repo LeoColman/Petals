@@ -144,4 +144,18 @@
     <string name="purchase_and_sale">Compra e Venda</string>
     <string name="enforcement">Policiamento</string>
     <string name="keep_in_mind_that_laws_can_change">Lembre-se sempre que leis mudam e aplicam-se de maneira diferente a pessoas a depender de cor da pele, gênero, credo e classe social. Verifique as fontes legais mais recentes ou busque um especialista para informação mais acurada.</string>
+    <string name="current_irritability">Irritabilidade Atual: %s</string>
+    <string name="irritability">Irritabilidade</string>
+    <string name="current_sleep_difficulty">Dificuldade Atual para Dormir: %s</string>
+    <string name="sleep_difficulty">Dificuldade para Dormir</string>
+    <string name="current_strange_dreams">Sonhos Estranhos Atual: %s</string>
+    <string name="strange_dreams">Sonhos Estranhos</string>
+    <string name="current_decreased_appetite">Redução de Apetite Atual: %s</string>
+    <string name="decreased_appetite">Redução de Apetite</string>
+    <string name="current_nervousness_anxiety">Nervosismo / Ansiedade Atual: %s</string>
+    <string name="nervousness_anxiety">Nervosismo / Ansiedade</string>
+    <string name="current_restlessness">Inquietude Atual: %s</string>
+    <string name="restlessness">Inquietude</string>
+    <string name="current_anger">Raiva Atual: %s</string>
+    <string name="anger">Raiva</string>
 </resources>
