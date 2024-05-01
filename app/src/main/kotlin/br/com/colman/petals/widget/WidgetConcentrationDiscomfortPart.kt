@@ -17,20 +17,29 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import br.com.colman.petals.R
-import br.com.colman.petals.withdrawal.discomfort.repository.DiscomfortRepository
-import br.com.colman.petals.withdrawal.thc.repository.ThcConcentrationRepository
-import kotlinx.coroutines.flow.map
+import br.com.colman.petals.use.repository.UseRepository
+import br.com.colman.petals.withdrawal.data.DiscomfortDataPoints
+import br.com.colman.petals.withdrawal.data.ThcConcentrationDataPoints
+import br.com.colman.petals.withdrawal.interpolator.Interpolator
+import br.com.colman.petals.withdrawal.view.SecondsPerDay
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
+import kotlinx.coroutines.flow.filterNotNull
 import org.koin.compose.koinInject
 
 @Composable
 fun WidgetConcentrationDiscomfortPart() {
-  val thcConcentrationRepository: ThcConcentrationRepository = koinInject()
-  val discomfortRepository: DiscomfortRepository = koinInject()
+  val useRepository = koinInject<UseRepository>()
 
-  val currentPercentageTHC by thcConcentrationRepository.concentration.map { it * 100 }
-    .collectAsState(100.0)
-  val currentDiscomfort by discomfortRepository.discomfort
-    .collectAsState(8.0)
+  val lastUseDate by useRepository.getLastUseDate().filterNotNull().collectAsState(LocalDateTime.now().minusYears(10))
+  val thcInterpolator = Interpolator(ThcConcentrationDataPoints)
+  val discomfortInterpolator = Interpolator(DiscomfortDataPoints)
+
+  val currentPercentageTHC = thcInterpolator.calculatePercentage(ChronoUnit.SECONDS.between(lastUseDate, LocalDateTime.now())) * 100
+
+  val currentDiscomfort = discomfortInterpolator.value(ChronoUnit.SECONDS.between(lastUseDate, LocalDateTime.now()).toDouble().div(
+    SecondsPerDay))
 
   val thcConcentrationString = LocalContext.current.getString(
     R.string.current_thc_concentration,
