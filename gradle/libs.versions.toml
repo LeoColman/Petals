@@ -1,7 +1,7 @@
 [versions]
 androidx = "1.5.0"
 composeCompiler = "1.5.11"
-compose = "1.6.6"
+compose = "1.6.7"
 datastore = "1.0.0"
 detekt = "1.23.6"
 koin = "3.5.6"
