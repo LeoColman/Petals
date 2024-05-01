@@ -1,0 +1,2 @@
+- Add more charts to Symptoms Page
+- Add small version string to app title
