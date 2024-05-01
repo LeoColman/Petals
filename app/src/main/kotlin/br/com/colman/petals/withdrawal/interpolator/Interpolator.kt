@@ -6,6 +6,7 @@ import org.apache.commons.math3.analysis.interpolation.LinearInterpolator
 import org.apache.commons.math3.analysis.interpolation.UnivariateInterpolator
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction
 
+// TODO Add tests
 class Interpolator(
   val data: Map<Duration, Double>
 ) : UnivariateInterpolator, UnivariateFunction {
