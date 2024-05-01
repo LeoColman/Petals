@@ -18,6 +18,7 @@ import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit.SECONDS
 
 @Composable
+@Suppress("LongParameterList")
 fun WithdrawalChart(
   lastUseDate: LocalDateTime?,
   data: Map<Duration, Double>,
@@ -32,22 +33,24 @@ fun WithdrawalChart(
 
   val interpolator = Interpolator(scaledData)
 
-  AndroidView({ createGraph(it, verticalAxisTitle, horizontalAxisTitle, lastUseDate, colors, scaledData, maxX, maxY) }, update = {
+  AndroidView({
+    createGraph(it, verticalAxisTitle, horizontalAxisTitle, lastUseDate, colors, scaledData, maxX, maxY)
+  }, update = {
     val currentValue = lastUseDate?.let { lud -> interpolator.value(lud.daysToTodayInSeconds().times(SecondsPerDay)) }
     it.title = graphTitle(it.context, currentValue)
     it.removeAllSeries()
     it.addSeries(scaledData.toLineGraphSeries())
 
-    if(lastUseDate != null) it.addSeries(interpolator.currentPointSeries(lastUseDate))
+    if (lastUseDate != null) it.addSeries(interpolator.currentPointSeries(lastUseDate))
     it.invalidate()
   })
-
 }
 
 private fun Map<Duration, Double>.scaled(maxY: Double): Map<Duration, Double> {
   return mapValues { ((it.value - values.min()) * maxY / (values.max() - values.min())) }
 }
 
+@Suppress("LongParameterList")
 private fun createGraph(
   context: Context,
   verticalAxisTitle: String,
@@ -61,7 +64,7 @@ private fun createGraph(
   val interpolator = Interpolator(data)
 
   addSeries(data.toLineGraphSeries())
-  if(lastUseDate != null) addSeries(interpolator.currentPointSeries(lastUseDate))
+  if (lastUseDate != null) addSeries(interpolator.currentPointSeries(lastUseDate))
 
   viewport.apply {
     isXAxisBoundsManual = true
@@ -80,11 +83,9 @@ private fun createGraph(
     horizontalLabelsColor = colors.primary.toArgb()
     verticalLabelsColor = colors.primary.toArgb()
 
-
     this.verticalAxisTitle = verticalAxisTitle
     this.horizontalAxisTitle = horizontalAxisTitle
   }
-
 }
 
 private fun Map<Duration, Double>.toLineGraphSeries(): LineGraphSeries<DataPoint> {

@@ -48,9 +48,7 @@ fun Symptoms(
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
 
   Column(Modifier.verticalScroll(scrollState).padding(8.dp, 8.dp, 8.dp, 64.dp), spacedBy(16.dp)) {
-
     Text(stringResource(symptoms_introduction))
-
 
     ChartConfig.entries().forEach { chart ->
       Box(Modifier.height(250.dp)) {
