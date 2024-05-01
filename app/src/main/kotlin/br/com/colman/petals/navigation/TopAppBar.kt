@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.com.colman.petals.BuildConfig
 import br.com.colman.petals.R.string.app_name
 import br.com.colman.petals.R.string.export_export
 import br.com.colman.petals.R.string.import_import
@@ -52,7 +53,6 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.InfoCircle
 import compose.icons.tablericons.Settings
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.get
 import org.koin.compose.koinInject
 
 @Composable
@@ -74,7 +74,20 @@ fun MyTopAppBarContent(navController: NavController) {
   val coroutineScope = rememberCoroutineScope()
 
   Row(Modifier.fillMaxWidth(), SpaceBetween, CenterVertically) {
-    Text(stringResource(app_name), fontWeight = FontWeight.Bold, fontSize = 20.sp)
+    Row {
+      Text(
+        modifier = Modifier.alignByBaseline(),
+        text = stringResource(app_name),
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
+      )
+      Text(
+        modifier = Modifier.alignByBaseline(),
+        text = " v${BuildConfig.VERSION_NAME}",
+        fontWeight = FontWeight.Light,
+        fontSize = 10.sp
+      )
+    }
     Box(
       Modifier.clickable {
         coroutineScope.launch {
