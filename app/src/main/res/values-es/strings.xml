@@ -43,7 +43,7 @@
     <string name="start_date">Fecha inicio</string>
     <string name="change_period">Cambiar periodo</string>
     <string name="grams_distribution_per_hour_of_day">Distribución de gramos por hora del día</string>
-    <string name="current_thc_concentration">Concentración actual de THC: %s %%</string>
+    <string name="current_thc_concentration">Concentración actual de THC: %s \%%</string>
     <string name="current_withdrawal_discomfort">Malestar actual por la abstinencia: %s</string>
     <string name="discomfort_strength">Intensidad del malestar</string>
     <string name="day">día</string>
@@ -67,7 +67,7 @@
     <string name="hittime_source">Fuente: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
     <string name="this_year">Este año</string>
     <string name="grams">Gramos</string>
-    <string name="thc_concentration">Concentración de THC (%%)</string>
+    <string name="thc_concentration">Concentración de THC (%)</string>
     <string name="average_per">Promedio por %s</string>
     <string name="vibrate_on_timer_end">Vibrar al finalizar temporizador</string>
     <plurals name="amount_uses">
