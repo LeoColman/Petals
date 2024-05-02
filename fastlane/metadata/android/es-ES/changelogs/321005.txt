@@ -1,0 +1,1 @@
+- Se solucionó el problema con la vista semanal que nunca mostraba "Hoy"
