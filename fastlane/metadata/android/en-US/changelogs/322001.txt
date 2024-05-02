@@ -1,0 +1,2 @@
+- Correct double percent notation in multiple languages
+- Sync translations from Weblate
