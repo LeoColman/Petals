@@ -1,0 +1,2 @@
+- Se solucionó el problema con las semanas que aún contenían un día adicional después de los ajustes de v3.21.3.
+- Actualización revertida a la biblioteca que causaba problemas con el almacenamiento de datos para propiedades personalizadas

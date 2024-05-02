@@ -128,4 +128,18 @@
     <string name="purchase_and_sale">Compraventa</string>
     <string name="enforcement">Aplicación</string>
     <string name="keep_in_mind_that_laws_can_change">Tenga en cuenta que las leyes pueden cambiar, por lo que es importante consultar las fuentes legales más recientes o al asesor jurídico local para obtener la información más actualizada.</string>
+    <string name="irritability">Irritabilidad</string>
+    <string name="strange_dreams">Pesadillas</string>
+    <string name="current_decreased_appetite">Disminución actual del apetito: %s</string>
+    <string name="decreased_appetite">Disminución del apetito</string>
+    <string name="current_nervousness_anxiety">Nerviosismo/Ansiedad actual: %s</string>
+    <string name="nervousness_anxiety">Nerviosismo / Ansiedad</string>
+    <string name="current_restlessness">Intranquilidad actual: %s</string>
+    <string name="current_anger">Ira actual: %s</string>
+    <string name="anger">Ira</string>
+    <string name="current_irritability">Irritabilidad actual: %s</string>
+    <string name="sleep_difficulty">Dificultad para dormir</string>
+    <string name="restlessness">Intranquilidad</string>
+    <string name="current_sleep_difficulty">Dificultad actual para dormir: %s</string>
+    <string name="current_strange_dreams">Pesadillas actuales: %s</string>
 </resources>

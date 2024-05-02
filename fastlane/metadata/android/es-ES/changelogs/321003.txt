@@ -1,0 +1,1 @@
+- Modificar el gráfico de estadísticas semanales para mostrar una cantidad redonda de semanas
