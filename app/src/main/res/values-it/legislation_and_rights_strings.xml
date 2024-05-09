@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="brazil_legalstatus">La marijuana è illegale per uso ricreativo.
+\nL’uso medico è fortemente regolamentato.
+\nL’uso scientifico è fortemente regolamentato.</string>
+    <string name="brazil_possession">Il possesso di qualsiasi quantità di marijuana per uso personale è illegale e soggetto a sanzioni penali.
+\nLa legge non distingue l\'importo per uso personale, qualsiasi possesso può portare a denunce.</string>
+    <string name="slovakia_lastupdate">Novembre 2023</string>
+    <string name="brazil_country">Brasile</string>
+    <string name="brazil_consumption">Il consumo di marijuana in qualsiasi forma è illegale quando si tratta di uso ricreativo.
+\nL\'uso medico è consentito entro i limiti di una prescrizione e deve essere consumato come indicato da un operatore sanitario.</string>
+    <string name="canada_lastupdate">Novembre 2023</string>
+    <string name="slovakia_country">Slovacchia</string>
+    <string name="slovakia_legalstatus">La marijuana è illegale per uso ricreativo.</string>
+</resources>
