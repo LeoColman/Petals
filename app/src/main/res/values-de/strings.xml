@@ -119,10 +119,24 @@
     <string name="last_updated">Letzte Aktualisierung: %s</string>
     <string name="legal_status">Rechtsstatus</string>
     <string name="possession">Besitz</string>
-    <string name="enable_or_disable_milliseconds_bar_on_home_page">Aktivieren oder deaktivieren der Millisekunden Leiste auf der Nutzen Seite</string>
+    <string name="enable_or_disable_milliseconds_bar_on_home_page">Aktivieren oder deaktivieren der Millisekunden Leiste auf der Konsum Seite</string>
     <string name="legislation_and_rights">Gesetzgebung und Rechte</string>
     <string name="consumption">Verbrauch</string>
     <string name="enforcement">Durchsetzung</string>
     <string name="purchase_and_sale">Kauf und Verkauf</string>
     <string name="milliseconds_enabled">Aktivieren/deaktivieren der millisekunden Leiste</string>
+    <string name="current_irritability">Aktuelle Reizbarkeit: %s</string>
+    <string name="irritability">Reizbarkeit</string>
+    <string name="current_sleep_difficulty">Aktuelle Schlaf Schwierigkeit: %s</string>
+    <string name="sleep_difficulty">Schlaf Schwierigkeit</string>
+    <string name="current_strange_dreams">Aktuelle seltsame Träume: %s</string>
+    <string name="strange_dreams">Seltsame Träume</string>
+    <string name="current_decreased_appetite">Aktueller verminderter Appetit: %s</string>
+    <string name="decreased_appetite">Verminderter Appetit</string>
+    <string name="current_restlessness">Aktuelle Unruhe: %s</string>
+    <string name="restlessness">Unruhe</string>
+    <string name="anger">Wut</string>
+    <string name="nervousness_anxiety">Nervosität/ Angst</string>
+    <string name="current_anger">Aktueller Wut: %s</string>
+    <string name="current_nervousness_anxiety">Aktuelle Nervosität/Angst: %s</string>
 </resources>

@@ -128,4 +128,18 @@
     <string name="legal_status">Stato giuridico</string>
     <string name="no_country_selected">Nessun paese selezionato</string>
     <string name="enforcement">Rinforzo</string>
+    <string name="current_irritability">Irritabilità attuale: %s</string>
+    <string name="irritability">Irritabilità</string>
+    <string name="current_sleep_difficulty">Attuale difficoltà di sonno: %s</string>
+    <string name="sleep_difficulty">Difficoltà del sonno</string>
+    <string name="current_strange_dreams">Sogni strani attuali: %s</string>
+    <string name="strange_dreams">Sogni Strani</string>
+    <string name="current_decreased_appetite">Attuale diminuzione dell\'appetito: %s</string>
+    <string name="decreased_appetite">Diminuzione dell\'appetito</string>
+    <string name="current_nervousness_anxiety">Nervosismo/Ansia attuale: %s</string>
+    <string name="nervousness_anxiety">Nervosismo/Ansia</string>
+    <string name="current_restlessness">Irrequietezza attuale: %s</string>
+    <string name="restlessness">Irrequietezza</string>
+    <string name="current_anger">Rabbia attuale: %s</string>
+    <string name="anger">Rabbia</string>
 </resources>
