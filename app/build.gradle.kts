@@ -144,7 +144,8 @@ android {
 }
 
 dependencies {
-  // Kotlin
+  implementation(libs.androidx.datastore.preferences.core.jvm)
+    // Kotlin
   testRuntimeOnly(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
 

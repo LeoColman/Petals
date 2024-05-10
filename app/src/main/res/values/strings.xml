@@ -136,6 +136,7 @@
     <string name="purchase_and_sale">Purchase and Sale</string>
     <string name="enforcement">Enforcement</string>
     <string name="keep_in_mind_that_laws_can_change">Keep in mind that laws can change, so it\'s important to consult the latest legal sources or local legal counsel for the most current information.</string>
+    <string name="hide">*****</string>
     <string name="current_irritability">Current Irritability: %s</string>
     <string name="irritability">Irritability</string>
     <string name="current_sleep_difficulty">Current Sleep Difficulty: %s</string>
