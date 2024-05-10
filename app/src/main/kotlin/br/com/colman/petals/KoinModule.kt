@@ -23,14 +23,17 @@ import androidx.datastore.preferences.preferencesDataStore
 import br.com.colman.petals.hittimer.HitTimerRepository
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.pause.repository.PauseRepository
+import br.com.colman.petals.use.repository.BlockRepository
 import br.com.colman.petals.use.repository.UseRepository
 import org.koin.dsl.module
 
 private val Context.settingsDatastore by preferencesDataStore("settings")
+private val Context.blockDataStore by preferencesDataStore("block")
 
 val KoinModule = module {
   single { UseRepository(get<Database>().useQueries) }
   single { PauseRepository(get<Database>().pauseQueries) }
   single { HitTimerRepository(get()) }
   single { SettingsRepository(get<Context>().settingsDatastore) }
+  single { BlockRepository(get<Context>().blockDataStore)}
 }
