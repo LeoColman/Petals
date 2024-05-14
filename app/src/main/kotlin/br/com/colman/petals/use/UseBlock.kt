@@ -111,7 +111,7 @@ private fun UseBlock(modifier: Modifier, blockType: BlockType, uses: List<Use>, 
     totalCost = uses.sumOf { it.costPerGram * it.amountGrams }.setScale(decimalPrecision, HALF_UP).toString()
   }
 
-  UseBlock(modifier, blockType, totalGrams, totalCost, isCensored)
+  UseBlock(title, totalGrams, totalCost)
 }
 
 @Preview
