@@ -59,7 +59,6 @@ requery-sqlite = "com.github.requery:sqlite-android:3.45.0"
 play-services-ads = "com.google.android.gms:play-services-ads:23.1.0"
 glance = { module = "androidx.glance:glance", version.ref = "glance" }
 glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
-androidx-datastore-preferences-core-jvm = { group = "androidx.datastore", name = "datastore-preferences-core-jvm", version.ref = "datastorePreferencesCoreJvm" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
 [bundles]

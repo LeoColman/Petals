@@ -144,7 +144,6 @@ android {
 }
 
 dependencies {
-  implementation(libs.firebase.firestore.ktx)
   // Kotlin
   testRuntimeOnly(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
