@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo1.maven.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.15.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.0.0")
 
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn("actions:checkout:v4")
@@ -18,7 +18,6 @@ import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.writeToFile
 
 val GPG_KEY by Contexts.secrets
 
@@ -26,7 +25,7 @@ val GPG_KEY by Contexts.secrets
 workflow(
   name = "Build Universal Release APK",
   on = listOf(Push(branches = listOf("main"))),
-  sourceFile = __FILE__.toPath()
+  sourceFile = __FILE__
 ) {
   job(id = "build", runsOn = RunnerType.UbuntuLatest) {
     uses(name = "reveal-secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
@@ -36,4 +35,4 @@ workflow(
     uses(name = "Create Playstore APK", action = GradleBuildAction(arguments = "packagePlaystoreReleaseUniversalApk"))
     uses(name = "Create Github APK", action = GradleBuildAction(arguments = "packageGithubReleaseUniversalApk"))
   }
-}.writeToFile()
+}
