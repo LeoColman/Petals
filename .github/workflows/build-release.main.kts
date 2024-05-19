@@ -28,9 +28,9 @@ workflow(
   sourceFile = __FILE__
 ) {
   job(id = "build", runsOn = RunnerType.UbuntuLatest) {
-    uses(name = "reveal-secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
     uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
     uses(action = Checkout())
+    uses(name = "reveal-secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
     uses(name = "Create Fdroid APK", action = GradleBuildAction(arguments = "packageFdroidReleaseUniversalApk"))
     uses(name = "Create Playstore APK", action = GradleBuildAction(arguments = "packagePlaystoreReleaseUniversalApk"))
     uses(name = "Create Github APK", action = GradleBuildAction(arguments = "packageGithubReleaseUniversalApk"))

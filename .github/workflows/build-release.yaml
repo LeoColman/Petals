@@ -27,18 +27,18 @@ jobs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      name: 'reveal-secrets'
-      uses: 'entrostat/git-secret-action@v4'
-      with:
-        gpg-private-key: '${{ secrets.GPG_KEY }}'
-    - id: 'step-1'
       name: 'Set up JDK'
       uses: 'actions/setup-java@v4'
       with:
         java-version: '17'
         distribution: 'adopt'
-    - id: 'step-2'
+    - id: 'step-1'
       uses: 'actions/checkout@v4'
+    - id: 'step-2'
+      name: 'reveal-secrets'
+      uses: 'entrostat/git-secret-action@v4'
+      with:
+        gpg-private-key: '${{ secrets.GPG_KEY }}'
     - id: 'step-3'
       name: 'Create Fdroid APK'
       uses: 'gradle/gradle-build-action@v3'
