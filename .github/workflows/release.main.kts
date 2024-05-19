@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo1.maven.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:1.15.0")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:2.0.0")
 
 @file:Repository("https://github-workflows-kt-bindings.colman.com.br/binding/")
 @file:DependsOn("actions:checkout:v4")
@@ -21,7 +21,6 @@ import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
-import io.github.typesafegithub.workflows.yaml.writeToFile
 
 
 val GPG_KEY by Contexts.secrets
@@ -30,7 +29,7 @@ val GITHUB_REF_NAME by Contexts.github
 workflow(
   name = "Release",
   on = listOf(Push(tags = listOf("*"))),
-  sourceFile = __FILE__.toPath(),
+  sourceFile = __FILE__
 ) {
   job(id = "create-apk", runsOn = UbuntuLatest) {
     uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
@@ -61,4 +60,4 @@ workflow(
       command = "bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore"
     )
   }
-}.writeToFile()
+}
