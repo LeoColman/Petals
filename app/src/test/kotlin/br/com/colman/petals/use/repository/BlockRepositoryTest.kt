@@ -14,8 +14,14 @@ class BlockRepositoryTest : FunSpec({
 
   test("Defaults block censor true") {
     BlockType.entries.forEach { blockType ->
-      val defaultBlockCensorValue = datastore.data.first()[blockType.preferencesKey]
-      defaultBlockCensorValue shouldBe true
+      val isCensored = when (blockType) {
+        BlockType.Today -> target.isTodayCensored.first()
+        BlockType.ThisWeek -> target.isThisWeekCensored.first()
+        BlockType.ThisMonth -> target.isThisMonthCensored.first()
+        BlockType.ThisYear -> target.isThisYearCensored.first()
+        BlockType.AllTime -> target.isAllTimeCensored.first()
+      }
+      isCensored shouldBe true
     }
   }
 
