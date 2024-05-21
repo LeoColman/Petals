@@ -6,25 +6,33 @@
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:setup-java:v4")
 @file:DependsOn("gradle:gradle-build-action:v3")
+@file:DependsOn("entrostat:git-secret-action:v4")
+
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
+import io.github.typesafegithub.workflows.actions.entrostat.GitSecretAction
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildAction
 import io.github.typesafegithub.workflows.domain.RunnerType
-import io.github.typesafegithub.workflows.domain.triggers.PullRequest
 import io.github.typesafegithub.workflows.domain.triggers.Push
+import io.github.typesafegithub.workflows.dsl.expressions.Contexts
+import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
+
+val GPG_KEY by Contexts.secrets
 
 
 workflow(
-  name = "Dependency License Analysis",
-  on = listOf(Push(), PullRequest()),
+  name = "Build Universal Release APK",
+  on = listOf(Push(branches = listOf("main"))),
   sourceFile = __FILE__
 ) {
-  job(id = "analyse", runsOn = RunnerType.UbuntuLatest) {
+  job(id = "build", runsOn = RunnerType.UbuntuLatest) {
     uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
     uses(action = Checkout())
-    uses(action = GradleBuildAction(arguments = "checkLicense"))
-    run(command = "cat build/reports/dependency-license/licenses.md >> \$GITHUB_STEP_SUMMARY")
+    uses(name = "reveal-secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
+    uses(name = "Create Fdroid APK", action = GradleBuildAction(arguments = "packageFdroidReleaseUniversalApk"))
+    uses(name = "Create Playstore APK", action = GradleBuildAction(arguments = "packagePlaystoreReleaseUniversalApk"))
+    uses(name = "Create Github APK", action = GradleBuildAction(arguments = "packageGithubReleaseUniversalApk"))
   }
 }
