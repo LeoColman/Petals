@@ -41,7 +41,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -58,15 +57,12 @@ import br.com.colman.petals.use.repository.BlockType.ThisMonth
 import br.com.colman.petals.use.repository.BlockType.ThisWeek
 import br.com.colman.petals.use.repository.BlockType.ThisYear
 import br.com.colman.petals.use.repository.BlockType.Today
-import br.com.colman.petals.use.repository.BlockRepository
-import br.com.colman.petals.use.repository.BlockType
 import br.com.colman.petals.use.repository.Use
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Eye
 import compose.icons.tablericons.EyeOff
 import compose.icons.tablericons.Scale
 import compose.icons.tablericons.ZoomMoney
-import org.koin.androidx.compose.get
 import org.koin.compose.koinInject
 import java.math.RoundingMode.HALF_UP
 import java.time.DayOfWeek.MONDAY
