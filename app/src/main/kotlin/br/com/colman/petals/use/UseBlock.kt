@@ -152,11 +152,11 @@ private fun UseBlock(
 
 @Composable
 private fun CensureIcon(isCensored: Boolean) {
-  val chosenIcon = if (isCensored) TablerIcons.Eye else TablerIcons.EyeOff
+  val chosenIcon = if (isCensored) TablerIcons.EyeOff else TablerIcons.Eye
   Icon(chosenIcon, null, Modifier.size(18.dp))
 }
 
 @Composable
 private fun BlockText(blockText: String, isCensored: Boolean) {
-  if (isCensored) Text(blockText) else Text(stringResource(R.string.censored))
+  if (isCensored) Text(stringResource(R.string.censored)) else Text(blockText)
 }
