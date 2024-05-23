@@ -17,11 +17,11 @@ import kotlinx.coroutines.runBlocking
 class BlockRepository(
   private val datastore: DataStore<Preferences>
 ) {
-  val isTodayCensored = datastore.data.map { it[Today.preferencesKey] ?: true }
-  val isThisWeekCensored = datastore.data.map { it[ThisWeek.preferencesKey] ?: true }
-  val isThisMonthCensored = datastore.data.map { it[ThisMonth.preferencesKey] ?: true }
-  val isThisYearCensored = datastore.data.map { it[ThisYear.preferencesKey] ?: true }
-  val isAllTimeCensored = datastore.data.map { it[AllTime.preferencesKey] ?: true }
+  val isTodayCensored = datastore.data.map { it[Today.preferencesKey] ?: false }
+  val isThisWeekCensored = datastore.data.map { it[ThisWeek.preferencesKey] ?: false }
+  val isThisMonthCensored = datastore.data.map { it[ThisMonth.preferencesKey] ?: false }
+  val isThisYearCensored = datastore.data.map { it[ThisYear.preferencesKey] ?: false }
+  val isAllTimeCensored = datastore.data.map { it[AllTime.preferencesKey] ?: false }
 
   fun setBlockCensure(blockType: BlockType, isCensored: Boolean): Unit = runBlocking {
     datastore.edit { it[blockType.preferencesKey] = isCensored }

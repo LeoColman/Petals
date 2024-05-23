@@ -12,7 +12,7 @@ class BlockRepositoryTest : FunSpec({
   val datastore: DataStore<Preferences> = PreferenceDataStoreFactory.create { tempfile(suffix = ".preferences_pb") }
   val target = BlockRepository(datastore)
 
-  test("Defaults block censor true") {
+  test("Defaults block censor to false") {
     BlockType.entries.forEach { blockType ->
       val isCensored = when (blockType) {
         BlockType.Today -> target.isTodayCensored.first()
@@ -21,17 +21,18 @@ class BlockRepositoryTest : FunSpec({
         BlockType.ThisYear -> target.isThisYearCensored.first()
         BlockType.AllTime -> target.isAllTimeCensored.first()
       }
-      isCensored shouldBe true
+      isCensored shouldBe false
     }
   }
 
   test("Changes today's block censure") {
-    target.setBlockCensure(BlockType.Today, false)
     target.isTodayCensored.first() shouldBe false
+    target.setBlockCensure(BlockType.Today, true)
+    target.isTodayCensored.first() shouldBe true
   }
 
   test("Persists specified block censure") {
-    target.setBlockCensure(BlockType.Today, false)
-    datastore.data.first()[BlockType.Today.preferencesKey] shouldBe false
+    target.setBlockCensure(BlockType.Today, true)
+    datastore.data.first()[BlockType.Today.preferencesKey] shouldBe true
   }
 })
