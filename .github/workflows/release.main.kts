@@ -54,7 +54,7 @@ workflow(
       )
     )
 
-    uses(action = SetupRuby(rubyVersion = "2.6"))
+    uses(action = SetupRuby(rubyVersion = "3.2.3"))
     run(
       name = "publish-playstore",
       command = "bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore"
