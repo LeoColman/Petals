@@ -26,7 +26,7 @@ class SettingsRepository(
   val timeFormatList = listOf("HH:mm", "KK:mm a", "HH:mm:ss", "KK:mm:ss a")
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
   val millisecondsEnabledList = listOf("enabled", "disabled")
-  val millisecondsEnabled = datastore.data.map { it[MillisecondsEnabled] ?: millisecondsEnabledList.first() }
+  val millisecondsEnabled = datastore.data.map { it[MillisecondsEnabled] ?: "disabled" }
   val hitTimerMillisecondsEnabledList = listOf("enabled", "disabled")
   val hitTimerMillisecondsEnabled = datastore.data.map {
     it[HitTimerMillisecondsEnabled] ?: hitTimerMillisecondsEnabledList.first()
