@@ -69,9 +69,7 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
   val settingsRepository = koinInject<SettingsRepository>()
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val millisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(
-    settingsRepository.millisecondsEnabledList[0]
-  )
+  val millisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState("disabled")
   val dateString = DateTimeFormatter.ofPattern(
     String.format(
       Locale.US,
