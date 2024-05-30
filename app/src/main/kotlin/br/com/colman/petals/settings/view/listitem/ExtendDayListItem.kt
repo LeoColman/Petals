@@ -20,7 +20,7 @@ fun ExtendDayListItem(
     icon = TablerIcons.CalendarTime,
     textId = extend_day_a_few_hours,
     descriptionId = wait_until_3am_to_show_a_new_day,
-    dialog = {hideDialog: () -> Unit ->
+    dialog = { hideDialog: () -> Unit ->
       ExtendDayDialog(
         extendedDay,
         extendedDayOptions,

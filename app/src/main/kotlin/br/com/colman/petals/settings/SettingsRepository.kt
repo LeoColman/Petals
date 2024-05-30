@@ -34,7 +34,7 @@ class SettingsRepository(
   val decimalPrecisionList = listOf(0, 1, 2, 3)
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
   val extendedDayList = listOf("enabled", "disabled")
-  val extendedDay:Flow<String> = datastore.data.map { it[ExtendedDayEnabled] ?: extendedDayList[1] }
+  val extendedDay: Flow<String> = datastore.data.map { it[ExtendedDayEnabled] ?: extendedDayList[1] }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
     datastore.edit { it[CurrencyIcon] = value }
@@ -60,7 +60,7 @@ class SettingsRepository(
     datastore.edit { it[DecimalPrecision] = value }
   }
 
-  fun setExtendedDay(value:String): Unit = runBlocking {
+  fun setExtendedDay(value: String): Unit = runBlocking {
     datastore.edit { it[ExtendedDayEnabled] = value }
   }
 
@@ -81,6 +81,6 @@ class SettingsRepository(
     val MillisecondsEnabled = stringPreferencesKey("milliseconds_enabled")
     val HitTimerMillisecondsEnabled = stringPreferencesKey("hit_timer_milliseconds_enabled")
     val DecimalPrecision = intPreferencesKey("decimal_precision")
-    val ExtendedDayEnabled:Preferences.Key<String> = stringPreferencesKey("is_day_extended")
+    val ExtendedDayEnabled: Preferences.Key<String> = stringPreferencesKey("is_day_extended")
   }
 }
