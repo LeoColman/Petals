@@ -32,7 +32,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(
     settingsRepository.decimalPrecisionList[2]
   )
-  val currentExtendDay:String by settingsRepository.extendedDay.collectAsState(settingsRepository.extendedDayList[1])
+  val currentExtendDay: String by settingsRepository.extendedDay.collectAsState(settingsRepository.extendedDayList[1])
 
   Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
@@ -56,9 +56,9 @@ fun SettingsView(settingsRepository: SettingsRepository) {
       settingsRepository::setDecimalPrecision
     )
     ExtendDayListItem(
-            currentExtendDay,
-            settingsRepository.extendedDayList,
-            settingsRepository::setExtendedDay
+      currentExtendDay,
+      settingsRepository.extendedDayList,
+      settingsRepository::setExtendedDay
     )
     ShareApp()
   }
