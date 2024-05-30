@@ -67,19 +67,31 @@ import org.koin.compose.koinInject
 import java.math.RoundingMode.HALF_UP
 import java.time.DayOfWeek.MONDAY
 import java.time.LocalDate.now
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Composable
 fun StatsBlocks(uses: List<Use>) {
   val blockRepository = koinInject<BlockRepository>()
+  val settingsRepository = koinInject<SettingsRepository>()
 
   val isTodayCensored by blockRepository.isTodayCensored.collectAsState(true)
   val isThisWeekCensored by blockRepository.isThisWeekCensored.collectAsState(true)
   val isThisMonthCensored by blockRepository.isThisMonthCensored.collectAsState(true)
   val isThisYearCensored by blockRepository.isThisYearCensored.collectAsState(true)
   val isAllTimeCensored by blockRepository.isAllTimeCensored.collectAsState(true)
+  val isDayExtended:String by settingsRepository.extendedDay.collectAsState("disabled")
 
-  Row(Modifier.horizontalScroll(rememberScrollState()).width(Max)) {
-    UseBlock(Modifier.weight(1f), Today, uses.filter { it.date.toLocalDate() == now() }, isTodayCensored)
+  Row(
+    Modifier
+      .horizontalScroll(rememberScrollState())
+      .width(Max)) {
+
+    if (isDayExtended == "enabled"){
+      UseBlock(Modifier.weight(1f), Today, adjustTodayFilter(uses), isTodayCensored)
+    } else {
+      UseBlock(Modifier.weight(1f), Today, uses.filter { it.date.toLocalDate() == now() }, isTodayCensored)
+    }
 
     UseBlock(
       Modifier.weight(1f),
@@ -111,7 +123,7 @@ private fun UseBlock(modifier: Modifier, blockType: BlockType, uses: List<Use>, 
     totalCost = uses.sumOf { it.costPerGram * it.amountGrams }.setScale(decimalPrecision, HALF_UP).toString()
   }
 
-  UseBlock(title, totalGrams, totalCost)
+  UseBlock(modifier, blockType, totalGrams, totalCost, isCensored)
 }
 
 @Preview
@@ -128,9 +140,15 @@ private fun UseBlock(
 
   val currencyIcon by settingsRepository.currencyIcon.collectAsState("$")
 
-  Card(modifier.padding(8.dp).defaultMinSize(145.dp), elevation = 4.dp) {
+  Card(
+    modifier
+      .padding(8.dp)
+      .defaultMinSize(145.dp), elevation = 4.dp) {
     Column(Modifier.padding(8.dp), spacedBy(4.dp)) {
-      Row(Modifier.padding(8.dp).fillMaxWidth(), Center, CenterVertically) {
+      Row(
+        Modifier
+          .padding(8.dp)
+          .fillMaxWidth(), Center, CenterVertically) {
         Text(stringResource(blockType.resourceId), fontWeight = Bold)
         IconButton({ blockRepository.setBlockCensure(blockType, !isCensored) }) {
           CensureIcon(isCensored)
@@ -159,4 +177,18 @@ private fun CensureIcon(isCensored: Boolean) {
 @Composable
 private fun BlockText(blockText: String, isCensored: Boolean) {
   if (isCensored) Text(stringResource(R.string.censored)) else Text(blockText)
+}
+
+@Composable
+private fun adjustTodayFilter(
+  uses: List<Use>,
+): List<Use> {
+
+  return if (LocalTime.now().isBefore(LocalTime.of(3, 0))) {
+    uses.filter {
+      it.date.toLocalDate() >= now().minusDays(1)
+    }
+  } else {
+    uses.filter { it.date.isAfter(now().atTime(LocalTime.of(3, 0)))}
+  }
 }

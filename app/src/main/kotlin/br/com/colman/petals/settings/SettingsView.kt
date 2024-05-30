@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import br.com.colman.petals.settings.view.listitem.CurrencyListItem
 import br.com.colman.petals.settings.view.listitem.DateListItem
+import br.com.colman.petals.settings.view.listitem.ExtendDayListItem
 import br.com.colman.petals.settings.view.listitem.HitTimerMillisecondsEnabledListItem
 import br.com.colman.petals.settings.view.listitem.MillisecondsBarEnabledListItem
 import br.com.colman.petals.settings.view.listitem.PinListItem
@@ -31,6 +32,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(
     settingsRepository.decimalPrecisionList[2]
   )
+  val currentExtendDay:String by settingsRepository.extendedDay.collectAsState(settingsRepository.extendedDayList[1])
 
   Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
@@ -52,6 +54,11 @@ fun SettingsView(settingsRepository: SettingsRepository) {
       currentDecimalPrecision,
       settingsRepository.decimalPrecisionList,
       settingsRepository::setDecimalPrecision
+    )
+    ExtendDayListItem(
+            currentExtendDay,
+            settingsRepository.extendedDayList,
+            settingsRepository::setExtendedDay
     )
     ShareApp()
   }
