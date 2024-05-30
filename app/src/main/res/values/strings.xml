@@ -122,6 +122,9 @@
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Enable or disable milliseconds on Hit Timer page</string>
     <string name="decimal_precision">Decimal Precision</string>
     <string name="what_decimal_precision_should_be_used">What decimal precision should be displayed on Usage page</string>
+    <string name="extend_day">Toggle Extended Day</string>
+    <string name="extend_day_a_few_hours">Extend day a few hours past midnight</string>
+    <string name="wait_until_3am_to_show_a_new_day">Wait until 3:00 AM to show a new day. Useful if you typically go to sleep after midnight.</string>
     <string name="custom">Custom</string>
     <string name="general_knowledge">General Knowledge</string>
     <string name="legislation_and_rights">Legislation and Rights</string>
