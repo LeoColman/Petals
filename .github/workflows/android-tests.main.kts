@@ -23,6 +23,14 @@ workflow(
   job(id = "android-tests", runsOn = RunnerType.UbuntuLatest) {
     uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
     uses(action = Checkout())
+    run(
+      name = "Enable KVM",
+      command = """
+        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --name-match=kvm
+      """.trimIndent()
+    )
     uses(
       name = "Set up Android Emulator",
       action = AndroidEmulatorRunner(
