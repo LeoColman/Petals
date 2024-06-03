@@ -78,11 +78,11 @@ class SettingsRepositoryTest : FunSpec({
 
   test("Changes extend day to enable") {
     target.setExtendedDay("enabled")
-    target.extendedDay.first() shouldBe true
+    target.extendedDay.first() shouldBe "enabled"
   }
 
   test("Persists extended day to enabled") {
-    target.setExtendedDay("enable")
+    target.setExtendedDay("enabled")
     datastore.data.first()[ExtendedDayEnabled] shouldBe "enabled"
   }
 })
