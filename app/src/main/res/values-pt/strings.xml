@@ -130,6 +130,11 @@
         <item quantity="many">Últimos %s dias</item>
         <item quantity="other">Últimos %s dias</item>
     </plurals>
+    <string name="extend_day">Habilitar Dia Estendido</string>
+    <string name="extend_day_a_few_hours">Estender dia algumas horas após a meia-noite</string>
+    <string name="wait_until_3am_to_show_a_new_day">Aguarda até 03:00 da manhã para mostrar um novo dia. Útil para quem
+        vai dormir depois da meia-noite.
+    </string>
     <string name="custom">Personalizado</string>
     <string name="general_knowledge">Conhecimento Geral</string>
     <string name="legislation_and_rights">Legislação e Direitos</string>
