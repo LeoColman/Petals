@@ -66,7 +66,9 @@ import compose.icons.tablericons.ZoomMoney
 import org.koin.compose.koinInject
 import java.math.RoundingMode.HALF_UP
 import java.time.DayOfWeek.MONDAY
+import java.time.LocalDate
 import java.time.LocalDate.now
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 @Composable
@@ -81,11 +83,7 @@ fun StatsBlocks(uses: List<Use>) {
   val isAllTimeCensored by blockRepository.isAllTimeCensored.collectAsState(true)
   val isDayExtended: String by settingsRepository.extendedDay.collectAsState("disabled")
 
-  Row(
-    Modifier
-      .horizontalScroll(rememberScrollState())
-      .width(Max)
-  ) {
+  Row(Modifier.horizontalScroll(rememberScrollState()).width(Max)) {
     if (isDayExtended == "enabled") {
       UseBlock(Modifier.weight(1f), Today, adjustTodayFilter(uses), isTodayCensored)
     } else {
@@ -139,20 +137,9 @@ private fun UseBlock(
 
   val currencyIcon by settingsRepository.currencyIcon.collectAsState("$")
 
-  Card(
-    modifier
-      .padding(8.dp)
-      .defaultMinSize(145.dp),
-    elevation = 4.dp
-  ) {
+  Card(modifier.padding(8.dp).defaultMinSize(145.dp), elevation = 4.dp) {
     Column(Modifier.padding(8.dp), spacedBy(4.dp)) {
-      Row(
-        Modifier
-          .padding(8.dp)
-          .fillMaxWidth(),
-        Center,
-        CenterVertically
-      ) {
+      Row(Modifier.padding(8.dp).fillMaxWidth(), Center, CenterVertically) {
         Text(stringResource(blockType.resourceId), fontWeight = Bold)
         IconButton({ blockRepository.setBlockCensure(blockType, !isCensored) }) {
           CensureIcon(isCensored)
@@ -187,11 +174,13 @@ private fun BlockText(blockText: String, isCensored: Boolean) {
 private fun adjustTodayFilter(
   uses: List<Use>,
 ): List<Use> {
-  return if (LocalTime.now().isBefore(LocalTime.of(3, 0))) {
-    uses.filter {
-      it.date.toLocalDate() >= now().minusDays(1)
-    }
-  } else {
-    uses.filter { it.date.isAfter(now().atTime(LocalTime.of(3, 0))) }
-  }
+  val limitTime = LocalTime.of(3, 0)
+  val currentTime = LocalTime.now()
+  val currentDate = LocalDate.now()
+
+  return if(currentTime <= limitTime)
+    uses.filter { it.date.toLocalDate() >= currentDate.minusDays(1) }
+  else
+    uses.filter { it.date.isAfter(currentDate.atTime(limitTime)) }
+
 }
