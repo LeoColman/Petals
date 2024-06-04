@@ -68,7 +68,6 @@ import java.math.RoundingMode.HALF_UP
 import java.time.DayOfWeek.MONDAY
 import java.time.LocalDate
 import java.time.LocalDate.now
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 @Composable
@@ -178,9 +177,9 @@ private fun adjustTodayFilter(
   val currentTime = LocalTime.now()
   val currentDate = LocalDate.now()
 
-  return if(currentTime <= limitTime)
+  return if (currentTime <= limitTime) {
     uses.filter { it.date.toLocalDate() >= currentDate.minusDays(1) }
-  else
+  } else {
     uses.filter { it.date.isAfter(currentDate.atTime(limitTime)) }
-
+  }
 }
