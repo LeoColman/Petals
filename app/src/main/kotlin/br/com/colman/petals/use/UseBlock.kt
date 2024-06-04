@@ -66,20 +66,28 @@ import compose.icons.tablericons.ZoomMoney
 import org.koin.compose.koinInject
 import java.math.RoundingMode.HALF_UP
 import java.time.DayOfWeek.MONDAY
+import java.time.LocalDate
 import java.time.LocalDate.now
+import java.time.LocalTime
 
 @Composable
 fun StatsBlocks(uses: List<Use>) {
   val blockRepository = koinInject<BlockRepository>()
+  val settingsRepository = koinInject<SettingsRepository>()
 
   val isTodayCensored by blockRepository.isTodayCensored.collectAsState(true)
   val isThisWeekCensored by blockRepository.isThisWeekCensored.collectAsState(true)
   val isThisMonthCensored by blockRepository.isThisMonthCensored.collectAsState(true)
   val isThisYearCensored by blockRepository.isThisYearCensored.collectAsState(true)
   val isAllTimeCensored by blockRepository.isAllTimeCensored.collectAsState(true)
+  val isDayExtended: String by settingsRepository.extendedDay.collectAsState("disabled")
 
   Row(Modifier.horizontalScroll(rememberScrollState()).width(Max)) {
-    UseBlock(Modifier.weight(1f), Today, uses.filter { it.date.toLocalDate() == now() }, isTodayCensored)
+    if (isDayExtended == "enabled") {
+      UseBlock(Modifier.weight(1f), Today, adjustTodayFilter(uses), isTodayCensored)
+    } else {
+      UseBlock(Modifier.weight(1f), Today, uses.filter { it.date.toLocalDate() == now() }, isTodayCensored)
+    }
 
     UseBlock(
       Modifier.weight(1f),
@@ -159,4 +167,19 @@ private fun CensureIcon(isCensored: Boolean) {
 @Composable
 private fun BlockText(blockText: String, isCensored: Boolean) {
   if (isCensored) Text(stringResource(R.string.censored)) else Text(blockText)
+}
+
+@Composable
+private fun adjustTodayFilter(
+  uses: List<Use>,
+): List<Use> {
+  val limitTime = LocalTime.of(3, 0)
+  val currentTime = LocalTime.now()
+  val currentDate = LocalDate.now()
+
+  return if (currentTime <= limitTime) {
+    uses.filter { it.date.toLocalDate() >= currentDate.minusDays(1) }
+  } else {
+    uses.filter { it.date.isAfter(currentDate.atTime(limitTime)) }
+  }
 }
