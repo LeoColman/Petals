@@ -142,4 +142,7 @@
     <string name="restlessness">Intranquilidad</string>
     <string name="current_sleep_difficulty">Dificultad actual para dormir: %s</string>
     <string name="current_strange_dreams">Pesadillas actuales: %s</string>
+    <string name="extend_day_a_few_hours">Prolongar el día unas horas después de medianoche</string>
+    <string name="wait_until_3am_to_show_a_new_day">Espera hasta las 3:00 AM para mostrar un nuevo día. Útil si sueles irte a dormir después de medianoche.</string>
+    <string name="extend_day">Conmutar a jornada ampliada</string>
 </resources>
