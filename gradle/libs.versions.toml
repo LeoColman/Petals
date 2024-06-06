@@ -55,6 +55,7 @@ sqldelight-coroutines-extensions = { module = "com.squareup.sqldelight:coroutine
 sqldelight-sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 requery-sqlite = "com.github.requery:sqlite-android:3.45.0"
 play-services-ads = "com.google.android.gms:play-services-ads:23.1.0"
+play-services-billing = "com.android.billingclient:billing:3.0.3"
 glance = { module = "androidx.glance:glance", version.ref = "glance" }
 glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 

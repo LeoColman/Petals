@@ -210,6 +210,9 @@ dependencies {
   // Google Ads
   "playstoreImplementation"(libs.play.services.ads)
 
+  // Google Billing
+  "playstoreImplementation"(libs.play.services.billing)
+
   // Glance
   implementation(libs.bundles.glance)
 
