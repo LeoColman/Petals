@@ -108,4 +108,4 @@ kotest-common = ["kotest-assertions", "kotest-property", "kotest-framework-datat
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.8.0" }
+kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.8.1" }
