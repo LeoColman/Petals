@@ -10,17 +10,24 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.compose.rememberNavController
 import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
 import br.com.colman.petals.navigation.NavHostContainer
+import br.com.colman.petals.settings.SettingsRepository
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 @Suppress("FunctionName")
 class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
+
+  private val settingsRepository by inject<SettingsRepository>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -43,5 +50,11 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
       }
     }
     launch { MobileAds.initialize(this@MainActivity) }
+  }
+
+  @Composable
+  fun isDarkModeEnabled(): Boolean {
+    val darkMode: Boolean? by settingsRepository.isDarkModeEnabled.collectAsState(null)
+    return darkMode ?: isSystemInDarkTheme()
   }
 }
