@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
         }
       }
 
-      MaterialTheme(if (isSystemInDarkTheme()) darkColors() else lightColors()) {
+      MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
         if (isAuthorized || correctPin == null) {
           Surface {
             Scaffold(
@@ -107,5 +107,11 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
       Text(stringResource(pin_main_screen))
       OutlinedTextField(pin, { pin = it }, visualTransformation = PasswordVisualTransformation())
     }
+  }
+
+  @Composable
+  fun isDarkModeEnabled(): Boolean {
+    val darkMode: Boolean? by settingsRepository.isDarkModeOn.collectAsState(null)
+    return darkMode ?: isSystemInDarkTheme()
   }
 }
