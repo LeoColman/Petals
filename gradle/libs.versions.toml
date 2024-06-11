@@ -5,7 +5,7 @@ compose = "1.6.7"
 datastore = "1.0.0"
 detekt = "1.23.6"
 koin = "3.5.6"
-kotest = "5.9.0"
+kotest = "5.9.1"
 kotlin = "1.9.23"
 vanpra-material-dialogs = "0.9.0"
 sqldelight = "1.5.5"
@@ -38,7 +38,7 @@ koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-assertions-android = { module = "br.com.colman:kotest-assertions-android", version = "1.1.1" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
-kotest-runner-android = { module = "br.com.colman:kotest-runner-android", version = "1.1.0" }
+kotest-runner-android = { module = "br.com.colman:kotest-runner-android", version = "1.1.1" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
 kotest-extensions-now = { module = "io.kotest:kotest-extensions-now", version.ref = "kotest" }
@@ -55,6 +55,7 @@ sqldelight-coroutines-extensions = { module = "com.squareup.sqldelight:coroutine
 sqldelight-sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 requery-sqlite = "com.github.requery:sqlite-android:3.45.0"
 play-services-ads = "com.google.android.gms:play-services-ads:23.1.0"
+play-services-billing = "com.android.billingclient:billing:7.0.0"
 glance = { module = "androidx.glance:glance", version.ref = "glance" }
 glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 
@@ -107,4 +108,4 @@ kotest-common = ["kotest-assertions", "kotest-property", "kotest-framework-datat
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.8.0" }
+kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.8.1" }
