@@ -38,19 +38,20 @@ import br.com.colman.petals.use.UseCards
 import br.com.colman.petals.use.pause.PauseButton
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.UseRepository
-import org.koin.androidx.compose.get
 import org.koin.compose.koinInject
 
 @Composable
 fun Usage(
   useRepository: UseRepository = koinInject(),
-  pauseRepository: PauseRepository = koinInject()
+  pauseRepository: PauseRepository = koinInject(),
 ) {
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
   val pause by pauseRepository.get().collectAsState(null)
 
   Column(Modifier.verticalScroll(rememberScrollState()), spacedBy(8.dp), CenterHorizontally) {
-    lastUseDate?.let { LastUseDateTimer(it) }
+    Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {
+      lastUseDate?.let { LastUseDateTimer(it) }
+    }
 
     Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {
       AddUseButton(useRepository, pause)

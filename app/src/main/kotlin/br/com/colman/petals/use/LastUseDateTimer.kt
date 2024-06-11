@@ -19,11 +19,16 @@
 package br.com.colman.petals.use
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -55,6 +60,9 @@ import br.com.colman.petals.use.TimeUnit.Month
 import br.com.colman.petals.use.TimeUnit.Second
 import br.com.colman.petals.use.TimeUnit.Year
 import br.com.colman.petals.utils.truncatedToMinute
+import compose.icons.TablerIcons
+import compose.icons.tablericons.Moon
+import compose.icons.tablericons.Sun
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
@@ -70,14 +78,11 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
   val millisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState("disabled")
+  val darkMode: Boolean? by settingsRepository.isDarkModeOn.collectAsState(null)
   val dateString = DateTimeFormatter.ofPattern(
-    String.format(
-      Locale.US,
-      "%s %s",
-      dateFormat,
-      timeFormat
-    )
+    String.format(Locale.US, "%s %s", dateFormat, timeFormat)
   ).format(lastUseDate)
+  val isSystemDarkTheme = isSystemInDarkTheme()
 
   var millis by remember { mutableStateOf(ChronoUnit.MILLIS.between(lastUseDate, now())) }
 
@@ -100,9 +105,19 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
 
   Column(Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
     Column {
-      Text(stringResource(quit_date_text))
-      val dateStringWithExtras = if (!lastUseDate.is420()) dateString else "$dateString 🥦🥦"
-      Text(dateStringWithExtras, fontSize = 24.sp)
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+      ) {
+        Column {
+          Text(stringResource(quit_date_text))
+          val dateStringWithExtras = if (!lastUseDate.is420()) dateString else "$dateString 🥦🥦"
+          Text(dateStringWithExtras, fontSize = 24.sp)
+        }
+        IconButton({ settingsRepository.setDarkMode(darkMode?.let { !it } ?: isSystemDarkTheme) }) {
+          SetDarkModeIcon(darkMode)
+        }
+      }
     }
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -136,3 +151,13 @@ enum class TimeUnit(@StringRes val unitName: Int, val max: Long, val millis: Lon
 }
 
 private fun LocalDateTime.is420() = toLocalTime().truncatedToMinute() == LocalTime.of(16, 20)
+
+@Composable
+fun SetDarkModeIcon(isDarkModeOn: Boolean?) {
+  if (isDarkModeOn != null) {
+    val chosenIcon = if (isDarkModeOn) TablerIcons.Sun else TablerIcons.Moon
+    Icon(chosenIcon, null, Modifier.size(26.dp))
+  } else {
+    Icon(TablerIcons.Moon, null, Modifier.size(26.dp))
+  }
+}
