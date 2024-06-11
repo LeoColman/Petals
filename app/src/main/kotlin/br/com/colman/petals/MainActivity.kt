@@ -43,11 +43,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import br.com.colman.petals.AppRating.MainScreen
 import br.com.colman.petals.R.string.pin_main_screen
 import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
 import br.com.colman.petals.navigation.NavHostContainer
 import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.utils.Preferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -88,6 +90,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
           Authorization(correctPin)
         }
       }
+      MainScreen(this)
     }
   }
 
@@ -109,3 +112,6 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
     }
   }
 }
+
+
+
