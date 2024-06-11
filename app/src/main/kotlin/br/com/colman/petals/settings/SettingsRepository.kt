@@ -36,7 +36,7 @@ class SettingsRepository(
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
   val extendedDayList = listOf("enabled", "disabled")
   val extendedDay: Flow<String> = datastore.data.map { it[ExtendedDayEnabled] ?: extendedDayList[1] }
-  val isDarkModeOn: Flow<Boolean?> = datastore.data.map { it[IsDarkModeOn] }
+  val isDarkModeEnabled: Flow<Boolean?> = datastore.data.map { it[IsDarkModeOn] }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
     datastore.edit { it[CurrencyIcon] = value }

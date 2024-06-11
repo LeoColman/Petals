@@ -78,7 +78,7 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
   val millisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState("disabled")
-  val darkMode: Boolean? by settingsRepository.isDarkModeOn.collectAsState(null)
+  val darkMode: Boolean? by settingsRepository.isDarkModeEnabled.collectAsState(null)
   val dateString = DateTimeFormatter.ofPattern(
     String.format(Locale.US, "%s %s", dateFormat, timeFormat)
   ).format(lastUseDate)
