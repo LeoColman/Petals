@@ -44,4 +44,10 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
     }
     launch { MobileAds.initialize(this@MainActivity) }
   }
+
+  @Composable
+  fun isDarkModeEnabled(): Boolean {
+    val darkMode: Boolean? by settingsRepository.isDarkModeOn.collectAsState(null)
+    return darkMode ?: isSystemInDarkTheme()
+  }
 }
