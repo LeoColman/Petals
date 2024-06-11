@@ -87,12 +87,12 @@ class SettingsRepositoryTest : FunSpec({
   }
 
   test("Changes dark mode to true") {
-        target.setDarkMode(true)
-        target.isDarkModeOn.first() shouldBe true
-    }
+    target.setDarkMode(true)
+    target.isDarkModeOn.first() shouldBe true
+  }
 
-    test("Changes dark mode to false") {
-        target.setDarkMode(false)
-        target.isDarkModeOn.first() shouldBe false
-    }
+  test("Changes dark mode to false") {
+    target.setDarkMode(false)
+    target.isDarkModeOn.first() shouldBe false
+  }
 })
