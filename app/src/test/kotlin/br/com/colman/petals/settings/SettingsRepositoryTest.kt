@@ -85,4 +85,14 @@ class SettingsRepositoryTest : FunSpec({
     target.setExtendedDay("enabled")
     datastore.data.first()[ExtendedDayEnabled] shouldBe "enabled"
   }
+
+  test("Changes dark mode to true") {
+        target.setDarkMode(true)
+        target.isDarkModeOn.first() shouldBe true
+    }
+
+    test("Changes dark mode to false") {
+        target.setDarkMode(false)
+        target.isDarkModeOn.first() shouldBe false
+    }
 })
