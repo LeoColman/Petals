@@ -1,10 +1,7 @@
 package br.com.colman.petals.settings
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -35,6 +32,7 @@ class SettingsRepository(
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
   val extendedDayList = listOf("enabled", "disabled")
   val extendedDay: Flow<String> = datastore.data.map { it[ExtendedDayEnabled] ?: extendedDayList[1] }
+  val isDarkModeOn: Flow<Boolean?> = datastore.data.map { it[IsDarkModeOn] }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
     datastore.edit { it[CurrencyIcon] = value }
@@ -64,6 +62,10 @@ class SettingsRepository(
     datastore.edit { it[ExtendedDayEnabled] = value }
   }
 
+  fun setDarkMode(value: Boolean): Unit = runBlocking {
+    datastore.edit { it[IsDarkModeOn] = value }
+  }
+
   val pin: Flow<String?>
     get() = datastore.data.map { it[Pin] }
 
@@ -82,5 +84,6 @@ class SettingsRepository(
     val HitTimerMillisecondsEnabled = stringPreferencesKey("hit_timer_milliseconds_enabled")
     val DecimalPrecision = intPreferencesKey("decimal_precision")
     val ExtendedDayEnabled: Preferences.Key<String> = stringPreferencesKey("is_day_extended")
+    val IsDarkModeOn: Preferences.Key<Boolean> = booleanPreferencesKey("is_dark_mode_on")
   }
 }

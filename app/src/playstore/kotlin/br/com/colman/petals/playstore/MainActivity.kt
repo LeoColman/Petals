@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
     setContent {
       val navController = rememberNavController()
 
-      MaterialTheme(if (isSystemInDarkTheme()) darkColors() else lightColors()) {
+      MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
         Surface {
           Scaffold(
             topBar = { MyTopAppBar(navController) },
