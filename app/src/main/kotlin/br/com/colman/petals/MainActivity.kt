@@ -111,7 +111,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
 
   @Composable
   fun isDarkModeEnabled(): Boolean {
-    val darkMode: Boolean? by settingsRepository.isDarkModeEnabled.collectAsState(null)
-    return darkMode ?: isSystemInDarkTheme()
+    val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())
+    return darkMode
   }
 }

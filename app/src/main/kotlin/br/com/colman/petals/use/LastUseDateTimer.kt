@@ -78,11 +78,10 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
   val millisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState("disabled")
-  val darkMode: Boolean? by settingsRepository.isDarkModeEnabled.collectAsState(null)
+  val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())
   val dateString = DateTimeFormatter.ofPattern(
     String.format(Locale.US, "%s %s", dateFormat, timeFormat)
   ).format(lastUseDate)
-  val isSystemDarkTheme = isSystemInDarkTheme()
 
   var millis by remember { mutableStateOf(ChronoUnit.MILLIS.between(lastUseDate, now())) }
 
@@ -114,7 +113,7 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
           val dateStringWithExtras = if (!lastUseDate.is420()) dateString else "$dateString 🥦🥦"
           Text(dateStringWithExtras, fontSize = 24.sp)
         }
-        IconButton({ settingsRepository.setDarkMode(darkMode?.let { !it } ?: isSystemDarkTheme) }) {
+        IconButton({ settingsRepository.setDarkMode(!darkMode) }) {
           SetDarkModeIcon(darkMode)
         }
       }
