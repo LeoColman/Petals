@@ -9,7 +9,7 @@ kotest = "5.9.1"
 kotlin = "1.9.23"
 vanpra-material-dialogs = "0.9.0"
 sqldelight = "1.5.5"
-glance = "1.0.0"
+glance = "1.1.0"
 
 [libraries]
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.0.4"
