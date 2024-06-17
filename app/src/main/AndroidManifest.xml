@@ -20,16 +20,16 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <application
-        android:name=".PetalsApplication"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="Petals"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+            android:name=".PetalsApplication"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="Petals"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+                android:name=".MainActivity"
+                android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,24 +38,34 @@
         </activity>
 
         <receiver
-            android:name=".widget.PetalsAppWidgetReceiver"
-            android:exported="true">
+                android:name=".widget.PetalsAppWidgetReceiver"
+                android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_info" />
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/appwidget_info" />
+        </receiver>
+
+        <receiver android:name=".widget.PetalsRepeatLastUseWidgetReceiver"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/repeat_last_use_widget_info"/>
         </receiver>
 
         <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}"
-            android:exported="false"
-            android:grantUriPermissions="true">
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${applicationId}"
+                android:exported="false"
+                android:grantUriPermissions="true">
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths" />
         </provider>
 
     </application>

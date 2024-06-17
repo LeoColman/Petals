@@ -158,6 +158,7 @@
     <string name="confirm_deletion">Confirm deletion</string>
     <string name="pause_time">Pause Time</string>
     <string name="id_label">id</string>
+    <string name="repeat_last_use">Repeat Last Use</string>
     <plurals name="last_x_days">
         <item quantity="one">Last %s day</item>
         <item quantity="other">Last %s days</item>
