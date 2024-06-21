@@ -41,6 +41,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
           )
         }
       }
+      MainScreen(this)
     }
     launch { MobileAds.initialize(this@MainActivity) }
   }
