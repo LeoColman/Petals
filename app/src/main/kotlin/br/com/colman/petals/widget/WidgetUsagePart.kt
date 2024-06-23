@@ -42,7 +42,7 @@ fun WidgetUsagePart() {
   val lastUseDate = useRepository.getLastUseDate().collectAsState(LocalDateTime.now())
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val millisecondsEnabled = "disabled"
+  val millisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(false)
   val dateString =
     DateTimeFormatter.ofPattern(String.format(Locale.US, "%s %s", dateFormat, timeFormat))
       .format(lastUseDate.value)

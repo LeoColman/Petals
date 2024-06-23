@@ -1,12 +1,17 @@
 package br.com.colman.petals.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.glance.AndroidResourceImageProvider
 import androidx.glance.Button
+import androidx.glance.ButtonDefaults
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.Image
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.action.actionRunCallback
@@ -16,17 +21,22 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.Alignment.Horizontal.Companion.CenterHorizontally
 import androidx.glance.layout.Alignment.Vertical.Companion.CenterVertically
 import androidx.glance.layout.Column
+import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
 import androidx.glance.layout.padding
+import androidx.glance.layout.wrapContentWidth
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
+import br.com.colman.petals.R
 import br.com.colman.petals.use.RepeatLastUseCallback
 
 object PetalsRepeatLastUseWidget : GlanceAppWidget() {
+  @SuppressLint("RestrictedApi")
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     provideContent {
       Column(
@@ -39,22 +49,32 @@ object PetalsRepeatLastUseWidget : GlanceAppWidget() {
           verticalAlignment = Alignment.CenterVertically,
           modifier = GlanceModifier.fillMaxWidth()
         ) {
-          Text(
-            text = "Quick use",
-            modifier = GlanceModifier.padding(bottom = 6.dp),
-            style = TextStyle(
-              textAlign = TextAlign.Center,
-              fontWeight = FontWeight.Medium,
-              color = ColorProvider(Color.White),
-              fontSize = 22.sp
+          Row(
+            verticalAlignment = Alignment.CenterVertically,
+          ) {
+            Image(
+              provider = AndroidResourceImageProvider(R.drawable.ic_repeat),
+              contentDescription = "App Icon",
+              modifier = GlanceModifier.wrapContentWidth().height(40.dp)
             )
-          )
+            Text(
+              text = "Quick Use",
+              modifier = GlanceModifier.padding(bottom = 6.dp),
+              style = TextStyle(
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Medium,
+                color = ColorProvider(Color.White),
+                fontSize = 22.sp
+              )
+            )
+          }
           Button(
-            text = "Repeat",
+            text = "Repeat Last Use",
             style = TextStyle(
               fontWeight = FontWeight.Medium,
               fontSize = 16.sp,
             ),
+            colors = ButtonDefaults.buttonColors(backgroundColor = ColorProvider(R.color.buttonBackground)),
             onClick = actionRunCallback(RepeatLastUseCallback::class.java)
           )
         }
