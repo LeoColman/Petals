@@ -38,8 +38,14 @@ class SettingsRepository(
   val extendedDay: Flow<String> = datastore.data.map { it[ExtendedDayEnabled] ?: extendedDayList[1] }
   val isDarkModeEnabled: Flow<Boolean> = datastore.data.map { it[IsDarkModeOn] ?: true }
 
+  val buttonText: Flow<String> = datastore.data.map { it[ButtonText] ?: "Repeat Last Use" }
+
   fun setCurrencyIcon(value: String): Unit = runBlocking {
     datastore.edit { it[CurrencyIcon] = value }
+  }
+
+  fun setButtonText(value: String): Unit = runBlocking {
+    datastore.edit { it[ButtonText] = value }
   }
 
   fun setDateFormat(value: String): Unit = runBlocking {
@@ -89,5 +95,6 @@ class SettingsRepository(
     val DecimalPrecision = intPreferencesKey("decimal_precision")
     val ExtendedDayEnabled: Preferences.Key<String> = stringPreferencesKey("is_day_extended")
     val IsDarkModeOn: Preferences.Key<Boolean> = booleanPreferencesKey("is_dark_mode_on")
+    val ButtonText = stringPreferencesKey("button_text")
   }
 }
