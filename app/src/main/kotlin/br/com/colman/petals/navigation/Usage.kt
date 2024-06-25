@@ -30,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.use.AddUseButton
 import br.com.colman.petals.use.LastUseDateTimer
@@ -38,7 +39,6 @@ import br.com.colman.petals.use.UseCards
 import br.com.colman.petals.use.pause.PauseButton
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.UseRepository
-import org.koin.androidx.compose.get
 import org.koin.compose.koinInject
 
 @Composable
@@ -49,7 +49,11 @@ fun Usage(
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
   val pause by pauseRepository.get().collectAsState(null)
 
-  Column(Modifier.verticalScroll(rememberScrollState()), spacedBy(8.dp), CenterHorizontally) {
+  Column(
+    Modifier.verticalScroll(rememberScrollState()).testTag("UsageMainColumn"),
+    spacedBy(8.dp),
+    CenterHorizontally
+  ) {
     lastUseDate?.let { LastUseDateTimer(it) }
 
     Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {

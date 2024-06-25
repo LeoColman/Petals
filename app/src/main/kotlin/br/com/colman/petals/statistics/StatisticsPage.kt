@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import br.com.colman.petals.statistics.card.AverageUseCard
 import br.com.colman.petals.statistics.component.MultiPeriodSelect
 import br.com.colman.petals.statistics.component.Period
@@ -25,7 +26,7 @@ fun StatisticsPage(useRepository: UseRepository) {
   val uses by useRepository.all().collectAsState(emptyList())
   val usesInPeriod = selectedPeriods.associateWith(uses)
 
-  Column(Modifier.verticalScroll(rememberScrollState())) {
+  Column(Modifier.verticalScroll(rememberScrollState()).testTag("StatisticsMainColumn")) {
     MultiPeriodSelect(selectedPeriods) { selectedPeriods = it }
     if (selectedPeriods.isEmpty()) return
 

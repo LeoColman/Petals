@@ -33,6 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavHostController
@@ -87,6 +88,7 @@ fun BottomNavigationBar(navController: NavHostController) {
   BottomNavigation {
     Page.entries.forEach { page ->
       BottomNavigationItem(
+        modifier = Modifier.testTag(page.name),
         selected = currentRoute == page.name,
 
         onClick = {
