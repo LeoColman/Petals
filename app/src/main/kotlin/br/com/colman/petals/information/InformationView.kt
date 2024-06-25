@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -46,11 +47,11 @@ import br.com.colman.petals.components.ExpandableComponent
 fun InformationView() {
   val context = LocalContext.current
   val generalKnowledgeList = parseXmlGenKnowledge(context)
-  Column(Modifier.verticalScroll(rememberScrollState())) {
+  Column(Modifier.verticalScroll(rememberScrollState()).testTag("InformationViewMainColumn")) {
     SectionHeader(stringResource(general_knowledge))
 
-    generalKnowledgeList.forEach { (title, text) ->
-      ExpandableComponent(title) {
+    generalKnowledgeList.forEachIndexed { index, (title, text) ->
+      ExpandableComponent(index, title) {
         KnowledgeContent(text)
       }
     }
@@ -93,7 +94,7 @@ fun CountryPicker(context: Context) {
   val selectCountry = { country: String -> selectedCountry = country }
 
   Column {
-    OutlinedButton(expand, Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+    OutlinedButton(expand, Modifier.fillMaxWidth().padding(horizontal = 16.dp).testTag("SelectCountry")) {
       Text(
         selectedCountry.ifEmpty { stringResource(select_country) },
         Modifier.padding(4.dp),
@@ -106,7 +107,7 @@ fun CountryPicker(context: Context) {
         DropdownMenuItem(onClick = {
           selectCountry(country.name)
           collapse()
-        }) {
+        }, Modifier.testTag("DropdownMenuItem")) {
           Text(country.name)
         }
       }
@@ -126,19 +127,19 @@ fun CountryPicker(context: Context) {
 fun CountryLegislationAndRights(context: Context, country: String) {
   val countryInformation = getCountryInformation(context, country)
 
-  ExpandableComponent(stringResource(legal_status)) { KnowledgeContent(countryInformation.legalStatus) }
+  ExpandableComponent(0, stringResource(legal_status)) { KnowledgeContent(countryInformation.legalStatus) }
 
-  ExpandableComponent(stringResource(possession)) { KnowledgeContent(countryInformation.possession) }
+  ExpandableComponent(1, stringResource(possession)) { KnowledgeContent(countryInformation.possession) }
 
-  ExpandableComponent(stringResource(consumption)) { KnowledgeContent(countryInformation.consumption) }
+  ExpandableComponent(2, stringResource(consumption)) { KnowledgeContent(countryInformation.consumption) }
 
-  ExpandableComponent(stringResource(medical_use)) { KnowledgeContent(countryInformation.medicalUse) }
+  ExpandableComponent(3, stringResource(medical_use)) { KnowledgeContent(countryInformation.medicalUse) }
 
-  ExpandableComponent(stringResource(cultivation)) { KnowledgeContent(countryInformation.cultivation) }
+  ExpandableComponent(4, stringResource(cultivation)) { KnowledgeContent(countryInformation.cultivation) }
 
-  ExpandableComponent(stringResource(purchase_and_sale)) { KnowledgeContent(countryInformation.purchaseAndSale) }
+  ExpandableComponent(5, stringResource(purchase_and_sale)) { KnowledgeContent(countryInformation.purchaseAndSale) }
 
-  ExpandableComponent(stringResource(enforcement)) { KnowledgeContent(countryInformation.enforcement) }
+  ExpandableComponent(6, stringResource(enforcement)) { KnowledgeContent(countryInformation.enforcement) }
 
   Text(
     stringResource(keep_in_mind_that_laws_can_change),

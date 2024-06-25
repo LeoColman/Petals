@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,7 +31,7 @@ import androidx.compose.ui.unit.sp
 @Preview
 @Composable
 fun ExpandableComponent() {
-  ExpandableComponent("Expand this CoMpOnEnT") {
+  ExpandableComponent(0, "Expand this CoMpOnEnT") {
     Column {
       Text("Expanded!")
       Text("Isn't it beautiful?")
@@ -39,13 +40,13 @@ fun ExpandableComponent() {
 }
 
 @Composable
-fun ExpandableComponent(title: String, content: @Composable () -> Unit) {
+fun ExpandableComponent(index: Int, title: String, content: @Composable () -> Unit) {
   var expanded by remember { mutableStateOf(false) }
   val flipExpanded = { expanded = !expanded }
 
   Card(Modifier.padding(8.dp), elevation = 4.dp) {
     Column {
-      ExpandCollapseLine(flipExpanded, expanded, title)
+      ExpandCollapseLine(index, flipExpanded, expanded, title)
 
       if (expanded) {
         Box(Modifier.fillMaxWidth().padding(8.dp).animateContentSize()) {
@@ -57,8 +58,11 @@ fun ExpandableComponent(title: String, content: @Composable () -> Unit) {
 }
 
 @Composable
-private fun ExpandCollapseLine(flipExpanded: () -> Unit, expanded: Boolean, title: String) {
-  Row(Modifier.fillMaxWidth().clickable(flipExpanded).padding(8.dp), verticalAlignment = CenterVertically) {
+private fun ExpandCollapseLine(index: Int, flipExpanded: () -> Unit, expanded: Boolean, title: String) {
+  Row(
+    Modifier.fillMaxWidth().clickable(flipExpanded).padding(8.dp).testTag("ExpandCollapseLine $index"),
+    verticalAlignment = CenterVertically
+  ) {
     IconButton(flipExpanded) {
       Icon(if (expanded) Filled.ExpandLess else Filled.ExpandMore, null)
     }

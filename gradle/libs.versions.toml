@@ -60,11 +60,16 @@ play-services-ads = "com.google.android.gms:play-services-ads:23.2.0"
 play-services-billing = "com.android.billingclient:billing:7.0.0"
 glance = { module = "androidx.glance:glance", version.ref = "glance" }
 glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
+fuel = "com.github.kittinunf.fuel:fuel:2.3.1"
+androidx-test-core = "androidx.test:core:1.6.1"
+androidx-test-ext-junit = "androidx.test.ext:junit:1.2.1"
 
 [bundles]
 androidx-test = [
     "androidx-test-rules",
     "androidx-test-runner",
+    "androidx-test-core",
+    "androidx-test-ext-junit",
     "junit4",
 ]
 apache-commons = [

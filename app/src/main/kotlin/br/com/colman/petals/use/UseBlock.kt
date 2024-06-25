@@ -43,6 +43,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
@@ -82,7 +83,7 @@ fun StatsBlocks(uses: List<Use>) {
   val isAllTimeCensored by blockRepository.isAllTimeCensored.collectAsState(true)
   val isDayExtended: String by settingsRepository.extendedDay.collectAsState("disabled")
 
-  Row(Modifier.horizontalScroll(rememberScrollState()).width(Max)) {
+  Row(Modifier.horizontalScroll(rememberScrollState()).width(Max).testTag("StatsBlockMainRow")) {
     if (isDayExtended == "enabled") {
       UseBlock(Modifier.weight(1f), Today, adjustTodayFilter(uses), isTodayCensored)
     } else {
