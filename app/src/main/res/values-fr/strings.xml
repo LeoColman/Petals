@@ -84,7 +84,7 @@
     <string name="end_time">Heure de fin</string>
     <string name="delete">Supprimer</string>
     <string name="yes_timer">Oui (%s s)</string>
-    <string name="add_use_during_pause_alert">Vous avez programmé cette période comme une pause. Êtes-vous sûr·e de vouloir ajouter une utilisation maintenant ?</string>
+    <string name="add_use_during_pause_alert">Vous avez programmé cette période comme une pause. Êtes-vous sûr·e de vouloir ajouter une utilisation maintenant ?</string>
     <string name="grams_distribution_per_day_of_week">Distribution de grammes par jour de la semaine</string>
     <string name="time_format_label">Format de l\'heure</string>
     <string name="what_time_format_should_be_used">Quel format horaire doit être utilisé</string>
@@ -102,7 +102,7 @@
     <string name="confirm_to_delete">Êtes-vous sûr·e de vouloir supprimer l\'utilisation ajoutée sur %s ?</string>
     <string name="app_pin">NIP de l\'appli</string>
     <string name="pin_main_screen">Cette application est protégée par un mot de passe. Entrez le bon mot de passe pour continuer.</string>
-    <string name="password_description">Pour plus de confidentialité, vous pouvez définir un mot de passe pour accéder à l\'application. La définition d\'un mot de passe vide le supprime. ATTENTION ! Il n\'est pas possible de récupérer un mot de passe défini</string>
+    <string name="password_description">Pour plus de confidentialité, vous pouvez définir un mot de passe pour accéder à l\'application. La définition d\'un mot de passe vide le supprime. ATTENTION ! Il n\'est pas possible de récupérer un mot de passe défini</string>
     <plurals name="last_x_days">
         <item quantity="one">Les %s derniers jours</item>
         <item quantity="many"/>
