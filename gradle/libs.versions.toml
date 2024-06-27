@@ -1,5 +1,5 @@
 [versions]
-androidx = "1.6.0"
+androidx = "1.6.1"
 composeCompiler = "1.5.11"
 compose = "1.6.8"
 datastore = "1.0.0"
