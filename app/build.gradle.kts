@@ -29,6 +29,7 @@ plugins {
   alias(libs.plugins.sqldelight)
   alias(libs.plugins.kotlinx.serialization)
   alias(libs.plugins.kotlinx.kover)
+  alias(libs.plugins.compose.compiler)
 }
 
 repositories {
@@ -122,10 +123,6 @@ android {
   buildFeatures {
     compose = true
     buildConfig = true
-  }
-
-  composeOptions {
-    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
   }
 
   testOptions {
