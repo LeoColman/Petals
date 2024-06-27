@@ -24,7 +24,7 @@ workflow(
   job(id = "analyse", runsOn = RunnerType.UbuntuLatest) {
     uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
     uses(action = Checkout())
-    uses(action = GradleBuildAction(arguments = "checkLicense"))
-    run(command = "cat build/reports/dependency-license/licenses.md >> \$GITHUB_STEP_SUMMARY")
+    uses(action = GradleBuildAction(arguments = "licensee"))
+    run(command = "cat app/build/reports/licensee/androidFdroidDebug/validation.txt >> \$GITHUB_STEP_SUMMARY")
   }
 }

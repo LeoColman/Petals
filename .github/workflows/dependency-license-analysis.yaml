@@ -36,6 +36,6 @@ jobs:
     - id: 'step-2'
       uses: 'gradle/gradle-build-action@v3'
       with:
-        arguments: 'checkLicense'
+        arguments: 'licensee'
     - id: 'step-3'
-      run: 'cat build/reports/dependency-license/licenses.md >> $GITHUB_STEP_SUMMARY'
+      run: 'cat app/build/reports/licensee/androidFdroidDebug/validation.txt >> $GITHUB_STEP_SUMMARY'

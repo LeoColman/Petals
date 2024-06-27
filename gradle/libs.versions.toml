@@ -7,6 +7,7 @@ detekt = "1.23.6"
 koin = "3.5.6"
 kotest = "5.9.1"
 kotlin = "2.0.0"
+licensee = "1.11.0"
 vanpra-material-dialogs = "0.9.0"
 sqldelight = "1.5.5"
 glance = "1.1.0"
@@ -46,6 +47,7 @@ kotlin-csv = "com.github.doyaaaaaken:kotlin-csv-jvm:1.9.3"
 kotlin-date-range = "me.moallemi.tools:kotlin-date-range:1.0.0"
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1"
+licensee-gradle-plugin = { module = "app.cash.licensee:licensee-gradle-plugin", version.ref = "licensee" }
 mockk = "io.mockk:mockk:1.13.11"
 mp-android-chart = "com.github.AppDevNext:AndroidChart:3.1.0.23"
 snodge = "com.natpryce:snodge:3.7.0.0"
@@ -110,3 +112,4 @@ sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.8.2" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+licensee = { id = "app.cash.licensee", version.ref = "licensee" }

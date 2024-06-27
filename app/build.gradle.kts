@@ -30,6 +30,7 @@ plugins {
   alias(libs.plugins.kotlinx.serialization)
   alias(libs.plugins.kotlinx.kover)
   alias(libs.plugins.compose.compiler)
+  id("app.cash.licensee")
 }
 
 repositories {
@@ -235,5 +236,28 @@ sqldelight {
     dialect = "sqlite:3.25"
     schemaOutputDirectory = file("src/main/sqldelight/databases")
     verifyMigrations = true
+  }
+}
+
+licensee {
+  allow("Apache-2.0")
+  allow("BSD-3-Clause")
+  allow("MIT")
+
+  allowUrl("https://github.com/doyaaaaaken/kotlin-csv/blob/master/LICENSE") {
+    because("Apache-2.0 but self-hosted")
+  }
+
+  allowUrl("https://github.com/jjoe64/GraphView/blob/master/license.txtl") {
+    because("Typo of `license.txt`, which is Apache-2.0")
+    because("https://github.com/jjoe64/GraphView/blob/master/license.txt")
+  }
+
+  allowUrl("https://github.com/devsrsouza/compose-icons/blob/master/LICENSE") {
+    because("MIT License")
+  }
+
+  allowUrl("https://developer.android.com/studio/terms.html") {
+    because("Android Software Development Kit License Agreement.")
   }
 }
