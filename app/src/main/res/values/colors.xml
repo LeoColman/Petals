@@ -20,4 +20,5 @@
     <color name="darkGreen">#3A7C3B</color>
     <color name="lightGreen">#66B767</color>
     <color name="smokeColor">#4D4A4F</color>
+    <color name="buttonBackground">#bb86fc</color>
 </resources>
