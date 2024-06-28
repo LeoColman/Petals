@@ -38,7 +38,7 @@ object RepeatLastUseCallback : ActionCallback {
       val currentIcon = prefs[PetalsRepeatLastUseWidget.iconKey]
       if(currentIcon == R.drawable.ic_repeat || currentIcon == null) {
         prefs[PetalsRepeatLastUseWidget.iconKey] = R.drawable.ic_padlock
-      } else if (currentIcon == R.drawable.ic_padlock && useRepository.getLastUse().firstOrNull()?.date?.minute != now().minute)  {
+      } else if (currentIcon == R.drawable.ic_padlock)  {
         prefs[PetalsRepeatLastUseWidget.iconKey] = R.drawable.ic_repeat
       }
     }
