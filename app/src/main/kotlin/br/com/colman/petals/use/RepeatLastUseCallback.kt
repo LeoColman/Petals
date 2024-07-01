@@ -10,7 +10,6 @@ import br.com.colman.petals.R
 import br.com.colman.petals.koin
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.widget.PetalsRepeatLastUseWidget
-import br.com.colman.petals.widget.WidgetRepository
 import br.com.colman.petals.widget.WidgetRepository.Companion.IconKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,11 +34,11 @@ object RepeatLastUseCallback : ActionCallback {
 
   private suspend fun updateWidget(context: Context, glanceId: GlanceId) {
     updateAppWidgetState(context, glanceId){prefs ->
-      val currentIcon = prefs[PetalsRepeatLastUseWidget.iconKey]
-      if(currentIcon == R.drawable.ic_repeat || currentIcon == null) {
-        prefs[PetalsRepeatLastUseWidget.iconKey] = R.drawable.ic_padlock
+      val currentIcon = prefs[IconKey] ?: R.drawable.ic_repeat
+      if(currentIcon == R.drawable.ic_repeat) {
+        prefs[IconKey] = R.drawable.ic_padlock
       } else if (currentIcon == R.drawable.ic_padlock)  {
-        prefs[PetalsRepeatLastUseWidget.iconKey] = R.drawable.ic_repeat
+        prefs[IconKey] = R.drawable.ic_repeat
       }
     }
     PetalsRepeatLastUseWidget.updateAll(context)

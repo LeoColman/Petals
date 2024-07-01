@@ -50,12 +50,10 @@ object PetalsRepeatLastUseWidget : GlanceAppWidget() {
     }
   }
 
-  val iconKey = intPreferencesKey("IconKey")
-
   @SuppressLint("RestrictedApi")
   @Composable
   fun Content() {
-    val icon = currentState(key = iconKey) ?: R.drawable.ic_repeat
+    val icon = currentState(key = WidgetRepository.IconKey) ?: R.drawable.ic_repeat
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
       verticalAlignment = Alignment.CenterVertically,
