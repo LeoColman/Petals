@@ -154,6 +154,7 @@
     <string name="restlessness">Restlessness</string>
     <string name="current_anger">Current Anger: %s</string>
     <string name="anger">Anger</string>
+    <string name="repeat_last_use">Repeat Last Use</string>
     <plurals name="last_x_days">
         <item quantity="one">Last %s day</item>
         <item quantity="other">Last %s days</item>

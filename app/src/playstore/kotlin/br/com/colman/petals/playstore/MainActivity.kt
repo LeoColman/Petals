@@ -58,3 +58,4 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
     return darkMode ?: isSystemInDarkTheme()
   }
 }
+
