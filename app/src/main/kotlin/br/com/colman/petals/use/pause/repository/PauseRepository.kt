@@ -30,11 +30,13 @@ class PauseRepository(
 fun PauseEntity.toPause() = Pause(
   LocalTime.parse(start_time),
   LocalTime.parse(end_time),
-  id
+  id,
+  (is_disabled ?: 0) != 0L // Zero is default value because pause is not disabled by default
 )
 
 fun Pause.toEntity() = PauseEntity(
   startTime.format(DateTimeFormatter.ISO_LOCAL_TIME),
   endTime.format(DateTimeFormatter.ISO_LOCAL_TIME),
-  id
+  id,
+  if (isDisabled) 1 else 0
 )
