@@ -1,0 +1,11 @@
+Die quelloffene App Petals zielt darauf ab, ihren Benutzern zu helfen, entweder den Mahriuana Konsum zu beenden, die Nutzung zu reduzieren oder einfach zu wissen, wie viel sie konsumieren.
+
+Funktionen
+
+- Verbrauch verfolgen
+- Time-gate Ihren Verbrauch
+- Nutzung verfolgen
+- Siehe Statistiken, um Ihren Verbrauch zu verstehen
+- Schadensverminderung Anleitung
+- Export und Import als einfache CSV-Dateien
+- Extra Privatsphäre mit einem persönlichen PIN
