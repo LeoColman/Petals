@@ -77,7 +77,7 @@
     <string name="end_time">Eindtijd</string>
     <string name="repository_link_description">Deze app is Open Source en Vrije Software onder de AGPL-3.0 licentie. De broncode is beschikbaar in GitHub op github.com/LeoColman/Petals</string>
     <string name="amount_label">hoeveelheid</string>
-    <string name="symptoms_introduction">In een studie van Budney et al. van de Universiteit van Vermont is vastgesteld hoe ontwenningsverschijnselen van invloed zijn op cannabisgebruikers en hoe ze afnemen. Hieronder zie je een schatting van je huidige situatie op basis van je laatste gebruiksdatum</string>
+    <string name="symptoms_introduction">In een studie van Budney et al. van de Universiteit van Vermont is vastgesteld hoe ontwenningsverschijnselen van invloed zijn op cannabisgebruikers en hoe ze afnemen. Hieronder zie je een schatting van je huidige situatie op basis van je laatste gebruiksdatum.</string>
     <string name="years">Jaren</string>
     <string name="average_per">Gemiddeld per %s</string>
     <string name="week">week</string>

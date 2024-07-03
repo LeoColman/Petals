@@ -82,7 +82,7 @@
     <string name="grams_distribution_per_hour_of_day">Распределение граммов по часам дня</string>
     <string name="week">неделю</string>
     <string name="grams">Граммы</string>
-    <string name="symptoms_introduction">Budney et al. (университет Вермонта) исследовал скорость облегчения симптомов абстиненции после отказа у потребителей каннабиса. Ниже вы увидите предположительную оценку вашей текущей ситуации, основанную на дате последнего употребления</string>
+    <string name="symptoms_introduction">Budney et al. (университет Вермонта) исследовал скорость облегчения симптомов абстиненции после отказа у потребителей каннабиса. Ниже вы увидите предположительную оценку вашей текущей ситуации, основанную на дате последнего употребления.</string>
     <string name="month">месяц</string>
     <string name="day">день</string>
     <string name="vibrate_on_timer_end">Вибрировать по завершении таймера</string>
