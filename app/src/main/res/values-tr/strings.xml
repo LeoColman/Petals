@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Petals</string>
     <string name="quit_date_text">Son kullanım tarihi</string>

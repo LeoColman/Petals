@@ -28,7 +28,7 @@
     <string name="start">Iniciar</string>
     <string name="reset">Reiniciar</string>
     <string name="symptoms">Sintomas</string>
-    <string name="symptoms_introduction">Um estudo de Budney et al. da Universidade de Vermont estabelece como sintomas de abstinência afetam usuários de cannabis. Abaixo você verá uma estimativa da sua situação baseado no seu último uso</string>
+    <string name="symptoms_introduction">Um estudo de Budney et al. da Universidade de Vermont estabelece como sintomas de abstinência afetam usuários de cannabis. Abaixo você verá uma estimativa da sua situação baseado no seu último uso.</string>
     <string name="_355thc" formatted="false">3.55% THC</string>
     <string name="_175thc" formatted="false">1.75% THC</string>
     <string name="breathhold_duration">Tempo Segurando (segundos)</string>

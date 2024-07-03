@@ -82,7 +82,7 @@
     </plurals>
     <string name="hittime_source">Quelle: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
     <string name="repository_link_description">Diese App ist Open Source und freie Software unter der AGPL-3.0-Lizenz. Der Quellcode ist auf GitHub unter github.com/LeoColman/Petals verfügbar</string>
-    <string name="symptoms_introduction">In einer Studie von Budney et al. von der University of Vermont wurde ermittelt, wie sich Entzugserscheinungen auf Cannabiskonsumenten auswirken und abklingen. Unten siehst du eine Schätzung deiner aktuellen Situation auf der Grundlage des Datums deines letzten Konsums</string>
+    <string name="symptoms_introduction">In einer Studie von Budney et al. von der University of Vermont wurde ermittelt, wie sich Entzugserscheinungen auf Cannabiskonsumenten auswirken und abklingen. Unten siehst du eine Schätzung deiner aktuellen Situation auf der Grundlage des Datums deines letzten Konsums.</string>
     <string name="date_format_label">Datumsformat</string>
     <string name="what_date_format_should_be_used">Welches Datumsformat sollte verwendet werden?</string>
     <string name="time_format_label">Zeitformat</string>
