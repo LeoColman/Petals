@@ -78,7 +78,7 @@
     <string name="see_more">Увидеть больше</string>
     <string name="cost_per_gram_short">%s/г</string>
     <string name="import_import">Импортировать</string>
-    <string name="current_thc_concentration">Текущая концентрация ТГК: %s %</string>
+    <string name="current_thc_concentration">Текущая концентрация ТГК: %s \%%</string>
     <string name="grams_distribution_per_hour_of_day">Распределение граммов по часам дня</string>
     <string name="week">неделю</string>
     <string name="grams">Граммы</string>
