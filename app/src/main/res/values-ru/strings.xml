@@ -110,9 +110,9 @@
     <string name="hit_timer_milliseconds_enabled">Включить миллисекунды на странице Таймера</string>
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Включить или выключить миллисекунды на странице Таймера</string>
     <plurals name="last_x_days">
-        <item quantity="one">Последние %s дней</item>
-        <item quantity="few"/>
-        <item quantity="many"/>
-        <item quantity="other"/>
+        <item quantity="one">Последний %s день</item>
+        <item quantity="few">Последние %s дня</item>
+        <item quantity="many">Последние %s дней</item>
+        <item quantity="other">Последние %s дней</item>
     </plurals>
 </resources>
