@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.AndroidResourceImageProvider
 import androidx.glance.Button
 import androidx.glance.ButtonDefaults
@@ -50,10 +50,13 @@ object PetalsRepeatLastUseWidget : GlanceAppWidget() {
     }
   }
 
+  val WidgetStateKey = stringPreferencesKey("widget_state_key")
+
   @SuppressLint("RestrictedApi")
   @Composable
   fun Content() {
-    val icon = currentState(key = WidgetRepository.IconKey) ?: R.drawable.ic_repeat
+    val stateName = currentState(WidgetStateKey) ?: WidgetState.ENABLED.name
+    val widgetState = WidgetState.valueOf(stateName)
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
       verticalAlignment = Alignment.CenterVertically,
@@ -63,7 +66,7 @@ object PetalsRepeatLastUseWidget : GlanceAppWidget() {
         verticalAlignment = Alignment.CenterVertically,
       ) {
         Image(
-          provider = AndroidResourceImageProvider(icon),
+          provider = AndroidResourceImageProvider(widgetState.iconResId),
           contentDescription = "App Icon",
           modifier = GlanceModifier.wrapContentWidth().height(40.dp)
         )
@@ -84,12 +87,12 @@ object PetalsRepeatLastUseWidget : GlanceAppWidget() {
           fontWeight = FontWeight.Medium,
           fontSize = 16.sp,
         ),
+        enabled = widgetState.isButtonEnabled,
         colors = ButtonDefaults.buttonColors(backgroundColor = ColorProvider(R.color.buttonBackground)),
         onClick = actionRunCallback(RepeatLastUseCallback::class.java)
       )
     }
   }
-
 }
 
 class PetalsRepeatLastUseWidgetReceiver : GlanceAppWidgetReceiver() {
