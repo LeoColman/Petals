@@ -49,9 +49,9 @@
     </plurals>
     <string name="vibrate_on_timer_end">Vibra alla fine del timer</string>
     <plurals name="amount_uses">
-        <item quantity="one">uso</item>
-        <item quantity="many">usi</item>
-        <item quantity="other">usi</item>
+        <item quantity="one">%s uso</item>
+        <item quantity="many">%s usi</item>
+        <item quantity="other">%s usi</item>
     </plurals>
     <string name="current_withdrawal_discomfort">Attuale disagio da astinenza: %s</string>
     <string name="discomfort_strength">Forza del disagio</string>
