@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,18 +26,14 @@ fun PauseButton(
   pauseRepository: PauseRepository
 ) {
   var openPauseDialog by remember { mutableStateOf(false) }
-  val pause by pauseRepository.get().collectAsState(null)
-
   PauseButtonView { openPauseDialog = true }
 
   if (openPauseDialog) {
     PauseDialog(
-      pause = pause ?: Pause(),
+      pause = Pause(),
       setPause = {
-        if (it == null) {
-          pauseRepository.delete()
-        } else {
-          pauseRepository.set(it)
+        if (it != null) {
+          pauseRepository.insert(it)
         }
       },
       onDismiss = { openPauseDialog = false }
@@ -50,8 +46,21 @@ fun PauseButton(
 private fun PauseButtonView(
   onClick: () -> Unit = { }
 ) {
-  Row(Modifier.padding(8.dp).clickable { onClick() }, spacedBy(8.dp), CenterVertically) {
+  Row(
+    Modifier.padding(8.dp).clickable { onClick() },
+    spacedBy(8.dp),
+    CenterVertically,
+  ) {
     Icon(TablerIcons.Alarm, null)
     Text("Pause Time")
   }
+}
+
+@Preview
+@Composable
+fun DisablePauseView(
+  isDisabled: Boolean,
+  onClick: (Boolean) -> Unit
+) {
+  Switch(checked = !isDisabled, onCheckedChange = onClick)
 }

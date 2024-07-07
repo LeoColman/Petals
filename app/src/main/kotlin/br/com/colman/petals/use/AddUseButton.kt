@@ -22,7 +22,6 @@ import br.com.colman.petals.R.string.no
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.R.string.yes_timer
-import br.com.colman.petals.use.pause.repository.Pause
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 import compose.icons.TablerIcons
@@ -36,7 +35,7 @@ import java.time.LocalTime
 @Composable
 fun AddUseButton(
   repository: UseRepository,
-  pause: Pause? = null
+  isAnyPauseActive: Boolean
 ) {
   var openAddUseDialog by remember { mutableStateOf(false) }
   var openConfirmAddUseDialog by remember { mutableStateOf(false) }
@@ -53,7 +52,7 @@ fun AddUseButton(
     }
   }
 
-  if (pause == null || !pause.isActive()) {
+  if (!isAnyPauseActive) {
     UseButton { openAddUseDialog = true }
   } else {
     PauseUseButton { openConfirmAddUseDialog = true }
