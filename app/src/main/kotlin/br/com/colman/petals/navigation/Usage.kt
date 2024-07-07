@@ -44,10 +44,8 @@ import br.com.colman.petals.use.UseCards
 import br.com.colman.petals.use.pause.PauseButton
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.UseRepository
-import kotlinx.coroutines.delay
-import org.koin.compose.koinInject
 import java.time.LocalTime
-import kotlin.time.Duration.Companion.seconds
+import org.koin.compose.koinInject
 
 @Composable
 fun Usage(
@@ -55,19 +53,13 @@ fun Usage(
   pauseRepository: PauseRepository = koinInject()
 ) {
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
-  var currentTime by remember {
-    mutableStateOf(LocalTime.now())
+  var currentTime by remember { mutableStateOf(LocalTime.now()) }
+
+  LaunchedEffect(LocalTime.now().second) {
+    currentTime = LocalTime.now()
   }
-  LaunchedEffect(Unit) {
-    while (true) {
-      val now = LocalTime.now()
-      if (currentTime.minute != now.minute) {
-        currentTime = now
-      }
-      delay(10.seconds)
-    }
-  }
-  val pauses by pauseRepository.getAll().collectAsState(listOf())
+
+  val pauses by pauseRepository.getAll().collectAsState(emptyList())
   val isAnyPauseActive = pauses.any { it.isActive(currentTime) }
 
   Column(
