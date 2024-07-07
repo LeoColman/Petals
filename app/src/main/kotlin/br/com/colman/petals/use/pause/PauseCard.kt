@@ -41,11 +41,11 @@ fun PauseCard(
       verticalAlignment = CenterVertically,
     ) {
       Column {
-        Text(stringResource(id = R.string.time))
+        Text(stringResource(id = R.string.pause_time))
         Text("${pause.startTime.format(formatter)} - ${pause.endTime.format(formatter)}")
       }
       Row(horizontalArrangement = spacedBy(4.dp)) {
-        DisablePauseView(isDisabled = pause.isDisabled, onClick = onPauseDisabledStatusChange)
+        DisablePauseView(isEnabled = pause.isEnabled, onClick = onPauseDisabledStatusChange)
         IconButton(onClick = onPauseEditClick) {
           Icon(imageVector = Icons.Rounded.Edit, contentDescription = "Edit pause")
         }

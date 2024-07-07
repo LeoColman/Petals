@@ -14,8 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.colman.petals.R.string
 import br.com.colman.petals.use.pause.repository.Pause
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import compose.icons.TablerIcons
@@ -47,20 +49,22 @@ private fun PauseButtonView(
   onClick: () -> Unit = { }
 ) {
   Row(
-    Modifier.padding(8.dp).clickable { onClick() },
+    Modifier
+      .padding(8.dp)
+      .clickable { onClick() },
     spacedBy(8.dp),
     CenterVertically,
   ) {
     Icon(TablerIcons.Alarm, null)
-    Text("Pause Time")
+    Text(stringResource(string.pause_time))
   }
 }
 
 @Preview
 @Composable
 fun DisablePauseView(
-  isDisabled: Boolean,
+  isEnabled: Boolean,
   onClick: (Boolean) -> Unit
 ) {
-  Switch(checked = !isDisabled, onCheckedChange = onClick)
+  Switch(checked = isEnabled, onCheckedChange = onClick)
 }

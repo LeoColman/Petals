@@ -156,6 +156,7 @@
     <string name="anger">Anger</string>
     <string name="are_you_sure_delete_pause">Are you sure that you want to delete pause from %s to %s?</string>
     <string name="confirm_deletion">Confirm deletion</string>
+    <string name="pause_time">Pause Time</string>
     <plurals name="last_x_days">
         <item quantity="one">Last %s day</item>
         <item quantity="other">Last %s days</item>
