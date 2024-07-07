@@ -1,14 +1,30 @@
 CREATE TABLE Pause(
   start_time TEXT NOT NULL,
   end_time TEXT NOT NULL,
-  id TEXT PRIMARY KEY
+  id TEXT PRIMARY KEY,
+  is_disabled INTEGER DEFAULT 0
 );
 
 insert:
-INSERT INTO Pause(start_time, end_time, id) VALUES ?;
+INSERT INTO Pause(start_time, end_time, id, is_disabled) VALUES ?;
 
 deleteAll:
 DELETE FROM Pause;
-
 selectFirst:
 SELECT * FROM Pause LIMIT 1;
+
+-- Delete a pause by its ID
+deleteById:
+DELETE FROM Pause WHERE id = ?;
+
+-- Update a pause by its ID
+updatePauseById:
+UPDATE Pause
+SET start_time = ?,
+    end_time = ?,
+    is_disabled = ?
+WHERE id = ?;
+
+-- Query to get all pauses
+selectAll:
+SELECT * FROM Pause;

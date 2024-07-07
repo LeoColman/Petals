@@ -65,7 +65,7 @@ fun PauseDialogContent(
     TimeRow(start_time, pauseStart) { pauseStart = it }
     TimeRow(end_time, pauseEnd) { pauseEnd = it }
   }
-  setPause(Pause(pauseStart, pauseEnd))
+  setPause(pause.copy(startTime = pauseStart, endTime = pauseEnd))
 }
 
 @Preview
