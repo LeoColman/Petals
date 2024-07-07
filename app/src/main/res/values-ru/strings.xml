@@ -34,7 +34,7 @@
     <string name="total_spent">%s всего</string>
     <string name="date_label">дата</string>
     <string name="amount_label">количество</string>
-    <string name="export_export">Экспортировать</string>
+    <string name="export_export">Экспорт</string>
     <string name="end_date">Дата конца</string>
     <string name="start_date">Дата начала</string>
     <string name="change_period">Изменить период</string>
@@ -77,7 +77,7 @@
     <string name="cost_per_gram_label">цена_за_грамм</string>
     <string name="see_more">Увидеть больше</string>
     <string name="cost_per_gram_short">%s/г</string>
-    <string name="import_import">Импортировать</string>
+    <string name="import_import">Импорт</string>
     <string name="current_thc_concentration">Текущая концентрация ТГК: %s \%%</string>
     <string name="grams_distribution_per_hour_of_day">Распределение граммов по часам дня</string>
     <string name="week">неделю</string>

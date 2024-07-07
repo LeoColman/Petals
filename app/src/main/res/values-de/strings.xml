@@ -11,7 +11,7 @@
     <string name="stats">Statistiken</string>
     <string name="hit_timer">Hit Timer</string>
     <string name="start">Start</string>
-    <string name="reset">Zurücksetzen</string>
+    <string name="reset">Reset</string>
     <string name="tenSecondsIntro">Wenn du den Rauch länger als 10 Sekunden hältst, wird dein Rausch nicht stärker aber die negativen Auswirkungen des Kiffens auf dich nehmen zu.</string>
     <string name="subjectve_high">Subjektives \"High\"</string>
     <string name="breathhold_duration">Atemzugdauer (Sekunden)</string>
