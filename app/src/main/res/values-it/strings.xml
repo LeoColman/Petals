@@ -10,7 +10,7 @@
     <string name="start">Avvia</string>
     <string name="milliseconds">Millisecondi</string>
     <string name="hittime_source">Fonte: Azorlosa JL, Greenwald MK, Stitzer ML. Fumo di marijuana: effetti della variazione del volume della boccata e della durata dell\'apnea. J Pharmacol Exp lì. 1995. Febbraio;272(2):560–9. PMID: 7853169.</string>
-    <string name="symptoms_introduction">Uno studio di Budney et al. dell\'Università del Vermont ha stabilito come i sintomi di astinenza influiscono e decadono sui consumatori di cannabis. Di seguito vedrai una stima della tua situazione attuale in base alla data del tuo ultimo utilizzo</string>
+    <string name="symptoms_introduction">Uno studio di Budney et al. dell\'Università del Vermont ha stabilito come i sintomi di astinenza influiscono e decadono sui consumatori di cannabis. Di seguito vedrai una stima della tua situazione attuale in base alla data del tuo ultimo utilizzo.</string>
     <string name="symptoms">Sintomi</string>
     <string name="stats">Stati</string>
     <string name="usage">Utilizzo</string>
@@ -49,9 +49,9 @@
     </plurals>
     <string name="vibrate_on_timer_end">Vibra alla fine del timer</string>
     <plurals name="amount_uses">
-        <item quantity="one">uso</item>
-        <item quantity="many">usi</item>
-        <item quantity="other">usi</item>
+        <item quantity="one">%s uso</item>
+        <item quantity="many">%s usi</item>
+        <item quantity="other">%s usi</item>
     </plurals>
     <string name="current_withdrawal_discomfort">Attuale disagio da astinenza: %s</string>
     <string name="discomfort_strength">Forza del disagio</string>
@@ -100,7 +100,7 @@
     <string name="settings">Impostazioni</string>
     <string name="all_time">Tutto il tempo</string>
     <string name="change_period">Cambia periodo</string>
-    <string name="current_thc_concentration">Concentrazione attuale di THC: %s %</string>
+    <string name="current_thc_concentration">Concentrazione attuale di THC: %s \%%</string>
     <string name="confirm_to_delete">Sei sicuro di voler eliminare l\'uso aggiunto su %s?</string>
     <string name="time">Orario</string>
     <string name="_175thc">1.75% THC</string>

@@ -61,7 +61,7 @@
     <string name="end_date">Date de fin</string>
     <string name="change_period">Période de changement</string>
     <string name="grams">Grammes</string>
-    <string name="current_thc_concentration">Concentration actuelle en THC: %s %</string>
+    <string name="current_thc_concentration">Concentration actuelle en THC : %s \%%</string>
     <plurals name="amount_days">
         <item quantity="one">%s jour</item>
         <item quantity="many">%s jours</item>
@@ -76,7 +76,7 @@
     <string name="what_icon_should_be_used_for_currency">Quelle icône doit être utilisée pour la monnaie</string>
     <string name="repository_link_description">Cette application est un logiciel libre sous licence AGPL-3.0. Le code source est disponible sur GitHub à l’adresse github.com/LeoColman/Petals</string>
     <string name="repository_link_title">Accès au code source</string>
-    <string name="symptoms_introduction">Une étude de Budney et al. de l’université du Vermont a établi comment les symptômes de sevrage affectent et dévalorisent les consommateurs de cannabis. Vous trouverez ci-dessous une estimation de votre situation actuelle en fonction de la date de votre dernière consommation</string>
+    <string name="symptoms_introduction">Une étude de Budney et al. de l’université du Vermont a établi comment les symptômes de sevrage affectent et dévalorisent les consommateurs de cannabis. Vous trouverez ci-dessous une estimation de votre situation actuelle en fonction de la date de votre dernière consommation.</string>
     <string name="pause_change_minutes">%+d min</string>
     <string name="no">Non</string>
     <string name="yes">Oui</string>

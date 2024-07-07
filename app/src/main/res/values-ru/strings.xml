@@ -78,11 +78,11 @@
     <string name="see_more">Увидеть больше</string>
     <string name="cost_per_gram_short">%s/г</string>
     <string name="import_import">Импортировать</string>
-    <string name="current_thc_concentration">Текущая концентрация ТГК: %s %</string>
+    <string name="current_thc_concentration">Текущая концентрация ТГК: %s \%%</string>
     <string name="grams_distribution_per_hour_of_day">Распределение граммов по часам дня</string>
     <string name="week">неделю</string>
     <string name="grams">Граммы</string>
-    <string name="symptoms_introduction">Budney et al. (университет Вермонта) исследовал скорость облегчения симптомов абстиненции после отказа у потребителей каннабиса. Ниже вы увидите предположительную оценку вашей текущей ситуации, основанную на дате последнего употребления</string>
+    <string name="symptoms_introduction">Budney et al. (университет Вермонта) исследовал скорость облегчения симптомов абстиненции после отказа у потребителей каннабиса. Ниже вы увидите предположительную оценку вашей текущей ситуации, основанную на дате последнего употребления.</string>
     <string name="month">месяц</string>
     <string name="day">день</string>
     <string name="vibrate_on_timer_end">Вибрировать по завершении таймера</string>
@@ -110,9 +110,9 @@
     <string name="hit_timer_milliseconds_enabled">Включить миллисекунды на странице Таймера</string>
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Включить или выключить миллисекунды на странице Таймера</string>
     <plurals name="last_x_days">
-        <item quantity="one">Последние %s дней</item>
-        <item quantity="few"/>
-        <item quantity="many"/>
-        <item quantity="other"/>
+        <item quantity="one">Последний %s день</item>
+        <item quantity="few">Последние %s дня</item>
+        <item quantity="many">Последние %s дней</item>
+        <item quantity="other">Последние %s дней</item>
     </plurals>
 </resources>

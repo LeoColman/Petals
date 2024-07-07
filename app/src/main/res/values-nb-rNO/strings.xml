@@ -30,14 +30,14 @@
     <string name="breathhold_duration">Antall sekunder før utpust</string>
     <string name="amount_grams_short">%s g</string>
     <string name="cost_per_gram_label">cost_per_gram</string>
-    <string name="symptoms_introduction">En studie av Budney og andre fra universitetet i Vermont viser hvordan abstinens innvirker og avtar for cannabis-brukere. Nedenfor ser du en oversikt over nåværende situasjon basert på siste bruksdato</string>
+    <string name="symptoms_introduction">En studie av Budney og andre fra universitetet i Vermont viser hvordan abstinens innvirker og avtar for cannabis-brukere. Nedenfor ser du en oversikt over nåværende situasjon basert på siste bruksdato.</string>
     <string name="hit_timer">Innpustingstidsur</string>
     <string name="seconds">Sekunder</string>
     <string name="usage">Bruk</string>
     <string name="export_export">Eksporter</string>
     <string name="end_date">Sluttdato</string>
     <string name="start_date">Startdato</string>
-    <string name="current_thc_concentration">Nåværende THC-konsentrasjon: %s %</string>
+    <string name="current_thc_concentration">Nåværende THC-konsentrasjon: %s \%%</string>
     <string name="date_at_time">%1$s klokken %2$s</string>
     <plurals name="amount_uses">
         <item quantity="one">%s brukstilfelle</item>

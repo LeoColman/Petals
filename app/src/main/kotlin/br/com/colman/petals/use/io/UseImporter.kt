@@ -18,19 +18,20 @@
 
 package br.com.colman.petals.use.io
 
+import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 
 class UseImporter(
   private val useRepository: UseRepository
 ) {
 
-  fun import(csvFileLines: List<String>): Result<Unit> = runCatching {
+  fun import(csvFileLines: List<String>, modifyUse: (Use) -> (Use) = { it }): Result<Unit> = runCatching {
     val uses = csvFileLines.mapIndexed { index, s ->
       UseCsvParser.parse(s).onFailure {
         if (index > 0) throw it
       }
     }.mapNotNull { it.getOrNull() }
 
-    useRepository.upsertAll(uses)
+    useRepository.upsertAll(uses.map(modifyUse))
   }
 }

@@ -48,8 +48,8 @@ android {
     applicationId = "br.com.colman.petals"
     minSdk = 21
     targetSdk = 34
-    versionCode = 325000
-    versionName = "3.25.0"
+    versionCode = 325002
+    versionName = "3.25.2"
 
     testApplicationId = "$applicationId.test"
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -213,6 +213,11 @@ dependencies {
 
   // Glance
   implementation(libs.bundles.glance)
+
+  // Fuel
+  androidTestImplementation(libs.fuel) {
+    because("Specifically to make Screenshots and upload them to a localhost server")
+  }
 
 }
 

@@ -34,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.use.AddUseButton
 import br.com.colman.petals.use.LastUseDateTimer
@@ -69,7 +70,11 @@ fun Usage(
   val pauses by pauseRepository.getAll().collectAsState(listOf())
   val isAnyPauseActive = pauses.any { it.isActive(currentTime) }
 
-  Column(Modifier.verticalScroll(rememberScrollState()), spacedBy(8.dp), CenterHorizontally) {
+  Column(
+    Modifier.verticalScroll(rememberScrollState()).testTag("UsageMainColumn"),
+    spacedBy(8.dp),
+    CenterHorizontally
+  ) {
     lastUseDate?.let { LastUseDateTimer(it) }
 
     Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {

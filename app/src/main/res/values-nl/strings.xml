@@ -69,7 +69,7 @@
     <string name="change_period">Periode wijzigen</string>
     <string name="start_date">Startdatum</string>
     <string name="export_export">Exporteren</string>
-    <string name="current_thc_concentration">Huidige THC-concentratie: %s %</string>
+    <string name="current_thc_concentration">Huidige THC-concentratie: %s \%%</string>
     <string name="vibrate_on_timer_end">Trillen bij einde timer</string>
     <string name="repository_link_title">Toegang tot de broncode</string>
     <string name="start_time">Starttijd</string>
@@ -77,7 +77,7 @@
     <string name="end_time">Eindtijd</string>
     <string name="repository_link_description">Deze app is Open Source en Vrije Software onder de AGPL-3.0 licentie. De broncode is beschikbaar in GitHub op github.com/LeoColman/Petals</string>
     <string name="amount_label">hoeveelheid</string>
-    <string name="symptoms_introduction">In een studie van Budney et al. van de Universiteit van Vermont is vastgesteld hoe ontwenningsverschijnselen van invloed zijn op cannabisgebruikers en hoe ze afnemen. Hieronder zie je een schatting van je huidige situatie op basis van je laatste gebruiksdatum</string>
+    <string name="symptoms_introduction">In een studie van Budney et al. van de Universiteit van Vermont is vastgesteld hoe ontwenningsverschijnselen van invloed zijn op cannabisgebruikers en hoe ze afnemen. Hieronder zie je een schatting van je huidige situatie op basis van je laatste gebruiksdatum.</string>
     <string name="years">Jaren</string>
     <string name="average_per">Gemiddeld per %s</string>
     <string name="week">week</string>
