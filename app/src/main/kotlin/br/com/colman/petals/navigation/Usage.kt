@@ -44,8 +44,8 @@ import br.com.colman.petals.use.UseCards
 import br.com.colman.petals.use.pause.PauseButton
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.UseRepository
-import java.time.LocalTime
 import org.koin.compose.koinInject
+import java.time.LocalTime
 
 @Composable
 fun Usage(

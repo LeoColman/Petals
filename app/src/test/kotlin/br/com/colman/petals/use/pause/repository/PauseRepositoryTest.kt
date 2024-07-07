@@ -47,8 +47,9 @@ class PauseRepositoryTest : FunSpec({
   test("Delete by id") {
     target.insert(pause)
     target.insert(otherPause)
-    database.pauseQueries.selectAll().executeAsList().map { it.toPause() } shouldContainExactlyInAnyOrder listOf(pause, otherPause)
-
+    database.pauseQueries.selectAll().executeAsList().map {
+      it.toPause()
+    } shouldContainExactlyInAnyOrder listOf(pause, otherPause)
 
     target.delete(pause)
     database.pauseQueries.selectAll().executeAsList().map { it.toPause() } shouldNotContain pause
