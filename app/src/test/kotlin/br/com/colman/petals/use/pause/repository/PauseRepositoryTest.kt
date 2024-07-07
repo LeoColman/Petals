@@ -6,6 +6,7 @@ import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldNotContain
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
@@ -31,7 +32,7 @@ class PauseRepositoryTest : FunSpec({
 
   test("Updating existing value after insert") {
     target.insert(pause)
-    val updatedPause = pause.copy(isDisabled = true)
+    val updatedPause = pause.copy(isEnabled = false)
     target.update(updatedPause)
     database.pauseQueries.selectFirst().executeAsOne().toPause() shouldBe updatedPause
   }
@@ -46,8 +47,8 @@ class PauseRepositoryTest : FunSpec({
   test("Delete by id") {
     target.insert(pause)
     target.insert(otherPause)
-    database.pauseQueries.selectAll().executeAsList().map { it.toPause() } shouldContain pause
-    database.pauseQueries.selectAll().executeAsList().map { it.toPause() } shouldContain otherPause
+    database.pauseQueries.selectAll().executeAsList().map { it.toPause() } shouldContainExactlyInAnyOrder listOf(pause, otherPause)
+
 
     target.delete(pause)
     database.pauseQueries.selectAll().executeAsList().map { it.toPause() } shouldNotContain pause

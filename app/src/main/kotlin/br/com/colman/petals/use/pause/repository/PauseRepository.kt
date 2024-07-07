@@ -28,7 +28,7 @@ class PauseRepository(
 
   fun update(pause: Pause) {
     val pauseEntity = pause.toEntity()
-    pauseQueries.updatePauseById(pauseEntity.start_time, pauseEntity.end_time, pauseEntity.is_disabled, pauseEntity.id)
+    pauseQueries.updatePauseById(pauseEntity.start_time, pauseEntity.end_time, pauseEntity.is_enabled, pauseEntity.id)
   }
 
   fun delete(pause: Pause) {
@@ -44,12 +44,12 @@ fun PauseEntity.toPause() = Pause(
   LocalTime.parse(start_time),
   LocalTime.parse(end_time),
   id,
-  (is_disabled ?: 0) != 0L // Zero is default value because pause is not disabled by default
+  (is_enabled ?: 1) == 1L
 )
 
 fun Pause.toEntity() = PauseEntity(
   startTime.format(DateTimeFormatter.ISO_LOCAL_TIME),
   endTime.format(DateTimeFormatter.ISO_LOCAL_TIME),
   id,
-  if (isDisabled) 1 else 0
+  if (isEnabled) 1 else 0
 )

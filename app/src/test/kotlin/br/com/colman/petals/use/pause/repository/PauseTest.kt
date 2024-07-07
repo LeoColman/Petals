@@ -30,7 +30,7 @@ class PauseTest : FunSpec({
     }
 
     test("Pause disabled") {
-      val pause = Pause(startTime = MIN, endTime = MAX, isDisabled = true)
+      val pause = Pause(startTime = MIN, endTime = MAX, isEnabled = false)
       pause shouldNotBeActiveAt NOON
     }
 

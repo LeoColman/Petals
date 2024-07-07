@@ -163,4 +163,7 @@
     <string name="restlessness">Inquietude</string>
     <string name="current_anger">Raiva Atual: %s</string>
     <string name="anger">Raiva</string>
+    <string name="are_you_sure_delete_pause">Tem certeza que deseja remover a pausa entre %s e %s?</string>
+    <string name="confirm_deletion">Confirmar Remoção</string>
+    <string name="pause_time">Tempo de Pausa</string>
 </resources>

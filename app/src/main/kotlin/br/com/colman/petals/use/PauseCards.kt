@@ -39,8 +39,8 @@ fun PauseCards(
         onPauseDeleteClick = {
           deletingPause = pause
         },
-        onPauseDisabledStatusChange = { isDisabled ->
-          pauseRepository.update(pause.copy(isDisabled = !isDisabled))
+        onPauseDisabledStatusChange = { isEnabled ->
+          pauseRepository.update(pause.copy(isEnabled = isEnabled))
         }
       )
     }
