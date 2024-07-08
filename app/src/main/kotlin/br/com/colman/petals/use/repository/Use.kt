@@ -23,7 +23,7 @@ data class Use(
     date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
     amountGrams.toPlainString(),
     costPerGram.toPlainString(),
-    id // FIXME ThinkMe: should this be included?
+    id
   )
 
   override fun equals(other: Any?): Boolean {

@@ -166,4 +166,5 @@
     <string name="are_you_sure_delete_pause">Tem certeza que deseja remover a pausa entre %s e %s?</string>
     <string name="confirm_deletion">Confirmar Remoção</string>
     <string name="pause_time">Tempo de Pausa</string>
+    <string name="id_label">id</string>
 </resources>

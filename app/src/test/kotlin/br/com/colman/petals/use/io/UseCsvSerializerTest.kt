@@ -37,7 +37,7 @@ import java.math.BigDecimal.ZERO
 
 class UseCsvSerializerTest : FunSpec({
   val useRepository = mockk<UseRepository>()
-  val useCsvHeaders = UseCsvHeaders("date", "amount", "cost")
+  val useCsvHeaders = UseCsvHeaders("date", "amount", "cost", "id")
   val target = UseCsvSerializer(useRepository, useCsvHeaders)
 
   context("Create CSV content") {
@@ -52,7 +52,7 @@ class UseCsvSerializerTest : FunSpec({
     }
 
     test("Includes the headers at the start of the file") {
-      file shouldStartWith "date,amount,cost\n"
+      file shouldStartWith "date,amount,cost,id\n"
     }
   }
 })
