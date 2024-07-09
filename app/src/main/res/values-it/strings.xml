@@ -145,4 +145,8 @@
     <string name="extend_day_a_few_hours">Prolungare la giornata qualche ora dopo la mezzanotte</string>
     <string name="wait_until_3am_to_show_a_new_day">Attendi fino alle 3:00 per mostrare un nuovo giorno. Utile se di solito vai a dormire dopo la mezzanotte.</string>
     <string name="extend_day">Attiva il giorno prolungato</string>
+    <string name="are_you_sure_delete_pause">Sei sicuro di voler eliminare la pausa da %s a %s?</string>
+    <string name="pause_time">Tempo di pausa</string>
+    <string name="id_label">id</string>
+    <string name="confirm_deletion">Confermare la cancellazione</string>
 </resources>
