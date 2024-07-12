@@ -43,14 +43,17 @@ val locales = listOf(
 )
 
 class ScreenshotTakerTest : FunSpec({
+
   var usesImported = false
+  fun importUses(activity: MainActivity) {
+    if (usesImported) return
+    activity.importDemoUses()
+    usesImported = true
+  }
 
   test("ScreenShot 1") {
     runAndroidComposeUiTest<MainActivity> {
-      if(!usesImported) {
-        activity!!.importDemoUses()
-        usesImported = true
-      }
+      importUses(activity!!)
 
       locales.forEach { (lang, country) ->
         activity?.setLocale(Locale(lang, country))
@@ -66,10 +69,7 @@ class ScreenshotTakerTest : FunSpec({
 
   test("ScreenShot 2") {
     runAndroidComposeUiTest<MainActivity> {
-      if(!usesImported) {
-        activity!!.importDemoUses()
-        usesImported = true
-      }
+      importUses(activity!!)
 
       locales.forEach { (lang, country) ->
         activity?.setLocale(Locale(lang, country))
@@ -108,10 +108,7 @@ class ScreenshotTakerTest : FunSpec({
 
   test("ScreenShot 4") {
     runAndroidComposeUiTest<MainActivity> {
-      if(!usesImported) {
-        activity!!.importDemoUses()
-        usesImported = true
-      }
+      importUses(activity!!)
 
       locales.forEach { (lang, country) ->
         activity?.setLocale(Locale(lang, country))
@@ -127,10 +124,7 @@ class ScreenshotTakerTest : FunSpec({
 
   test("ScreenShot 5") {
     runAndroidComposeUiTest<MainActivity> {
-      if(!usesImported) {
-        activity!!.importDemoUses()
-        usesImported = true
-      }
+      importUses(activity!!)
 
       onNodeWithTag(Page.Stats.name).performClick()
 
@@ -152,10 +146,7 @@ class ScreenshotTakerTest : FunSpec({
 
   test("ScreenShot 6") {
     runAndroidComposeUiTest<MainActivity> {
-      if(!usesImported) {
-        activity!!.importDemoUses()
-        usesImported = true
-      }
+      importUses(activity!!)
 
       locales.forEach { (lang, country) ->
         activity?.setLocale(Locale(lang, country))
@@ -180,7 +171,6 @@ class ScreenshotTakerTest : FunSpec({
 
   test("ScreenShot 7") {
     runAndroidComposeUiTest<MainActivity> {
-
       locales.forEach { (lang, country) ->
         activity?.setLocale(Locale(lang, country))
 
@@ -197,7 +187,6 @@ class ScreenshotTakerTest : FunSpec({
 
   test("ScreenShot 8") {
     runAndroidComposeUiTest<MainActivity> {
-
       locales.forEach { (lang, country) ->
         activity?.setLocale(Locale(lang, country))
 
@@ -247,10 +236,7 @@ private fun MainActivity.setLocale(locale: Locale) {
 }
 
 private fun AndroidComposeUiTest<*>.takeScreenshot(file: String, lang: String, country: String) {
-  val bitmap = onRoot()
-    .captureToImage()
-    .asAndroidBitmap()
-
+  val bitmap = onRoot().captureToImage().asAndroidBitmap()
   uploadScreenshot(bitmap, file, lang, country)
 }
 
@@ -259,16 +245,10 @@ private fun uploadScreenshot(bitmap: Bitmap, fileName: String, lang: String, cou
   bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
   val byteArray = byteArrayOutputStream.toByteArray()
 
-  // Save to a temporary file
-  val tempFile = File.createTempFile(fileName, null)
-  tempFile.writeBytes(byteArray)
+  val tempFile = File.createTempFile(fileName, null).also { it.writeBytes(byteArray) }
 
-  Fuel.upload("http://10.0.2.2:8080/upload?country=$country&lang=$lang")
+  val computerIpAddress = "10.0.2.2"
+  Fuel.upload("http://$computerIpAddress:8080/upload?country=$country&lang=$lang")
     .add(FileDataPart(tempFile, name = "file", filename = fileName))
-    .response { _, _, result ->
-      result.fold(
-        { println("File uploaded successfully.") },
-        { error -> println("Failed to upload file: ${error.message}") }
-      )
-    }
+    .response()
 }
