@@ -33,11 +33,9 @@ class UseRepository(
 
   suspend fun repeatLastUse() {
     val lastUse = getLastUse().firstOrNull()
-    if (lastUse?.date?.minute != now().minute) {
-      val newUse = lastUse?.copy(date = now(), id = UUID.randomUUID().toString())
-      newUse?.let {
-        upsert(it)
-      }
+    val newUse = lastUse?.copy(date = now(), id = UUID.randomUUID().toString())
+    newUse?.let {
+      upsert(it)
     }
   }
 
