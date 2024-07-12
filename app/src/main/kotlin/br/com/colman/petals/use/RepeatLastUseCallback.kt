@@ -18,8 +18,7 @@ import java.time.LocalDateTime.now
 
 object RepeatLastUseCallback : ActionCallback {
   val useRepository: UseRepository = koin.get<UseRepository>()
-  val job = Job()
-  val scope = CoroutineScope(Dispatchers.IO + job)
+  val scope = CoroutineScope(Dispatchers.IO)
 
   override suspend fun onAction(
     context: Context,
