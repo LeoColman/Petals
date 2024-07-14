@@ -175,7 +175,7 @@ class ScreenshotTakerTest : FunSpec({
         activity?.setLocale(Locale(lang, country))
 
         onNodeWithTag("InfoButton").performClick()
-        onNodeWithTag("ExpandCollapseLine 0").performClick()
+        onAllNodesWithTag("ExpandCollapseLine").onFirst().performClick()
 
         waitForIdle()
         Thread.sleep(700)
@@ -191,7 +191,7 @@ class ScreenshotTakerTest : FunSpec({
         activity?.setLocale(Locale(lang, country))
 
         onNodeWithTag("InfoButton").performClick()
-        onNodeWithTag("ExpandCollapseLine 0").performClick()
+        onAllNodesWithTag("ExpandCollapseLine").onFirst().performClick()
         onNodeWithTag("InformationViewMainColumn").performTouchInput {
           swipeUp()
         }

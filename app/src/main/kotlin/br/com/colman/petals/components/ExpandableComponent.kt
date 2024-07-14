@@ -11,7 +11,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons.Filled
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.runtime.Composable
@@ -23,7 +23,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,24 +31,33 @@ import androidx.compose.ui.unit.sp
 @Preview
 @Composable
 fun ExpandableComponentPreview() {
-  ExpandableComponent(0, "Expand this CoMpOnEnT") {
-    Column {
-      Text("Expanded!")
-      Text("Isn't it beautiful?")
+  Column {
+    ExpandableComponent("Expandable Component") {
+      Column {
+        Text("Expanded!")
+        Text("Isn't it beautiful?")
+      }
+    }
+
+    ExpandableComponent("Collapsable Component", true) {
+      Column {
+        Text("Expanded!")
+        Text("Isn't it beautiful?")
+      }
     }
   }
 }
 
 @Composable
-fun ExpandableComponent(index: Int, title: String, content: @Composable () -> Unit) {
-  var expanded by remember { mutableStateOf(false) }
-  val flipExpanded = { expanded = !expanded }
+fun ExpandableComponent(title: String, isExpanded: Boolean = false, content: @Composable () -> Unit) {
+  var isExpanded by remember { mutableStateOf(isExpanded) }
+  val onClick = { isExpanded = !isExpanded }
 
   Card(Modifier.padding(8.dp), elevation = 4.dp) {
     Column {
-      ExpandCollapseLine(index, flipExpanded, expanded, title)
+      ExpandCollapseLine(title, isExpanded, onClick)
 
-      if (expanded) {
+      if (isExpanded) {
         Box(Modifier.fillMaxWidth().padding(8.dp).animateContentSize()) {
           content()
         }
@@ -58,16 +67,20 @@ fun ExpandableComponent(index: Int, title: String, content: @Composable () -> Un
 }
 
 @Composable
-private fun ExpandCollapseLine(index: Int, flipExpanded: () -> Unit, expanded: Boolean, title: String) {
+private fun ExpandCollapseLine(
+  text: String,
+  isExpanded: Boolean,
+  onClick: () -> Unit,
+) {
+  val icon = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore
+
   Row(
-    Modifier.fillMaxWidth().clickable(flipExpanded).padding(8.dp).testTag("ExpandCollapseLine $index"),
+    Modifier.fillMaxWidth().clickable(onClick = onClick).padding(8.dp).testTag("ExpandCollapseLine"),
     verticalAlignment = CenterVertically
   ) {
-    IconButton(flipExpanded) {
-      Icon(if (expanded) Filled.ExpandLess else Filled.ExpandMore, null)
+    IconButton(onClick) {
+      Icon(icon, null)
     }
-    Text(title, Modifier.weight(1f), style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp))
+    Text(text, Modifier.weight(1f), style = TextStyle(fontWeight = Bold, fontSize = 16.sp))
   }
 }
-
-private fun Modifier.clickable(onClick: () -> Unit) = this.clickable(onClick = onClick)
