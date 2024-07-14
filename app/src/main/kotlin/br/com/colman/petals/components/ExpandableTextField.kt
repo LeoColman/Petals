@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 
 @Preview
 @Composable
-fun ExpandableComponent() {
+fun ExpandableComponentPreview() {
   ExpandableComponent(0, "Expand this CoMpOnEnT") {
     Column {
       Text("Expanded!")
