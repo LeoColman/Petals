@@ -100,7 +100,6 @@ class ScreenshotTakerTest : FunSpec({
 
         onNodeWithTag(Page.HitTimer.name).performClick()
         waitForIdle()
-        Thread.sleep(700)
         takeScreenshot("3.png", lang, country)
       }
     }
@@ -114,7 +113,6 @@ class ScreenshotTakerTest : FunSpec({
         activity?.setLocale(Locale(lang, country))
 
         onNodeWithTag(Page.Symptoms.name).performClick()
-        Thread.sleep(700)
         waitForIdle()
 
         takeScreenshot("4.png", lang, country)
@@ -137,7 +135,6 @@ class ScreenshotTakerTest : FunSpec({
         onNodeWithTag("Days 30").performClick()
         onNodeWithTag("Days 60").performClick()
         waitForIdle()
-        Thread.sleep(700)
 
         takeScreenshot("5.png", lang, country)
       }
@@ -162,7 +159,6 @@ class ScreenshotTakerTest : FunSpec({
           swipeUp(endY = bottom * 0.5f)
         }
         waitForIdle()
-        Thread.sleep(700)
 
         takeScreenshot("6.png", lang, country)
       }
@@ -178,7 +174,6 @@ class ScreenshotTakerTest : FunSpec({
         onAllNodesWithTag("ExpandCollapseLine").onFirst().performClick()
 
         waitForIdle()
-        Thread.sleep(700)
 
         takeScreenshot("7.png", lang, country)
       }
@@ -205,7 +200,6 @@ class ScreenshotTakerTest : FunSpec({
         }
 
         waitForIdle()
-        Thread.sleep(700)
 
         takeScreenshot("8.png", lang, country)
       }

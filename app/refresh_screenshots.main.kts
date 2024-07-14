@@ -19,6 +19,23 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.io.File
 
+// Function to disable animations via ADB
+fun disableAnimations() {
+  listOf(
+    "adb shell settings put global window_animation_scale 0",
+    "adb shell settings put global transition_animation_scale 0",
+    "adb shell settings put global animator_duration_scale 0",
+  ).forEach { command ->
+    try {
+      val process = Runtime.getRuntime().exec(command)
+      process.waitFor()
+    } catch (e: Exception) {
+      println("Error while trying to disable animations via ADB: ${e.localizedMessage}")
+    }
+  }
+  println("Animations in the emulator has been disabled")
+}
+
 // Function to start the server
 fun startServer(): NettyApplicationEngine {
   return embeddedServer(Netty, port = 8080) {
@@ -52,6 +69,9 @@ fun startServer(): NettyApplicationEngine {
 
 // Start the server
 val server = startServer()
+
+// Disable Animations
+disableAnimations()
 
 // Run the Android tests
 println("Running Android tests...")
