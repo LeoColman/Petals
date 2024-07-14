@@ -167,4 +167,5 @@
     <string name="confirm_deletion">Confirmar Remoção</string>
     <string name="pause_time">Tempo de Pausa</string>
     <string name="id_label">id</string>
+    <string name="select_time">Selecione o horário</string>
 </resources>
