@@ -4,7 +4,6 @@ import br.com.colman.petals.Database
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldBeSortedWith
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
