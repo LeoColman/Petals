@@ -145,4 +145,9 @@
     <string name="extend_day_a_few_hours">Prolongar el día unas horas después de medianoche</string>
     <string name="wait_until_3am_to_show_a_new_day">Espera hasta las 3:00 AM para mostrar un nuevo día. Útil si sueles irte a dormir después de medianoche.</string>
     <string name="extend_day">Conmutar a jornada ampliada</string>
+    <string name="are_you_sure_delete_pause">¿Estás seguro de que quieres borrar la pausa de %s a %s?</string>
+    <string name="confirm_deletion">Confirmar eliminación</string>
+    <string name="id_label">id</string>
+    <string name="select_time">Seleccionar hora</string>
+    <string name="pause_time">Tiempo de pausa</string>
 </resources>
