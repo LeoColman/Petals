@@ -14,8 +14,8 @@ class PauseRepository(
   private val pauseQueries: PauseQueries
 ) {
 
-  fun getAll(): Flow<List<Pause>> {
-    return pauseQueries.selectAll().asFlow().mapToList().map { it.map { pauseEntity -> pauseEntity.toPause() } }
+  fun getAll() = pauseQueries.selectAll().asFlow().mapToList().map { pauses ->
+    pauses.map(PauseEntity::toPause).sortedWith(compareBy({ it.startTime }, { it.endTime }))
   }
 
   fun get(): Flow<Pause?> {
