@@ -5,6 +5,7 @@ import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldBeSortedWith
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldNotContain
@@ -44,6 +45,13 @@ class PauseRepositoryTest : FunSpec({
     database.pauseQueries.selectAll().executeAsList().map { it.toPause() } shouldContain otherPause
   }
 
+  test("Get all should be sorted") {
+    target.insert(pause)
+    target.insert(otherPause)
+
+    target.getAll().first().shouldBeSortedWith(compareBy({ it.startTime }, { it.endTime }))
+  }
+
   test("Delete by id") {
     target.insert(pause)
     target.insert(otherPause)
@@ -61,12 +69,6 @@ class PauseRepositoryTest : FunSpec({
   test("Get") {
     database.pauseQueries.insert(pause.toEntity())
     target.get().first() shouldBe pause
-  }
-
-  test("Delete") {
-    database.pauseQueries.insert(pause.toEntity())
-    target.delete()
-    database.pauseQueries.selectAll().executeAsList().shouldBeEmpty()
   }
 
   isolationMode = IsolationMode.InstancePerTest

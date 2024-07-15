@@ -28,15 +28,11 @@ class PauseRepository(
 
   fun update(pause: Pause) {
     val pauseEntity = pause.toEntity()
-    pauseQueries.updatePauseById(pauseEntity.start_time, pauseEntity.end_time, pauseEntity.is_enabled, pauseEntity.id)
+    pauseQueries.update(pauseEntity.start_time, pauseEntity.end_time, pauseEntity.is_enabled, pauseEntity.id)
   }
 
   fun delete(pause: Pause) {
-    pauseQueries.deleteById(pause.id)
-  }
-
-  fun delete() {
-    pauseQueries.deleteAll()
+    pauseQueries.delete(pause.id)
   }
 }
 

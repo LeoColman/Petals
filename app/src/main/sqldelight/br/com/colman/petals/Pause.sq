@@ -8,23 +8,18 @@ CREATE TABLE Pause(
 insert:
 INSERT INTO Pause(start_time, end_time, id, is_enabled) VALUES ?;
 
-deleteAll:
-DELETE FROM Pause;
 selectFirst:
 SELECT * FROM Pause LIMIT 1;
 
--- Delete a pause by its ID
-deleteById:
-DELETE FROM Pause WHERE id = ?;
+selectAll:
+SELECT * FROM Pause;
 
--- Update a pause by its ID
-updatePauseById:
+update:
 UPDATE Pause
 SET start_time = ?,
     end_time = ?,
     is_enabled = ?
 WHERE id = ?;
 
--- Query to get all pauses
-selectAll:
-SELECT * FROM Pause;
+delete:
+DELETE FROM Pause WHERE id = ?;
