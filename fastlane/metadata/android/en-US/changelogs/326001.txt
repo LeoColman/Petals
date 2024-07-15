@@ -1,0 +1,2 @@
+- Properly sort multiple pauses per day
+- Include missing ID header text

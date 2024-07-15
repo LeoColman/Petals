@@ -1,0 +1,2 @@
+- Classificar adequadamente várias pausas por dia
+- Inclui texto de cabeçalho de ID ausente
