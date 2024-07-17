@@ -134,10 +134,10 @@ private fun AverageUseList(uses: List<Use>, period: LocalDateRange) {
 @Composable
 private fun AverageListItem(label: String, grams: Double, cost: Double, uses: Double) {
   Row {
-    Text(stringResource(average_per, label), Modifier.weight(0.4f))
-    Text(stringResource(amount_grams_short, "%.2f".format(grams)), Modifier.weight(0.6f / 3f))
-    Text(getCurrencyIcon() + "%.2f".format(cost), Modifier.weight(0.6f / 3f))
-    Text(pluralResource(amount_uses, uses.toInt(), uses.toInt()))
+    Text(stringResource(average_per, label), Modifier.padding(end = 4.dp))
+    Text(stringResource(amount_grams_short, "%.2f".format(grams)), Modifier.padding(horizontal = 4.dp))
+    Text(getCurrencyIcon() + "%.2f".format(cost), Modifier.padding(horizontal = 4.dp))
+    Text(pluralResource(amount_uses, uses.toInt(), uses.toInt()), Modifier.padding(horizontal = 4.dp))
   }
 }
 
