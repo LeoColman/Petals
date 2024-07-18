@@ -103,7 +103,7 @@ private fun IconTextPreview() {
 
 @Composable
 private fun IconText(icon: ImageVector, text: String) {
-  Row(Modifier, spacedBy(6.dp), CenterVertically) {
+  Row(Modifier, spacedBy(8.dp), CenterVertically) {
     Icon(icon, text)
     Text(text)
   }
