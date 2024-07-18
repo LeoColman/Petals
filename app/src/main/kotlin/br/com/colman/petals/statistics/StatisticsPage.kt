@@ -34,10 +34,8 @@ fun StatisticsPage(useRepository: UseRepository) {
 
     UsePerHourGraph(usesInPeriod)
     UsePerDayOfWeekGraph(usesInPeriod)
-    Row(Modifier.horizontalScroll(rememberScrollState())) {
-      usesInPeriod.forEach { (period, uses) ->
-        AverageUseCard(uses, period.toDateRange())
-      }
+    usesInPeriod.forEach { (period, uses) ->
+      AverageUseCard(uses, period.toDateRange())
     }
   }
 }

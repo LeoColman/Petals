@@ -3,6 +3,7 @@ package br.com.colman.petals.statistics.card
 
 import androidx.compose.foundation.gestures.Orientation.Horizontal
 import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -64,7 +65,7 @@ fun AverageUseCardPreview() {
 fun AverageUseCard(uses: List<Use>, period: LocalDateRange) {
   if (uses.isEmpty()) return
 
-  Card(Modifier.padding(8.dp)) {
+  Card(Modifier.padding(8.dp).horizontalScroll(rememberScrollState())) {
     Column(Modifier.padding(8.dp), spacedBy(8.dp)) {
       AverageUseCardTitle(uses.count(), uses.totalGrams, period)
       AverageUseList(uses, period)
@@ -102,7 +103,7 @@ private fun IconTextPreview() {
 
 @Composable
 private fun IconText(icon: ImageVector, text: String) {
-  Row(Modifier, spacedBy(8.dp), CenterVertically) {
+  Row(Modifier, spacedBy(6.dp), CenterVertically) {
     Icon(icon, text)
     Text(text)
   }
