@@ -3,6 +3,7 @@ package br.com.colman.petals.statistics.card
 
 import androidx.compose.foundation.gestures.Orientation.Horizontal
 import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -64,7 +65,7 @@ fun AverageUseCardPreview() {
 fun AverageUseCard(uses: List<Use>, period: LocalDateRange) {
   if (uses.isEmpty()) return
 
-  Card(Modifier.padding(8.dp)) {
+  Card(Modifier.padding(8.dp).horizontalScroll(rememberScrollState())) {
     Column(Modifier.padding(8.dp), spacedBy(8.dp)) {
       AverageUseCardTitle(uses.count(), uses.totalGrams, period)
       AverageUseList(uses, period)
@@ -134,10 +135,10 @@ private fun AverageUseList(uses: List<Use>, period: LocalDateRange) {
 @Composable
 private fun AverageListItem(label: String, grams: Double, cost: Double, uses: Double) {
   Row {
-    Text(stringResource(average_per, label), Modifier.weight(0.4f))
-    Text(stringResource(amount_grams_short, "%.2f".format(grams)), Modifier.weight(0.6f / 3f))
-    Text(getCurrencyIcon() + "%.2f".format(cost), Modifier.weight(0.6f / 3f))
-    Text(pluralResource(amount_uses, uses.toInt(), uses.toInt()))
+    Text(stringResource(average_per, label), Modifier.padding(end = 4.dp))
+    Text(stringResource(amount_grams_short, "%.2f".format(grams)), Modifier.padding(horizontal = 4.dp))
+    Text(getCurrencyIcon() + "%.2f".format(cost), Modifier.padding(horizontal = 4.dp))
+    Text(pluralResource(amount_uses, uses.toInt(), uses.toInt()), Modifier.padding(horizontal = 4.dp))
   }
 }
 
