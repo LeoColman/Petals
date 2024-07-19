@@ -149,4 +149,5 @@
     <string name="pause_time">Tempo di pausa</string>
     <string name="id_label">id</string>
     <string name="confirm_deletion">Confermare la cancellazione</string>
+    <string name="select_time">Seleziona orario</string>
 </resources>
