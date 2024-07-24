@@ -24,7 +24,7 @@ fun SwitchListItem(
   @StringRes descriptionId: Int,
   initialState: Boolean,
   onChangeState: (Boolean) -> Unit,
-){
+) {
   Row {
     ListItem(
       modifier = Modifier.fillMaxWidth().weight(0.8f),
