@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      safeDataKeyMigration(settingsRepository)
+      SafeDataKeyMigration(settingsRepository)
       val navController = rememberNavController()
 
       var isAuthorized by remember { mutableStateOf(false) }
@@ -117,7 +117,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   }
 
   @Composable
-  fun safeDataKeyMigration(settingsRepository: SettingsRepository) {
+  fun SafeDataKeyMigration(settingsRepository: SettingsRepository) {
     val millisecondsEnabled = settingsRepository.millisecondsEnabled.collectAsState(true).value
     val hitTimerMillisecondsEnabled = settingsRepository.hitTimerMillisecondsEnabled.collectAsState(true).value
     val extendedDay = settingsRepository.extendedDay.collectAsState(false).value
