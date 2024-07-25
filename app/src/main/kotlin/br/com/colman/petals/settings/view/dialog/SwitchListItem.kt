@@ -3,6 +3,7 @@ package br.com.colman.petals.settings.view.dialog
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -27,12 +28,12 @@ fun SwitchListItem(
 ) {
   Row {
     ListItem(
-      modifier = Modifier.fillMaxWidth().weight(0.8f),
+      modifier = Modifier.fillMaxWidth().weight(0.7f),
       icon = { Icon(icon, null, Modifier.size(42.dp)) },
       secondaryText = { Text(stringResource(descriptionId)) }
     ) {
       Text(stringResource(textId))
     }
-    Switch(initialState, onChangeState, modifier = Modifier.align(CenterVertically))
+    Switch(initialState, onChangeState, modifier = Modifier.align(CenterVertically).padding(end = 8.dp))
   }
 }
