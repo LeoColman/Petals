@@ -72,18 +72,18 @@ class SettingsRepositoryTest : FunSpec({
     datastore.data.first()[TimeFormat] shouldBe "HH:mm"
   }
 
-  test("Default extended day to disabled") {
-    target.extendedDay.first() shouldBe "disabled"
+  test("Default extended day to false") {
+    target.extendedDay.first() shouldBe false
   }
 
-  test("Changes extend day to enable") {
-    target.setExtendedDay("enabled")
-    target.extendedDay.first() shouldBe "enabled"
+  test("Changes extend day to true") {
+    target.setExtendedDay(true)
+    target.extendedDay.first() shouldBe true
   }
 
-  test("Persists extended day to enabled") {
-    target.setExtendedDay("enabled")
-    datastore.data.first()[ExtendedDayEnabled] shouldBe "enabled"
+  test("Persists extended day to true") {
+    target.setExtendedDay(true)
+    datastore.data.first()[ExtendedDayEnabled] shouldBe true
   }
 
   test("Changes dark mode to true") {

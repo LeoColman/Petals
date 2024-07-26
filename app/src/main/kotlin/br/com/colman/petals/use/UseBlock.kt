@@ -81,10 +81,10 @@ fun StatsBlocks(uses: List<Use>) {
   val isThisMonthCensored by blockRepository.isThisMonthCensored.collectAsState(true)
   val isThisYearCensored by blockRepository.isThisYearCensored.collectAsState(true)
   val isAllTimeCensored by blockRepository.isAllTimeCensored.collectAsState(true)
-  val isDayExtended: String by settingsRepository.extendedDay.collectAsState("disabled")
+  val isDayExtended by settingsRepository.extendedDay.collectAsState(false)
 
   Row(Modifier.horizontalScroll(rememberScrollState()).width(Max).testTag("StatsBlockMainRow")) {
-    if (isDayExtended == "enabled") {
+    if (isDayExtended) {
       UseBlock(Modifier.weight(1f), Today, adjustTodayFilter(uses), isTodayCensored)
     } else {
       UseBlock(Modifier.weight(1f), Today, uses.filter { it.date.toLocalDate() == now() }, isTodayCensored)

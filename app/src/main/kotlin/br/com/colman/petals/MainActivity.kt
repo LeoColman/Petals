@@ -63,6 +63,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
+      SafeDataKeyMigration(settingsRepository)
       val navController = rememberNavController()
 
       var isAuthorized by remember { mutableStateOf(false) }
@@ -113,5 +114,18 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   fun isDarkModeEnabled(): Boolean {
     val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())
     return darkMode
+  }
+
+  @Composable
+  fun SafeDataKeyMigration(settingsRepository: SettingsRepository) {
+    val millisecondsEnabled = settingsRepository.millisecondsEnabled.collectAsState(true).value
+    val hitTimerMillisecondsEnabled = settingsRepository.hitTimerMillisecondsEnabled.collectAsState(true).value
+    val extendedDay = settingsRepository.extendedDay.collectAsState(false).value
+
+    if (millisecondsEnabled !is Boolean || hitTimerMillisecondsEnabled !is Boolean || extendedDay !is Boolean) {
+      settingsRepository.setMillisecondsEnabled(true)
+      settingsRepository.setHitTimerMillisecondsEnabled(true)
+      settingsRepository.setExtendedDay(false)
+    }
   }
 }

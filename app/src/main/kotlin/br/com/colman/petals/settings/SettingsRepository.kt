@@ -26,16 +26,11 @@ class SettingsRepository(
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
   val timeFormatList = listOf("HH:mm", "KK:mm a", "HH:mm:ss", "KK:mm:ss a")
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
-  val millisecondsEnabledList = listOf("enabled", "disabled")
-  val millisecondsEnabled = datastore.data.map { it[MillisecondsEnabled] ?: "disabled" }
-  val hitTimerMillisecondsEnabledList = listOf("enabled", "disabled")
-  val hitTimerMillisecondsEnabled = datastore.data.map {
-    it[HitTimerMillisecondsEnabled] ?: hitTimerMillisecondsEnabledList.first()
-  }
+  val millisecondsEnabled = datastore.data.map { it[MillisecondsEnabled] ?: false }
+  val hitTimerMillisecondsEnabled = datastore.data.map { it[HitTimerMillisecondsEnabled] ?: true }
   val decimalPrecisionList = listOf(0, 1, 2, 3)
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
-  val extendedDayList = listOf("enabled", "disabled")
-  val extendedDay: Flow<String> = datastore.data.map { it[ExtendedDayEnabled] ?: extendedDayList[1] }
+  val extendedDay = datastore.data.map { it[ExtendedDayEnabled] ?: false }
   val isDarkModeEnabled: Flow<Boolean> = datastore.data.map { it[IsDarkModeOn] ?: true }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
@@ -50,11 +45,11 @@ class SettingsRepository(
     datastore.edit { it[TimeFormat] = value }
   }
 
-  fun setMillisecondsEnabled(value: String): Unit = runBlocking {
+  fun setMillisecondsEnabled(value: Boolean): Unit = runBlocking {
     datastore.edit { it[MillisecondsEnabled] = value }
   }
 
-  fun setHitTimerMillisecondsEnabled(value: String): Unit = runBlocking {
+  fun setHitTimerMillisecondsEnabled(value: Boolean): Unit = runBlocking {
     datastore.edit { it[HitTimerMillisecondsEnabled] = value }
   }
 
@@ -62,7 +57,7 @@ class SettingsRepository(
     datastore.edit { it[DecimalPrecision] = value }
   }
 
-  fun setExtendedDay(value: String): Unit = runBlocking {
+  fun setExtendedDay(value: Boolean): Unit = runBlocking {
     datastore.edit { it[ExtendedDayEnabled] = value }
   }
 
@@ -84,10 +79,10 @@ class SettingsRepository(
     val DateFormat = stringPreferencesKey("date_format")
     val TimeFormat = stringPreferencesKey("time_format")
     val Pin = stringPreferencesKey("pin")
-    val MillisecondsEnabled = stringPreferencesKey("milliseconds_enabled")
-    val HitTimerMillisecondsEnabled = stringPreferencesKey("hit_timer_milliseconds_enabled")
+    val MillisecondsEnabled = booleanPreferencesKey("milliseconds_enabled")
+    val HitTimerMillisecondsEnabled = booleanPreferencesKey("hit_timer_milliseconds_enabled")
     val DecimalPrecision = intPreferencesKey("decimal_precision")
-    val ExtendedDayEnabled: Preferences.Key<String> = stringPreferencesKey("is_day_extended")
-    val IsDarkModeOn: Preferences.Key<Boolean> = booleanPreferencesKey("is_dark_mode_on")
+    val ExtendedDayEnabled = booleanPreferencesKey("is_day_extended")
+    val IsDarkModeOn = booleanPreferencesKey("is_dark_mode_on")
   }
 }

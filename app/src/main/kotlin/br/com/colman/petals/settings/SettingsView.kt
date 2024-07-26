@@ -23,16 +23,12 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentCurrency by settingsRepository.currencyIcon.collectAsState("$")
   val currentDateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val currentMillisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(
-    settingsRepository.millisecondsEnabledList[0]
-  )
-  val currentHitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(
-    settingsRepository.hitTimerMillisecondsEnabledList[0]
-  )
+  val currentMillisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(true)
+  val currentHitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(true)
   val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(
     settingsRepository.decimalPrecisionList[2]
   )
-  val currentExtendDay: String by settingsRepository.extendedDay.collectAsState(settingsRepository.extendedDayList[1])
+  val currentExtendDay by settingsRepository.extendedDay.collectAsState(false)
 
   Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
@@ -40,24 +36,21 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     RepositoryListItem()
     DateListItem(currentDateFormat, settingsRepository.dateFormatList, settingsRepository::setDateFormat)
     TimeListItem(currentTimeFormat, settingsRepository.timeFormatList, settingsRepository::setTimeFormat)
-    MillisecondsBarEnabledListItem(
-      currentMillisecondsEnabled,
-      settingsRepository.millisecondsEnabledList,
-      settingsRepository::setMillisecondsEnabled
-    )
-    HitTimerMillisecondsEnabledListItem(
-      currentHitTimerMillisecondsEnabled,
-      settingsRepository.hitTimerMillisecondsEnabledList,
-      settingsRepository::setHitTimerMillisecondsEnabled
-    )
     PrecisionListItem(
       currentDecimalPrecision,
       settingsRepository.decimalPrecisionList,
       settingsRepository::setDecimalPrecision
     )
+    MillisecondsBarEnabledListItem(
+      currentMillisecondsEnabled,
+      settingsRepository::setMillisecondsEnabled
+    )
+    HitTimerMillisecondsEnabledListItem(
+      currentHitTimerMillisecondsEnabled,
+      settingsRepository::setHitTimerMillisecondsEnabled
+    )
     ExtendDayListItem(
       currentExtendDay,
-      settingsRepository.extendedDayList,
       settingsRepository::setExtendedDay
     )
     ShareApp()
