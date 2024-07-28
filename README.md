@@ -10,7 +10,7 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/LeoColman/Petals?style=plastic)](https://star-history.com/#LeoColman/Petals&Date)
 [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=plastic)](https://gitmoji.dev/)
 [![Git Secrets](https://img.shields.io/badge/git%20secrets-enabled-green)](https://github.com/sobolevn/git-secret)
-[![Fdroid](https://img.shields.io/f-droid/v/org.fdroid.fdroid)](https://github.com/LeoColman/Petals)
+[![Fdroid](https://img.shields.io/f-droid/v/br.com.colman.petals)](https://github.com/LeoColman/Petals)
 
 
 
