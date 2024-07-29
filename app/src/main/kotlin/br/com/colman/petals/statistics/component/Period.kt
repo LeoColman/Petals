@@ -45,10 +45,11 @@ open class Period(val days: Int) : Comparable<Period> {
   data object Month : Period(30)
   data object TwoMonth : Period(60)
   data object ThreeMonth : Period(90)
+  data object AllTime : Period(-1)
 
   companion object {
     fun values(): Array<Period> {
-      return arrayOf(Zero, Week, TwoWeek, Month, TwoMonth, ThreeMonth)
+      return arrayOf(Zero, Week, TwoWeek, Month, TwoMonth, ThreeMonth, AllTime)
     }
   }
 }
