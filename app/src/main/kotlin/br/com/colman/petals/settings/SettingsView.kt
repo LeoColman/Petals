@@ -23,7 +23,9 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentDateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
   val currentHitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(true)
-  val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(settingsRepository.decimalPrecisionList[2])
+  val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(
+    settingsRepository.decimalPrecisionList[2]
+  )
   val currentExtendDay by settingsRepository.extendedDay.collectAsState(false)
 
   Column(Modifier.verticalScroll(rememberScrollState())) {

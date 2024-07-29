@@ -61,12 +61,10 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
 
   @Composable
   fun safeDataKeyMigration(settingsRepository: SettingsRepository) {
-    val millisecondsEnabled = settingsRepository.millisecondsEnabled.collectAsState(true).value
     val hitTimerMillisecondsEnabled = settingsRepository.hitTimerMillisecondsEnabled.collectAsState(true).value
     val extendedDay = settingsRepository.extendedDay.collectAsState(false).value
 
-    if (millisecondsEnabled !is Boolean || hitTimerMillisecondsEnabled !is Boolean || extendedDay !is Boolean) {
-      settingsRepository.setMillisecondsEnabled(true)
+    if (hitTimerMillisecondsEnabled !is Boolean || extendedDay !is Boolean) {
       settingsRepository.setHitTimerMillisecondsEnabled(true)
       settingsRepository.setExtendedDay(false)
     }
