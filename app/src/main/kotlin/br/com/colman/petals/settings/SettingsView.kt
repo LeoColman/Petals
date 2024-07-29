@@ -11,7 +11,6 @@ import br.com.colman.petals.settings.view.listitem.CurrencyListItem
 import br.com.colman.petals.settings.view.listitem.DateListItem
 import br.com.colman.petals.settings.view.listitem.ExtendDayListItem
 import br.com.colman.petals.settings.view.listitem.HitTimerMillisecondsEnabledListItem
-import br.com.colman.petals.settings.view.listitem.MillisecondsBarEnabledListItem
 import br.com.colman.petals.settings.view.listitem.PinListItem
 import br.com.colman.petals.settings.view.listitem.PrecisionListItem
 import br.com.colman.petals.settings.view.listitem.RepositoryListItem
@@ -23,7 +22,6 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentCurrency by settingsRepository.currencyIcon.collectAsState("$")
   val currentDateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val currentMillisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(true)
   val currentHitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(true)
   val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(
     settingsRepository.decimalPrecisionList[2]
@@ -40,10 +38,6 @@ fun SettingsView(settingsRepository: SettingsRepository) {
       currentDecimalPrecision,
       settingsRepository.decimalPrecisionList,
       settingsRepository::setDecimalPrecision
-    )
-    MillisecondsBarEnabledListItem(
-      currentMillisecondsEnabled,
-      settingsRepository::setMillisecondsEnabled
     )
     HitTimerMillisecondsEnabledListItem(
       currentHitTimerMillisecondsEnabled,
