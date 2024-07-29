@@ -26,7 +26,6 @@ class SettingsRepository(
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
   val timeFormatList = listOf("HH:mm", "KK:mm a", "HH:mm:ss", "KK:mm:ss a")
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
-  val millisecondsEnabled = datastore.data.map { it[MillisecondsEnabled] ?: false }
   val hitTimerMillisecondsEnabled = datastore.data.map { it[HitTimerMillisecondsEnabled] ?: true }
   val decimalPrecisionList = listOf(0, 1, 2, 3)
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
@@ -43,10 +42,6 @@ class SettingsRepository(
 
   fun setTimeFormat(value: String): Unit = runBlocking {
     datastore.edit { it[TimeFormat] = value }
-  }
-
-  fun setMillisecondsEnabled(value: Boolean): Unit = runBlocking {
-    datastore.edit { it[MillisecondsEnabled] = value }
   }
 
   fun setHitTimerMillisecondsEnabled(value: Boolean): Unit = runBlocking {
@@ -79,7 +74,6 @@ class SettingsRepository(
     val DateFormat = stringPreferencesKey("date_format")
     val TimeFormat = stringPreferencesKey("time_format")
     val Pin = stringPreferencesKey("pin")
-    val MillisecondsEnabled = booleanPreferencesKey("milliseconds_enabled")
     val HitTimerMillisecondsEnabled = booleanPreferencesKey("hit_timer_milliseconds_enabled")
     val DecimalPrecision = intPreferencesKey("decimal_precision")
     val ExtendedDayEnabled = booleanPreferencesKey("is_day_extended")
