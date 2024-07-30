@@ -8,12 +8,14 @@ koin = "3.5.6"
 kotest = "5.9.1"
 kotlin = "2.0.0"
 licensee = "1.11.0"
+material3Android = "1.2.1"
 vanpra-material-dialogs = "0.9.0"
 sqldelight = "1.5.5"
 glance = "1.1.0"
 
 [libraries]
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.0.4"
+androidx-material3-android = { module = "androidx.compose.material3:material3-android", version.ref = "material3Android" }
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx" }
 androidx-test-runner = "androidx.test:runner:1.6.1"
 apache-commons-lang = "org.apache.commons:commons-lang3:3.15.0"

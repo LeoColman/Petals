@@ -148,6 +148,7 @@ dependencies {
 
   // Compose
   implementation(libs.bundles.compose)
+  implementation(libs.androidx.material3.android)
   compileOnly(libs.compose.material.tooling)
   debugRuntimeOnly(libs.compose.material.tooling)
   androidTestImplementation(libs.bundles.compose.test)
