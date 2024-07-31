@@ -31,40 +31,45 @@ import java.time.ZoneId
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Material3DatePicker(dialogState: MaterialDialogState,
-                        onDateChange: (LocalDate) -> Unit){
-  val datePickerState= rememberDatePickerState(
+fun Material3DatePicker(
+  dialogState: MaterialDialogState,
+  onDateChange: (LocalDate) -> Unit
+) {
+  val datePickerState = rememberDatePickerState(
     yearRange = 1900..2100
   )
-  val confirmEnabled  by remember {
+  val confirmEnabled by remember {
     derivedStateOf { datePickerState.selectedDateMillis != null }
   }
   DatePickerDialog(
-    onDismissRequest = {dialogState.hide()},
+    onDismissRequest = { dialogState.hide() },
     confirmButton = {
       TextButton(
         enabled = confirmEnabled,
         onClick = {
-        val selectedDateMillis = datePickerState.selectedDateMillis
-        if(selectedDateMillis!=null){
-          /**
-           * The LocalDate is calculated by converting selected date (milliseconds) to
-           * LocalDate using Instant.
-           */
-          onDateChange(
-            Instant
-              .ofEpochMilli(selectedDateMillis)
-              .atZone(ZoneId.systemDefault())
-              .toLocalDate()
-          )
-          dialogState.hide()
+          val selectedDateMillis = datePickerState.selectedDateMillis
+          if (selectedDateMillis != null) {
+            /**
+             * The LocalDate is calculated by converting selected date (milliseconds) to
+             * LocalDate using Instant.
+             */
+            onDateChange(
+              Instant
+                .ofEpochMilli(selectedDateMillis)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+            )
+            dialogState.hide()
+          }
         }
-      }) {Text(stringResource(id = ok))}
-    }, dismissButton = {
-      TextButton(onClick = { dialogState.hide()}) {
+      ) { Text(stringResource(id = ok)) }
+    },
+    dismissButton = {
+      TextButton(onClick = { dialogState.hide() }) {
         Text(stringResource(id = cancel))
       }
-    }) {
-     DatePicker(state = datePickerState)
     }
+  ) {
+    DatePicker(state = datePickerState)
+  }
 }

@@ -37,57 +37,59 @@ import java.util.Calendar
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Material3TimePicker(dialogState: MaterialDialogState,
-                              onTimeChange: (LocalTime) -> Unit){
-
-  val timePickerState24Hour= getTimePickerState(is24Hour = true)
-  val timePickerState12Hour= getTimePickerState(is24Hour = false)
+fun Material3TimePicker(
+  dialogState: MaterialDialogState,
+  onTimeChange: (LocalTime) -> Unit
+) {
+  val timePickerState24Hour = getTimePickerState(is24Hour = true)
+  val timePickerState12Hour = getTimePickerState(is24Hour = false)
 
   var timePickerState by remember { mutableStateOf(timePickerState24Hour) }
 
-    AlertDialog(
-      onDismissRequest = {dialogState.hide()},
-      dismissButton = {
-        TextButton(onClick = { dialogState.hide()}) {
-          Text(stringResource(id = cancel))
-        }
-      },
-      confirmButton = {
-        TextButton(onClick = {
-          onTimeChange(LocalTime.of(timePickerState.hour,timePickerState.minute))
-          dialogState.hide()
-        }) {
-          Text(stringResource(id = ok))
-        }
-      },
-      text = {
-        TimePickerDialogContent(timePickerState = timePickerState) {
-          timePickerState = if(it){
-            timePickerState24Hour
-          }else{
-            timePickerState12Hour
-          }
+  AlertDialog(
+    onDismissRequest = { dialogState.hide() },
+    dismissButton = {
+      TextButton(onClick = { dialogState.hide() }) {
+        Text(stringResource(id = cancel))
+      }
+    },
+    confirmButton = {
+      TextButton(onClick = {
+        onTimeChange(LocalTime.of(timePickerState.hour, timePickerState.minute))
+        dialogState.hide()
+      }) {
+        Text(stringResource(id = ok))
+      }
+    },
+    text = {
+      TimePickerDialogContent(timePickerState = timePickerState) {
+        timePickerState = if (it) {
+          timePickerState24Hour
+        } else {
+          timePickerState12Hour
         }
       }
-    )
-  }
+    }
+  )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TimePickerDialogContent(timePickerState: TimePickerState, set24HourMode:(Boolean)->Unit){
+fun TimePickerDialogContent(timePickerState: TimePickerState, set24HourMode: (Boolean) -> Unit) {
   Column {
     Text(text = stringResource(id = select_time))
-    var tabIndex by remember { mutableIntStateOf(if(timePickerState.is24hour) 0 else 1 ) }
+    var tabIndex by remember { mutableIntStateOf(if (timePickerState.is24hour) 0 else 1) }
     val tabs = listOf("24H Mode", "12H Mode")
 
     TabRow(selectedTabIndex = tabIndex) {
       tabs.forEachIndexed { index, title ->
-        Tab(text = { Text(title) },
+        Tab(
+          text = { Text(title) },
           selected = tabIndex == index,
           onClick = {
-            if(index!=tabIndex){
+            if (index != tabIndex) {
               tabIndex = index
-              set24HourMode(index==0)
+              set24HourMode(index == 0)
             }
           }
         )
@@ -99,7 +101,7 @@ fun TimePickerDialogContent(timePickerState: TimePickerState, set24HourMode:(Boo
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun getTimePickerState(is24Hour:Boolean): TimePickerState {
+fun getTimePickerState(is24Hour: Boolean): TimePickerState {
   val currentTime = Calendar.getInstance()
   return rememberTimePickerState(
     initialHour = currentTime.get(Calendar.HOUR_OF_DAY),
