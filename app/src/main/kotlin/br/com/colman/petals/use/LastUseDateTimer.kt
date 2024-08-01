@@ -77,6 +77,7 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
   val settingsRepository = koinInject<SettingsRepository>()
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
+  val millisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState("disabled")
   val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())
   val dateString = DateTimeFormatter.ofPattern(
     String.format(Locale.US, "%s %s", dateFormat, timeFormat)
@@ -91,6 +92,8 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
     }
   }
 
+  val allLabels = listOf(Year, Month, Day, Hour, Minute, Second, Millisecond)
+  val enabledLabels = if (millisecondsEnabled == "disabled") allLabels.dropLast(1) else allLabels
   val enabledLabels = listOf(Year, Month, Day, Hour, Minute, Second)
 
   var millisCopy = millis
