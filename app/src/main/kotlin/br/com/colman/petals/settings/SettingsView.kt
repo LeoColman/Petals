@@ -22,9 +22,6 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentCurrency by settingsRepository.currencyIcon.collectAsState("$")
   val currentDateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val currentMillisecondsEnabled by settingsRepository.millisecondsEnabled.collectAsState(
-    settingsRepository.millisecondsEnabledList[0]
-  )
   val currentHitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(
     settingsRepository.hitTimerMillisecondsEnabledList[0]
   )
