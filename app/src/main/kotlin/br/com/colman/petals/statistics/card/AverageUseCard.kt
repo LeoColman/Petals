@@ -1,12 +1,12 @@
 
 package br.com.colman.petals.statistics.card
 
-import androidx.compose.foundation.gestures.Orientation.Horizontal
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Card
@@ -39,11 +39,11 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.CalendarStats
 import compose.icons.tablericons.ChartPie
 import compose.icons.tablericons.Scale
+import java.math.BigDecimal
+import java.time.LocalDate.now
 import me.moallemi.tools.daterange.localdate.LocalDateRange
 import me.moallemi.tools.daterange.localdate.rangeTo
 import org.koin.compose.koinInject
-import java.math.BigDecimal
-import java.time.LocalDate.now
 
 @Preview
 @Composable
@@ -88,7 +88,7 @@ private fun AverageUseCardTitlePreview() {
 private fun AverageUseCardTitle(uses: Int, grams: BigDecimal, period: LocalDateRange) {
   val amountDays = period.count()
 
-  Row(Modifier.scrollable(rememberScrollState(), Horizontal), spacedBy(8.dp), CenterVertically) {
+  Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(16.dp), CenterVertically) {
     IconText(TablerIcons.ChartPie, pluralResource(amount_uses, uses, uses))
     IconText(TablerIcons.Scale, stringResource(amount_grams, "%.2f".format(grams)))
     IconText(TablerIcons.CalendarStats, pluralResource(amount_days, amountDays, amountDays))
@@ -134,11 +134,11 @@ private fun AverageUseList(uses: List<Use>, period: LocalDateRange) {
 
 @Composable
 private fun AverageListItem(label: String, grams: Double, cost: Double, uses: Double) {
-  Row {
-    Text(stringResource(average_per, label), Modifier.padding(end = 4.dp))
-    Text(stringResource(amount_grams_short, "%.2f".format(grams)), Modifier.padding(horizontal = 4.dp))
-    Text(getCurrencyIcon() + "%.2f".format(cost), Modifier.padding(horizontal = 4.dp))
-    Text(pluralResource(amount_uses, uses.toInt(), uses.toInt()), Modifier.padding(horizontal = 4.dp))
+  Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
+    Text(stringResource(average_per, label), Modifier.padding(4.dp))
+    Text(stringResource(amount_grams_short, "%.2f".format(grams)), Modifier.padding(4.dp))
+    Text(getCurrencyIcon() + "%.2f".format(cost), Modifier.padding(4.dp))
+    Text(pluralResource(amount_uses, uses.toInt(), uses.toInt()), Modifier.padding(4.dp))
   }
 }
 
