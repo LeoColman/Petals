@@ -5,9 +5,11 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize.Max
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -65,8 +67,8 @@ fun AverageUseCardPreview() {
 fun AverageUseCard(uses: List<Use>, period: LocalDateRange) {
   if (uses.isEmpty()) return
 
-  Card(Modifier.padding(8.dp).horizontalScroll(rememberScrollState())) {
-    Column(Modifier.padding(8.dp), spacedBy(8.dp)) {
+  Card(Modifier.padding(8.dp).fillMaxWidth().horizontalScroll(rememberScrollState()).width(Max)) {
+    Column(Modifier.padding(8.dp).fillMaxWidth().width(Max), spacedBy(8.dp)) {
       AverageUseCardTitle(uses.count(), uses.totalGrams, period)
       AverageUseList(uses, period)
     }
@@ -134,11 +136,11 @@ private fun AverageUseList(uses: List<Use>, period: LocalDateRange) {
 
 @Composable
 private fun AverageListItem(label: String, grams: Double, cost: Double, uses: Double) {
-  Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {
-    Text(stringResource(average_per, label), Modifier.padding(4.dp))
-    Text(stringResource(amount_grams_short, "%.2f".format(grams)), Modifier.padding(4.dp))
-    Text(getCurrencyIcon() + "%.2f".format(cost), Modifier.padding(4.dp))
-    Text(pluralResource(amount_uses, uses.toInt(), uses.toInt()), Modifier.padding(4.dp))
+  Row(Modifier.fillMaxWidth(), Arrangement.SpaceEvenly) {
+    Text(stringResource(average_per, label), Modifier.padding(2.dp))
+    Text(stringResource(amount_grams_short, "%.2f".format(grams)), Modifier.padding(2.dp))
+    Text(getCurrencyIcon() + "%.2f".format(cost), Modifier.padding(2.dp))
+    Text(pluralResource(amount_uses, uses.toInt(), uses.toInt()), Modifier.padding(2.dp))
   }
 }
 
