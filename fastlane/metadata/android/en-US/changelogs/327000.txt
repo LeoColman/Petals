@@ -1,0 +1,4 @@
+- Fix "Average use per X" card alignment
+- Sync translations from weblate
+- Refactor settings to switch instead of two options dialog
+- Remove milliseconds bar from usage screen permanently
