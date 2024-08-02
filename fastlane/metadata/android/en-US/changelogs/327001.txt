@@ -1,0 +1,3 @@
+- Fix "Average use per X" card alignment
+- Sync translations from weblate
+- Remove milliseconds bar from usage screen permanently
