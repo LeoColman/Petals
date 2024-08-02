@@ -1,8 +1,6 @@
 package br.com.colman.petals.components
 
 import androidx.compose.runtime.Composable
-import com.vanpra.composematerialdialogs.MaterialDialogState
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -21,7 +19,7 @@ fun timeDialogState(onTimeChange: (LocalTime) -> Unit) = createMaterialDialog { 
 }
 
 @Composable
-private fun createMaterialDialog(content: @Composable (dialogState: MaterialDialogState) -> Unit) =
-  rememberMaterialDialogState().also { dialogState ->
+private fun createMaterialDialog(content: @Composable (dialogState: DialogState) -> Unit) =
+  rememberDialogState().also { dialogState ->
     content(dialogState)
   }

@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import br.com.colman.petals.R.string.cancel
 import br.com.colman.petals.R.string.ok
-import com.vanpra.composematerialdialogs.MaterialDialogState
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -32,7 +31,7 @@ import java.time.ZoneId
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Material3DatePicker(
-  dialogState: MaterialDialogState,
+  dialogState: DialogState,
   onDateChange: (LocalDate) -> Unit
 ) {
   val datePickerState = rememberDatePickerState(

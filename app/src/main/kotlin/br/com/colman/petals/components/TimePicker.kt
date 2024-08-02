@@ -12,7 +12,6 @@ import androidx.compose.ui.res.stringResource
 import br.com.colman.petals.R.string.cancel
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.select_time
-import com.vanpra.composematerialdialogs.MaterialDialogState
 import java.time.LocalTime
 import java.util.Calendar
 
@@ -29,7 +28,7 @@ import java.util.Calendar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Material3TimePicker(
-  dialogState: MaterialDialogState,
+  dialogState: DialogState,
   onTimeChange: (LocalTime) -> Unit,
   is24Hour: Boolean = true
 ) {
