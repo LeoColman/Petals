@@ -1,42 +1,25 @@
 package br.com.colman.petals.components
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import br.com.colman.petals.R.string.cancel
-import br.com.colman.petals.R.string.ok
-import br.com.colman.petals.R.string.select_date
-import br.com.colman.petals.R.string.select_time
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.MaterialDialogScope
-import com.vanpra.composematerialdialogs.datetime.date.datepicker
-import com.vanpra.composematerialdialogs.datetime.time.timepicker
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.LocalDate
 import java.time.LocalTime
 
 @Composable
-fun dateDialogState(onDateChange: (LocalDate) -> Unit) = createMaterialDialog {
-  datepicker(title = stringResource(select_date)) { date ->
-    onDateChange(date)
+fun dateDialogState(onDateChange: (LocalDate) -> Unit) = createMaterialDialog { dialogState ->
+  if (dialogState.showing) {
+    Material3DatePicker(dialogState = dialogState, onDateChange = onDateChange)
   }
 }
 
 @Composable
-fun timeDialogState(onTimeChange: (LocalTime) -> Unit) = createMaterialDialog {
-  timepicker(title = stringResource(select_time)) { time ->
-    onTimeChange(time)
+fun timeDialogState(onTimeChange: (LocalTime) -> Unit) = createMaterialDialog { dialogState ->
+  if (dialogState.showing) {
+    Material3TimePicker(dialogState = dialogState, onTimeChange = onTimeChange)
   }
 }
 
 @Composable
-private fun createMaterialDialog(content: @Composable MaterialDialogScope.() -> Unit) =
-  rememberMaterialDialogState().also {
-    MaterialDialog(
-      dialogState = it,
-      buttons = {
-        positiveButton(res = ok)
-        negativeButton(res = cancel)
-      },
-      content = content
-    )
+private fun createMaterialDialog(content: @Composable (dialogState: DialogState) -> Unit) =
+  rememberDialogState().also { dialogState ->
+    content(dialogState)
   }
