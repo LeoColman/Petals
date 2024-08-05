@@ -3,8 +3,6 @@ package br.com.colman.petals.settings
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import br.com.colman.petals.settings.SettingsRepository.Companion.CurrencyIcon
 import br.com.colman.petals.settings.SettingsRepository.Companion.DateFormat
-import br.com.colman.petals.settings.SettingsRepository.Companion.ExtendedDayEnabled
-import br.com.colman.petals.settings.SettingsRepository.Companion.IsDayExtended
 import br.com.colman.petals.settings.SettingsRepository.Companion.TimeFormat
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.FunSpec
