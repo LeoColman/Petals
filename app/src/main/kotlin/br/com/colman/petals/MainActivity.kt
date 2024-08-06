@@ -53,6 +53,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
 import java.time.LocalDateTime
+import org.koin.android.ext.android.get
 
 @Suppress("FunctionName")
 class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
@@ -108,10 +109,10 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
       OutlinedTextField(pin, { pin = it }, visualTransformation = PasswordVisualTransformation())
     }
   }
+}
 
-  @Composable
-  fun isDarkModeEnabled(): Boolean {
-    val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())
-    return darkMode
-  }
+@Composable
+fun isDarkModeEnabled(settingsRepository: SettingsRepository = koin.get()): Boolean {
+  val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())
+  return darkMode
 }

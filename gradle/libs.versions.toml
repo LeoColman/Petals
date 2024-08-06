@@ -76,6 +76,7 @@ apache-commons = [
     "apache-commons-math",
 ]
 compose = [
+    "androidx-material3-android",
     "compose-activity",
     "compose-material",
     "compose-material-icons",

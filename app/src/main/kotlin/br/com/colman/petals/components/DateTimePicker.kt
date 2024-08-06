@@ -5,16 +5,16 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Composable
-fun dateDialogState(onDateChange: (LocalDate) -> Unit) = createMaterialDialog { dialogState ->
+fun dateDialogState(onDateChange: (newDate: LocalDate) -> Unit) = createMaterialDialog { dialogState ->
   if (dialogState.showing) {
-    Material3DatePicker(dialogState = dialogState, onDateChange = onDateChange)
+    DatePickerDialog(dialogState = dialogState, onDateChange = onDateChange)
   }
 }
 
 @Composable
-fun timeDialogState(onTimeChange: (LocalTime) -> Unit) = createMaterialDialog { dialogState ->
+fun timeDialogState(onTimeChange: (newTime: LocalTime) -> Unit) = createMaterialDialog { dialogState ->
   if (dialogState.showing) {
-    Material3TimePicker(dialogState = dialogState, onTimeChange = onTimeChange)
+    TimePickerDialog(dialogState = dialogState, onTimeChange = onTimeChange)
   }
 }
 
