@@ -32,6 +32,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
+      settingsRepository.migrateOldKeysValue()
       settingsRepository.removeOldKeysValue()
       val navController = rememberNavController()
 
