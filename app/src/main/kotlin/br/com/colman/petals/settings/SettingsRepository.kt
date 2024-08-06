@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 class SettingsRepository(
   private val datastore: DataStore<Preferences>
@@ -69,7 +70,24 @@ class SettingsRepository(
     datastore.edit { it[IsDayExtended] = value }
   }
 
-  fun removeOldKeysValue(): Unit = runBlocking {
+  fun migrateOldKeysValues(): Unit = runBlocking {
+    datastore.edit { prefs ->
+      val hitTimerMillisecondsEnabled = prefs[HitTimerMillisecondsEnabled]
+      val extendedDay = prefs[ExtendedDayEnabled]
+
+      if (hitTimerMillisecondsEnabled != null){
+        if (hitTimerMillisecondsEnabled == "enabled") prefs[IsHitTimerMillisecondsEnabled] = true
+        else prefs[IsHitTimerMillisecondsEnabled] = false
+      }
+
+      if (extendedDay != null) {
+        if (extendedDay == "enabled") prefs[IsDayExtended] = true
+        else prefs[IsDayExtended] = false
+      }
+    }
+  }
+
+  fun removeOldKeysValues(): Unit = runBlocking {
     datastore.edit { prefs ->
       prefs.remove(HitTimerMillisecondsEnabled)
       prefs.remove(ExtendedDayEnabled)

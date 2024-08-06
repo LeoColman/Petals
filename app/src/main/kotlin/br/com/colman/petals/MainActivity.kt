@@ -63,7 +63,8 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      settingsRepository.removeOldKeysValue()
+      settingsRepository.migrateOldKeysValues()
+      settingsRepository.removeOldKeysValues()
       val navController = rememberNavController()
 
       var isAuthorized by remember { mutableStateOf(false) }
