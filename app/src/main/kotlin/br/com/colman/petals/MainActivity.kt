@@ -53,7 +53,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
 import java.time.LocalDateTime
-import org.koin.android.ext.android.get
 
 @Suppress("FunctionName")
 class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
