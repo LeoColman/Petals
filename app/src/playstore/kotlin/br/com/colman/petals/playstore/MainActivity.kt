@@ -32,6 +32,8 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
+      settingsRepository.migrateOldKeysValues()
+      settingsRepository.removeOldKeysValues()
       val navController = rememberNavController()
 
       MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
