@@ -30,10 +30,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -137,7 +137,7 @@ private fun UseBlock(
 
   val currencyIcon by settingsRepository.currencyIcon.collectAsState("$")
 
-  Card(modifier.padding(8.dp).defaultMinSize(145.dp), elevation = 4.dp) {
+  Card(modifier.padding(8.dp).defaultMinSize(145.dp)) {
     Column(Modifier.padding(8.dp), spacedBy(4.dp)) {
       Row(Modifier.padding(8.dp).fillMaxWidth(), Center, CenterVertically) {
         Text(stringResource(blockType.resourceId), fontWeight = Bold)

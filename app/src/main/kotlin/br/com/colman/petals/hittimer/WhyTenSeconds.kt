@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
@@ -52,14 +52,14 @@ fun WhyTenSeconds() {
 @Preview
 @Composable
 private fun SubjectiveHigh() {
-  val colors = MaterialTheme.colors
+  val colors = MaterialTheme.colorScheme
   Box(Modifier.height(300.dp)) {
     AndroidView({ createGraph(it, colors) })
   }
 }
 
 // TODO sync graph and timer
-private fun createGraph(context: Context, colors: Colors) = GraphView(context).apply {
+private fun createGraph(context: Context, colors: ColorScheme) = GraphView(context).apply {
   addSeries(subjectiveHighWeakSeries(context))
   addSeries(subjectiveHighStrongSeries(context))
 

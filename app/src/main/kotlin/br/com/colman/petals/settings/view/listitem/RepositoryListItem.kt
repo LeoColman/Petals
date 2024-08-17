@@ -1,13 +1,10 @@
-@file:OptIn(ExperimentalMaterialApi::class)
-
 package br.com.colman.petals.settings.view.listitem
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.ListItem
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -26,9 +23,8 @@ fun RepositoryListItem() {
 
   ListItem(
     modifier = Modifier.clickable { openProjectPage() },
-    icon = { Icon(TablerIcons.BrandGithub, null, Modifier.size(42.dp)) },
-    secondaryText = { Text(stringResource(string.repository_link_description)) }
-  ) {
-    Text(stringResource(string.repository_link_title))
-  }
+    leadingContent = { Icon(TablerIcons.BrandGithub, null, Modifier.size(42.dp)) },
+    supportingContent = { Text(stringResource(string.repository_link_description)) },
+    headlineContent = { Text(stringResource(string.repository_link_title)) }
+  )
 }

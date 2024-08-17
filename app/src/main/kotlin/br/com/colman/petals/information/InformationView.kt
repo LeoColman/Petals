@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -79,7 +79,7 @@ fun SectionHeader(text: String) {
   Text(
     text,
     Modifier.fillMaxWidth().wrapContentWidth(CenterHorizontally).padding(vertical = 32.dp),
-    style = MaterialTheme.typography.h5
+    style = MaterialTheme.typography.headlineSmall
   )
 }
 
@@ -107,14 +107,14 @@ fun CountryPicker(context: Context) {
         DropdownMenuItem(onClick = {
           selectCountry(country.name)
           collapse()
-        }, Modifier.testTag("DropdownMenuItem")) {
+        }, modifier = Modifier.testTag("DropdownMenuItem"), text = {
           Text(country.name)
-        }
+        })
       }
     }
 
     if (selectedCountry == "") {
-      Card(Modifier.fillMaxWidth().padding(top = 8.dp).padding(horizontal = 16.dp), elevation = 4.dp) {
+      Card(Modifier.fillMaxWidth().padding(top = 8.dp).padding(horizontal = 16.dp)) {
         Text(stringResource(no_country_selected), Modifier.padding(8.dp))
       }
     } else {

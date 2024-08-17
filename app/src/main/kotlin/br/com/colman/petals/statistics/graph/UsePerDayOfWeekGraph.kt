@@ -1,6 +1,6 @@
 package br.com.colman.petals.statistics.graph
 
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -95,7 +95,7 @@ fun UsePerDayOfWeekGraphPreview4() {
 @Composable
 fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
   val description = stringResource(string.grams_distribution_per_day_of_week)
-  val colors = MaterialTheme.colors
+  val colors = MaterialTheme.colorScheme
   val gramsData = useGroups.map { (period, uses) ->
     val daysExceedingWeek = period.days % 7
     val weekPeriod = period.minusDays(daysExceedingWeek)

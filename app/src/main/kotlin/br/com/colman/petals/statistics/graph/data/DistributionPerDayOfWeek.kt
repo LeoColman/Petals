@@ -1,6 +1,6 @@
 package br.com.colman.petals.statistics.graph.data
 
-import androidx.compose.material.Colors
+import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.toArgb
 import br.com.colman.petals.statistics.graph.color.createColor
 import br.com.colman.petals.statistics.graph.formatter.GramsValueFormatter
@@ -17,7 +17,7 @@ private fun calculateGramDistributionPerDayOfWeek(uses: List<Use>): List<Entry> 
     .map { (k, v) -> Entry(k.value.toFloat(), v.toFloat()) }
 }
 
-fun createDistributionPerDayOfWeekDataset(days: Int, uses: List<Use>, label: String, colors: Colors): LineDataSet {
+fun createDistributionPerDayOfWeekDataset(days: Int, uses: List<Use>, label: String, colors: ColorScheme): LineDataSet {
   return LineDataSet(calculateGramDistributionPerDayOfWeek(uses), label).apply {
     valueFormatter = GramsValueFormatter
     lineWidth = 6f

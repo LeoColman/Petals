@@ -35,10 +35,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Checkbox
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -63,7 +63,6 @@ import br.com.colman.petals.R.string.start
 import br.com.colman.petals.R.string.vibrate_on_timer_end
 import br.com.colman.petals.settings.SettingsRepository
 import kotlinx.coroutines.delay
-import org.koin.androidx.compose.get
 import org.koin.compose.koinInject
 
 @Preview
@@ -144,12 +143,12 @@ private fun TimerText(millisLeft: Long) {
 
 @Composable
 private fun BlinkingText(text: String) {
-  Text(text, fontSize = 60.sp, color = MaterialTheme.colors.error, modifier = Modifier.height(100.dp))
+  Text(text, fontSize = 60.sp, color = MaterialTheme.colorScheme.error, modifier = Modifier.height(100.dp))
 }
 
 @Composable
 private fun NonBlinkingText(text: String) {
-  Text(text, fontSize = 52.sp, color = MaterialTheme.colors.primary, modifier = Modifier.height(100.dp))
+  Text(text, fontSize = 52.sp, color = MaterialTheme.colorScheme.primary, modifier = Modifier.height(100.dp))
 }
 
 @Suppress("DEPRECATION")
