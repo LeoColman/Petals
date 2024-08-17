@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import br.com.colman.petals.utils.ClockFormatHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -26,6 +27,8 @@ class SettingsRepository(
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
   val timeFormatList = listOf("HH:mm", "KK:mm a", "HH:mm:ss", "KK:mm:ss a")
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
+  val clockFormatList = ClockFormatHandler.formatsList
+  val clockFormat = datastore.data.map { it[ClockFormat] ?: clockFormatList.first() }
   val hitTimerMillisecondsEnabledList = listOf("enabled", "disabled")
   val hitTimerMillisecondsEnabled = datastore.data.map {
     it[HitTimerMillisecondsEnabled] ?: hitTimerMillisecondsEnabledList.first()
@@ -46,6 +49,10 @@ class SettingsRepository(
 
   fun setTimeFormat(value: String): Unit = runBlocking {
     datastore.edit { it[TimeFormat] = value }
+  }
+
+  fun setClockFormat(value: String): Unit = runBlocking {
+    datastore.edit { it[ClockFormat] = value }
   }
 
   fun setMillisecondsEnabled(value: String): Unit = runBlocking {
@@ -81,6 +88,7 @@ class SettingsRepository(
     val CurrencyIcon = stringPreferencesKey("currency_icon")
     val DateFormat = stringPreferencesKey("date_format")
     val TimeFormat = stringPreferencesKey("time_format")
+    val ClockFormat = stringPreferencesKey("clock_format")
     val Pin = stringPreferencesKey("pin")
     val MillisecondsEnabled = stringPreferencesKey("milliseconds_enabled")
     val HitTimerMillisecondsEnabled = stringPreferencesKey("hit_timer_milliseconds_enabled")

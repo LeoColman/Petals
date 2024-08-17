@@ -12,9 +12,9 @@ fun dateDialogState(onDateChange: (newDate: LocalDate) -> Unit) = createMaterial
 }
 
 @Composable
-fun timeDialogState(onTimeChange: (newTime: LocalTime) -> Unit) = createMaterialDialog { dialogState ->
+fun timeDialogState(is24Hour: Boolean, onTimeChange: (newTime: LocalTime) -> Unit) = createMaterialDialog { dialogState ->
   if (dialogState.showing) {
-    TimePickerDialog(dialogState = dialogState, onTimeChange = onTimeChange)
+    TimePickerDialog(dialogState = dialogState, onTimeChange = onTimeChange, is24Hour = is24Hour)
   }
 }
 

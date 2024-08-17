@@ -15,6 +15,8 @@ import br.com.colman.petals.R.string.cancel
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.select_time
 import br.com.colman.petals.isDarkModeEnabled
+import br.com.colman.petals.settings.SettingsRepository
+import org.koin.compose.koinInject
 import java.time.LocalTime
 import androidx.compose.material3.TimePicker as MaterialTimePicker
 
@@ -23,8 +25,10 @@ import androidx.compose.material3.TimePicker as MaterialTimePicker
 fun TimePickerDialog(
   dialogState: DialogState,
   onTimeChange: (LocalTime) -> Unit,
+  is24Hour: Boolean,
 ) {
-  val timePickerState = rememberTimePickerState(LocalTime.now().hour, LocalTime.now().minute)
+
+  val timePickerState = rememberTimePickerState(LocalTime.now().hour, LocalTime.now().minute, is24Hour = is24Hour)
 
   MaterialTheme(if (isDarkModeEnabled()) darkColorScheme() else lightColorScheme()) {
     AlertDialog(onDismissRequest = dialogState::hide, dismissButton = {

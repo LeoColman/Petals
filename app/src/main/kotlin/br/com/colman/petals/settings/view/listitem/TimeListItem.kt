@@ -6,6 +6,7 @@ import br.com.colman.petals.R.string.time_format_label
 import br.com.colman.petals.R.string.what_time_format_should_be_used
 import br.com.colman.petals.settings.view.dialog.SelectFromListDialog
 import compose.icons.TablerIcons
+import compose.icons.tablericons.CalendarTime
 import compose.icons.tablericons.Clock
 
 @Preview
@@ -16,7 +17,7 @@ fun TimeListItem(
   setTimeFormat: (String) -> Unit = {}
 ) {
   DialogListItem(
-    icon = TablerIcons.Clock,
+    icon = TablerIcons.CalendarTime,
     textId = what_time_format_should_be_used,
     descriptionId = time_format_label,
     dialog = { hideDialog -> TimeDialog(timeFormat, timeFormatList, setTimeFormat, hideDialog) }
