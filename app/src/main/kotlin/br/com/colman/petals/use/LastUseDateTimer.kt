@@ -62,14 +62,14 @@ import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Moon
 import compose.icons.tablericons.Sun
+import kotlinx.coroutines.delay
+import org.koin.compose.koinInject
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.Locale
-import kotlinx.coroutines.delay
-import org.koin.compose.koinInject
 
 @Composable
 fun LastUseDateTimer(lastUseDate: LocalDateTime) {
