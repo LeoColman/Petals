@@ -22,13 +22,11 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentCurrency by settingsRepository.currencyIcon.collectAsState("$")
   val currentDateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val currentHitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(
-    settingsRepository.hitTimerMillisecondsEnabledList[0]
-  )
+  val currentHitTimerMillisecondsEnabled by settingsRepository.isHitTimerMillisecondsEnabled.collectAsState(true)
   val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(
     settingsRepository.decimalPrecisionList[2]
   )
-  val currentExtendDay: String by settingsRepository.extendedDay.collectAsState(settingsRepository.extendedDayList[1])
+  val currentExtendDay by settingsRepository.isDayExtended.collectAsState(false)
 
   Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
@@ -36,20 +34,18 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     RepositoryListItem()
     DateListItem(currentDateFormat, settingsRepository.dateFormatList, settingsRepository::setDateFormat)
     TimeListItem(currentTimeFormat, settingsRepository.timeFormatList, settingsRepository::setTimeFormat)
-    HitTimerMillisecondsEnabledListItem(
-      currentHitTimerMillisecondsEnabled,
-      settingsRepository.hitTimerMillisecondsEnabledList,
-      settingsRepository::setHitTimerMillisecondsEnabled
-    )
     PrecisionListItem(
       currentDecimalPrecision,
       settingsRepository.decimalPrecisionList,
       settingsRepository::setDecimalPrecision
     )
+    HitTimerMillisecondsEnabledListItem(
+      currentHitTimerMillisecondsEnabled,
+      settingsRepository::setIsHitTimerMillisecondsEnabled
+    )
     ExtendDayListItem(
       currentExtendDay,
-      settingsRepository.extendedDayList,
-      settingsRepository::setExtendedDay
+      settingsRepository::setDayExtended
     )
     ShareApp()
   }

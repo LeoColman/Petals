@@ -3,7 +3,6 @@ package br.com.colman.petals.settings
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import br.com.colman.petals.settings.SettingsRepository.Companion.CurrencyIcon
 import br.com.colman.petals.settings.SettingsRepository.Companion.DateFormat
-import br.com.colman.petals.settings.SettingsRepository.Companion.ExtendedDayEnabled
 import br.com.colman.petals.settings.SettingsRepository.Companion.TimeFormat
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.FunSpec
@@ -72,18 +71,18 @@ class SettingsRepositoryTest : FunSpec({
     datastore.data.first()[TimeFormat] shouldBe "HH:mm"
   }
 
-  test("Default extended day to disabled") {
-    target.extendedDay.first() shouldBe "disabled"
+  test("Default extended day to false") {
+    target.isDayExtended.first() shouldBe false
   }
 
-  test("Changes extend day to enable") {
-    target.setExtendedDay("enabled")
-    target.extendedDay.first() shouldBe "enabled"
+  test("Changes extend day to false") {
+    target.setDayExtended(false)
+    target.isDayExtended.first() shouldBe false
   }
 
-  test("Persists extended day to enabled") {
-    target.setExtendedDay("enabled")
-    datastore.data.first()[ExtendedDayEnabled] shouldBe "enabled"
+  test("Persists extended day to true") {
+    target.setDayExtended(true)
+    target.isDayExtended.first() shouldBe true
   }
 
   test("Changes dark mode to true") {
