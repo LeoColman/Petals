@@ -2,8 +2,8 @@ package br.com.colman.petals.withdrawal.view
 
 import android.content.Context
 import android.graphics.Color
-import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.Colors
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
@@ -28,7 +28,7 @@ fun WithdrawalChart(
   maxX: Double,
   maxY: Double,
 ) {
-  val colors = MaterialTheme.colorScheme
+  val colors = MaterialTheme.colors
   val scaledData = data.scaled(maxY)
 
   val interpolator = Interpolator(scaledData)
@@ -56,7 +56,7 @@ private fun createGraph(
   verticalAxisTitle: String,
   horizontalAxisTitle: String,
   lastUseDate: LocalDateTime?,
-  colors: ColorScheme,
+  colors: Colors,
   data: Map<Duration, Double>,
   maxX: Double,
   maxY: Double

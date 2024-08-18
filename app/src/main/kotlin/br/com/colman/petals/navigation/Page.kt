@@ -21,14 +21,14 @@ package br.com.colman.petals.navigation
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons.Default
 import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.LockClock
 import androidx.compose.material.icons.filled.MedicalServices
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -85,9 +85,9 @@ fun BottomNavigationBar(navController: NavHostController) {
   val navBackStackEntry by navController.currentBackStackEntryAsState()
   val currentRoute = navBackStackEntry?.destination?.route
 
-  NavigationBar {
+  BottomNavigation {
     Page.entries.forEach { page ->
-      NavigationBarItem(
+      BottomNavigationItem(
         modifier = Modifier.testTag(page.name),
         selected = currentRoute == page.name,
 

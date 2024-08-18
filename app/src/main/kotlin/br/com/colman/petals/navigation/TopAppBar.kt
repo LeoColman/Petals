@@ -26,14 +26,12 @@ import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -58,27 +56,25 @@ import compose.icons.tablericons.Settings
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyTopAppBar(navController: NavController) {
-  TopAppBar(title = {
+  TopAppBar {
     Box(
       Modifier
         .padding(16.dp)
         .height(56.dp)
         .fillMaxWidth()
-
     ) {
       MyTopAppBarContent(navController)
     }
-  })
+  }
 }
 
 @Composable
 fun MyTopAppBarContent(navController: NavController) {
   val coroutineScope = rememberCoroutineScope()
 
-  Row(Modifier.fillMaxSize(), SpaceBetween, CenterVertically) {
+  Row(Modifier.fillMaxWidth(), SpaceBetween, CenterVertically) {
     Row {
       Text(
         modifier = Modifier.alignByBaseline(),
