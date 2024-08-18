@@ -117,9 +117,7 @@ private fun TimerText(millisLeft: Long) {
   var blinking by remember { mutableStateOf(false) }
 
   val settingsRepository = koinInject<SettingsRepository>()
-  val hitTimerMillisecondsEnabled by settingsRepository.hitTimerMillisecondsEnabled.collectAsState(
-    settingsRepository.hitTimerMillisecondsEnabledList[0]
-  )
+  val hitTimerMillisecondsEnabled by settingsRepository.isHitTimerMillisecondsEnabled.collectAsState(true)
 
   LaunchedEffect(isTimerRunning) {
     if (isTimerRunning) {
@@ -134,7 +132,7 @@ private fun TimerText(millisLeft: Long) {
   }
 
   var duration = HitTimer.duration(millisLeft)
-  if (hitTimerMillisecondsEnabled == "disabled") {
+  if (!hitTimerMillisecondsEnabled) {
     duration = HitTimer.durationMillisecondsDisabled(millisLeft)
   }
 
