@@ -36,7 +36,7 @@ workflow(
     uses(action = Checkout())
     uses(name = "reveal-secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
 
-    uses(name = "Create APK", action = GradleBuildAction(arguments = "packageGithubReleaseUniversalApk"))
+    uses(name = "Create APK", action = GradleBuildAction(arguments = "assembleGithubRelease"))
 
     uses(
       name = "Create release", action = ActionGhRelease(
@@ -44,7 +44,7 @@ workflow(
         name = "Version " + expr { GITHUB_REF_NAME },
         draft = true,
         files = listOf(
-          "app/build/outputs/apk_from_bundle/githubRelease/app-github-release-universal.apk",
+          "app/build/outputs/apk/github/release/app-github-release.apk",
           "app/build/outputs/mapping/githubRelease/mapping.txt",
           "app/build/outputs/mapping/githubRelease/configuration.txt",
           "app/build/outputs/mapping/githubRelease/seeds.txt",

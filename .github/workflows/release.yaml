@@ -43,7 +43,7 @@ jobs:
       name: 'Create APK'
       uses: 'gradle/gradle-build-action@v3'
       with:
-        arguments: 'packageGithubReleaseUniversalApk'
+        arguments: 'assembleGithubRelease'
     - id: 'step-4'
       name: 'Create release'
       uses: 'softprops/action-gh-release@v2'
@@ -52,7 +52,7 @@ jobs:
         tag_name: '${{ github.GITHUB_REF_NAME }}'
         draft: 'true'
         files: |-
-          app/build/outputs/apk_from_bundle/githubRelease/app-github-release-universal.apk
+          app/build/outputs/apk/github/release/app-github-release.apk
           app/build/outputs/mapping/githubRelease/mapping.txt
           app/build/outputs/mapping/githubRelease/configuration.txt
           app/build/outputs/mapping/githubRelease/seeds.txt
