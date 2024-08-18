@@ -1,7 +1,7 @@
 package br.com.colman.petals.widget
 
 import android.content.Context
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.MaterialTheme
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.appwidget.GlanceAppWidget
@@ -17,7 +17,7 @@ object PetalsAppWidget : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     provideContent {
       Column(
-        GlanceModifier.fillMaxSize().background(MaterialTheme.colorScheme.onBackground),
+        GlanceModifier.fillMaxSize().background(MaterialTheme.colors.onBackground),
         CenterVertically,
         CenterHorizontally
       ) {

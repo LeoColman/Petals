@@ -24,13 +24,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
         }
       }
 
-      MaterialTheme(if (isDarkModeEnabled()) darkColorScheme() else lightColorScheme()) {
+      MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
         if (isAuthorized || correctPin == null) {
           Surface {
             Scaffold(
@@ -110,10 +110,10 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
       OutlinedTextField(pin, { pin = it }, visualTransformation = PasswordVisualTransformation())
     }
   }
-}
 
-@Composable
-fun isDarkModeEnabled(settingsRepository: SettingsRepository = koin.get()): Boolean {
-  val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())
-  return darkMode
+  @Composable
+  fun isDarkModeEnabled(): Boolean {
+    val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())
+    return darkMode
+  }
 }

@@ -27,10 +27,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Text
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -54,6 +54,7 @@ import br.com.colman.petals.R.string.years
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.TimeUnit.Day
 import br.com.colman.petals.use.TimeUnit.Hour
+import br.com.colman.petals.use.TimeUnit.Millisecond
 import br.com.colman.petals.use.TimeUnit.Minute
 import br.com.colman.petals.use.TimeUnit.Month
 import br.com.colman.petals.use.TimeUnit.Second
@@ -125,10 +126,10 @@ fun LastUseDateTimer(lastUseDate: LocalDateTime) {
             Text("$amount")
           }
           LinearProgressIndicator(
-            progress = { amount.toFloat() / label.max },
-            modifier = Modifier
+            amount.toFloat() / label.max,
+            Modifier
               .height(8.dp)
-              .weight(0.5f),
+              .weight(0.5f)
           )
         }
       }

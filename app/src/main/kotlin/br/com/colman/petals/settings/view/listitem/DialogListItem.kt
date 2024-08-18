@@ -1,12 +1,14 @@
+@file:OptIn(ExperimentalMaterialApi::class)
 
 package br.com.colman.petals.settings.view.listitem
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.Text
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.ListItem
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,10 +29,11 @@ fun DialogListItem(
   var showDialog by remember { mutableStateOf(false) }
   ListItem(
     modifier = Modifier.clickable { showDialog = true },
-    leadingContent = { Icon(icon, null, Modifier.size(42.dp)) },
-    supportingContent = { Text(stringResource(descriptionId)) },
-    headlineContent = { Text(stringResource(textId)) }
-  )
+    icon = { Icon(icon, null, Modifier.size(42.dp)) },
+    secondaryText = { Text(stringResource(descriptionId)) }
+  ) {
+    Text(stringResource(textId))
+  }
   if (showDialog) {
     dialog { showDialog = false }
   }
