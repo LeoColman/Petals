@@ -43,14 +43,14 @@ jobs:
       name: 'Create Fdroid APK'
       uses: 'gradle/gradle-build-action@v3'
       with:
-        arguments: 'packageFdroidReleaseUniversalApk'
+        arguments: 'assembleFdroidRelease'
     - id: 'step-4'
       name: 'Create Playstore APK'
       uses: 'gradle/gradle-build-action@v3'
       with:
-        arguments: 'packagePlaystoreReleaseUniversalApk'
+        arguments: 'assemblePlaystoreRelease'
     - id: 'step-5'
       name: 'Create Github APK'
       uses: 'gradle/gradle-build-action@v3'
       with:
-        arguments: 'packageGithubReleaseUniversalApk'
+        arguments: 'assembleGithubRelease'

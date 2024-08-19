@@ -63,6 +63,8 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
+      settingsRepository.migrateOldKeysValues()
+      settingsRepository.removeOldKeysValues()
       val navController = rememberNavController()
 
       var isAuthorized by remember { mutableStateOf(false) }
@@ -108,10 +110,10 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
       OutlinedTextField(pin, { pin = it }, visualTransformation = PasswordVisualTransformation())
     }
   }
-}
 
-@Composable
-fun isDarkModeEnabled(settingsRepository: SettingsRepository = koin.get()): Boolean {
-  val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())
-  return darkMode
+  @Composable
+  fun isDarkModeEnabled(): Boolean {
+    val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())
+    return darkMode
+  }
 }
