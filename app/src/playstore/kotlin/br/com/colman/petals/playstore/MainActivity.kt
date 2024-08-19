@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
 import br.com.colman.petals.navigation.NavHostContainer
+import br.com.colman.petals.settings.SettingsMigrations
 import br.com.colman.petals.settings.SettingsRepository
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
@@ -28,12 +29,13 @@ import org.koin.android.ext.android.inject
 class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
   private val settingsRepository by inject<SettingsRepository>()
+  private val settingsMigrations by inject<SettingsMigrations>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      settingsRepository.migrateOldKeysValues()
-      settingsRepository.removeOldKeysValues()
+      settingsMigrations.migrateOldKeysValues()
+      settingsMigrations.removeOldKeysValues()
       val navController = rememberNavController()
 
       MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
