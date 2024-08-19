@@ -7,6 +7,7 @@ object ClockFormatHandler {
 
   val formatsList = listOf(HOURS_12, HOURS_24)
 
-  fun is24HourFormat(format: String) = format == HOURS_24
-
+  fun is24HourFormat(format: String): Boolean {
+    return format == HOURS_24
+  }
 }

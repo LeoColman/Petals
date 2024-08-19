@@ -7,7 +7,6 @@ import br.com.colman.petals.R.string.what_time_format_should_be_used
 import br.com.colman.petals.settings.view.dialog.SelectFromListDialog
 import compose.icons.TablerIcons
 import compose.icons.tablericons.CalendarTime
-import compose.icons.tablericons.Clock
 
 @Preview
 @Composable

@@ -76,37 +76,6 @@ class SettingsRepository(
     datastore.edit { it[IsDayExtended] = value }
   }
 
-  fun migrateOldKeysValues(): Unit = runBlocking {
-    datastore.edit { prefs ->
-      val hitTimerMillisecondsEnabled = prefs[HitTimerMillisecondsEnabled]
-      val extendedDay = prefs[ExtendedDayEnabled]
-
-      if (hitTimerMillisecondsEnabled != null) {
-        if (hitTimerMillisecondsEnabled == "enabled") {
-          prefs[IsHitTimerMillisecondsEnabled] = true
-        } else {
-          prefs[IsHitTimerMillisecondsEnabled] = false
-        }
-      }
-
-      if (extendedDay != null) {
-        if (extendedDay == "enabled") {
-          prefs[IsDayExtended] = true
-        } else {
-          prefs[IsDayExtended] = false
-        }
-      }
-    }
-  }
-
-  fun removeOldKeysValues(): Unit = runBlocking {
-    datastore.edit { prefs ->
-      prefs.remove(HitTimerMillisecondsEnabled)
-      prefs.remove(ExtendedDayEnabled)
-      prefs.remove(MillisecondsEnabled)
-    }
-  }
-
   companion object {
     val CurrencyIcon = stringPreferencesKey("currency_icon")
     val DateFormat = stringPreferencesKey("date_format")

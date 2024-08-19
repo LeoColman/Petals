@@ -21,6 +21,7 @@ package br.com.colman.petals
 import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
 import br.com.colman.petals.hittimer.HitTimerRepository
+import br.com.colman.petals.settings.SettingsMigrations
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.BlockRepository
@@ -35,5 +36,6 @@ val KoinModule = module {
   single { PauseRepository(get<Database>().pauseQueries) }
   single { HitTimerRepository(get()) }
   single { SettingsRepository(get<Context>().settingsDatastore) }
+  single { SettingsMigrations(get<Context>().settingsDatastore) }
   single { BlockRepository(get<Context>().blockDataStore) }
 }
