@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import br.com.colman.petals.utils.ClockFormatHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -26,6 +27,8 @@ class SettingsRepository(
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
   val timeFormatList = listOf("HH:mm", "KK:mm a", "HH:mm:ss", "KK:mm:ss a")
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
+  val clockFormatList = ClockFormatHandler.formatsList
+  val clockFormat = datastore.data.map { it[ClockFormat] ?: clockFormatList.first() }
   val decimalPrecisionList = listOf(0, 1, 2, 3)
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
   val isDarkModeEnabled: Flow<Boolean> = datastore.data.map { it[IsDarkModeOn] ?: true }
@@ -42,6 +45,10 @@ class SettingsRepository(
 
   fun setTimeFormat(value: String): Unit = runBlocking {
     datastore.edit { it[TimeFormat] = value }
+  }
+
+  fun setClockFormat(value: String): Unit = runBlocking {
+    datastore.edit { it[ClockFormat] = value }
   }
 
   fun setDecimalPrecision(value: Int): Unit = runBlocking {
@@ -69,41 +76,11 @@ class SettingsRepository(
     datastore.edit { it[IsDayExtended] = value }
   }
 
-  fun migrateOldKeysValues(): Unit = runBlocking {
-    datastore.edit { prefs ->
-      val hitTimerMillisecondsEnabled = prefs[HitTimerMillisecondsEnabled]
-      val extendedDay = prefs[ExtendedDayEnabled]
-
-      if (hitTimerMillisecondsEnabled != null) {
-        if (hitTimerMillisecondsEnabled == "enabled") {
-          prefs[IsHitTimerMillisecondsEnabled] = true
-        } else {
-          prefs[IsHitTimerMillisecondsEnabled] = false
-        }
-      }
-
-      if (extendedDay != null) {
-        if (extendedDay == "enabled") {
-          prefs[IsDayExtended] = true
-        } else {
-          prefs[IsDayExtended] = false
-        }
-      }
-    }
-  }
-
-  fun removeOldKeysValues(): Unit = runBlocking {
-    datastore.edit { prefs ->
-      prefs.remove(HitTimerMillisecondsEnabled)
-      prefs.remove(ExtendedDayEnabled)
-      prefs.remove(MillisecondsEnabled)
-    }
-  }
-
   companion object {
     val CurrencyIcon = stringPreferencesKey("currency_icon")
     val DateFormat = stringPreferencesKey("date_format")
     val TimeFormat = stringPreferencesKey("time_format")
+    val ClockFormat = stringPreferencesKey("clock_format")
     val Pin = stringPreferencesKey("pin")
     val DecimalPrecision = intPreferencesKey("decimal_precision")
     val IsDarkModeOn: Preferences.Key<Boolean> = booleanPreferencesKey("is_dark_mode_on")

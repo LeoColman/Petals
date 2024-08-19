@@ -106,7 +106,9 @@
     <string name="date_format_label">Date format</string>
     <string name="what_date_format_should_be_used">What date format should be used</string>
     <string name="time_format_label">Time format</string>
+    <string name="clock_format_label">Clock format</string>
     <string name="what_time_format_should_be_used">What time format should be used</string>
+    <string name="what_clock_format_should_be_used">What clock format should be used</string>
     <string name="share_app">Share app with your friends</string>
     <string name="share_app_title">Share App</string>
     <string name="share_app_message">Hey, the Petals app helps me\nGet it on Google Play:\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals\nor Get it on F-Droid\nhttps://f-droid.org/packages/br.com.colman.petals/</string>

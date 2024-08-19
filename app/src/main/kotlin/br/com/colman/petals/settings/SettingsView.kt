@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import br.com.colman.petals.settings.view.listitem.ClockListItem
 import br.com.colman.petals.settings.view.listitem.CurrencyListItem
 import br.com.colman.petals.settings.view.listitem.DateListItem
 import br.com.colman.petals.settings.view.listitem.ExtendDayListItem
@@ -22,6 +23,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentCurrency by settingsRepository.currencyIcon.collectAsState("$")
   val currentDateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
+  val currentClockFormat by settingsRepository.clockFormat.collectAsState(settingsRepository.clockFormatList[0])
   val currentHitTimerMillisecondsEnabled by settingsRepository.isHitTimerMillisecondsEnabled.collectAsState(true)
   val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(
     settingsRepository.decimalPrecisionList[2]
@@ -34,6 +36,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     RepositoryListItem()
     DateListItem(currentDateFormat, settingsRepository.dateFormatList, settingsRepository::setDateFormat)
     TimeListItem(currentTimeFormat, settingsRepository.timeFormatList, settingsRepository::setTimeFormat)
+    ClockListItem(currentClockFormat, settingsRepository.clockFormatList, settingsRepository::setClockFormat)
     PrecisionListItem(
       currentDecimalPrecision,
       settingsRepository.decimalPrecisionList,

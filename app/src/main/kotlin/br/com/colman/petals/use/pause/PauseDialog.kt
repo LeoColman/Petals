@@ -12,6 +12,7 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,10 +27,13 @@ import br.com.colman.petals.R.string.end_time
 import br.com.colman.petals.R.string.start_time
 import br.com.colman.petals.components.ClickableTextField
 import br.com.colman.petals.components.timeDialogState
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.pause.repository.Pause
+import br.com.colman.petals.utils.ClockFormatHandler
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Clock
+import org.koin.compose.koinInject
 import java.time.LocalTime
 import java.time.LocalTime.now
 
@@ -75,7 +79,10 @@ private fun TimeRow(
   value: LocalTime = now(),
   changeValue: (LocalTime) -> Unit = {}
 ) {
-  val dialog = timeDialogState(changeValue)
+  val settingsRepository = koinInject<SettingsRepository>()
+  val clockFormat by settingsRepository.clockFormat.collectAsState(settingsRepository.clockFormatList[0])
+
+  val dialog = timeDialogState(is24Hour = ClockFormatHandler.is24HourFormat(clockFormat), changeValue)
 
   Row(Modifier.height(IntrinsicSize.Min), spacedBy(2.dp)) {
     ClickableTextField(

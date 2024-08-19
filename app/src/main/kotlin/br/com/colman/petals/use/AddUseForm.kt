@@ -11,6 +11,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -26,12 +27,15 @@ import br.com.colman.petals.R.string.cost_per_gram_title
 import br.com.colman.petals.components.ClickableTextField
 import br.com.colman.petals.components.dateDialogState
 import br.com.colman.petals.components.timeDialogState
+import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.utils.ClockFormatHandler
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Calendar
 import compose.icons.tablericons.Cash
 import compose.icons.tablericons.Clock
 import compose.icons.tablericons.Scale
+import org.koin.compose.koinInject
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -41,8 +45,11 @@ fun AddUseForm(
   amount: MutableState<String>,
   cost: MutableState<String>,
   date: MutableState<LocalDate>,
-  time: MutableState<LocalTime>,
+  time: MutableState<LocalTime>
 ) {
+  val settingsRepository = koinInject<SettingsRepository>()
+  val clockFormat by settingsRepository.clockFormat.collectAsState(settingsRepository.clockFormatList[0])
+
   var amount by amount
   var cost by cost
 
@@ -50,7 +57,7 @@ fun AddUseForm(
   val dateDialog = dateDialogState { date = it }
 
   var time by time
-  val timeDialog = timeDialogState { time = it }
+  val timeDialog = timeDialogState(is24Hour = ClockFormatHandler.is24HourFormat(clockFormat)) { time = it }
 
   Column(Modifier, Arrangement.spacedBy(8.dp)) {
     Text(stringResource(add_use), fontWeight = Bold, fontSize = 16.sp)
