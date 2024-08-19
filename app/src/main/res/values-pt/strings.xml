@@ -105,8 +105,10 @@
     <string name="date_format_label">Formato da data</string>
     <string name="what_date_format_should_be_used">Qual formato deve ser utilizado para a data</string>
     <string name="time_format_label">Formato do Tempo</string>
+    <string name="clock_format_label">Formato do relógio</string>
     <string name="what_time_format_should_be_used">Qual formato deve ser utilizado para tempo</string>
     <string name="share_app_title">Compartilhar App</string>
+    <string name="what_clock_format_should_be_used">Qual formato deve ser usado para o relógio</string>
     <string name="share_app">Compartilhar app com amigos</string>
     <string name="share_app_message">Olá, o app Petals me ajuda
 \nBaixar na Google Play Store:
