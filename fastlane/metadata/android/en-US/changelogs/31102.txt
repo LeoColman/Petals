@@ -1,2 +1,0 @@
-* Fix typo
-* Sync translation from weblate

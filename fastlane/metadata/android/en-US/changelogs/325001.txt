@@ -1,1 +1,0 @@
-- Fix problem in a few languages causing a page to not open properly

@@ -1,2 +1,0 @@
-- Fix issue with censoring not working for a few frames after app is opened
-- Sync translations from Weblate

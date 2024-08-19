@@ -1,2 +1,0 @@
-- Add "Hide" button to each day in "Usage" page
-- Sync translations from Weblate

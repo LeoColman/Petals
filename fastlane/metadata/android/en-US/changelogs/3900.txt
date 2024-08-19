@@ -1,4 +1,0 @@
-* Improve time format options
-* Sync translations from Weblate
-* Add option to remove milliseconds bar
-* Make the settings page scrollable

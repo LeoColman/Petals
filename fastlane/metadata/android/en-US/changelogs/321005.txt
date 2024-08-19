@@ -1,1 +1,0 @@
-- Fixed problem with week view never showing "Today"

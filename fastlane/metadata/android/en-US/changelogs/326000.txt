@@ -1,2 +1,0 @@
-- Add multiple pauses per day
-- Add option to disable a pause temporarily

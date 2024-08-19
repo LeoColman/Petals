@@ -1,2 +1,0 @@
-- Fixed problem with weeks still containing an extra day after v3.21.3 adjustments
-- Reverted upgrade to library that caused issues with data storage for custom properties

@@ -1,2 +1,0 @@
-- Add line indicating time of day to chart
-- Minor fixes

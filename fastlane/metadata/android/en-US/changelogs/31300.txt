@@ -1,2 +1,0 @@
-- Add Italian translation
-- Minor dependency upgrades

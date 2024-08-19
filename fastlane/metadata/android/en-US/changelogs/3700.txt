@@ -1,3 +1,0 @@
-* Add toast message on Use delete
-* Add Total Grams to stats block
-* Fixed UsePerDayOfWeek graph not displaying data correctly

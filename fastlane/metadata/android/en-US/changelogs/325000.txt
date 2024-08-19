@@ -1,2 +1,0 @@
-- Add possibility to switch from day to night mode
-- Add translation to Turkish

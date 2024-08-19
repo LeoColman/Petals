@@ -1,1 +1,0 @@
-- Add new Uses Per Day of Week chart to stats page

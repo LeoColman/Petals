@@ -1,2 +1,0 @@
-- Adjust "Uses per Day Of Week" chart rounding decimals
-- Replace "Last 0 days" with "Today"
