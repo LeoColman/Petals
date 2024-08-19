@@ -1,0 +1,4 @@
+- Add option to select clock format between 24h and 12h clock
+- Fix a minor issue when having the app open right at the start/end of a pause
+- Change settings that would open a dialog for enabled/disabled to be switches instead
+- Successfully checked the Material Design 3 is not ready for our migration yet

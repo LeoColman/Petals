@@ -39,7 +39,8 @@ val locales = listOf(
   "no" to "NO",
   "pt" to "BR",
   "ru" to "RU",
-  "tr" to "TR"
+  "tr" to "TR",
+  "uk" to ""
 )
 
 class ScreenshotTakerTest : FunSpec({
@@ -112,6 +113,7 @@ class ScreenshotTakerTest : FunSpec({
       locales.forEach { (lang, country) ->
         activity?.setLocale(Locale(lang, country))
 
+        waitForIdle()
         onNodeWithTag(Page.Symptoms.name).performClick()
         waitForIdle()
 

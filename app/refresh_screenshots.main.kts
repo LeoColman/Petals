@@ -52,7 +52,8 @@ fun startServer(): NettyApplicationEngine {
 
         multipart.forEachPart { part ->
           if (part is PartData.FileItem) {
-            val dir = File("../fastlane/metadata/android/${lang}-${country}/images/phoneScreenshots")
+            val countryHyphen = if (country.isNotBlank()) "-$country" else ""
+            val dir = File("../fastlane/metadata/android/${lang}${countryHyphen}/images/phoneScreenshots")
             if (!dir.exists()) {
               dir.mkdirs()
             }

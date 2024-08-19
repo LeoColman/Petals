@@ -82,7 +82,7 @@
     <string name="export_export">Експорт</string>
     <string name="change_period">Змінити проміжок</string>
     <string name="current_withdrawal_discomfort">Поточний дискомфорт відміни: %s</string>
-    <string name="current_thc_concentration">Поточна концентрація ТГК: %s %</string>
+    <string name="current_thc_concentration">Поточна концентрація ТГК: %s \%%</string>
     <string name="grams_distribution_per_hour_of_day">Розподіл грам на годину дня</string>
     <string name="thc_concentration">Концентрація ТГК(%)</string>
     <string name="discomfort_strength">Рівень дискомфорту</string>
