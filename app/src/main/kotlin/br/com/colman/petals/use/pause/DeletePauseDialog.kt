@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.colman.petals.R
 import br.com.colman.petals.use.pause.repository.Pause
+import br.com.colman.petals.utils.datetime.TimeFormatEnum
 import java.time.format.DateTimeFormatter
 
 @Preview
@@ -20,7 +21,7 @@ fun DeletePauseDialog(
   onDismiss: () -> Unit = { }
 ) {
   val formatter = remember {
-    DateTimeFormatter.ofPattern("HH:mm")
+    DateTimeFormatter.ofPattern(TimeFormatEnum.HH_MM.format)
   }
   AlertDialog(
     onDismissRequest = onDismiss,

@@ -3,8 +3,10 @@ package br.com.colman.petals.settings
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import br.com.colman.petals.settings.SettingsRepository.Companion.ClockFormat
 import br.com.colman.petals.settings.SettingsRepository.Companion.ExtendedDayEnabled
 import br.com.colman.petals.settings.SettingsRepository.Companion.HitTimerMillisecondsEnabled
+import br.com.colman.petals.settings.SettingsRepository.Companion.Is24HoursFormat
 import br.com.colman.petals.settings.SettingsRepository.Companion.IsDayExtended
 import br.com.colman.petals.settings.SettingsRepository.Companion.IsHitTimerMillisecondsEnabled
 import br.com.colman.petals.settings.SettingsRepository.Companion.MillisecondsEnabled
@@ -16,6 +18,7 @@ class SettingsMigrations(private val datastore: DataStore<Preferences>) {
     datastore.edit { prefs ->
       val hitTimerMillisecondsEnabled = prefs[HitTimerMillisecondsEnabled]
       val extendedDay = prefs[ExtendedDayEnabled]
+      val clockFormat = prefs[ClockFormat]
 
       if (hitTimerMillisecondsEnabled != null) {
         if (hitTimerMillisecondsEnabled == "enabled") {
@@ -31,6 +34,10 @@ class SettingsMigrations(private val datastore: DataStore<Preferences>) {
         } else {
           prefs[IsDayExtended] = false
         }
+      }
+
+      if (clockFormat != null) {
+        prefs[Is24HoursFormat] = extendedDay == "24 hours"
       }
     }
   }

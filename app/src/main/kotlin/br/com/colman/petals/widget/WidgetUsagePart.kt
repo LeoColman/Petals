@@ -42,7 +42,6 @@ fun WidgetUsagePart() {
   val lastUseDate = useRepository.getLastUseDate().collectAsState(LocalDateTime.now())
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val millisecondsEnabled = "disabled"
   val dateString =
     DateTimeFormatter.ofPattern(String.format(Locale.US, "%s %s", dateFormat, timeFormat))
       .format(lastUseDate.value)
@@ -72,7 +71,7 @@ fun WidgetUsagePart() {
     TimeUnit.Millisecond
   )
 
-  val enabledLabels = if (millisecondsEnabled == "disabled") allLabels.dropLast(1) else allLabels
+  val enabledLabels = allLabels.dropLast(1)
 
   var millisCopy = millis
   val labels = enabledLabels.map {

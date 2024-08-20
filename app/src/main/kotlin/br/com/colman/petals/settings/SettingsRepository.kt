@@ -6,7 +6,9 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import br.com.colman.petals.utils.ClockFormatHandler
+import br.com.colman.petals.R
+import br.com.colman.petals.utils.datetime.DateTimeFormatEnum
+import br.com.colman.petals.utils.datetime.TimeFormatEnum
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -16,19 +18,12 @@ class SettingsRepository(
 ) {
 
   val currencyIcon = datastore.data.map { it[CurrencyIcon] ?: "$" }
-  val dateFormatList = listOf(
-    "yyyy-MM-dd",
-    "yyyy/MM/dd",
-    "dd-MM-yyyy",
-    "dd.MM.yyyy",
-    "MM/dd/yyyy",
-    "MM-dd-yyyy"
-  )
+  val dateFormatList = DateTimeFormatEnum.entries.map { it.format }
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
-  val timeFormatList = listOf("HH:mm", "KK:mm a", "HH:mm:ss", "KK:mm:ss a")
+  val timeFormatList = TimeFormatEnum.entries.map { it.format }
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
-  val clockFormatList = ClockFormatHandler.formatsList
-  val clockFormat = datastore.data.map { it[ClockFormat] ?: clockFormatList.first() }
+  val clockFormatList = listOf(R.string.hours_12, R.string.hours_24)
+  val is24HoursFormat = datastore.data.map { it[Is24HoursFormat] ?: false }
   val decimalPrecisionList = listOf(0, 1, 2, 3)
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
   val isDarkModeEnabled: Flow<Boolean> = datastore.data.map { it[IsDarkModeOn] ?: true }
@@ -47,8 +42,8 @@ class SettingsRepository(
     datastore.edit { it[TimeFormat] = value }
   }
 
-  fun setClockFormat(value: String): Unit = runBlocking {
-    datastore.edit { it[ClockFormat] = value }
+  fun setIs24HoursFormat(value: Boolean): Unit = runBlocking {
+    datastore.edit { it[Is24HoursFormat] = value }
   }
 
   fun setDecimalPrecision(value: Int): Unit = runBlocking {
@@ -80,12 +75,15 @@ class SettingsRepository(
     val CurrencyIcon = stringPreferencesKey("currency_icon")
     val DateFormat = stringPreferencesKey("date_format")
     val TimeFormat = stringPreferencesKey("time_format")
-    val ClockFormat = stringPreferencesKey("clock_format")
+    val Is24HoursFormat = booleanPreferencesKey("is_24_hours_format")
     val Pin = stringPreferencesKey("pin")
     val DecimalPrecision = intPreferencesKey("decimal_precision")
     val IsDarkModeOn: Preferences.Key<Boolean> = booleanPreferencesKey("is_dark_mode_on")
     val IsHitTimerMillisecondsEnabled = booleanPreferencesKey("is_hit_timer_milliseconds_enabled")
     val IsDayExtended = booleanPreferencesKey("is_day_extended_enabled")
+
+    @Deprecated("This Key is no longer in use")
+    val ClockFormat = stringPreferencesKey("clock_format")
 
     @Deprecated("This Key is no longer in use")
     val MillisecondsEnabled = stringPreferencesKey("milliseconds_enabled")

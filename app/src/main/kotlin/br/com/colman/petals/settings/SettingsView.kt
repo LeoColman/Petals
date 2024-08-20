@@ -23,20 +23,19 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val currentCurrency by settingsRepository.currencyIcon.collectAsState("$")
   val currentDateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val currentClockFormat by settingsRepository.clockFormat.collectAsState(settingsRepository.clockFormatList[0])
+  val is24HoursFormat by settingsRepository.is24HoursFormat.collectAsState(false)
   val currentHitTimerMillisecondsEnabled by settingsRepository.isHitTimerMillisecondsEnabled.collectAsState(true)
   val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(
     settingsRepository.decimalPrecisionList[2]
   )
   val currentExtendDay by settingsRepository.isDayExtended.collectAsState(false)
-
   Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
     PinListItem(settingsRepository::setPin)
     RepositoryListItem()
     DateListItem(currentDateFormat, settingsRepository.dateFormatList, settingsRepository::setDateFormat)
     TimeListItem(currentTimeFormat, settingsRepository.timeFormatList, settingsRepository::setTimeFormat)
-    ClockListItem(currentClockFormat, settingsRepository.clockFormatList, settingsRepository::setClockFormat)
+    ClockListItem(is24HoursFormat, settingsRepository.clockFormatList, settingsRepository::setIs24HoursFormat)
     PrecisionListItem(
       currentDecimalPrecision,
       settingsRepository.decimalPrecisionList,

@@ -71,10 +71,10 @@ fun NavHostContainer(navController: NavHostController, paddingValues: PaddingVal
       }
     }
 
-    composable("settings") {
+    composable(Screens.Settings) {
       SettingsView(koinInject())
     }
-    composable("information") {
+    composable(Screens.Information) {
       InformationView()
     }
   }

@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R
 import br.com.colman.petals.use.pause.repository.Pause
+import br.com.colman.petals.utils.datetime.TimeFormatEnum
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -32,7 +33,7 @@ fun PauseCard(
   onPauseDisabledStatusChange: (Boolean) -> Unit,
 ) {
   Card(modifier = modifier) {
-    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+    val formatter = DateTimeFormatter.ofPattern(TimeFormatEnum.HH_MM.format)
     Row(
       modifier = Modifier
         .fillMaxWidth()
@@ -45,12 +46,21 @@ fun PauseCard(
         Text("${pause.startTime.format(formatter)} - ${pause.endTime.format(formatter)}")
       }
       Row(horizontalArrangement = spacedBy(4.dp)) {
-        DisablePauseView(isEnabled = pause.isEnabled, onClick = onPauseDisabledStatusChange)
+        DisablePauseView(
+          isEnabled = pause.isEnabled,
+          onClick = onPauseDisabledStatusChange
+        )
         IconButton(onClick = onPauseEditClick) {
-          Icon(imageVector = Icons.Rounded.Edit, contentDescription = "Edit pause")
+          Icon(
+            imageVector = Icons.Rounded.Edit,
+            contentDescription = stringResource(id = R.string.edit_pause)
+          )
         }
         IconButton(onClick = onPauseDeleteClick) {
-          Icon(imageVector = Icons.Rounded.DeleteForever, contentDescription = "Delete pause")
+          Icon(
+            imageVector = Icons.Rounded.DeleteForever,
+            contentDescription = stringResource(id = R.string.delete_pause)
+          )
         }
       }
     }

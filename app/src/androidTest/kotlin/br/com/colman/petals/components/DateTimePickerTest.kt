@@ -61,7 +61,7 @@ class DateTimePickerTest : FunSpec({
       var selectedTime: LocalTime? = null
 
       activity!!.setContent {
-        val dialogState = timeDialogState(is24Hour = true) { time ->
+        val dialogState = timeDialogState(is24HoursFormat = true) { time ->
           selectedTime = time
         }
         dialogState.show()
@@ -80,7 +80,7 @@ class DateTimePickerTest : FunSpec({
       var selectedTime: LocalTime? = null
 
       activity!!.setContent {
-        val dialogState = timeDialogState(is24Hour = true) { time ->
+        val dialogState = timeDialogState(is24HoursFormat = true) { time ->
           selectedTime = time
         }
         dialogState.show()

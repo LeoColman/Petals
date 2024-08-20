@@ -29,7 +29,6 @@ import br.com.colman.petals.components.ClickableTextField
 import br.com.colman.petals.components.timeDialogState
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.pause.repository.Pause
-import br.com.colman.petals.utils.ClockFormatHandler
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Clock
@@ -64,7 +63,7 @@ fun PauseDialogContent(
   var pauseEnd by remember { mutableStateOf(pause.endTime) }
 
   Column(Modifier.padding(8.dp), spacedBy(8.dp)) {
-    Text("During this time period, the app will remind you of your break")
+    Text(stringResource(id = R.string.pause_dialog_description))
 
     TimeRow(start_time, pauseStart) { pauseStart = it }
     TimeRow(end_time, pauseEnd) { pauseEnd = it }
@@ -80,9 +79,9 @@ private fun TimeRow(
   changeValue: (LocalTime) -> Unit = {}
 ) {
   val settingsRepository = koinInject<SettingsRepository>()
-  val clockFormat by settingsRepository.clockFormat.collectAsState(settingsRepository.clockFormatList[0])
+  val is24HoursFormat by settingsRepository.is24HoursFormat.collectAsState(false)
 
-  val dialog = timeDialogState(is24Hour = ClockFormatHandler.is24HourFormat(clockFormat), changeValue)
+  val dialog = timeDialogState(is24HoursFormat = is24HoursFormat, changeValue)
 
   Row(Modifier.height(IntrinsicSize.Min), spacedBy(2.dp)) {
     ClickableTextField(
@@ -92,8 +91,22 @@ private fun TimeRow(
       Modifier.weight(2f),
       dialog::show,
     )
-    AddTimeButton(-5, value, changeValue, Modifier.fillMaxHeight().weight(1f))
-    AddTimeButton(5, value, changeValue, Modifier.fillMaxHeight().weight(1f))
+    AddTimeButton(
+      -5,
+      value,
+      changeValue,
+      Modifier
+        .fillMaxHeight()
+        .weight(1f)
+    )
+    AddTimeButton(
+      5,
+      value,
+      changeValue,
+      Modifier
+        .fillMaxHeight()
+        .weight(1f)
+    )
   }
 }
 

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceModifier
@@ -15,6 +16,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
+import br.com.colman.petals.R
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import org.koin.compose.koinInject
 
@@ -27,7 +29,7 @@ fun BreakPeriodPart() {
   Column(GlanceModifier.padding(4.dp), CenterVertically, CenterHorizontally) {
     if (isPaused) {
       Text(
-        "Break period",
+        stringResource(id = R.string.break_period),
         style = TextStyle(
           fontWeight = FontWeight.Bold,
           color = ColorProvider(Color.Red),
@@ -36,7 +38,7 @@ fun BreakPeriodPart() {
       )
     } else {
       Text(
-        text = "No break period",
+        text = stringResource(id = R.string.no_break_period),
         style = TextStyle(
           fontWeight = FontWeight.Bold,
           color = ColorProvider(Color.Green),
