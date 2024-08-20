@@ -47,6 +47,7 @@ class SettingsMigrations(private val datastore: DataStore<Preferences>) {
       prefs.remove(HitTimerMillisecondsEnabled)
       prefs.remove(ExtendedDayEnabled)
       prefs.remove(MillisecondsEnabled)
+      prefs.remove(ClockFormat)
     }
   }
 }
