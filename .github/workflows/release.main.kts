@@ -54,6 +54,8 @@ workflow(
       )
     )
 
+    uses(name = "Create Bundle", action = GradleBuildAction(arguments = "clean bundlePlaystoreRelease"))
+
     uses(action = SetupRuby(rubyVersion = "3.2.3"))
     run(
       name = "publish-playstore",

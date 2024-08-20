@@ -18,7 +18,7 @@ default_platform(:android)
 platform :android do
     desc "Deploy to Google Play Store"
     lane :playstore do
-        gradle(task: "bundlePlaystore")
+        gradle(task: "bundlePlaystoreRelease")
         upload_to_play_store(timeout: 600)
     end
 end
