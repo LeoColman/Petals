@@ -9,7 +9,7 @@ kotest = "5.9.1"
 kotlin = "2.0.20"
 licensee = "1.11.0"
 vanpra-material-dialogs = "0.9.0"
-sqldelight = "1.5.5"
+sqldelight = "2.0.2"
 glance = "1.1.0"
 
 [libraries]
@@ -51,10 +51,11 @@ licensee-gradle-plugin = { module = "app.cash.licensee:licensee-gradle-plugin", 
 mockk = "io.mockk:mockk:1.13.12"
 mp-android-chart = "com.github.AppDevNext:AndroidChart:3.1.0.24"
 snodge = "com.natpryce:snodge:3.7.0.0"
+sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 timber = "com.jakewharton.timber:timber:5.0.1"
-sqldelight-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
-sqldelight-coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
-sqldelight-sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-sqlite-dialect = { module = "app.cash.sqldelight:sqlite-3-25-dialect", version.ref = "sqldelight" }
 requery-sqlite = "com.github.requery:sqlite-android:3.45.0"
 play-services-ads = "com.google.android.gms:play-services-ads:23.3.0"
 play-services-billing = "com.android.billingclient:billing:7.0.0"
@@ -113,7 +114,7 @@ kotest-common = ["kotest-assertions", "kotest-property", "kotest-framework-datat
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.8.3" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

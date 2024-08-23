@@ -1,9 +1,10 @@
 package br.com.colman.petals.use.repository
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import br.com.colman.petals.UseQueries
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
@@ -24,11 +25,13 @@ class UseRepository(
     useQueries.upsert(use.toEntity())
   }
 
-  fun getLastUse() = useQueries.selectLast().asFlow().mapToOneOrNull().map { it?.toUse() }
+  fun getLastUse() = useQueries.selectLast().asFlow().mapToOneOrNull(Dispatchers.IO).map { it?.toUse() }
 
   fun getLastUseDate() = getLastUse().map { it?.date }
 
-  fun all(): Flow<List<Use>> = useQueries.selectAll().asFlow().mapToList().map { it.map(UseEntity::toUse) }
+  fun all(): Flow<List<Use>> = useQueries.selectAll().asFlow().mapToList(
+    Dispatchers.IO
+  ).map { it.map(UseEntity::toUse) }
 
   fun delete(use: Use) {
     Timber.d("Deleting use: $use")
