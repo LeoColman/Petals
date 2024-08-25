@@ -150,4 +150,6 @@
     <string name="id_label">id</string>
     <string name="select_time">Seleccionar hora</string>
     <string name="pause_time">Tiempo de pausa</string>
+    <string name="clock_format_label">Formato del reloj</string>
+    <string name="what_clock_format_should_be_used">¿Qué formato de reloj debe utilizarse?</string>
 </resources>
