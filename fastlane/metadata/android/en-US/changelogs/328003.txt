@@ -1,0 +1,1 @@
+- Migrate SQLDelight Database to version 2
