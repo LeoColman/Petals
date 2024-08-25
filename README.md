@@ -10,16 +10,14 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/LeoColman/Petals?style=plastic)](https://star-history.com/#LeoColman/Petals&Date)
 [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=plastic)](https://gitmoji.dev/)
 [![Git Secrets](https://img.shields.io/badge/git%20secrets-enabled-green)](https://github.com/sobolevn/git-secret)
-[![Fdroid](https://img.shields.io/f-droid/v/br.com.colman.petals)](https://f-droid.org/packages/br.com.colman.petals/)
+[![F-Droid](https://img.shields.io/f-droid/v/br.com.colman.petals)](https://f-droid.org/packages/br.com.colman.petals/)
 [![GitHub Release](https://img.shields.io/github/v/release/LeoColman/Petals?label=github)](https://github.com/LeoColman/Petals/releases)
 [![IzzyOnDroid Release](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/br.com.colman.petals)](https://apt.izzysoft.de/fdroid/index/apk/br.com.colman.petals)
 
 <a href="https://www.producthunt.com/posts/petals?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-petals" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=356573&theme=light" alt="Petals - An&#0032;open&#0032;source&#0032;app&#0032;to&#0032;help&#0032;users&#0032;quit&#0032;or&#0032;control&#0032;weed&#0032;usage | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K62Y2GB)
 
-
 ------
-
 The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're
 using.
 
@@ -62,14 +60,13 @@ language [here](https://hosted.weblate.org/engage/petals-app)
 ![](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png)
 ![](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png)
 
-[More Screenshots](fastlane/metadata/android/en-US/images/phoneScreenshots)
-
+[More Screenshots](fastlane/metadata/android/en-US/images/phoneScreenshots/)
 </details>
 
 ## Building
 
-You can assemble both debug and release versions of the app for different variants (Fdroid, Playstore, GitHub) using the
-corresponding gradle tasks. Here's how to do that:
+You can assemble both debug and release versions of the app for different variants (F-Droid, Playstore, GitHub) using
+the corresponding Gradle tasks. Here's how to do that:
 
 ### Debug Version
 
@@ -79,8 +76,8 @@ corresponding gradle tasks. Here's how to do that:
 
 ### Release Version
 
-For release version you must first decrypt secrets using `git secret reveal`. Release version can be assembled as
-following:
+For the release version, you must first decrypt secrets using `git secret reveal`. The release version can be assembled
+as follows:
 
 - F-Droid: `./gradlew assembleFdroidRelease`
 - PlayStore: `./gradlew assemblePlaystoreRelease`
@@ -88,7 +85,7 @@ following:
 
 ## Git Secrets
 
-The **Keystore**, **Keystore Properties** and **Google Play deploy json** files are included in the repository using
+The **Keystore**, **Keystore Properties**, and **Google Play deploy json** files are included in the repository using
 [git secret](https://sobolevn.me/git-secret/). The current secret owners are:
 
 - Leonardo Colman Lopes
@@ -103,7 +100,7 @@ The **Keystore**, **Keystore Properties** and **Google Play deploy json** files 
 
 ## Releasing
 
-Release to all our channels are made automatically after a tag is released. The workflow responsible for doing this
+Release to all our channels is made automatically after a tag is released. The workflow responsible for doing this
 is [release.main.kts](.github/workflows/release.main.kts).
 
 ### Google Play Store
@@ -117,7 +114,7 @@ is [release.main.kts](.github/workflows/release.main.kts).
 
 F-Droid builds automatically from the repository whenever a new tag is published. The definitions for how to build the
 app are
-in [FDroid's data repository](https://gitlab.com/fdroid/fdroiddata/-/blob/master/metadata/br.com.colman.petals.yml). If
+in [F-Droid's data repository](https://gitlab.com/fdroid/fdroiddata/-/blob/master/metadata/br.com.colman.petals.yml). If
 modifications are required, the place to change is there.
 
 ### Releases Page
