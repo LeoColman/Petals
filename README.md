@@ -14,9 +14,6 @@
 [![GitHub Release](https://img.shields.io/github/v/release/LeoColman/Petals?label=github)](https://github.com/LeoColman/Petals/releases)
 [![IzzyOnDroid Release](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/br.com.colman.petals)](https://apt.izzysoft.de/fdroid/index/apk/br.com.colman.petals)
 
-
-
-
 <a href="https://www.producthunt.com/posts/petals?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-petals" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=356573&theme=light" alt="Petals - An&#0032;open&#0032;source&#0032;app&#0032;to&#0032;help&#0032;users&#0032;quit&#0032;or&#0032;control&#0032;weed&#0032;usage | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K62Y2GB)
 
@@ -25,7 +22,6 @@
 
 The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're
 using.
-
 
 [<img src="https://user-images.githubusercontent.com/1577251/236347752-5c312036-27d1-4515-ab86-dc2aa9a09e66.png"
 alt="Get it on GitHub"
@@ -43,7 +39,9 @@ height="80">](https://play.google.com/store/apps/details?id=br.com.colman.petals
 For an ad free experience download the app either from F-Droid or from the Releases Page.
 
 ## Translations
-Translations are hosted at Weblate. You can contribute to your language [here](https://hosted.weblate.org/engage/petals-app)
+
+Translations are hosted at Weblate. You can contribute to your
+language [here](https://hosted.weblate.org/engage/petals-app)
 
 <a href="https://hosted.weblate.org/engage/petals-app/">
 <img src="https://hosted.weblate.org/widgets/petals-app/-/287x66-grey.png" alt="Translation status" />
@@ -70,25 +68,23 @@ Translations are hosted at Weblate. You can contribute to your language [here](h
 
 ## Building
 
-### Signed
+You can assemble both debug and release versions of the app for different variants (Fdroid, Playstore, GitHub) using the
+corresponding gradle tasks. Here's how to do that:
 
-The signed version (the one published to GitHub and PlayStore) can be built with:
+### Debug Version
 
-```
-./gradlew packageGithubReleaseUniversalApk
-```
+- F-Droid: `./gradlew assembleFdroidDebug`
+- PlayStore: `./gradlew assemblePlaystoreDebug`
+- GitHub: `./gradlelw assembleGithubDebug`
 
-You must first decrypt secrets using `git secret reveal`
+### Release Version
 
-### Unsigned
+For release version you must first decrypt secrets using `git secret reveal`. Release version can be assembled as
+following:
 
-If you're building an unsigned version, build the same one that goes to FDroid (as FDroid signs the app themselves).
-
-```
-./gradlew packageFdroidReleaseUniversalApk
-```
-
-This approach doesn't require secrets.
+- F-Droid: `./gradlew assembleFdroidRelease`
+- PlayStore: `./gradlew assemblePlaystoreRelease`
+- GitHub: `./gradlew assembleGithubRelease`
 
 ## Git Secrets
 
@@ -107,14 +103,14 @@ The **Keystore**, **Keystore Properties** and **Google Play deploy json** files 
 
 ## Releasing
 
-Release to all our channels are made automatically after a tag is released. The workflow responsible for doing that
+Release to all our channels are made automatically after a tag is released. The workflow responsible for doing this
 is [release.main.kts](.github/workflows/release.main.kts).
 
 ### Google Play Store
 
 1. Decrypt all git secrets
-2. Run `./gradlew packageGithubReleaseUniversalApk`
-3. Publish to playstore
+2. Run `./gradlew bundlePlaystoreRelease`
+3. Publish to playstore by
    running `bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore`
 
 ### F-Droid
@@ -125,5 +121,6 @@ in [FDroid's data repository](https://gitlab.com/fdroid/fdroiddata/-/blob/master
 modifications are required, the place to change is there.
 
 ### Releases Page
+
 1. Decrypt all git secrets
-2. Run `./gradlew packageGithubReleaseUniversalApk`
+2. Run `./gradlew assembleGithubRelease`
