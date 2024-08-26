@@ -1,6 +1,5 @@
 package br.com.colman.petals.settings.view.listitem
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -9,6 +8,7 @@ import br.com.colman.petals.R
 import br.com.colman.petals.R.string.clock_format_label
 import br.com.colman.petals.R.string.what_clock_format_should_be_used
 import br.com.colman.petals.settings.view.dialog.SelectFromListDialog
+import br.com.colman.petals.utils.datetime.ClockFormatEnum
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Clock
 
@@ -16,7 +16,7 @@ import compose.icons.tablericons.Clock
 @Composable
 fun ClockListItem(
   is24HoursFormat: Boolean = false,
-  @StringRes clockFormatList: List<Int> = listOf(),
+  clockFormatList: List<ClockFormatEnum> = listOf(),
   setIs24HoursFormat: (Boolean) -> Unit = {}
 ) {
   DialogListItem(
@@ -38,7 +38,7 @@ fun ClockListItem(
 @Composable
 private fun ClockDialog(
   is24HoursFormat: Boolean = false,
-  clockFormatList: List<Int> = listOf(),
+  clockFormatList: List<ClockFormatEnum> = listOf(),
   setIs24HoursFormat: (Boolean) -> Unit = {},
   onDismiss: () -> Unit = {},
 ) {
@@ -51,7 +51,7 @@ private fun ClockDialog(
 
   SelectFromListDialog(
     initialValue = initialValue,
-    possibleValues = clockFormatList.map { stringResource(id = it) },
+    possibleValues = clockFormatList.map { it.name() },
     setValue = { value -> setIs24HoursFormat(value == context.getString(R.string.hours_24)) },
     onDismiss = onDismiss,
     label = clock_format_label
