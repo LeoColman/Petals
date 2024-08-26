@@ -1,9 +1,10 @@
 package br.com.colman.petals.use.pause.repository
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import br.com.colman.petals.PauseQueries
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalTime
@@ -14,12 +15,12 @@ class PauseRepository(
   private val pauseQueries: PauseQueries
 ) {
 
-  fun getAll() = pauseQueries.selectAll().asFlow().mapToList().map { pauses ->
+  fun getAll() = pauseQueries.selectAll().asFlow().mapToList(Dispatchers.IO).map { pauses ->
     pauses.map(PauseEntity::toPause).sortedWith(compareBy({ it.startTime }, { it.endTime }))
   }
 
   fun get(): Flow<Pause?> {
-    return pauseQueries.selectFirst().asFlow().mapToOneOrNull().map { it?.toPause() }
+    return pauseQueries.selectFirst().asFlow().mapToOneOrNull(Dispatchers.IO).map { it?.toPause() }
   }
 
   fun insert(pause: Pause) {
@@ -40,7 +41,7 @@ fun PauseEntity.toPause() = Pause(
   LocalTime.parse(start_time),
   LocalTime.parse(end_time),
   id,
-  (is_enabled ?: 1) == 1L
+  is_enabled == 1L
 )
 
 fun Pause.toEntity() = PauseEntity(

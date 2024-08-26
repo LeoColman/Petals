@@ -1,7 +1,7 @@
 package br.com.colman.petals.use.pause.repository
 
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import br.com.colman.petals.Database
-import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeSortedWith

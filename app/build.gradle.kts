@@ -48,8 +48,8 @@ android {
     applicationId = "br.com.colman.petals"
     minSdk = 21
     targetSdk = 34
-    versionCode = 328002
-    versionName = "3.28.0"
+    versionCode = 328003
+    versionName = "3.28.1"
 
     testApplicationId = "$applicationId.test"
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -200,10 +200,11 @@ dependencies {
     because("It's useful for fuzzy testing (mutating strings, jsons, etc)")
   }
 
+  // SQLDelight
   implementation(libs.sqldelight.android.driver)
   implementation(libs.sqldelight.coroutines.extensions)
-  testImplementation(libs.sqldelight.sqlite.driver)
   implementation(libs.requery.sqlite)
+  testImplementation(libs.sqldelight.sqlite.driver)
 
   // Google Ads
   "playstoreImplementation"(libs.play.services.ads)
@@ -237,10 +238,12 @@ java {
 }
 
 sqldelight {
-  database("Database") {
-    dialect = "sqlite:3.25"
-    schemaOutputDirectory = file("src/main/sqldelight/databases")
-    verifyMigrations = true
+  databases {
+    create("Database") {
+      dialect(libs.sqldelight.sqlite.dialect)
+      schemaOutputDirectory = file("src/main/sqldelight/databases")
+      verifyMigrations = true
+    }
   }
 }
 
