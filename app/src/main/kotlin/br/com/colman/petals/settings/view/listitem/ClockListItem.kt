@@ -51,7 +51,7 @@ private fun ClockDialog(
 
   SelectFromListDialog(
     initialValue = initialValue,
-    possibleValues = clockFormatList.map { it.name() },
+    possibleValues = clockFormatList.map { stringResource(it.nameRes) },
     setValue = { value -> setIs24HoursFormat(value == context.getString(R.string.hours_24)) },
     onDismiss = onDismiss,
     label = clock_format_label
