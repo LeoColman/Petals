@@ -150,4 +150,6 @@
     <string name="id_label">id</string>
     <string name="confirm_deletion">Confermare la cancellazione</string>
     <string name="select_time">Seleziona orario</string>
+    <string name="clock_format_label">Formato dell\'orologio</string>
+    <string name="what_clock_format_should_be_used">Quale formato di orologio dovrebbe essere utilizzato</string>
 </resources>
