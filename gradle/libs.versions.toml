@@ -13,10 +13,10 @@ sqldelight = "2.0.2"
 glance = "1.1.0"
 
 [libraries]
-android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.1.0"
+android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.1.1"
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx" }
 androidx-test-runner = "androidx.test:runner:1.6.2"
-apache-commons-lang = "org.apache.commons:commons-lang3:3.16.0"
+apache-commons-lang = "org.apache.commons:commons-lang3:3.17.0"
 apache-commons-math = "org.apache.commons:commons-math3:3.6.1"
 compose-activity = "androidx.activity:activity-compose:1.9.1"
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
