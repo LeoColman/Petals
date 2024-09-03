@@ -161,6 +161,13 @@
     <string name="pause_time">Pause Time</string>
     <string name="id_label">id</string>
     <string name="select_time">Select Time</string>
+    <string name="pause_dialog_description">During this time period, the app will remind you of your break</string>
+    <string name="edit_pause">Edit pause</string>
+    <string name="delete_pause">Delete pause</string>
+    <string name="break_period">Break period</string>
+    <string name="no_break_period">No break period</string>
+    <string name="hours_12">12 hours</string>
+    <string name="hours_24">24 hours</string>
     <plurals name="last_x_days">
         <item quantity="one">Last %s day</item>
         <item quantity="other">Last %s days</item>

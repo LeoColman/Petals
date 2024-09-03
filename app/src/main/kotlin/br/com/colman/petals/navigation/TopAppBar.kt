@@ -147,7 +147,7 @@ private fun SettingsButton(
     TablerIcons.Settings,
     stringResource(settings),
     Modifier.clickable {
-      navController.navigate("settings")
+      navController.navigate(Screens.Settings)
     }
   )
 }
@@ -160,7 +160,7 @@ private fun InfoButton(
     TablerIcons.InfoCircle,
     stringResource(settings),
     Modifier.clickable {
-      navController.navigate("information")
+      navController.navigate(Screens.Information)
     }.testTag("InfoButton")
   )
 }

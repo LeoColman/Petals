@@ -47,6 +47,8 @@ import br.com.colman.petals.R.string.total_spent
 import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.repository.Use
+import br.com.colman.petals.utils.datetime.DateTimeFormatEnum
+import br.com.colman.petals.utils.datetime.TimeFormatEnum
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Cash
 import compose.icons.tablericons.ReportMoney
@@ -150,8 +152,8 @@ private fun DeleteUseButton(
   context: Context = LocalContext.current
 ) {
   val showDialog = remember { mutableStateOf(false) }
-  val dateString = use.date.format(ofPattern("yyyy-MM-dd"))
-  val timeString = use.date.format(ofPattern("HH:mm"))
+  val dateString = use.date.format(ofPattern(DateTimeFormatEnum.YYYY_MM_DD_LINE.format))
+  val timeString = use.date.format(ofPattern(TimeFormatEnum.HH_MM.format))
   Icon(TablerIcons.Trash, null, Modifier.clickable { showDialog.value = true })
 
   if (showDialog.value) {

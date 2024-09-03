@@ -28,7 +28,6 @@ import br.com.colman.petals.components.ClickableTextField
 import br.com.colman.petals.components.dateDialogState
 import br.com.colman.petals.components.timeDialogState
 import br.com.colman.petals.settings.SettingsRepository
-import br.com.colman.petals.utils.ClockFormatHandler
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Calendar
@@ -48,7 +47,7 @@ fun AddUseForm(
   time: MutableState<LocalTime>
 ) {
   val settingsRepository = koinInject<SettingsRepository>()
-  val clockFormat by settingsRepository.clockFormat.collectAsState(settingsRepository.clockFormatList[0])
+  val is24HoursFormat by settingsRepository.is24HoursFormat.collectAsState(false)
 
   var amount by amount
   var cost by cost
@@ -57,7 +56,7 @@ fun AddUseForm(
   val dateDialog = dateDialogState { date = it }
 
   var time by time
-  val timeDialog = timeDialogState(is24Hour = ClockFormatHandler.is24HourFormat(clockFormat)) { time = it }
+  val timeDialog = timeDialogState(is24HoursFormat = is24HoursFormat) { time = it }
 
   Column(Modifier, Arrangement.spacedBy(8.dp)) {
     Text(stringResource(add_use), fontWeight = Bold, fontSize = 16.sp)
