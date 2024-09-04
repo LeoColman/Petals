@@ -152,4 +152,11 @@
     <string name="pause_time">Tiempo de pausa</string>
     <string name="clock_format_label">Formato del reloj</string>
     <string name="what_clock_format_should_be_used">¿Qué formato de reloj debe utilizarse?</string>
+    <string name="pause_dialog_description">Durante este periodo de tiempo, la aplicación te recordará tu descanso</string>
+    <string name="edit_pause">Modificar la pausa</string>
+    <string name="delete_pause">Borrar la pausa</string>
+    <string name="break_period">Período de descanso</string>
+    <string name="no_break_period">Sin periodo de descanso</string>
+    <string name="hours_12">12 horas</string>
+    <string name="hours_24">24 horas</string>
 </resources>
