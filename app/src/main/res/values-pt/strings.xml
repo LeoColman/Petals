@@ -170,4 +170,11 @@
     <string name="pause_time">Tempo de Pausa</string>
     <string name="id_label">id</string>
     <string name="select_time">Selecione o horário</string>
+    <string name="pause_dialog_description">Durante esse período, o app irá te lembrar da sua pausa</string>
+    <string name="delete_pause">Remover pausa</string>
+    <string name="edit_pause">Editar pausa</string>
+    <string name="break_period">Período de pausa</string>
+    <string name="no_break_period">Sem período de pausa</string>
+    <string name="hours_12">12 horas</string>
+    <string name="hours_24">24 horas</string>
 </resources>
