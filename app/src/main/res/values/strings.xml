@@ -110,6 +110,8 @@
     <string name="what_time_format_should_be_used">What time format should be used</string>
     <string name="what_clock_format_should_be_used">What clock format should be used</string>
     <string name="share_app">Share app with your friends</string>
+    <string name="remove_ads_title">Remove Ads</string>
+    <string name="remove_ads">Upgrade to an ad-free experience</string>
     <string name="share_app_title">Share App</string>
     <string name="share_app_message">Hey, the Petals app helps me\nGet it on Google Play:\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals\nor Get it on F-Droid\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="delete_use_title">Delete Use</string>

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.compose.rememberNavController
+import br.com.colman.petals.InAppPurchaseUtil
 import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
 import br.com.colman.petals.navigation.NavHostContainer
@@ -30,14 +31,16 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
 
   private val settingsRepository by inject<SettingsRepository>()
   private val settingsMigrations by inject<SettingsMigrations>()
+  private val inApp by inject<InAppPurchaseUtil>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
     setContent {
       settingsMigrations.migrateOldKeysValues()
       settingsMigrations.removeOldKeysValues()
+      inApp.init()
       val navController = rememberNavController()
-
       MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
         Surface {
           Scaffold(
@@ -45,7 +48,9 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
             bottomBar = {
               Column {
                 BottomNavigationBar(navController)
-                AdsView()
+                if(!isAdFree()){
+                  AdsView()
+                }
               }
             },
             content = { NavHostContainer(navController, it) }
@@ -60,5 +65,10 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   fun isDarkModeEnabled(): Boolean {
     val darkMode: Boolean? by settingsRepository.isDarkModeEnabled.collectAsState(null)
     return darkMode ?: isSystemInDarkTheme()
+  }
+
+  @Composable
+  fun isAdFree(): Boolean {
+    return settingsRepository.isAdsFree.collectAsState(false).value
   }
 }

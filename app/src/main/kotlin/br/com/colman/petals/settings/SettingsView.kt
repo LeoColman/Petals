@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import br.com.colman.petals.settings.view.listitem.AdFreeListItem
 import br.com.colman.petals.settings.view.listitem.ClockListItem
 import br.com.colman.petals.settings.view.listitem.CurrencyListItem
 import br.com.colman.petals.settings.view.listitem.DateListItem
@@ -30,6 +31,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   )
   val currentExtendDay by settingsRepository.isDayExtended.collectAsState(false)
   Column(Modifier.verticalScroll(rememberScrollState())) {
+    AdFreeListItem()
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
     PinListItem(settingsRepository::setPin)
     RepositoryListItem()
