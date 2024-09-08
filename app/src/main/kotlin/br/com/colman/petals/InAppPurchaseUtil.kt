@@ -23,7 +23,7 @@ import org.koin.java.KoinJavaComponent.inject
 class InAppPurchaseUtil(val context: Context) : PurchasesUpdatedListener {
   private lateinit var myBilled: BillingClient
   private val productId = if (BuildConfig.DEBUG) "android.test.purchased" else "petals_remove_ads"
-private  val settingsRepository: SettingsRepository by inject(SettingsRepository::class.java)
+  private val settingsRepository: SettingsRepository by inject(SettingsRepository::class.java)
   private var lstProductDetails: List<ProductDetails>? = null
 
   fun init() {
@@ -33,7 +33,6 @@ private  val settingsRepository: SettingsRepository by inject(SettingsRepository
       .build()
     myBilled.startConnection(object : BillingClientStateListener {
       override fun onBillingSetupFinished(billingResult: BillingResult) {
-
         myBilled.queryProductDetailsAsync(
           QueryProductDetailsParams.newBuilder().setProductList(
             listOf(
@@ -46,10 +45,7 @@ private  val settingsRepository: SettingsRepository by inject(SettingsRepository
         }
       }
 
-      override fun onBillingServiceDisconnected() {
-
-
-      }
+      override fun onBillingServiceDisconnected() {}
     })
   }
 
@@ -77,9 +73,10 @@ private  val settingsRepository: SettingsRepository by inject(SettingsRepository
     purchase?.forEach {
       if (!it.isAcknowledged) {
         CoroutineScope(Dispatchers.IO).launch {
-          myBilled.acknowledgePurchase(AcknowledgePurchaseParams.newBuilder().setPurchaseToken(
-            it.purchaseToken
-          ).build()
+          myBilled.acknowledgePurchase(
+            AcknowledgePurchaseParams.newBuilder().setPurchaseToken(
+              it.purchaseToken
+            ).build()
           ) {
 
           }
