@@ -170,6 +170,7 @@
     <string name="no_break_period">No break period</string>
     <string name="hours_12">12 hours</string>
     <string name="hours_24">24 hours</string>
+    <string name="all_time_day_description">All Time Distribution per day</string>
     <plurals name="last_x_days">
         <item quantity="one">Last %s day</item>
         <item quantity="other">Last %s days</item>
