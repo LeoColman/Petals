@@ -144,4 +144,19 @@
     <string name="general_knowledge">Connaissance générale</string>
     <string name="medical_use">Usage médical</string>
     <string name="purchase_and_sale">Achat et vente</string>
+    <string name="pause_time">Temps de pause</string>
+    <string name="id_label">Identifiant</string>
+    <string name="clock_format_label">Format d\'horloge</string>
+    <string name="what_clock_format_should_be_used">Quel format d\'horloge devrait être utilisé</string>
+    <string name="confirm_deletion">Confirmez la sélection</string>
+    <string name="are_you_sure_delete_pause">Êtes vous sûr de vouloir supprimer la pause de %s à %s ?</string>
+    <string name="cultivation">culture</string>
+    <string name="select_time">Sélectionnez l\'heure</string>
+    <string name="pause_dialog_description">Durant cette période, l\'application vous rappellera votre pause</string>
+    <string name="edit_pause">Modifier pause</string>
+    <string name="delete_pause">Supprimer la pause</string>
+    <string name="break_period">Temps de pause</string>
+    <string name="no_break_period">Période sans pause</string>
+    <string name="hours_12">12 heures</string>
+    <string name="hours_24">24 heures</string>
 </resources>

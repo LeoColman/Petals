@@ -7,3 +7,4 @@ Caractéristiques
 - Voir les statistiques pour comprendre votre consommation
 - Instructions de réduction des dommages
 - Exportation et importation sous forme de simples fichiers CSV
+- Code PIN pour une meilleure vie privée
