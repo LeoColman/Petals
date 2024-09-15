@@ -1,8 +1,9 @@
-package br.com.colman.petals
+package br.com.colman.petals.playstore.inapp
 
 import android.app.Activity
 import android.content.Context
-import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.BuildConfig
+import br.com.colman.petals.playstore.settings.AdsSettingsRepository
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.ProductType
@@ -20,17 +21,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
-class InAppPurchaseUtil(val context: Context) : PurchasesUpdatedListener {
-  private lateinit var myBilled: BillingClient
+class InAppPurchase(val context: Context) : PurchasesUpdatedListener {
+  private var myBilled: BillingClient = BillingClient.newBuilder(context)
+    .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
+    .setListener(this)
+    .build()
+
   private val productId = if (BuildConfig.DEBUG) "android.test.purchased" else "petals_remove_ads"
-  private val settingsRepository: SettingsRepository by inject(SettingsRepository::class.java)
+  private val settingsRepository: AdsSettingsRepository by inject(AdsSettingsRepository::class.java)
   private var lstProductDetails: List<ProductDetails>? = null
 
-  fun init() {
-    myBilled = BillingClient.newBuilder(context)
-      .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
-      .setListener(this)
-      .build()
+  init {
     myBilled.startConnection(object : BillingClientStateListener {
       override fun onBillingSetupFinished(billingResult: BillingResult) {
         myBilled.queryProductDetailsAsync(
@@ -40,7 +41,7 @@ class InAppPurchaseUtil(val context: Context) : PurchasesUpdatedListener {
                 .setProductType(ProductType.INAPP).build()
             )
           ).build()
-        ) { billingResult, productDetails ->
+        ) { _, productDetails ->
           lstProductDetails = productDetails
         }
       }
@@ -48,6 +49,7 @@ class InAppPurchaseUtil(val context: Context) : PurchasesUpdatedListener {
       override fun onBillingServiceDisconnected() {}
     })
   }
+
 
   fun purchase(activity: Activity) {
     lstProductDetails?.let {
