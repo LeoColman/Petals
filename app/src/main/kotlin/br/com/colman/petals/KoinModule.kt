@@ -21,6 +21,7 @@ package br.com.colman.petals
 import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
 import br.com.colman.petals.hittimer.HitTimerRepository
+import br.com.colman.petals.playstore.AdsSettingsRepository
 import br.com.colman.petals.settings.SettingsMigrations
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.pause.repository.PauseRepository
@@ -30,12 +31,14 @@ import org.koin.dsl.module
 
 private val Context.settingsDatastore by preferencesDataStore("settings")
 private val Context.blockDataStore by preferencesDataStore("block")
+private val Context.adsSettings by preferencesDataStore("ads_settings")
 
 val KoinModule = module {
   single { UseRepository(get<Database>().useQueries) }
   single { PauseRepository(get<Database>().pauseQueries) }
   single { HitTimerRepository(get()) }
   single { SettingsRepository(get<Context>().settingsDatastore) }
+  single { AdsSettingsRepository(get<Context>().adsSettings) }
   single { SettingsMigrations(get<Context>().settingsDatastore) }
   single { BlockRepository(get<Context>().blockDataStore) }
 }

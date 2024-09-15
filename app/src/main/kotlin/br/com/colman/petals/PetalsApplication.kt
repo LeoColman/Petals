@@ -41,7 +41,6 @@ class PetalsApplication : Application() {
       androidContext(this@PetalsApplication)
       modules(KoinModule)
       modules(AndroidModule)
-      modules(AppPurchaseModule)
       modules(IoModules)
       modules(SqlDelightModule)
     }.koin
@@ -60,13 +59,7 @@ private val AndroidModule = module {
   single { get<Context>().contentResolver }
 }
 
-private val AppPurchaseModule = module {
-  single {
-    InAppPurchaseUtil(get<Context>()).apply {
-      init()
-    }
-  }
-}
+
 
 private val SqlDelightModule = module {
   single<SqlDriver> {

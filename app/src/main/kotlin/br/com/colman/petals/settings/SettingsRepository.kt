@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
-class SettingsRepository(
+open class SettingsRepository(
   private val datastore: DataStore<Preferences>
 ) {
 
@@ -24,7 +24,6 @@ class SettingsRepository(
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
   val clockFormatList = ClockFormatEnum.entries.toList()
   val is24HoursFormat = datastore.data.map { it[Is24HoursFormat] ?: false }
-  val isAdsFree: Flow<Boolean> = datastore.data.map { it[isAdFree] ?: false }
   val decimalPrecisionList = listOf(0, 1, 2, 3)
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
   val isDarkModeEnabled: Flow<Boolean> = datastore.data.map { it[IsDarkModeOn] ?: true }
@@ -36,11 +35,6 @@ class SettingsRepository(
     datastore.edit { it[CurrencyIcon] = value }
   }
 
-  fun setAdFree(value: Boolean): Unit = runBlocking {
-    datastore.edit {
-      it[isAdFree] = value
-    }
-  }
 
   fun setDateFormat(value: String): Unit = runBlocking {
     datastore.edit { it[DateFormat] = value }
@@ -89,7 +83,6 @@ class SettingsRepository(
     val IsDarkModeOn: Preferences.Key<Boolean> = booleanPreferencesKey("is_dark_mode_on")
     val IsHitTimerMillisecondsEnabled = booleanPreferencesKey("is_hit_timer_milliseconds_enabled")
     val IsDayExtended = booleanPreferencesKey("is_day_extended_enabled")
-    val isAdFree = booleanPreferencesKey("is_adfree")
 
     @Deprecated("This Key is no longer in use")
     val ClockFormat = stringPreferencesKey("clock_format")
@@ -101,6 +94,7 @@ class SettingsRepository(
       "Use IsHitTimerMillisecondsEnabled instead",
       ReplaceWith("IsHitTimerMillisecondsEnabled")
     )
+
     val HitTimerMillisecondsEnabled = stringPreferencesKey("hit_timer_milliseconds_enabled")
 
     @Deprecated("Use IsDayExtendedEnabled instead", ReplaceWith("IsDayExtended"))
