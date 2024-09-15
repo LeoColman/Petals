@@ -43,9 +43,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import br.com.colman.petals.R.string.pin_main_screen
 import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
+import br.com.colman.petals.R.string
 import br.com.colman.petals.navigation.NavHostContainer
 import br.com.colman.petals.settings.SettingsMigrations
 import br.com.colman.petals.settings.SettingsRepository

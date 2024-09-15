@@ -7,7 +7,6 @@ class UseCsvFileImporter(
   private val useImporter: UseImporter,
   private val contentResolver: ContentResolver
 ) {
-
   fun importCsvFile(uri: Uri) {
     val lines = uri.readLines()
     useImporter.import(lines)

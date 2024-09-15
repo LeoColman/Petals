@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.compose.rememberNavController
 import br.com.colman.petals.koin
 import br.com.colman.petals.navigation.BottomNavigationBar
+import br.com.colman.petals.navigation.MyTopAppBarContent
 import br.com.colman.petals.navigation.NavHostContainer
 import br.com.colman.petals.settings.SettingsMigrations
 import br.com.colman.petals.settings.SettingsRepository
@@ -44,7 +46,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    setContent {to
+    setContent {
       settingsMigrations.migrateOldKeysValues()
       settingsMigrations.removeOldKeysValues()
       koin.loadModules(listOf(
@@ -54,9 +56,11 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
       MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
         Surface {
           Scaffold(
-            topBar = MyTop{ (navController) {
-              AdFreeListItem()
-            } },
+            topBar = {
+              TopAppBar{
+                 MyTopAppBarContent(navController)
+                 AdFreeListItem()
+              } },
             bottomBar = {
               Column {
                 BottomNavigationBar(navController)

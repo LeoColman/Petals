@@ -18,6 +18,8 @@
 
 package br.com.colman.petals.use.io
 
+import androidx.compose.ui.res.stringResource
+import br.com.colman.petals.R
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 
@@ -34,4 +36,5 @@ class UseImporter(
 
     useRepository.upsertAll(uses.map(modifyUse))
   }
+
 }
