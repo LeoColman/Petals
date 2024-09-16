@@ -25,14 +25,13 @@ class UseImporter(
   private val useRepository: UseRepository
 ) {
 
-  fun import(csvFileLines: List<String>, modifyUse: (Use) -> (Use) = { it }): Result<Unit> =
-    runCatching {
-      val uses = csvFileLines.mapIndexed { index, s ->
-        UseCsvParser.parse(s).onFailure {
-          if (index > 0) throw it
-        }
-      }.mapNotNull { it.getOrNull() }
+  fun import(csvFileLines: List<String>, modifyUse: (Use) -> (Use) = { it }): Result<Unit> = runCatching {
+    val uses = csvFileLines.mapIndexed { index, s ->
+      UseCsvParser.parse(s).onFailure {
+        if (index > 0) throw it
+      }
+    }.mapNotNull { it.getOrNull() }
 
-      useRepository.upsertAll(uses.map(modifyUse))
-    }
+    useRepository.upsertAll(uses.map(modifyUse))
+  }
 }
