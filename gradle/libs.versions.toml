@@ -11,7 +11,6 @@ licensee = "1.11.0"
 vanpra-material-dialogs = "0.9.0"
 sqldelight = "2.0.2"
 glance = "1.1.0"
-billingKtx = "7.0.0"
 
 [libraries]
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.1.2"
@@ -65,7 +64,6 @@ glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "g
 fuel = "com.github.kittinunf.fuel:fuel:2.3.1"
 androidx-test-core = "androidx.test:core:1.6.1"
 androidx-test-ext-junit = "androidx.test.ext:junit:1.2.1"
-billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billingKtx" }
 
 [bundles]
 androidx-test = [
