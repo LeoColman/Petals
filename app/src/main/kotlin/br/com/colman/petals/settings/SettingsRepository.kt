@@ -27,8 +27,7 @@ class SettingsRepository(
   val decimalPrecisionList = listOf(0, 1, 2, 3)
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
   val isDarkModeEnabled: Flow<Boolean> = datastore.data.map { it[IsDarkModeOn] ?: true }
-  val isHitTimerMillisecondsEnabled =
-    datastore.data.map { it[IsHitTimerMillisecondsEnabled] ?: false }
+  val isHitTimerMillisecondsEnabled = datastore.data.map { it[IsHitTimerMillisecondsEnabled] ?: false }
   val isDayExtended = datastore.data.map { it[IsDayExtended] ?: false }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
@@ -89,17 +88,10 @@ class SettingsRepository(
     @Deprecated("This Key is no longer in use")
     val MillisecondsEnabled = stringPreferencesKey("milliseconds_enabled")
 
-    @Deprecated(
-      "Use IsHitTimerMillisecondsEnabled instead",
-      ReplaceWith("IsHitTimerMillisecondsEnabled")
-    )
+    @Deprecated("Use IsHitTimerMillisecondsEnabled instead", ReplaceWith("IsHitTimerMillisecondsEnabled"))
     val HitTimerMillisecondsEnabled = stringPreferencesKey("hit_timer_milliseconds_enabled")
 
-    @Deprecated(
-      "Use IsDayExtendedEnabled instead",
-      ReplaceWith("IsDayExtended")
-    )
-    val ExtendedDayEnabled =
-      stringPreferencesKey("is_day_extended")
+    @Deprecated("Use IsDayExtendedEnabled instead", ReplaceWith("IsDayExtended"))
+    val ExtendedDayEnabled = stringPreferencesKey("is_day_extended")
   }
 }
