@@ -59,8 +59,6 @@ private val AndroidModule = module {
   single { get<Context>().contentResolver }
 }
 
-
-
 private val SqlDelightModule = module {
   single<SqlDriver> {
     AndroidSqliteDriver(Database.Schema, get(), "Database", RequerySQLiteOpenHelperFactory())

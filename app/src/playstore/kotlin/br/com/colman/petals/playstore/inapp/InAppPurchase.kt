@@ -1,8 +1,9 @@
-package br.com.colman.petals.playstore
+package br.com.colman.petals.playstore.inapp
 
 import android.app.Activity
 import android.content.Context
 import br.com.colman.petals.BuildConfig
+import br.com.colman.petals.playstore.settings.AdsSettingsRepository
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.ProductType
@@ -20,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
-class InAppPurchaseUtil(val context: Context) : PurchasesUpdatedListener {
+class InAppPurchase(val context: Context) : PurchasesUpdatedListener {
   private var myBilled: BillingClient = BillingClient.newBuilder(context)
     .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
     .setListener(this)

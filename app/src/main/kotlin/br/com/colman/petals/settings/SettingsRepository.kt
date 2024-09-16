@@ -35,7 +35,6 @@ open class SettingsRepository(
     datastore.edit { it[CurrencyIcon] = value }
   }
 
-
   fun setDateFormat(value: String): Unit = runBlocking {
     datastore.edit { it[DateFormat] = value }
   }
@@ -94,10 +93,13 @@ open class SettingsRepository(
       "Use IsHitTimerMillisecondsEnabled instead",
       ReplaceWith("IsHitTimerMillisecondsEnabled")
     )
-
     val HitTimerMillisecondsEnabled = stringPreferencesKey("hit_timer_milliseconds_enabled")
 
-    @Deprecated("Use IsDayExtendedEnabled instead", ReplaceWith("IsDayExtended"))
-    val ExtendedDayEnabled = stringPreferencesKey("is_day_extended")
+    @Deprecated(
+      "Use IsDayExtendedEnabled instead",
+      ReplaceWith("IsDayExtended")
+    )
+    val ExtendedDayEnabled =
+      stringPreferencesKey("is_day_extended")
   }
 }
