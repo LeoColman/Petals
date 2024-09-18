@@ -1,0 +1,4 @@
+- Sync translations from Weblate
+- Explicitly remove unnecessary network permission
+- Add option to purchase ad free version of the app
+- Fix bug where Symptoms page would crash the app if last use date was greater than chart sizes
