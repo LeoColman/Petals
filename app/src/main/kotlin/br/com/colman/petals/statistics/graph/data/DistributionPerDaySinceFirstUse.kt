@@ -11,26 +11,18 @@ import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.totalGrams
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
-import java.time.LocalDateTime.now
+import java.time.LocalDate.now
 
 private fun calculateGramsDistributionPerDaySinceFirstUse(uses: List<Use>): List<Entry> {
-  val dayBeforeFirstUseDate = uses.minByOrNull { it.date }!!.localDate.toEpochDay().dec()
-  val now = now().toLocalDate().toEpochDay()
-  val dateRange = (dayBeforeFirstUseDate..now).toList()
-
-  val usesPerDay = dateRange.associateWith { uses.filter { u -> u.localDate.toEpochDay() == it } }
-
-  return usesPerDay.mapValues { it.value.totalGrams }.toSortedMap().map { (k, v) ->
-    Entry(
-      (k - dayBeforeFirstUseDate).toFloat(),
-      v.toFloat()
-    )
+  val dayBeforeFirstUseDate = uses.minBy { it.date }.localDate.toEpochDay()
+  val daysSinceFirstUse = (dayBeforeFirstUseDate..now().toEpochDay()).toList()
+  return daysSinceFirstUse.associateWith {uses.filter { u -> u.localDate.toEpochDay() == it }  }.toSortedMap()
+    .map { (k, v) -> Entry((k - dayBeforeFirstUseDate).toFloat(), v.totalGrams.toFloat())
   }
 }
 
-@Composable
-fun createAllTimeDistribution(uses: List<Use>): LineDataSet {
-  return LineDataSet(calculateGramsDistributionPerDaySinceFirstUse(uses), stringResource(R.string.all_time)).apply {
+fun createLineDataSet(entryList: List<Entry>, label: String):LineDataSet {
+  return LineDataSet(entryList, label).apply {
     valueFormatter = GramsValueFormatter
     lineWidth = 6f
     setDrawCircles(true)
@@ -41,4 +33,10 @@ fun createAllTimeDistribution(uses: List<Use>): LineDataSet {
     valueTextColor = White.toArgb()
     valueTextSize = 14f
   }
+}
+
+@Composable
+fun createAllTimeDistribution(uses: List<Use>): LineDataSet {
+  val label = stringResource(R.string.grams_distribution_over_days_since_first_use)
+  return createLineDataSet(calculateGramsDistributionPerDaySinceFirstUse(uses), label)
 }

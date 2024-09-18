@@ -14,7 +14,7 @@ import java.time.YearMonth
 
 @Composable
 fun AllTimeGraph(uses: List<Use>) {
-  val description = stringResource(string.all_time_day_description)
+  val description = stringResource(string.grams_distribution_over_days_since_first_use)
   val gramsData = createAllTimeDistribution(uses)
   val gramsDataList = mutableListOf<LineDataSet>()
   gramsDataList.add(gramsData)

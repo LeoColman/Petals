@@ -19,7 +19,7 @@ val DaysSinceFirstUseFormatter = object : IAxisValueFormatter {
   private val formatter = DateTimeFormatter.ofPattern(dateFormat)
 
   private var uses: List<Use> = runBlocking { useRepository.all().first() }
-  private val dayBeforeFirstUseDateToEpochDay: Long = uses.minByOrNull { it.date }!!.localDate.toEpochDay().dec()
+  private val dayBeforeFirstUseDateToEpochDay: Long = uses.minBy { it.date }.localDate.toEpochDay().dec()
 
   override fun getFormattedValue(value: Float, axis: AxisBase?): String {
     val epochDay = (value + dayBeforeFirstUseDateToEpochDay).toLong()
