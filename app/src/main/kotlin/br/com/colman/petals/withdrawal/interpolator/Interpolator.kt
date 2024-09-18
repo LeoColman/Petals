@@ -16,13 +16,15 @@ class Interpolator(
     data.values.toDoubleArray()
   )
 
+  private val maxPossibleX = data.keys.max().seconds
+
   override fun interpolate(xs: DoubleArray?, ys: DoubleArray?): UnivariateFunction = dataInterpolator
 
-  override fun value(x: Double): Double = dataInterpolator.value(x)
+  override fun value(x: Double): Double = dataInterpolator.value(x.coerceAtMost(maxPossibleX.toDouble()))
 
   fun calculatePercentage(secondsQuit: Long): Double {
     val maxValue = data.values.max()
-    val currentValue = value(secondsQuit.coerceAtMost(data.keys.max().seconds).toDouble())
+    val currentValue = value(secondsQuit.coerceAtMost(maxPossibleX).toDouble())
     return currentValue / maxValue
   }
 }
