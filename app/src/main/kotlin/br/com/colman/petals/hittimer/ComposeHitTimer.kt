@@ -63,7 +63,6 @@ import br.com.colman.petals.R.string.start
 import br.com.colman.petals.R.string.vibrate_on_timer_end
 import br.com.colman.petals.settings.SettingsRepository
 import kotlinx.coroutines.delay
-import org.koin.androidx.compose.get
 import org.koin.compose.koinInject
 
 @Preview

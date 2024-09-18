@@ -48,7 +48,6 @@ import br.com.colman.petals.navigation.Page.Usage
 import br.com.colman.petals.settings.SettingsView
 import br.com.colman.petals.statistics.StatisticsPage
 import br.com.colman.petals.withdrawal.Symptoms
-import org.koin.androidx.compose.get
 import org.koin.compose.koinInject
 
 enum class Page(
