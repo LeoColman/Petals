@@ -21,4 +21,10 @@ platform :android do
         gradle(task: "bundlePlaystoreRelease")
         upload_to_play_store(timeout: 600)
     end
+
+  desc "Deploy to Google Play Internal Test Track"
+  lane :internal_test do
+    gradle(task: "bundlePlaystoreRelease")
+    upload_to_play_store(track: 'internal', timeout: 600)
+  end
 end

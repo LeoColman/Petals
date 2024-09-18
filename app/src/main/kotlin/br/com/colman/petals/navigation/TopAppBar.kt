@@ -57,7 +57,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
-fun MyTopAppBar(navController: NavController) {
+fun MyTopAppBar(navController: NavController, options: (@Composable () -> Unit)? = null) {
   TopAppBar {
     Box(
       Modifier
@@ -65,44 +65,56 @@ fun MyTopAppBar(navController: NavController) {
         .height(56.dp)
         .fillMaxWidth()
     ) {
-      MyTopAppBarContent(navController)
+      MyTopAppBarContent(navController, options)
     }
   }
 }
 
 @Composable
-fun MyTopAppBarContent(navController: NavController) {
-  val coroutineScope = rememberCoroutineScope()
-
+fun MyTopAppBarContent(
+  navController: NavController,
+  options:
+  @Composable
+  (() -> Unit)?
+) {
   Row(Modifier.fillMaxWidth(), SpaceBetween, CenterVertically) {
-    Row {
-      Text(
-        modifier = Modifier.alignByBaseline(),
-        text = stringResource(app_name),
-        fontWeight = FontWeight.Bold,
-        fontSize = 20.sp
-      )
-      Text(
-        modifier = Modifier.alignByBaseline(),
-        text = " v${BuildConfig.VERSION_NAME}",
-        fontWeight = FontWeight.Light,
-        fontSize = 10.sp
-      )
-    }
-    Box(
-      Modifier.clickable {
-        coroutineScope.launch {
-        }
-      }
-    ) {
-      Row(Modifier, spacedBy(16.dp)) {
-        ImportButton()
-        ExportButton(koinInject())
-        InfoButton(navController)
-        SettingsButton(navController)
-      }
+    AppAndVersionName()
+    Row(Modifier, spacedBy(16.dp)) {
+      ImportExportButtons()
+      options?.invoke()
+      InfoSettingsButtons(navController)
     }
   }
+}
+
+@Composable
+private fun AppAndVersionName() {
+  Row {
+    Text(
+      modifier = Modifier.alignByBaseline(),
+      text = stringResource(app_name),
+      fontWeight = FontWeight.Bold,
+      fontSize = 20.sp
+    )
+    Text(
+      modifier = Modifier.alignByBaseline(),
+      text = " v${BuildConfig.VERSION_NAME}",
+      fontWeight = FontWeight.Light,
+      fontSize = 10.sp
+    )
+  }
+}
+
+@Composable
+private fun InfoSettingsButtons(navController: NavController) {
+  InfoButton(navController)
+  SettingsButton(navController)
+}
+
+@Composable
+private fun ImportExportButtons() {
+  ImportButton()
+  ExportButton(koinInject())
 }
 
 @Preview
@@ -126,7 +138,8 @@ private fun ExportButton(
   useExporter: UseExporter
 ) {
   val coroutineScope = rememberCoroutineScope()
-  val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
+  val launcher =
+    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
   Box(
     Modifier.clickable {
@@ -159,8 +172,10 @@ private fun InfoButton(
   Icon(
     TablerIcons.InfoCircle,
     stringResource(settings),
-    Modifier.clickable {
-      navController.navigate(Screens.Information)
-    }.testTag("InfoButton")
+    Modifier
+      .clickable {
+        navController.navigate(Screens.Information)
+      }
+      .testTag("InfoButton")
   )
 }
