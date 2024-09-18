@@ -19,14 +19,13 @@ import br.com.colman.petals.koin
 import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
 import br.com.colman.petals.navigation.NavHostContainer
-import br.com.colman.petals.playstore.settings.view.AdFreeButton
 import br.com.colman.petals.playstore.settings.AdsSettingsRepository
+import br.com.colman.petals.playstore.settings.view.AdFreeButton
 import br.com.colman.petals.settings.SettingsMigrations
 import br.com.colman.petals.settings.SettingsRepository
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 
