@@ -48,7 +48,7 @@ android {
     applicationId = "br.com.colman.petals"
     minSdk = 21
     targetSdk = 34
-    versionCode = 328003
+    versionCode = 328005
     versionName = "3.28.1"
 
     testApplicationId = "$applicationId.test"

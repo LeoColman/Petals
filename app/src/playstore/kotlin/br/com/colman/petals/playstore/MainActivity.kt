@@ -39,6 +39,8 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    MobileAds.initialize(this)
+
 
     setContent {
       settingsMigrations.migrateOldKeysValues()
@@ -68,7 +70,6 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
         }
       }
     }
-    launch { MobileAds.initialize(this@MainActivity) }
   }
 
 
