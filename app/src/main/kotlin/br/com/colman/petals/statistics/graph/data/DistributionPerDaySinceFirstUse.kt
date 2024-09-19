@@ -13,15 +13,13 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import java.time.LocalDate.now
 
-private fun calculateGramsDistributionPerDaySinceFirstUse(uses: List<Use>): List<Entry> {
-  val dayBeforeFirstUseDate = uses.minBy { it.date }.localDate.toEpochDay()
-  val daysSinceFirstUse = (dayBeforeFirstUseDate..now().toEpochDay()).toList()
-  return daysSinceFirstUse.associateWith {uses.filter { u -> u.localDate.toEpochDay() == it }  }.toSortedMap()
-    .map { (k, v) -> Entry((k - dayBeforeFirstUseDate).toFloat(), v.totalGrams.toFloat())
-  }
+@Composable
+fun createAllTimeDistribution(uses: List<Use>): LineDataSet {
+  val label = stringResource(R.string.grams_distribution_over_days_since_first_use)
+  return createAllTimeLineDataSet(calculateAllTimeGramsDistribution(uses), label)
 }
 
-fun createLineDataSet(entryList: List<Entry>, label: String):LineDataSet {
+fun createAllTimeLineDataSet(entryList: List<Entry>, label: String):LineDataSet {
   return LineDataSet(entryList, label).apply {
     valueFormatter = GramsValueFormatter
     lineWidth = 6f
@@ -35,8 +33,10 @@ fun createLineDataSet(entryList: List<Entry>, label: String):LineDataSet {
   }
 }
 
-@Composable
-fun createAllTimeDistribution(uses: List<Use>): LineDataSet {
-  val label = stringResource(R.string.grams_distribution_over_days_since_first_use)
-  return createLineDataSet(calculateGramsDistributionPerDaySinceFirstUse(uses), label)
+private fun calculateAllTimeGramsDistribution(uses: List<Use>): List<Entry> {
+  val dayBeforeFirstUseDate = uses.minBy { it.date }.localDate.toEpochDay()
+  val daysSinceFirstUse = (dayBeforeFirstUseDate..now().toEpochDay()).toList()
+  return daysSinceFirstUse.associateWith {uses.filter { u -> u.localDate.toEpochDay() == it }  }.toSortedMap()
+    .map { (k, v) -> Entry((k - dayBeforeFirstUseDate).toFloat(), v.totalGrams.toFloat())
+    }
 }
