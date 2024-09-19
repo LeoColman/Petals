@@ -13,7 +13,7 @@ import java.time.LocalDate
 import java.time.YearMonth
 
 @Composable
-fun AllTimeGraph(uses: List<Use>) {
+fun AllTimeGraph(uses: List<Use>, dateFormat: String) {
   val description = stringResource(string.grams_distribution_over_days_since_first_use)
   val gramsData = createAllTimeDistribution(uses)
   val gramsDataList = mutableListOf<LineDataSet>()
@@ -23,7 +23,7 @@ fun AllTimeGraph(uses: List<Use>) {
     axisMinimum = 1f
     labelCount = 5
     granularity = 1f
-    valueFormatter = DaysSinceFirstUseFormatter
+    valueFormatter = DaysSinceFirstUseFormatter(uses, dateFormat).formatDate
     addLimitLine(LimitLine(YearMonth.from(LocalDate.now()).monthValue.toFloat()).apply { lineWidth = 2f })
   }
 }

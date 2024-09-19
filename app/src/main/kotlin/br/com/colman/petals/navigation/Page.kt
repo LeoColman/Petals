@@ -58,7 +58,7 @@ enum class Page(
   Usage(R.string.usage, { ImageVector.vectorResource(ic_cannabis) }, { Usage() }),
   HitTimer(R.string.hit_timer, { Default.LockClock }, { ComposeHitTimer() }),
   Symptoms(R.string.symptoms, { Default.MedicalServices }, { Symptoms() }),
-  Stats(R.string.stats, { Default.GraphicEq }, { StatisticsPage(koinInject()) })
+  Stats(R.string.stats, { Default.GraphicEq }, { StatisticsPage(koinInject(), koinInject()) })
 }
 
 @Composable
