@@ -159,4 +159,6 @@
     <string name="no_break_period">Sin periodo de descanso</string>
     <string name="hours_12">12 horas</string>
     <string name="hours_24">24 horas</string>
+    <string name="remove_ads_title">Eliminar anuncios</string>
+    <string name="remove_ads">Actualiza a una experiencia sin publicidad</string>
 </resources>
