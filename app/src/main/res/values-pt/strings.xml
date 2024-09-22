@@ -177,4 +177,6 @@
     <string name="no_break_period">Sem período de pausa</string>
     <string name="hours_12">12 horas</string>
     <string name="hours_24">24 horas</string>
+    <string name="remove_ads_title">Remover Anúncios</string>
+    <string name="remove_ads">Ativar uma experiência sem anúncios</string>
 </resources>
