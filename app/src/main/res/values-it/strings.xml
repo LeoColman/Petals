@@ -152,4 +152,13 @@
     <string name="select_time">Seleziona orario</string>
     <string name="clock_format_label">Formato dell\'orologio</string>
     <string name="what_clock_format_should_be_used">Quale formato di orologio dovrebbe essere utilizzato</string>
+    <string name="remove_ads_title">Rimuovi annunci</string>
+    <string name="remove_ads">Passa a un\'esperienza senza pubblicità</string>
+    <string name="pause_dialog_description">Durante questo periodo di tempo, l\'app ti ricorderà la tua pausa</string>
+    <string name="edit_pause">Modifica pausa</string>
+    <string name="delete_pause">Elimina pausa</string>
+    <string name="break_period">Periodo di pausa</string>
+    <string name="no_break_period">Nessun periodo di pausa</string>
+    <string name="hours_12">12 ore</string>
+    <string name="hours_24">24 ore</string>
 </resources>
