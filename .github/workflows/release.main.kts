@@ -5,7 +5,7 @@
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:setup-java:v4")
-@file:DependsOn("gradle:gradle-build-action:v3")
+@file:DependsOn("gradle:gradle-build-action:v3-prerelease")
 @file:DependsOn("entrostat:git-secret-action:v4")
 @file:DependsOn("ruby:setup-ruby:v1")
 @file:DependsOn("softprops:action-gh-release:v2")
