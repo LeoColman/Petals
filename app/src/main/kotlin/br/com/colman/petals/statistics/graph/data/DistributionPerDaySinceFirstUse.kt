@@ -1,8 +1,8 @@
 package br.com.colman.petals.statistics.graph.data
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Green
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import br.com.colman.petals.R
@@ -28,14 +28,14 @@ fun createAllTimeLineDataSet(entryList: List<Entry>, label: String): LineDataSet
     setDrawValues(true)
     fillColor = Green.toArgb()
     color = Green.toArgb()
-    valueTextColor = White.toArgb()
+    valueTextColor = Blue.toArgb()
     valueTextSize = 14f
   }
 }
 
 private fun calculateAllTimeGramsDistribution(uses: List<Use>): List<Entry> {
   val firstUseDay = uses.minBy { it.date }.localDate.toEpochDay()
-  val daysSinceFirstUse = (firstUseDate..now().toEpochDay()).toList()
+  val daysSinceFirstUse = (firstUseDay..now().toEpochDay()).toList()
   return daysSinceFirstUse.associateWith { uses.filter { u -> u.localDate.toEpochDay() == it } }.toSortedMap()
     .map { (k, v) ->
       Entry((k - firstUseDay).toFloat(), v.totalGrams.toFloat())
