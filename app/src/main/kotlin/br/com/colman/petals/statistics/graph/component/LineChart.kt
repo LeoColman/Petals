@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.LineDataSet
 fun LineChart(
   datasets: List<LineDataSet>,
   description: String,
+  visibleXRange: Float? = null,
   configureXAxis: XAxis.() -> Unit
 ) {
   val colors = MaterialTheme.colors
@@ -33,6 +34,13 @@ fun LineChart(
       chart.data = LineData(datasets)
       chart.notifyDataSetChanged()
       chart.invalidate()
+
+      visibleXRange?.let {
+        chart.setVisibleXRange(it, it)
+        chart.setVisibleXRangeMaximum(datasets[0].xMax)
+        chart.moveViewToX(datasets[0].xMax)
+        chart.notifyDataSetChanged()
+      }
 
       chart.axisRight.isEnabled = false
       chart.axisLeft.apply {
