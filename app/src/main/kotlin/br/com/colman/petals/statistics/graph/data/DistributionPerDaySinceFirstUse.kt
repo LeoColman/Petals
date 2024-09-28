@@ -34,10 +34,10 @@ fun createAllTimeLineDataSet(entryList: List<Entry>, label: String): LineDataSet
 }
 
 private fun calculateAllTimeGramsDistribution(uses: List<Use>): List<Entry> {
-  val firstUseDate = uses.minBy { it.date }.localDate.toEpochDay()
+  val firstUseDay = uses.minBy { it.date }.localDate.toEpochDay()
   val daysSinceFirstUse = (firstUseDate..now().toEpochDay()).toList()
   return daysSinceFirstUse.associateWith { uses.filter { u -> u.localDate.toEpochDay() == it } }.toSortedMap()
     .map { (k, v) ->
-      Entry((k - dayBeforeFirstUseDate).toFloat(), v.totalGrams.toFloat())
+      Entry((k - firstUseDay).toFloat(), v.totalGrams.toFloat())
     }
 }
