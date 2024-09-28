@@ -16,14 +16,13 @@ import java.time.YearMonth
 fun AllTimeGraph(uses: List<Use>, dateFormat: String) {
   val description = stringResource(string.grams_distribution_over_days_since_first_use)
   val gramsData = createAllTimeDistribution(uses)
-  val gramsDataList = mutableListOf<LineDataSet>()
-  gramsDataList.add(gramsData)
+  val gramsDataList = listOf(gramsData)
 
   LineChart(gramsDataList, description, 5f) {
     axisMinimum = 1f
     labelCount = 5
     granularity = 1f
     valueFormatter = DaysSinceFirstUseFormatter(uses, dateFormat).formatDate
-    addLimitLine(LimitLine(YearMonth.from(LocalDate.now()).monthValue.toFloat()).apply { lineWidth = 2f })
+    addLimitLine(LimitLine(YearMonth.now().monthValue.toFloat()).apply { lineWidth = 2f })
   }
 }
