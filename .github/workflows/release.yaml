@@ -50,7 +50,7 @@ jobs:
       with:
         name: 'Version ${{ github.GITHUB_REF_NAME }}'
         tag_name: '${{ github.GITHUB_REF_NAME }}'
-        draft: 'true'
+        draft: 'false'
         files: |-
           app/build/outputs/apk/github/release/app-github-release.apk
           app/build/outputs/mapping/githubRelease/mapping.txt
