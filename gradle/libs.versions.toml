@@ -49,7 +49,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0"
 licensee-gradle-plugin = { module = "app.cash.licensee:licensee-gradle-plugin", version.ref = "licensee" }
 mockk = "io.mockk:mockk:1.13.12"
-mp-android-chart = "com.github.AppDevNext:AndroidChart:3.1.0.24"
+mp-android-chart = "com.github.AppDevNext:AndroidChart:3.1.0.25"
 snodge = "com.natpryce:snodge:3.7.0.0"
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 timber = "com.jakewharton.timber:timber:5.0.1"
