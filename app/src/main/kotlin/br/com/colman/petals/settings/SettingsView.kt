@@ -1,5 +1,6 @@
 package br.com.colman.petals.settings
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -7,11 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.core.os.LocaleListCompat
 import br.com.colman.petals.settings.view.listitem.ClockListItem
 import br.com.colman.petals.settings.view.listitem.CurrencyListItem
 import br.com.colman.petals.settings.view.listitem.DateListItem
 import br.com.colman.petals.settings.view.listitem.ExtendDayListItem
 import br.com.colman.petals.settings.view.listitem.HitTimerMillisecondsEnabledListItem
+import br.com.colman.petals.settings.view.listitem.LanguageListItem
 import br.com.colman.petals.settings.view.listitem.PinListItem
 import br.com.colman.petals.settings.view.listitem.PrecisionListItem
 import br.com.colman.petals.settings.view.listitem.RepositoryListItem
@@ -29,6 +32,15 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     settingsRepository.decimalPrecisionList[2]
   )
   val currentExtendDay by settingsRepository.isDayExtended.collectAsState(false)
+
+  val setAppLanguage = { language: String ->
+    val languageCode = AppLanguage.getAppLanguageCode(language)
+    if (languageCode.isNotEmpty()) {
+      val appLocale = LocaleListCompat.forLanguageTags(languageCode)
+      AppCompatDelegate.setApplicationLocales(appLocale)
+    }
+  }
+
   Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
     PinListItem(settingsRepository::setPin)
@@ -40,6 +52,11 @@ fun SettingsView(settingsRepository: SettingsRepository) {
       currentDecimalPrecision,
       settingsRepository.decimalPrecisionList,
       settingsRepository::setDecimalPrecision
+    )
+    LanguageListItem(
+      AppLanguage.getAppLanguageName(AppCompatDelegate.getApplicationLocales().toLanguageTags()),
+      settingsRepository.appLanguages,
+      setAppLanguage
     )
     HitTimerMillisecondsEnabledListItem(
       currentHitTimerMillisecondsEnabled,
