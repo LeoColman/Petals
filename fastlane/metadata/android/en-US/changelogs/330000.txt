@@ -1,0 +1,3 @@
+- Allow for an "All Time" view in statistics page
+- Improve import file performance
+- Sync translations from WebLate
