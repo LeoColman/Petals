@@ -17,11 +17,12 @@ class UseRepository(
 ) {
 
   fun upsertAll(uses: Iterable<Use>) {
-    uses.forEach(::upsert)
+    useQueries.transaction {
+      uses.forEach(::upsert)
+    }
   }
 
   fun upsert(use: Use) {
-    Timber.d("Adding use: $use")
     useQueries.upsert(use.toEntity())
   }
 
