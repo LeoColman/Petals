@@ -1,7 +1,9 @@
 package br.com.colman.petals.statistics.graph.data
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Blue
+import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
@@ -24,11 +26,11 @@ fun createAllTimeLineDataSet(entryList: List<Entry>, label: String): LineDataSet
     valueFormatter = GramsValueFormatter
     lineWidth = 6f
     setDrawCircles(true)
-    setDrawFilled(false)
+    setDrawFilled(true)
     setDrawValues(true)
-    fillColor = Green.toArgb()
-    color = Green.toArgb()
-    valueTextColor = Blue.toArgb()
+    fillColor = Color.Cyan.copy(alpha = 0.3f).toArgb()
+    color = Color.Cyan.toArgb()
+    valueTextColor = Gray.toArgb()
     valueTextSize = 14f
   }
 }
