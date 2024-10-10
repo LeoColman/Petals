@@ -1,2 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="years">ஆண்டுகள்</string>
+    <string name="hours">மணிநேரம்</string>
+    <string name="minutes">நிமிடங்கள்</string>
+    <string name="milliseconds">மில்லி விநாடிகள்</string>
+    <string name="usage">பயன்பாடு</string>
+    <string name="amount_grams_title">தொகை (கிராம்)</string>
+    <string name="date">தேதி</string>
+    <string name="time">நேரம்</string>
+    <string name="this_week">திங்கட்கிழமை முதல்</string>
+    <string name="cost_per_gram">ஒரு கிராமுக்கு %s</string>
+    <string name="export_export">ஏற்றுமதி</string>
+    <string name="grams">கிராம்கள்</string>
+    <string name="legal_status">சட்ட நிலை</string>
+    <string name="months">மாதங்கள்</string>
+    <string name="days">நாட்கள்</string>
+    <string name="seconds">நொடிகள்</string>
+    <string name="symptoms">அறிகுறிகள்</string>
+    <string name="cost_per_gram_title">ஒரு கிராம் விலை</string>
+    <string name="select_date">தேதியைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="today">இன்று</string>
+    <string name="this_year">இந்த ஆண்டு</string>
+    <string name="amount_grams">%s கிராம்</string>
+    <string name="total_spent">மொத்தம் %s</string>
+    <string name="date_label">தேதி</string>
+    <string name="import_import">இறக்குமதி</string>
+    <string name="date_format_label">தேதி வடிவம்</string>
+    <string name="what_date_format_should_be_used">என்ன தேதி வடிவம் பயன்படுத்தப்பட வேண்டும்</string>
+    <string name="legislation_and_rights">சட்டம் மற்றும் உரிமைகள்</string>
+</resources>
