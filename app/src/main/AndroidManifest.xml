@@ -30,7 +30,7 @@
         android:label="Petals"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -61,6 +61,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+		<service
+			android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+			android:enabled="false"
+			android:exported="false">
+			<meta-data
+				android:name="autoStoreLocales"
+				android:value="true" />
+		</service>
 
     </application>
 

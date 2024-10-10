@@ -175,4 +175,6 @@
         <item quantity="one">Last %s day</item>
         <item quantity="other">Last %s days</item>
     </plurals>
+	<string name="language_label">App language</string>
+	<string name="what_language_should_be_used">What language should be used</string>
 </resources>

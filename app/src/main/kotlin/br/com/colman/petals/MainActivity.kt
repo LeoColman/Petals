@@ -19,8 +19,8 @@
 package br.com.colman.petals
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -56,7 +56,7 @@ import org.koin.android.ext.android.inject
 import java.time.LocalDateTime
 
 @Suppress("FunctionName")
-class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
+class MainActivity : AppCompatActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
   private var authorizedUntil = LocalDateTime.MIN
   private val settingsRepository by inject<SettingsRepository>()

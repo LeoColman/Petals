@@ -29,6 +29,7 @@ class SettingsRepository(
   val isDarkModeEnabled: Flow<Boolean> = datastore.data.map { it[IsDarkModeOn] ?: true }
   val isHitTimerMillisecondsEnabled = datastore.data.map { it[IsHitTimerMillisecondsEnabled] ?: false }
   val isDayExtended = datastore.data.map { it[IsDayExtended] ?: false }
+  val appLanguages = AppLanguage.entries.map { it.languageName }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
     datastore.edit { it[CurrencyIcon] = value }
