@@ -11,7 +11,7 @@ val colors = mapOf(
   56 to Color(0xFF4DD0E1), // Cyan
   60 to Color(0xFF4DD0E1), // Cyan
   84 to Color(0XFFFF8A65), // Orange
-  90 to Color(0XFFFF8A65)  // Orange
+  90 to Color(0XFFFF8A65), // Orange
 ).withDefault { Color.Red }
 
 fun createColor(days: Int): Color {
