@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="know_the_local_laws_title">உள்ளூர் சட்டங்களை அறிந்து கொள்ளுங்கள்</string>
+    <string name="carrying_marijuana_title">கஞ்சா எடுத்துச் செல்வது</string>
+    <string name="use_of_marijuana_title">கஞ்சாவின் பயன்பாடு</string>
+    <string name="use_of_marijuana_content">உள்ளூர் சட்டத்தால் வெளிப்படையாக பயன்படுத்த அனுமதிக்கப்படாத நிலையில், பொது இடங்களில் கஞ்சா பயன்படுத்த வேண்டாம்.\nகஞ்சா பயன்படுத்திய பிறகு வாகனம் ஓட்டுவது மற்றும் கனரக இயந்திரங்களை இயக்குவதை தவிர்க்கவும்.</string>
+    <string name="medical_use_title">மருத்துவ பயன்பாடு</string>
+    <string name="know_the_local_laws_content">உங்கள் பகுதியில் கஞ்சாவுக்கு உள்ள சட்ட நிலையைப் புரிந்து கொள்ளுங்கள்.\nநீங்கள் சட்டப்பூர்வமாக எவ்வளவு அளவு எடுத்துச் செல்ல அனுமதிக்கப்படுகிறீர்கள் என்பதை அறிந்து கொள்ளுங்கள்.\nமருத்துவ மற்றும் பொழுதுபோக்கு பயன்பாட்டிற்கான கஞ்சாவைப் பெறுவதில் உள்ள வேறுபாட்டைத் தெரிந்து கொள்ளுங்கள்.</string>
+    <string name="interacting_with_police_title">காவல்துறையினருடன் உரையாடுதல்</string>
+</resources>

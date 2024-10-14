@@ -104,8 +104,8 @@
     <string name="pin_main_screen">Cette application est protégée par un mot de passe. Entrez le bon mot de passe pour continuer.</string>
     <string name="password_description">Pour plus de confidentialité, vous pouvez définir un mot de passe pour accéder à l\'application. La définition d\'un mot de passe vide le supprime. ATTENTION ! Il n\'est pas possible de récupérer un mot de passe défini</string>
     <plurals name="last_x_days">
-        <item quantity="one">Les %s derniers jours</item>
-        <item quantity="many"/>
+        <item quantity="one">Le dernier jour</item>
+        <item quantity="many">Les %s derniers jours</item>
         <item quantity="other">Les %s derniers jours</item>
     </plurals>
     <string name="milliseconds_enabled">Basculer la barre des millisecondes</string>
@@ -155,8 +155,13 @@
     <string name="pause_dialog_description">Durant cette période, l\'application vous rappellera votre pause</string>
     <string name="edit_pause">Modifier pause</string>
     <string name="delete_pause">Supprimer la pause</string>
-    <string name="break_period">Temps de pause</string>
+    <string name="break_period">Période de pause</string>
     <string name="no_break_period">Période sans pause</string>
     <string name="hours_12">12 heures</string>
     <string name="hours_24">24 heures</string>
+    <string name="language_label">Langue de l\'appli</string>
+    <string name="what_language_should_be_used">Quelle langue devrait être utilisée</string>
+    <string name="remove_ads">Mettre à niveau pour une expérience sans publicité</string>
+    <string name="grams_distribution_over_days_since_first_use">Distribution en grammes par jour depuis la première utilisation</string>
+    <string name="remove_ads_title">Enlever les pubs</string>
 </resources>
