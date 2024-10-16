@@ -13,6 +13,8 @@
 [![F-Droid](https://img.shields.io/f-droid/v/br.com.colman.petals)](https://f-droid.org/packages/br.com.colman.petals/)
 [![GitHub Release](https://img.shields.io/github/v/release/LeoColman/Petals?label=github)](https://github.com/LeoColman/Petals/releases)
 [![IzzyOnDroid Release](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/br.com.colman.petals)](https://apt.izzysoft.de/fdroid/index/apk/br.com.colman.petals)
+[![GitHub All Releases](https://img.shields.io/github/downloads/LeoColman/Petals/total?label=Downloads%20All%20Time%20(GitHub))](https://github.com/LeoColman/Petals/releases)
+[![GitHub Release Downloads](https://img.shields.io/github/downloads/LeoColman/Petals/latest/total?label=Downloads%20Latest%20Release%20(GitHub))](https://github.com/LeoColman/Petals/releases/latest)
 
 <a href="https://www.producthunt.com/posts/petals?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-petals" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=356573&theme=light" alt="Petals - An&#0032;open&#0032;source&#0032;app&#0032;to&#0032;help&#0032;users&#0032;quit&#0032;or&#0032;control&#0032;weed&#0032;usage | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K62Y2GB)
