@@ -1,5 +1,7 @@
-package br.com.colman.petals.use.io
+package br.com.colman.petals.use.io.input
 
+import br.com.colman.petals.use.UseArb
+import br.com.colman.petals.use.io.UseCsvArb
 import br.com.colman.petals.use.repository.UseRepository
 import com.natpryce.snodge.mutants
 import com.natpryce.snodge.text.replaceWithPossiblyMeaningfulText
@@ -14,19 +16,19 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlin.random.Random
 
-class UseImporterSpec : FunSpec({
+class UseImporterTest : FunSpec({
   val useRepository = mockk<UseRepository>(relaxed = true)
   val target = UseImporter(useRepository)
 
   context("Parse file") {
     test("Returns success if all lines are parseable") {
-      val usesCsv = useCsvArb.take(1000).toList()
+      val usesCsv = UseCsvArb.take(1000).toList()
       target.import(usesCsv).shouldBeSuccess()
     }
 
     test("Returns success if the only unparseable line is the header") {
       val header = "my,header,line\n"
-      val usesCsv = useCsvArb.take(1000)
+      val usesCsv = UseCsvArb.take(1000)
       val csvLines = listOf(header) + usesCsv
 
       target.import(csvLines).shouldBeSuccess()
@@ -34,7 +36,7 @@ class UseImporterSpec : FunSpec({
 
     test("Returns failure when any line other than the header is unparseable") {
       val header = "my,header,line\n"
-      val usesCsv = useCsvArb.take(1000).toList()
+      val usesCsv = UseCsvArb.take(1000).toList()
       val invalidUseCsvs = invalidUseCsvArb.take(1000).toList()
 
       val firstLine = listOf(usesCsv.first())
@@ -61,7 +63,7 @@ class UseImporterSpec : FunSpec({
 
     test("Ingests the data if the only wrong line is the header") {
       val header = "my,beautiful,header"
-      val uses = useArb.take(1000).toList()
+      val uses = UseArb.take(1000).toList()
 
       val csvs = listOf(header) + uses.map { it.columns().joinToString(",") }
 
@@ -75,7 +77,7 @@ class UseImporterSpec : FunSpec({
     }
 
     test("Ingests the data if all lines are parseable") {
-      val uses = useArb.take(1000).toList()
+      val uses = UseArb.take(1000).toList()
 
       val csvs = uses.map { it.columns().joinToString(",") }
       target.import(csvs)
@@ -101,6 +103,6 @@ class UseImporterSpec : FunSpec({
   }
 })
 
-val invalidUseCsvArb = useCsvArb.map {
+val invalidUseCsvArb = UseCsvArb.map {
   Random.mutants(replaceWithPossiblyMeaningfulText(), 1, it)
 }.map { it.single() }

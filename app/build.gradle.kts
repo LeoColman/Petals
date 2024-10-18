@@ -176,6 +176,7 @@ dependencies {
 
   // Mockk
   testImplementation(libs.mockk)
+  androidTestImplementation(libs.bundles.mockk.android)
 
   // Date manipulation
   implementation(libs.bundles.date.time)

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.com.colman.petals.use.io
+package br.com.colman.petals.use.io.input
 
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository

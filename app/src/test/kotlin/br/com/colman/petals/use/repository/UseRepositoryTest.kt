@@ -21,7 +21,7 @@ package br.com.colman.petals.use.repository
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
 import br.com.colman.petals.Database
-import br.com.colman.petals.use.io.useArb
+import br.com.colman.petals.use.UseArb
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -94,7 +94,7 @@ class UseRepositoryTest : FunSpec({
   }
 
   test("Last use performance") {
-    useArb.take(10_000).map(Use::toEntity).forEach(database.useQueries::upsert)
+    UseArb.take(10_000).map(Use::toEntity).forEach(database.useQueries::upsert)
 
     measureTimeMillis {
       target.getLastUseDate().first()

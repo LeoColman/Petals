@@ -1,4 +1,4 @@
-package br.com.colman.petals.use.io
+package br.com.colman.petals.use.io.output
 
 import android.content.Context
 import android.net.Uri

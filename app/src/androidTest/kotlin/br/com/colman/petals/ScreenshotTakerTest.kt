@@ -18,7 +18,7 @@ import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeUp
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.navigation.Page
-import br.com.colman.petals.use.io.UseImporter
+import br.com.colman.petals.use.io.input.UseImporter
 import br.com.colman.petals.use.repository.BlockRepository
 import br.com.colman.petals.use.repository.BlockType
 import com.github.kittinunf.fuel.Fuel

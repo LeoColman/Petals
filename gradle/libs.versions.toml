@@ -11,6 +11,7 @@ licensee = "1.12.0"
 vanpra-material-dialogs = "0.9.0"
 sqldelight = "2.0.2"
 glance = "1.1.1"
+mockk = "1.13.13"
 
 [libraries]
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.1.2"
@@ -48,7 +49,9 @@ kotlin-date-range = "me.moallemi.tools:kotlin-date-range:1.0.0"
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0"
 licensee-gradle-plugin = { module = "app.cash.licensee:licensee-gradle-plugin", version.ref = "licensee" }
-mockk = "io.mockk:mockk:1.13.13"
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
+mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 mp-android-chart = "com.github.AppDevNext:AndroidChart:3.1.0.25"
 snodge = "com.natpryce:snodge:3.7.0.0"
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
@@ -107,10 +110,9 @@ koin = [
     "koin-compose",
 ]
 kotest-jvm = ["kotest-runner-junit5", "kotest-extensions-now"]
-
 kotest-android = ["kotest-runner-android", "kotest-assertions-android"]
-
 kotest-common = ["kotest-assertions", "kotest-property", "kotest-framework-datatest"]
+mockk-android = ["mockk-android", "mockk-agent"]
 
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

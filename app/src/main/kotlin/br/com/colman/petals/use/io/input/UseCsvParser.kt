@@ -1,4 +1,4 @@
-package br.com.colman.petals.use.io
+package br.com.colman.petals.use.io.input
 
 import br.com.colman.petals.use.repository.Use
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader

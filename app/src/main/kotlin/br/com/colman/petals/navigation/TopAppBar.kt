@@ -48,8 +48,8 @@ import br.com.colman.petals.R.string.app_name
 import br.com.colman.petals.R.string.export_export
 import br.com.colman.petals.R.string.import_import
 import br.com.colman.petals.R.string.settings
-import br.com.colman.petals.use.io.UseCsvFileImporter
-import br.com.colman.petals.use.io.UseExporter
+import br.com.colman.petals.use.io.input.UseCsvFileImporter
+import br.com.colman.petals.use.io.output.UseExporter
 import compose.icons.TablerIcons
 import compose.icons.tablericons.InfoCircle
 import compose.icons.tablericons.Settings

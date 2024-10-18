@@ -47,13 +47,9 @@ class ExpandableComponentTest : FunSpec({
 
       onNodeWithText("Expandable Component").assertExists().assertIsDisplayed()
       onNodeWithText("Expanded!").assertIsNotDisplayed()
-
     }
   }
-
-
 })
-
 
 @Composable
 private fun ExpandableComponentTestContent() {

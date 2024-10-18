@@ -10,7 +10,6 @@ import androidx.compose.ui.test.waitUntilExactlyOneExists
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.MainActivity
 
-
 @OptIn(ExperimentalTestApi::class)
 class ComposeHitTimerTest : FunSpec({
 
@@ -24,7 +23,6 @@ class ComposeHitTimerTest : FunSpec({
       onNodeWithText("Start").performClick()
       waitUntilExactlyOneExists(hasText("09:0", true), 5000)
       onNodeWithText("10:000").assertDoesNotExist()
-
     }
   }
 

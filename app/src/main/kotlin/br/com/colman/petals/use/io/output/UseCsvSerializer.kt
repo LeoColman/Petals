@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package br.com.colman.petals.use.io
+package br.com.colman.petals.use.io.output
 
 import android.content.res.Resources
 import br.com.colman.petals.R.string.amount_label
@@ -54,6 +54,7 @@ class UseCsvSerializer(
 
   private val csvWriter = csvWriter {
     lineTerminator = "\n"
+    outputLastLineTerminator = false
   }
 
   private fun serialize(content: List<List<String>>): String {

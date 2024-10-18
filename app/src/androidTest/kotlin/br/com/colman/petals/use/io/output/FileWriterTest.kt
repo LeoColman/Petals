@@ -1,4 +1,4 @@
-package br.com.colman.petals.use.io
+package br.com.colman.petals.use.io.output
 
 import androidx.test.platform.app.InstrumentationRegistry
 import br.com.colman.kotest.FunSpec
@@ -6,7 +6,11 @@ import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.matchers.file.shouldExist
 import io.kotest.matchers.file.shouldNotExist
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldEndWith
+import io.mockk.every
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import java.io.File
 import java.time.LocalDate
 
@@ -42,8 +46,28 @@ class FileWriterTest : FunSpec({
     uri.path shouldEndWith "PetalsExport-${LocalDate.now()}.csv"
   }
 
+  test("Generates different file names on different dates") {
+    val fixedDate = LocalDate.of(2024, 2, 9)
+    mockkStatic(LocalDate::class)
+    every { LocalDate.now() } returns fixedDate
+
+    val uri1 = target.write(FakeContent1)
+
+    val newDate = fixedDate.plusDays(1)
+    every { LocalDate.now() } returns newDate
+
+    val uri2 = target.write(FakeContent2)
+
+    uri1 shouldNotBe uri2
+
+    uri1.path shouldEndWith "PetalsExport-$fixedDate.csv"
+    uri2.path shouldEndWith "PetalsExport-$newDate.csv"
+
+    unmockkStatic(LocalDate::class)
+  }
+
   isolationMode = InstancePerTest
 })
 
-private val FakeContent1 = "abc"
-private val FakeContent2 = "def"
+private const val FakeContent1 = "abc"
+private const val FakeContent2 = "def"
