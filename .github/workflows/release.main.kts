@@ -41,7 +41,7 @@ workflow(
     uses(
       name = "Create release", action = ActionGhRelease(
         tagName = expr { GITHUB_REF_NAME },
-        name = "Version " + expr { GITHUB_REF_NAME },
+        name = expr { GITHUB_REF_NAME },
         draft = false,
         files = listOf(
           "app/build/outputs/apk/github/release/app-github-release.apk",
