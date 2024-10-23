@@ -3,16 +3,24 @@ package br.com.colman.petals.use.io.input
 import br.com.colman.petals.use.repository.Use
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
+import java.util.UUID.randomUUID
 
 object UseCsvParser {
   private val csvReader = csvReader()
 
   fun parse(line: String): Result<Use> = runCatching {
-    val (date, amount, cost) = csvReader.readAll(line).single()
+    val values = csvReader.readAll(line).single()
 
-    val dateTime = LocalDateTime.parse(date, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+    val dateTime = parseDateTime(values[0])
+    val amount = values[1].toBigDecimal()
+    val cost = values[2].toBigDecimal()
+    val id = parseOrGenerateUUID(values.getOrNull(3))
 
-    Use(dateTime, amount.toBigDecimal(), cost.toBigDecimal())
+    Use(dateTime, amount, cost, id)
   }
+
+  private fun parseDateTime(date: String) = LocalDateTime.parse(date, ISO_LOCAL_DATE_TIME)
+
+  private fun parseOrGenerateUUID(uuid: String?) = if (uuid.isNullOrBlank()) randomUUID().toString() else uuid
 }

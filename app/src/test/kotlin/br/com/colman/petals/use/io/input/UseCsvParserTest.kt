@@ -5,6 +5,7 @@ import br.com.colman.petals.use.io.UseCsvArb
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.result.shouldBeFailure
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldBeUUID
 import io.kotest.property.arbitrary.filter
 import io.kotest.property.arbitrary.next
 import io.kotest.property.arbitrary.take
@@ -34,6 +35,30 @@ class UseCsvParserTest : FunSpec({
   test("Returns failure if fewer than three fields are passed") {
     val useCsv = "2024-02-09T12:00:00,100.00"
     UseCsvParser.parse(useCsv).shouldBeFailure()
+  }
+
+  test("Parses the id field if it's present") {
+    val use = UseArb.next()
+    val useCsv = use.columns().joinToString(",")
+    val parsed = UseCsvParser.parse(useCsv)
+
+    parsed.getOrThrow().id shouldBe use.id
+  }
+
+  test("Creates new id if id field is empty") {
+    val use = UseArb.next().copy(id = "")
+    val useCsv = use.columns().joinToString(",")
+    val parsed = UseCsvParser.parse(useCsv)
+
+    parsed.getOrThrow().id.shouldBeUUID()
+  }
+
+  test("Creates new id if id field is not present") {
+    val use = UseArb.next().copy(id = "")
+    val useCsv = use.columns().dropLast(1).joinToString(",")
+    val parsed = UseCsvParser.parse(useCsv)
+
+    parsed.getOrThrow().id.shouldBeUUID()
   }
 
   test("Parses successfully even if extra fields are present") {
