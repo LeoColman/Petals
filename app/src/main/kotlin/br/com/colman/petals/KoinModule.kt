@@ -24,7 +24,7 @@ import br.com.colman.petals.hittimer.HitTimerRepository
 import br.com.colman.petals.settings.SettingsMigrations
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.pause.repository.PauseRepository
-import br.com.colman.petals.use.repository.BlockRepository
+import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.UseRepository
 import org.koin.dsl.module
 
@@ -37,5 +37,5 @@ val KoinModule = module {
   single { HitTimerRepository(get()) }
   single { SettingsRepository(get<Context>().settingsDatastore) }
   single { SettingsMigrations(get<Context>().settingsDatastore) }
-  single { BlockRepository(get<Context>().blockDataStore) }
+  single { CensorshipRepository(get<Context>().blockDataStore) }
 }

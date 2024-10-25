@@ -14,7 +14,7 @@ import br.com.colman.petals.use.repository.BlockType.Today
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
-class BlockRepository(
+class CensorshipRepository(
   private val datastore: DataStore<Preferences>
 ) {
   val isTodayCensored = datastore.data.map { it[Today.preferencesKey] ?: false }

@@ -8,9 +8,9 @@ import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
 
-class BlockRepositoryTest : FunSpec({
+class CensorshipRepositoryTest : FunSpec({
   val datastore: DataStore<Preferences> = PreferenceDataStoreFactory.create { tempfile(suffix = ".preferences_pb") }
-  val target = BlockRepository(datastore)
+  val target = CensorshipRepository(datastore)
 
   test("Defaults block censor to false") {
     BlockType.entries.forEach { blockType ->

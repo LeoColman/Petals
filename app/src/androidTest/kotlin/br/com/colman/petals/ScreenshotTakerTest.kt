@@ -19,7 +19,7 @@ import androidx.compose.ui.test.swipeUp
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.navigation.Page
 import br.com.colman.petals.use.io.input.UseImporter
-import br.com.colman.petals.use.repository.BlockRepository
+import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.BlockType
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FileDataPart
@@ -60,8 +60,8 @@ class ScreenshotTakerTest : FunSpec({
       locales.forEach { (lang, country) ->
         activity?.setLocale(Locale(lang, country))
 
-        val blockRepository by koin.inject<BlockRepository>()
-        blockRepository.setBlockCensure(BlockType.Today, true)
+        val censorshipRepository by koin.inject<CensorshipRepository>()
+        censorshipRepository.setBlockCensure(BlockType.Today, true)
 
         waitForIdle()
         takeScreenshot("1.png", lang, country)
@@ -76,8 +76,8 @@ class ScreenshotTakerTest : FunSpec({
       locales.forEach { (lang, country) ->
         activity?.setLocale(Locale(lang, country))
 
-        val blockRepository by koin.inject<BlockRepository>()
-        blockRepository.setBlockCensure(BlockType.Today, true)
+        val censorshipRepository by koin.inject<CensorshipRepository>()
+        censorshipRepository.setBlockCensure(BlockType.Today, true)
 
         waitForIdle()
 

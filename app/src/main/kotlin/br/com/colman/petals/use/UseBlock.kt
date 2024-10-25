@@ -51,7 +51,7 @@ import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R
 import br.com.colman.petals.R.string.amount_grams_short
 import br.com.colman.petals.settings.SettingsRepository
-import br.com.colman.petals.use.repository.BlockRepository
+import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.BlockType
 import br.com.colman.petals.use.repository.BlockType.AllTime
 import br.com.colman.petals.use.repository.BlockType.ThisMonth
@@ -73,14 +73,14 @@ import java.time.LocalTime
 
 @Composable
 fun StatsBlocks(uses: List<Use>) {
-  val blockRepository = koinInject<BlockRepository>()
+  val censorshipRepository = koinInject<CensorshipRepository>()
   val settingsRepository = koinInject<SettingsRepository>()
 
-  val isTodayCensored by blockRepository.isTodayCensored.collectAsState(true)
-  val isThisWeekCensored by blockRepository.isThisWeekCensored.collectAsState(true)
-  val isThisMonthCensored by blockRepository.isThisMonthCensored.collectAsState(true)
-  val isThisYearCensored by blockRepository.isThisYearCensored.collectAsState(true)
-  val isAllTimeCensored by blockRepository.isAllTimeCensored.collectAsState(true)
+  val isTodayCensored by censorshipRepository.isTodayCensored.collectAsState(true)
+  val isThisWeekCensored by censorshipRepository.isThisWeekCensored.collectAsState(true)
+  val isThisMonthCensored by censorshipRepository.isThisMonthCensored.collectAsState(true)
+  val isThisYearCensored by censorshipRepository.isThisYearCensored.collectAsState(true)
+  val isAllTimeCensored by censorshipRepository.isAllTimeCensored.collectAsState(true)
   val isDayExtended by settingsRepository.isDayExtended.collectAsState(false)
 
   Row(Modifier.horizontalScroll(rememberScrollState()).width(Max).testTag("StatsBlockMainRow")) {
@@ -133,7 +133,7 @@ private fun UseBlock(
   isCensored: Boolean = true
 ) {
   val settingsRepository = koinInject<SettingsRepository>()
-  val blockRepository = koinInject<BlockRepository>()
+  val censorshipRepository = koinInject<CensorshipRepository>()
 
   val currencyIcon by settingsRepository.currencyIcon.collectAsState("$")
 
@@ -141,7 +141,7 @@ private fun UseBlock(
     Column(Modifier.padding(8.dp), spacedBy(4.dp)) {
       Row(Modifier.padding(8.dp).fillMaxWidth(), Center, CenterVertically) {
         Text(stringResource(blockType.resourceId), fontWeight = Bold)
-        IconButton({ blockRepository.setBlockCensure(blockType, !isCensored) }) {
+        IconButton({ censorshipRepository.setBlockCensure(blockType, !isCensored) }) {
           CensureIcon(isCensored)
         }
       }
