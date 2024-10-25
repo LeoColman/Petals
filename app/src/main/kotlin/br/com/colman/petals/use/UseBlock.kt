@@ -51,13 +51,13 @@ import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R
 import br.com.colman.petals.R.string.amount_grams_short
 import br.com.colman.petals.settings.SettingsRepository
-import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.BlockType
 import br.com.colman.petals.use.repository.BlockType.AllTime
 import br.com.colman.petals.use.repository.BlockType.ThisMonth
 import br.com.colman.petals.use.repository.BlockType.ThisWeek
 import br.com.colman.petals.use.repository.BlockType.ThisYear
 import br.com.colman.petals.use.repository.BlockType.Today
+import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.Use
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Eye
