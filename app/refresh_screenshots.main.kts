@@ -1,11 +1,11 @@
 #!/usr/bin/env kotlin
 
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0")
-@file:DependsOn("io.ktor:ktor-server-core-jvm:3.0.0")
-@file:DependsOn("io.ktor:ktor-server-netty-jvm:3.0.0")
-@file:DependsOn("io.ktor:ktor-server-content-negotiation-jvm:3.0.0")
-@file:DependsOn("io.ktor:ktor-serialization-kotlinx-json-jvm:3.0.0")
-@file:DependsOn("io.ktor:ktor-server-host-common-jvm:3.0.0")
+@file:DependsOn("io.ktor:ktor-server-core-jvm:3.0.1")
+@file:DependsOn("io.ktor:ktor-server-netty-jvm:3.0.1")
+@file:DependsOn("io.ktor:ktor-server-content-negotiation-jvm:3.0.1")
+@file:DependsOn("io.ktor:ktor-serialization-kotlinx-json-jvm:3.0.1")
+@file:DependsOn("io.ktor:ktor-server-host-common-jvm:3.0.1")
 
 import io.ktor.http.*
 import io.ktor.http.content.*
