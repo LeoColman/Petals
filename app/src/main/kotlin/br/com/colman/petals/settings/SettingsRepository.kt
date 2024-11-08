@@ -28,6 +28,7 @@ class SettingsRepository(
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
   val isDarkModeEnabled: Flow<Boolean> = datastore.data.map { it[IsDarkModeOn] ?: true }
   val isHitTimerMillisecondsEnabled = datastore.data.map { it[IsHitTimerMillisecondsEnabled] ?: false }
+  val isHourOfDayLineInStatsEnabled = datastore.data.map { it[IsHourOfDayLineInStatsEnabled] ?: false }
   val isDayExtended = datastore.data.map { it[IsDayExtended] ?: false }
   val appLanguages = AppLanguage.entries.map { it.languageName }
 
@@ -72,6 +73,10 @@ class SettingsRepository(
     datastore.edit { it[IsDayExtended] = value }
   }
 
+  fun setIsHourOfDayLineInStatsEnabled(value: Boolean): Unit = runBlocking {
+    datastore.edit { it[IsHourOfDayLineInStatsEnabled] = value }
+  }
+
   companion object {
     val CurrencyIcon = stringPreferencesKey("currency_icon")
     val DateFormat = stringPreferencesKey("date_format")
@@ -82,6 +87,7 @@ class SettingsRepository(
     val IsDarkModeOn: Preferences.Key<Boolean> = booleanPreferencesKey("is_dark_mode_on")
     val IsHitTimerMillisecondsEnabled = booleanPreferencesKey("is_hit_timer_milliseconds_enabled")
     val IsDayExtended = booleanPreferencesKey("is_day_extended_enabled")
+    val IsHourOfDayLineInStatsEnabled = booleanPreferencesKey("is_hour_of_day_line_in_stats_enabled")
 
     @Deprecated("This Key is no longer in use")
     val ClockFormat = stringPreferencesKey("clock_format")

@@ -128,6 +128,8 @@
     <string name="what_decimal_precision_should_be_used">What decimal precision should be displayed on Usage page</string>
     <string name="extend_day">Toggle Extended Day</string>
     <string name="extend_day_a_few_hours">Extend day a few hours past midnight</string>
+    <string name="hour_of_day_line_in_stats_enabled">Toggle Hour of Day Line</string>
+    <string name="enable_or_disable_hour_of_day_line_in_stats">Enable or disable hour of day line on the graphs</string>
     <string name="wait_until_3am_to_show_a_new_day">Wait until 3:00 AM to show a new day. Useful if you typically go to sleep after midnight.</string>
     <string name="custom">Custom</string>
     <string name="general_knowledge">General Knowledge</string>

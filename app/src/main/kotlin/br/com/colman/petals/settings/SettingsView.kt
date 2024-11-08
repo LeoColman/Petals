@@ -20,6 +20,7 @@ import br.com.colman.petals.settings.view.listitem.PrecisionListItem
 import br.com.colman.petals.settings.view.listitem.RepositoryListItem
 import br.com.colman.petals.settings.view.listitem.ShareApp
 import br.com.colman.petals.settings.view.listitem.TimeListItem
+import br.com.colman.petals.statistics.view.listitem.HourOfDayLineInStatsEnabledListItem
 
 @Composable
 fun SettingsView(settingsRepository: SettingsRepository) {
@@ -40,6 +41,8 @@ fun SettingsView(settingsRepository: SettingsRepository) {
       AppCompatDelegate.setApplicationLocales(appLocale)
     }
   }
+
+  val currentHourOfDayInLineStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(true)
 
   Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
@@ -65,6 +68,10 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     ExtendDayListItem(
       currentExtendDay,
       settingsRepository::setDayExtended
+    )
+    HourOfDayLineInStatsEnabledListItem(
+      currentHourOfDayInLineStatsEnabled,
+      settingsRepository::setIsHourOfDayLineInStatsEnabled
     )
     ShareApp()
   }

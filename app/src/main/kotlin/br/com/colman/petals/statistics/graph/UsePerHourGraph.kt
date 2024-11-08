@@ -1,15 +1,19 @@
 package br.com.colman.petals.statistics.graph
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.colman.petals.R.string.grams_distribution_per_hour_of_day
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.statistics.component.Period
 import br.com.colman.petals.statistics.graph.component.LineChart
 import br.com.colman.petals.statistics.graph.data.createDistributionPerHourDataset
 import br.com.colman.petals.statistics.graph.formatter.TwelveHourFormatter
 import br.com.colman.petals.use.repository.Use
 import com.github.mikephil.charting.components.LimitLine
+import org.koin.compose.koinInject
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -54,6 +58,9 @@ fun UsePerHourGraphPreview2() {
 
 @Composable
 fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
+  val settingsRepository = koinInject<SettingsRepository>()
+  val currentHourOfDayLineInStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(false)
+
   val description = stringResource(grams_distribution_per_hour_of_day)
   val gramsData = useGroups.map { (period, uses) ->
     val label = period.label()
@@ -66,6 +73,12 @@ fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
     labelCount = 24
     granularity = 1f
     valueFormatter = TwelveHourFormatter
-    addLimitLine(LimitLine(LocalTime.now().hour.toFloat()).apply { lineWidth = 2f })
+    if (currentHourOfDayLineInStatsEnabled) {
+      addLimitLine(hourLimitLine)
+    } else {
+      removeAllLimitLines()
+    }
   }
 }
+
+private val hourLimitLine = LimitLine(LocalTime.now().hour.toFloat()).apply { lineWidth = 2f }
