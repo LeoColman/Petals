@@ -36,8 +36,8 @@ fun StatisticsPage(useRepository: UseRepository, settingsRepository: SettingsRep
   Column(
     Modifier
       .verticalScroll(rememberScrollState())
-      .testTag("StatisticsMainColumn")) {
-
+      .testTag("StatisticsMainColumn")
+  ) {
     ExpandableComponent("Customise") {
       Column {
         HourOfDayLineInStatsEnabledListItem(
