@@ -11,7 +11,7 @@ import compose.icons.tablericons.ToggleLeft
 @Preview
 @Composable
 fun HourOfDayLineInStatsEnabledListItem(
-  hourOfDayLineInStatsEnabled: Boolean,
+  hourOfDayLineInStatsEnabled: Boolean = true,
   setHourOfDayLineInStatsEnabled: (Boolean) -> Unit = {}
 ) {
   SwitchListItem(

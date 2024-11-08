@@ -99,15 +99,8 @@ fun UsePerDayOfWeekGraphPreview4() {
 @Composable
 fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
   val settingsRepository = koinInject<SettingsRepository>()
-  val currentHourOfDayLineInStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(
-    false
-  )
+  val currentHourOfDayLineInStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(false)
 
-  val hourOfDayLimitLine: LimitLine by lazy {
-    LimitLine(LocalDate.now().dayOfWeek.value.toFloat()).apply {
-      lineWidth = 2f
-    }
-  }
   val description = stringResource(string.grams_distribution_per_day_of_week)
   val colors = MaterialTheme.colors
   val gramsData = useGroups.map { (period, uses) ->
@@ -132,9 +125,11 @@ fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
     granularity = 1f
     valueFormatter = DayOfWeekFormatter
     if (currentHourOfDayLineInStatsEnabled) {
-      if (!limitLines.contains(hourOfDayLimitLine)) addLimitLine(hourOfDayLimitLine)
+      addLimitLine(limitLine)
     } else {
-      removeLimitLine(hourOfDayLimitLine)
+      removeAllLimitLines()
     }
   }
 }
+
+private val limitLine = LimitLine(LocalDate.now().dayOfWeek.value.toFloat()).apply { lineWidth = 2f }

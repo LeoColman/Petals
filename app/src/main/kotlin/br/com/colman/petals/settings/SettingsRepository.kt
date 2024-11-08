@@ -87,7 +87,6 @@ class SettingsRepository(
     val IsDarkModeOn: Preferences.Key<Boolean> = booleanPreferencesKey("is_dark_mode_on")
     val IsHitTimerMillisecondsEnabled = booleanPreferencesKey("is_hit_timer_milliseconds_enabled")
     val IsDayExtended = booleanPreferencesKey("is_day_extended_enabled")
-
     val IsHourOfDayLineInStatsEnabled = booleanPreferencesKey("is_hour_of_day_line_in_stats_enabled")
 
     @Deprecated("This Key is no longer in use")

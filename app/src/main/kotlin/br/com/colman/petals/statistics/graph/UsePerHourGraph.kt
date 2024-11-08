@@ -40,8 +40,7 @@ fun UsePerHourGraphPreview2() {
   val minutesInHour = (0..59).toList()
   val uses = List(293) {
     Use(
-      LocalDate.now().minusDays(hoursInDay.random().toLong())
-        .atTime(hoursInDay.random(), minutesInHour.random()),
+      LocalDate.now().minusDays(hoursInDay.random().toLong()).atTime(hoursInDay.random(), minutesInHour.random()),
       "3.37".toBigDecimal(),
       (it % 4).toBigDecimal()
     )
@@ -60,15 +59,8 @@ fun UsePerHourGraphPreview2() {
 @Composable
 fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
   val settingsRepository = koinInject<SettingsRepository>()
-  val currentHourOfDayLineInStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(
-    false
-  )
+  val currentHourOfDayLineInStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(false)
 
-  val hourOfDayLimitLine: LimitLine by lazy {
-    LimitLine(LocalTime.now().hour.toFloat()).apply {
-      lineWidth = 2f
-    }
-  }
   val description = stringResource(grams_distribution_per_hour_of_day)
   val gramsData = useGroups.map { (period, uses) ->
     val label = period.label()
@@ -82,9 +74,11 @@ fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
     granularity = 1f
     valueFormatter = TwelveHourFormatter
     if (currentHourOfDayLineInStatsEnabled) {
-      if (!limitLines.contains(hourOfDayLimitLine)) addLimitLine(hourOfDayLimitLine)
+      addLimitLine(hourLimitLine)
     } else {
-      removeLimitLine(hourOfDayLimitLine)
+      removeAllLimitLines()
     }
   }
 }
+
+private val hourLimitLine = LimitLine(LocalTime.now().hour.toFloat()).apply { lineWidth = 2f }

@@ -11,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import br.com.colman.petals.components.ExpandableComponent
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.statistics.card.AverageUseCard
 import br.com.colman.petals.statistics.component.MultiPeriodSelect
@@ -20,7 +19,6 @@ import br.com.colman.petals.statistics.component.Period.Zero
 import br.com.colman.petals.statistics.graph.AllTimeGraph
 import br.com.colman.petals.statistics.graph.UsePerDayOfWeekGraph
 import br.com.colman.petals.statistics.graph.UsePerHourGraph
-import br.com.colman.petals.statistics.view.listitem.HourOfDayLineInStatsEnabledListItem
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 
@@ -29,24 +27,9 @@ fun StatisticsPage(useRepository: UseRepository, settingsRepository: SettingsRep
   var selectedPeriods by remember { mutableStateOf(listOf<Period>(Zero)) }
   val uses by useRepository.all().collectAsState(emptyList())
   val usesInPeriod = selectedPeriods.associateWith(uses)
-  val dateFormat =
-    settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList.first())
-  val currentHourOfDayLineInStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(true)
+  val dateFormat = settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList.first())
 
-  Column(
-    Modifier
-      .verticalScroll(rememberScrollState())
-      .testTag("StatisticsMainColumn")
-  ) {
-    ExpandableComponent("Customise") {
-      Column {
-        HourOfDayLineInStatsEnabledListItem(
-          currentHourOfDayLineInStatsEnabled,
-          settingsRepository::setIsHourOfDayLineInStatsEnabled
-        )
-      }
-    }
-
+  Column(Modifier.verticalScroll(rememberScrollState()).testTag("StatisticsMainColumn")) {
     MultiPeriodSelect(selectedPeriods) { selectedPeriods = it }
     if (selectedPeriods.isEmpty()) return
 
