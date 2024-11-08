@@ -16,7 +16,6 @@ import br.com.colman.petals.use.repository.Use
 import com.github.mikephil.charting.components.LimitLine
 import org.koin.compose.koinInject
 import java.time.LocalDate
-import java.time.LocalTime
 import kotlin.random.Random
 
 @Composable
@@ -99,7 +98,6 @@ fun UsePerDayOfWeekGraphPreview4() {
 
 @Composable
 fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
-
   val settingsRepository = koinInject<SettingsRepository>()
   val currentHourOfDayLineInStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(
     false
@@ -135,6 +133,8 @@ fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
     valueFormatter = DayOfWeekFormatter
     if (currentHourOfDayLineInStatsEnabled) {
       if (!limitLines.contains(hourOfDayLimitLine)) addLimitLine(hourOfDayLimitLine)
-    } else removeLimitLine(hourOfDayLimitLine)
+    } else {
+      removeLimitLine(hourOfDayLimitLine)
+    }
   }
 }
