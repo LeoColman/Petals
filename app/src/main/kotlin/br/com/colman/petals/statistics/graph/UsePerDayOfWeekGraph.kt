@@ -2,16 +2,21 @@ package br.com.colman.petals.statistics.graph
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.colman.petals.R.string
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.statistics.component.Period
 import br.com.colman.petals.statistics.graph.component.LineChart
 import br.com.colman.petals.statistics.graph.data.createDistributionPerDayOfWeekDataset
 import br.com.colman.petals.statistics.graph.formatter.DayOfWeekFormatter
 import br.com.colman.petals.use.repository.Use
 import com.github.mikephil.charting.components.LimitLine
+import org.koin.compose.koinInject
 import java.time.LocalDate
+import java.time.LocalTime
 import kotlin.random.Random
 
 @Composable
@@ -94,6 +99,17 @@ fun UsePerDayOfWeekGraphPreview4() {
 
 @Composable
 fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
+
+  val settingsRepository = koinInject<SettingsRepository>()
+  val currentHourOfDayLineInStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(
+    false
+  )
+
+  val hourOfDayLimitLine: LimitLine by lazy {
+    LimitLine(LocalDate.now().dayOfWeek.value.toFloat()).apply {
+      lineWidth = 2f
+    }
+  }
   val description = stringResource(string.grams_distribution_per_day_of_week)
   val colors = MaterialTheme.colors
   val gramsData = useGroups.map { (period, uses) ->
@@ -117,6 +133,8 @@ fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
     labelCount = 7
     granularity = 1f
     valueFormatter = DayOfWeekFormatter
-    addLimitLine(LimitLine(LocalDate.now().dayOfWeek.value.toFloat()).apply { lineWidth = 2f })
+    if (currentHourOfDayLineInStatsEnabled) {
+      if (!limitLines.contains(hourOfDayLimitLine)) addLimitLine(hourOfDayLimitLine)
+    } else removeLimitLine(hourOfDayLimitLine)
   }
 }
