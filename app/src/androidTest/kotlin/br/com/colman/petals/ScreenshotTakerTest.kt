@@ -35,8 +35,6 @@ val locales = listOf(
   "fr" to "FR",
   "es" to "ES",
   "it" to "IT",
-  "nl" to "NL",
-  "no" to "NO",
   "pt" to "BR",
   "ru" to "RU",
   "ta" to "IN",

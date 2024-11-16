@@ -1,2 +1,0 @@
-- Verbeterde prestaties bij details over laatste gebruik
-- Lokaliseren van de tekst in Pauze Dialoog

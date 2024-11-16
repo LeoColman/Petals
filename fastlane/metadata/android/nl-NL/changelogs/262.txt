@@ -1,2 +1,0 @@
-- Fix Datum toevoegen breekt in 2 regels
-- Datum- en tijdvelden gestyled zodat ze er beter bewerkbaar uitzien

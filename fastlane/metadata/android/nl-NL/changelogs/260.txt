@@ -1,1 +1,0 @@
-- Houd de trilschakelaar van de sla-timer aan
