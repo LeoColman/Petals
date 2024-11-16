@@ -67,5 +67,9 @@ jobs:
       with:
         ruby-version: '3.2.3'
     - id: 'step-7'
-      name: 'publish-playstore'
-      run: 'bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore'
+      name: 'Publish to Playstore'
+      working-directory: 'fastlane'
+      run: |-
+        bundle config path vendor/bundle &&
+        bundle install --jobs 4 --retry 3 &&
+        bundle exec fastlane playstore

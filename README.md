@@ -109,8 +109,8 @@ is [release.main.kts](.github/workflows/release.main.kts).
 
 1. Decrypt all git secrets
 2. Run `./gradlew bundlePlaystoreRelease`
-3. Publish to playstore by
-   running `bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore`
+3. Publish to playstore by running
+   `cd fastlane && bundle config path vendor/bundle && bundle install --jobs 4 --retry 3 && bundle exec fastlane playstore`
 
 ### F-Droid
 
