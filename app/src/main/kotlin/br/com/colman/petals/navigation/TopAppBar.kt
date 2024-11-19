@@ -36,7 +36,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,7 +50,6 @@ import br.com.colman.petals.R.string.settings
 import br.com.colman.petals.use.io.input.UseCsvFileImporter
 import br.com.colman.petals.use.io.output.UseExporter
 import compose.icons.TablerIcons
-import compose.icons.tablericons.InfoCircle
 import compose.icons.tablericons.Settings
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -60,10 +58,7 @@ import org.koin.compose.koinInject
 fun MyTopAppBar(navController: NavController, options: (@Composable () -> Unit)? = null) {
   TopAppBar {
     Box(
-      Modifier
-        .padding(16.dp)
-        .height(56.dp)
-        .fillMaxWidth()
+      Modifier.padding(16.dp).height(56.dp).fillMaxWidth()
     ) {
       MyTopAppBarContent(navController, options)
     }
@@ -73,16 +68,14 @@ fun MyTopAppBar(navController: NavController, options: (@Composable () -> Unit)?
 @Composable
 fun MyTopAppBarContent(
   navController: NavController,
-  options:
-  @Composable
-  (() -> Unit)?
+  options: @Composable (() -> Unit)?
 ) {
   Row(Modifier.fillMaxWidth(), SpaceBetween, CenterVertically) {
     AppAndVersionName()
     Row(Modifier, spacedBy(16.dp)) {
       ImportExportButtons()
       options?.invoke()
-      InfoSettingsButtons(navController)
+      SettingsButton(navController)
     }
   }
 }
@@ -103,12 +96,6 @@ private fun AppAndVersionName() {
       fontSize = 10.sp
     )
   }
-}
-
-@Composable
-private fun InfoSettingsButtons(navController: NavController) {
-  InfoButton(navController)
-  SettingsButton(navController)
 }
 
 @Composable
@@ -138,8 +125,7 @@ private fun ExportButton(
   useExporter: UseExporter
 ) {
   val coroutineScope = rememberCoroutineScope()
-  val launcher =
-    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
+  val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
   Box(
     Modifier.clickable {
@@ -160,22 +146,7 @@ private fun SettingsButton(
     TablerIcons.Settings,
     stringResource(settings),
     Modifier.clickable {
-      navController.navigate(Screens.Settings)
+      navController.navigate("settings")
     }
-  )
-}
-
-@Composable
-private fun InfoButton(
-  navController: NavController
-) {
-  Icon(
-    TablerIcons.InfoCircle,
-    stringResource(settings),
-    Modifier
-      .clickable {
-        navController.navigate(Screens.Information)
-      }
-      .testTag("InfoButton")
   )
 }
