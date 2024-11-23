@@ -74,7 +74,7 @@ the corresponding Gradle tasks. Here's how to do that:
 
 - F-Droid: `./gradlew assembleFdroidDebug`
 - PlayStore: `./gradlew assemblePlaystoreDebug`
-- GitHub: `./gradlelw assembleGithubDebug`
+- GitHub: `./gradlew assembleGithubDebug`
 
 ### Release Version
 
