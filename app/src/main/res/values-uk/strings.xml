@@ -106,7 +106,7 @@
     <string name="what_icon_should_be_used_for_currency">Символ що буде використано як валюту</string>
     <string name="currency_icon">Символ валюти</string>
     <string name="settings">Налаштування</string>
-    <string name="repository_link_description">This app is Open Source and Free Software under the AGPL-3.0 license. The source code is available in GitHub at github.com/LeoColman/Petals</string>
+    <string name="repository_link_description">Ця програма є відкритим і безкоштовним програмним забезпеченням за ліцензією AGPL-3.0. Вихідний код доступний на GitHub за адресою github.com/LeoColman/Petals</string>
     <string name="yes">Так</string>
     <string name="what_date_format_should_be_used">Формат дати що буде застосований</string>
     <string name="end_time">Час Завершення</string>
@@ -139,16 +139,34 @@
         <item quantity="other">Останні %s днів</item>
     </plurals>
     <string name="are_you_sure_delete_pause">Ви впевнені що бажаєте видалити паузу з %s по %s?</string>
-    <string name="hittime_source">Source: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
+    <string name="hittime_source">Джерело: Azorlosa JL, Greenwald MK, Stitzer ML. Куріння марихуани: вплив різної гучності затяжки та тривалості затримки дихання. J Pharmacol Exp Ther. 1995. Лютий; 272 (2): 560–9. PMID: 7853169.</string>
     <string name="no_country_selected">Країна не вибрана</string>
     <string name="possession">Володіння</string>
     <string name="legislation_and_rights">Законодавство і права</string>
     <string name="consumption">Вживання</string>
     <string name="medical_use">Медичне застосування</string>
-    <string name="keep_in_mind_that_laws_can_change">Майте на увазі що законодавство може змінюватися, тому важливо проконсультуватися з актуальними джерелами</string>
+    <string name="keep_in_mind_that_laws_can_change">Майте на увазі, що закони можуть змінюватися, тому важливо звертатися до останніх юридичних джерел або до місцевого юридичного консультанта, щоб отримати найновішу інформацію.</string>
     <string name="current_irritability">Поточна дратівливість: %s</string>
     <string name="irritability">Дратівливість</string>
     <string name="current_decreased_appetite">Зменшений апетит: %s</string>
     <string name="current_nervousness_anxiety">Тривожність: %s</string>
     <string name="anger">Злість</string>
+    <string name="hour_of_day_line_in_stats_enabled">Переключити рядок годин дня</string>
+    <string name="hours_12">12 годин</string>
+    <string name="enable_or_disable_hour_of_day_line_in_stats">Увімкніть або вимкніть лінію години доби на графіках</string>
+    <string name="pause_dialog_description">Протягом цього періоду часу програма нагадуватиме вам про вашу перерву</string>
+    <string name="delete_pause">Видалити паузу</string>
+    <string name="break_period">Період перерви</string>
+    <string name="no_break_period">Без періоду перерви</string>
+    <string name="what_language_should_be_used">Якою мовою слід користуватися</string>
+    <string name="edit_pause">Редагувати паузу</string>
+    <string name="hours_24">24 години</string>
+    <string name="grams_distribution_over_days_since_first_use">Розподіл у грамах за дні з моменту першого використання</string>
+    <string name="language_label">Мова програми</string>
+    <string name="restlessness">Неспокійність</string>
+    <string name="current_restlessness">Поточний неспокій: %s</string>
+    <string name="clock_format_label">Формат годинника</string>
+    <string name="what_clock_format_should_be_used">Який формат годинника слід використовувати</string>
+    <string name="remove_ads_title">Видалити рекламу</string>
+    <string name="remove_ads">Оновіть без реклами</string>
 </resources>

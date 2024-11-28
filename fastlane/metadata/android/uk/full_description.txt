@@ -1,11 +1,11 @@
-The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're using.
+Додаток з відкритим кодом Petals має на меті допомогти своїм користувачам або кинути траву, зменшити використання або просто знати, скільки вони вживають. 
 
-Features
+Особливості
 
-- Track consumption
-- Time-gate your consumption
-- Track usage
-- See statistics to understand your consumption
-- Damage reduction instructions
-- Export and Import as simple CSV files
-- Extra privacy with a personal PIN
+- Відстежуйте споживання 
+- Тайм-гейт ваше споживання 
+- Відстежуйте використання 
+- Перегляньте статистику, щоб зрозуміти своє споживання 
+- Інструкції щодо зменшення шкоди 
+- Експорт і імпорт як прості файли CSV 
+- Додаткова конфіденційність з персональним PIN-кодом
