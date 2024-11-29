@@ -57,15 +57,15 @@ android {
   }
 
   signingConfigs {
-    val keystore = rootProject.file("keystore")
-    val keystoreSecret = rootProject.file("keystore.secret")
+    val keystore = file("keystore")
+    val keystoreSecret = file("keystore.secret")
 
     if(!keystore.exists() && keystoreSecret.exists()) {
       logger.warn("Impossible to create signing configuration with files encrypted")
       return@signingConfigs
     }
     val keystoreProperties = Properties().apply {
-      load(rootProject.file("keystore.properties").inputStream())
+      load(file("keystore.properties").inputStream())
     }
 
     create("self-sign") {

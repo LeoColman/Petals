@@ -24,5 +24,7 @@ keystore.properties
 google-play.json
 /fastlane/report.xml
 /Gemfile.lock
+app/keystore
+app/keystore.properties
 
 .github/workflows/generated
