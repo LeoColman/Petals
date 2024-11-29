@@ -1,0 +1,6 @@
+- Sync translations from Weblate
+- Minor code optimizations
+- Add different colors to day ranges 60 and 90
+- Added option to change app's language
+- Remove information screen
+- Remove languages with low translation score
