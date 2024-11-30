@@ -1,2 +1,2 @@
-json_key_file("google-play.json")
+json_key_file("fastlane/google-play.json")
 package_name("br.com.colman.petals")
