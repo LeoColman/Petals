@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,16 +37,15 @@ import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.totalCost
 import br.com.colman.petals.use.repository.totalGrams
-import br.com.colman.petals.utils.pluralResource
 import compose.icons.TablerIcons
 import compose.icons.tablericons.CalendarStats
 import compose.icons.tablericons.ChartPie
 import compose.icons.tablericons.Scale
+import java.math.BigDecimal
+import java.time.LocalDate.now
 import me.moallemi.tools.daterange.localdate.LocalDateRange
 import me.moallemi.tools.daterange.localdate.rangeTo
 import org.koin.compose.koinInject
-import java.math.BigDecimal
-import java.time.LocalDate.now
 
 @Preview
 @Composable
@@ -91,9 +91,9 @@ private fun AverageUseCardTitle(uses: Int, grams: BigDecimal, period: LocalDateR
   val amountDays = period.count()
 
   Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(16.dp), CenterVertically) {
-    IconText(TablerIcons.ChartPie, pluralResource(amount_uses, uses, uses))
+    IconText(TablerIcons.ChartPie, pluralStringResource(amount_uses, uses, uses))
     IconText(TablerIcons.Scale, stringResource(amount_grams, "%.2f".format(grams)))
-    IconText(TablerIcons.CalendarStats, pluralResource(amount_days, amountDays, amountDays))
+    IconText(TablerIcons.CalendarStats, pluralStringResource(amount_days, amountDays, amountDays))
   }
 }
 
@@ -140,7 +140,7 @@ private fun AverageListItem(label: String, grams: Double, cost: Double, uses: Do
     Text(stringResource(average_per, label), Modifier.padding(2.dp))
     Text(stringResource(amount_grams_short, "%.2f".format(grams)), Modifier.padding(2.dp))
     Text(getCurrencyIcon() + "%.2f".format(cost), Modifier.padding(2.dp))
-    Text(pluralResource(amount_uses, uses.toInt(), uses.toInt()), Modifier.padding(2.dp))
+    Text(pluralStringResource(amount_uses, uses.toInt(), uses.toInt()), Modifier.padding(2.dp))
   }
 }
 
