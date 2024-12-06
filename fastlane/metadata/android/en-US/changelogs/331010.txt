@@ -1,0 +1,1 @@
+- Fix bug where "This Month" would also fetch data from previous years
