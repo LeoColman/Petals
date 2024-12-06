@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize.Max
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -84,25 +85,26 @@ fun StatsBlocks(uses: List<Use>) {
   val isDayExtended by settingsRepository.isDayExtended.collectAsState(false)
 
   Row(Modifier.horizontalScroll(rememberScrollState()).width(Max).testTag("StatsBlockMainRow")) {
-    if (isDayExtended) {
-      UseBlock(Modifier.weight(1f), Today, adjustTodayFilter(uses), isTodayCensored)
-    } else {
-      UseBlock(Modifier.weight(1f), Today, uses.filter { it.date.toLocalDate() == now() }, isTodayCensored)
-    }
+    DayUseBlock(isDayExtended, uses, isTodayCensored)
 
-    UseBlock(
-      Modifier.weight(1f),
-      ThisWeek,
-      uses.filter { it.date.toLocalDate().with(MONDAY) == now().with(MONDAY) },
-      isThisWeekCensored
-    )
+    UseBlock(Modifier.weight(1f), ThisWeek, uses.filter { it.localDate isSameWeekAs now() }, isThisWeekCensored)
 
-    UseBlock(Modifier.weight(1f), ThisMonth, uses.filter { it.date.month == now().month }, isThisMonthCensored)
+    UseBlock(Modifier.weight(1f), ThisMonth, uses.filter { it.localDate isSameMonthAs now() }, isThisMonthCensored)
 
     UseBlock(Modifier.weight(1f), ThisYear, uses.filter { it.date.year == now().year }, isThisYearCensored)
 
     UseBlock(Modifier.weight(1f), AllTime, uses, isAllTimeCensored)
   }
+}
+
+private infix fun LocalDate.isSameWeekAs(other: LocalDate) = with(MONDAY) == other.with(MONDAY)
+private infix fun LocalDate.isSameMonthAs(other: LocalDate) = withDayOfMonth(1) == other.withDayOfMonth(1)
+
+@Composable
+private fun RowScope.DayUseBlock(isDayExtended: Boolean, uses: List<Use>, isTodayCensored: Boolean) {
+  val todayUses = if (isDayExtended) adjustTodayFilter(uses) else uses.filter { it.localDate == now() }
+
+  UseBlock(Modifier.weight(1f), Today, todayUses, isTodayCensored)
 }
 
 @Composable
