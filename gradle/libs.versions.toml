@@ -11,7 +11,7 @@ licensee = "1.12.0"
 vanpra-material-dialogs = "0.9.0"
 sqldelight = "2.0.2"
 glance = "1.1.1"
-mockk = "1.13.13"
+mockk = "1.13.14"
 
 [libraries]
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.1.4"
