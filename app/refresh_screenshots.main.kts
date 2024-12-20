@@ -1,6 +1,6 @@
 #!/usr/bin/env kotlin
 
-@file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.0")
+@file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.1")
 @file:DependsOn("io.ktor:ktor-server-core-jvm:3.0.3")
 @file:DependsOn("io.ktor:ktor-server-netty-jvm:3.0.3")
 @file:DependsOn("io.ktor:ktor-server-content-negotiation-jvm:3.0.3")
