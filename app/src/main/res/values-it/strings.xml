@@ -164,4 +164,6 @@
     <string name="grams_distribution_over_days_since_first_use">Distribuzione dei grammi nei giorni dal primo utilizzo</string>
     <string name="language_label">Lingua dell\'app</string>
     <string name="what_language_should_be_used">Quale lingua dovrebbe essere usata</string>
+    <string name="hour_of_day_line_in_stats_enabled">Attiva la linea dell\'ora del giorno</string>
+    <string name="enable_or_disable_hour_of_day_line_in_stats">Abilita o disabilita la linea dell\'ora del giorno sui grafici</string>
 </resources>
