@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R
 import br.com.colman.petals.use.pause.repository.Pause
-import br.com.colman.petals.utils.datetime.TimeFormatEnum
-import java.time.format.DateTimeFormatter
+import br.com.colman.petals.utils.truncatedToMinute
+import java.time.format.DateTimeFormatter.ISO_TIME
 
 @Composable
 fun PauseCard(
@@ -33,7 +33,6 @@ fun PauseCard(
   onPauseDisabledStatusChange: (Boolean) -> Unit,
 ) {
   Card(modifier = modifier) {
-    val formatter = DateTimeFormatter.ofPattern(TimeFormatEnum.HH_MM.format)
     Row(
       modifier = Modifier
         .fillMaxWidth()
@@ -43,7 +42,11 @@ fun PauseCard(
     ) {
       Column {
         Text(stringResource(id = R.string.pause_time))
-        Text("${pause.startTime.format(formatter)} - ${pause.endTime.format(formatter)}")
+        Text(
+          "${pause.startTime.truncatedToMinute().format(ISO_TIME)} - ${pause.endTime.truncatedToMinute().format(
+            ISO_TIME
+          )}"
+        )
       }
       Row(horizontalArrangement = spacedBy(4.dp)) {
         DisablePauseView(

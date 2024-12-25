@@ -7,20 +7,41 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import br.com.colman.petals.utils.datetime.ClockFormatEnum
-import br.com.colman.petals.utils.datetime.DateTimeFormatEnum
-import br.com.colman.petals.utils.datetime.TimeFormatEnum
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import java.time.format.DateTimeFormatter
+
+/**
+ * @see DateTimeFormatter
+ */
+private val DateFormats = listOf(
+  "yyyy-MM-dd",
+  "yyyy/MM/dd",
+  "dd-MM-yyyy",
+  "dd.MM.yyyy",
+  "MM/dd/yyyy",
+  "MM-dd-yyyy"
+)
+
+/**
+ * @see DateTimeFormatter
+ */
+private val TimeFormats = listOf(
+  "HH:mm",
+  "KK:mm a",
+  "HH:mm:ss",
+  "KK:mm:ss a"
+)
 
 class SettingsRepository(
   private val datastore: DataStore<Preferences>
 ) {
 
   val currencyIcon = datastore.data.map { it[CurrencyIcon] ?: "$" }
-  val dateFormatList = DateTimeFormatEnum.entries.map { it.format }
+  val dateFormatList = DateFormats
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
-  val timeFormatList = TimeFormatEnum.entries.map { it.format }
+  val timeFormatList = TimeFormats
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
   val clockFormatList = ClockFormatEnum.entries.toList()
   val is24HoursFormat = datastore.data.map { it[Is24HoursFormat] ?: false }

@@ -5,13 +5,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.colman.petals.R
 import br.com.colman.petals.use.pause.repository.Pause
-import br.com.colman.petals.utils.datetime.TimeFormatEnum
-import java.time.format.DateTimeFormatter
+import br.com.colman.petals.utils.truncatedToMinute
+import java.time.format.DateTimeFormatter.ISO_TIME
 
 @Preview
 @Composable
@@ -20,9 +19,6 @@ fun DeletePauseDialog(
   onDelete: () -> Unit = { },
   onDismiss: () -> Unit = { }
 ) {
-  val formatter = remember {
-    DateTimeFormatter.ofPattern(TimeFormatEnum.HH_MM.format)
-  }
   AlertDialog(
     onDismissRequest = onDismiss,
     title = {
@@ -35,8 +31,8 @@ fun DeletePauseDialog(
       Text(
         stringResource(
           R.string.are_you_sure_delete_pause,
-          pause.startTime.format(formatter),
-          pause.endTime.format(formatter)
+          pause.startTime.truncatedToMinute().format(ISO_TIME),
+          pause.endTime.truncatedToMinute().format(ISO_TIME)
         ),
       )
     },

@@ -47,8 +47,7 @@ import br.com.colman.petals.R.string.total_spent
 import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.repository.Use
-import br.com.colman.petals.utils.datetime.DateTimeFormatEnum
-import br.com.colman.petals.utils.datetime.TimeFormatEnum
+import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Cash
 import compose.icons.tablericons.ReportMoney
@@ -58,6 +57,8 @@ import org.koin.compose.koinInject
 import java.math.BigDecimal
 import java.math.RoundingMode.HALF_UP
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter.ISO_DATE
+import java.time.format.DateTimeFormatter.ISO_TIME
 import java.time.format.DateTimeFormatter.ofPattern
 
 @Preview
@@ -152,8 +153,9 @@ private fun DeleteUseButton(
   context: Context = LocalContext.current
 ) {
   val showDialog = remember { mutableStateOf(false) }
-  val dateString = use.date.format(ofPattern(DateTimeFormatEnum.YYYY_MM_DD_LINE.format))
-  val timeString = use.date.format(ofPattern(TimeFormatEnum.HH_MM.format))
+  // FIXME Date and Time string should come from Settings
+  val dateString = use.date.format(ISO_DATE)
+  val timeString = use.date.truncatedToMinute().format(ISO_TIME)
   Icon(TablerIcons.Trash, null, Modifier.clickable { showDialog.value = true })
 
   if (showDialog.value) {
