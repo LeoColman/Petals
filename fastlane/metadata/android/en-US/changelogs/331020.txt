@@ -1,0 +1,2 @@
+- Translation sync
+- Minor code changes
