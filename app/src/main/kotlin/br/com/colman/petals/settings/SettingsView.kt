@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.core.os.LocaleListCompat
 import br.com.colman.petals.settings.view.listitem.ClockListItem
 import br.com.colman.petals.settings.view.listitem.CurrencyListItem
@@ -50,7 +51,13 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     RepositoryListItem()
     DateListItem(currentDateFormat, settingsRepository.dateFormatList, settingsRepository::setDateFormat)
     TimeListItem(currentTimeFormat, settingsRepository.timeFormatList, settingsRepository::setTimeFormat)
-    ClockListItem(is24HoursFormat, settingsRepository.clockFormatList, settingsRepository::setIs24HoursFormat)
+    ClockListItem(
+      is24HoursFormat,
+      settingsRepository.clockFormatList.map {
+        stringResource(it)
+      },
+      settingsRepository::setIs24HoursFormat
+    )
     PrecisionListItem(
       currentDecimalPrecision,
       settingsRepository.decimalPrecisionList,

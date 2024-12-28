@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.colman.petals.R
 import br.com.colman.petals.R.string.clock_format_label
+import br.com.colman.petals.R.string.hours_12
+import br.com.colman.petals.R.string.hours_24
 import br.com.colman.petals.R.string.what_clock_format_should_be_used
 import br.com.colman.petals.settings.view.dialog.SelectFromListDialog
-import br.com.colman.petals.utils.datetime.ClockFormatEnum
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Clock
 
@@ -16,7 +16,7 @@ import compose.icons.tablericons.Clock
 @Composable
 fun ClockListItem(
   is24HoursFormat: Boolean = false,
-  clockFormatList: List<ClockFormatEnum> = listOf(),
+  clockFormatList: List<String> = listOf(),
   setIs24HoursFormat: (Boolean) -> Unit = {}
 ) {
   DialogListItem(
@@ -38,21 +38,17 @@ fun ClockListItem(
 @Composable
 private fun ClockDialog(
   is24HoursFormat: Boolean = false,
-  clockFormatList: List<ClockFormatEnum> = listOf(),
+  clockFormatList: List<String> = listOf(),
   setIs24HoursFormat: (Boolean) -> Unit = {},
   onDismiss: () -> Unit = {},
 ) {
   val context = LocalContext.current
-  val initialValue = if (is24HoursFormat) {
-    stringResource(id = R.string.hours_24)
-  } else {
-    stringResource(id = R.string.hours_12)
-  }
+  val initialValue = if (is24HoursFormat) stringResource(hours_24) else stringResource(hours_12)
 
   SelectFromListDialog(
     initialValue = initialValue,
-    possibleValues = clockFormatList.map { stringResource(it.nameRes) },
-    setValue = { value -> setIs24HoursFormat(value == context.getString(R.string.hours_24)) },
+    possibleValues = clockFormatList,
+    setValue = { value -> setIs24HoursFormat(value == context.getString(hours_24)) },
     onDismiss = onDismiss,
     label = clock_format_label
   )

@@ -6,7 +6,8 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import br.com.colman.petals.utils.datetime.ClockFormatEnum
+import br.com.colman.petals.R.string.hours_12
+import br.com.colman.petals.R.string.hours_24
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -34,6 +35,8 @@ private val TimeFormats = listOf(
   "KK:mm:ss a"
 )
 
+private val ClockFormats = listOf(hours_12, hours_24)
+
 class SettingsRepository(
   private val datastore: DataStore<Preferences>
 ) {
@@ -43,7 +46,7 @@ class SettingsRepository(
   val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
   val timeFormatList = TimeFormats
   val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
-  val clockFormatList = ClockFormatEnum.entries.toList()
+  val clockFormatList = ClockFormats
   val is24HoursFormat = datastore.data.map { it[Is24HoursFormat] ?: false }
   val decimalPrecisionList = listOf(0, 1, 2, 3)
   val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
