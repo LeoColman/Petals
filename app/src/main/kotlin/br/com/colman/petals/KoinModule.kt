@@ -35,17 +35,6 @@ import org.koin.dsl.module
 private val Context.settingsDatastore by preferencesDataStore("settings")
 private val Context.blockDataStore by preferencesDataStore("block")
 
-val KoinModule = module {
-  includes(AndroidModule, SqlDelightModule)
-  includes(UseIOModules)
-
-  single { UseRepository(get<Database>().useQueries) }
-  single { PauseRepository(get<Database>().pauseQueries) }
-  single { HitTimerRepository(get()) }
-  single { SettingsRepository(get<Context>().settingsDatastore) }
-  single { SettingsMigrations(get<Context>().settingsDatastore) }
-  single { CensorshipRepository(get<Context>().blockDataStore) }
-}
 
 private val AndroidModule = module {
   single { get<Context>().resources }
@@ -57,4 +46,16 @@ private val SqlDelightModule = module {
     AndroidSqliteDriver(Database.Schema, get(), "Database", RequerySQLiteOpenHelperFactory())
   }
   single { Database(get()) }
+}
+
+val KoinModule = module {
+  includes(AndroidModule, SqlDelightModule)
+  includes(UseIOModules)
+
+  single { UseRepository(get<Database>().useQueries) }
+  single { PauseRepository(get<Database>().pauseQueries) }
+  single { HitTimerRepository(get()) }
+  single { SettingsRepository(get<Context>().settingsDatastore) }
+  single { SettingsMigrations(get<Context>().settingsDatastore) }
+  single { CensorshipRepository(get<Context>().blockDataStore) }
 }

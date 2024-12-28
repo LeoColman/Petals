@@ -32,22 +32,32 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R.string.symptoms_introduction
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.data.ChartConfig
 import br.com.colman.petals.withdrawal.view.WithdrawalChart
+import java.time.LocalDateTime
 import org.koin.compose.koinInject
 
 @Composable
-@Preview
-fun Symptoms(
-  useRepository: UseRepository = koinInject()
-) {
-  val scrollState = rememberScrollState()
+fun SymptomsPage(useRepository: UseRepository = koinInject()) {
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
 
-  Column(Modifier.verticalScroll(scrollState).padding(8.dp, 8.dp, 8.dp, 64.dp), spacedBy(16.dp)) {
+  Symptoms(lastUseDate)
+}
+
+@Composable
+@Preview
+private fun SymptomsPreview() {
+  Symptoms(LocalDateTime.now().minusDays(10))
+}
+
+@Composable
+private fun Symptoms(lastUseDate: LocalDateTime?) {
+  val verticalScroll = rememberScrollState()
+  Column(Modifier.verticalScroll(verticalScroll).padding(8.dp, 8.dp, 8.dp, 64.dp), spacedBy(16.dp)) {
     Text(stringResource(symptoms_introduction))
 
     ChartConfig.entries().forEach { chart ->
@@ -65,3 +75,4 @@ fun Symptoms(
     }
   }
 }
+
