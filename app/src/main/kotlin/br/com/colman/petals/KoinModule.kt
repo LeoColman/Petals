@@ -35,7 +35,6 @@ import org.koin.dsl.module
 private val Context.settingsDatastore by preferencesDataStore("settings")
 private val Context.blockDataStore by preferencesDataStore("block")
 
-
 private val AndroidModule = module {
   single { get<Context>().resources }
   single { get<Context>().contentResolver }

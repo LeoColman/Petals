@@ -32,47 +32,59 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R.string.symptoms_introduction
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.withdrawal.data.ChartConfig
 import br.com.colman.petals.withdrawal.view.WithdrawalChart
-import java.time.LocalDateTime
 import org.koin.compose.koinInject
+import java.time.LocalDateTime
 
 @Composable
 fun SymptomsPage(useRepository: UseRepository = koinInject()) {
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
 
-  Symptoms(lastUseDate)
+  SymptomsOverview(lastUseDate)
 }
 
 @Composable
 @Preview
 private fun SymptomsPreview() {
-  Symptoms(LocalDateTime.now().minusDays(10))
+  SymptomsOverview(LocalDateTime.now().minusDays(10))
 }
 
 @Composable
-private fun Symptoms(lastUseDate: LocalDateTime?) {
-  val verticalScroll = rememberScrollState()
-  Column(Modifier.verticalScroll(verticalScroll).padding(8.dp, 8.dp, 8.dp, 64.dp), spacedBy(16.dp)) {
-    Text(stringResource(symptoms_introduction))
+@Preview
+private fun SymptomsNullPreview() {
+  SymptomsOverview(null)
+}
 
-    ChartConfig.entries().forEach { chart ->
-      Box(Modifier.height(250.dp)) {
-        WithdrawalChart(
-          lastUseDate = lastUseDate,
-          data = chart.data,
-          graphTitle = { getString(chart.title, "%.2f".format(it ?: 0.0)) },
-          verticalAxisTitle = stringResource(chart.verticalAxisTitle),
-          horizontalAxisTitle = stringResource(chart.horizontalAxisTitle),
-          maxX = chart.maxX,
-          maxY = chart.maxY
-        )
-      }
-    }
+@Composable
+private fun SymptomsOverview(lastUseDate: LocalDateTime?) {
+  Column(Modifier.verticalScroll(rememberScrollState()).padding(8.dp, 8.dp, 8.dp, 64.dp), spacedBy(16.dp)) {
+    Text(stringResource(symptoms_introduction))
+    ChartList(lastUseDate)
   }
 }
 
+@Composable
+private fun ChartList(lastUseDate: LocalDateTime?) {
+  ChartConfig.entries().forEach { chartConfig ->
+    WithdrawalChartBox(chartConfig, lastUseDate)
+  }
+}
+
+@Composable
+private fun WithdrawalChartBox(chartConfig: ChartConfig, lastUseDate: LocalDateTime?) {
+  Box(Modifier.height(250.dp)) {
+    WithdrawalChart(
+      lastUseDate = lastUseDate,
+      data = chartConfig.data,
+      graphTitle = { getString(chartConfig.title, "%.2f".format(it ?: 0.0)) },
+      verticalAxisTitle = stringResource(chartConfig.verticalAxisTitle),
+      horizontalAxisTitle = stringResource(chartConfig.horizontalAxisTitle),
+      maxX = chartConfig.maxX,
+      maxY = chartConfig.maxY
+    )
+  }
+}
