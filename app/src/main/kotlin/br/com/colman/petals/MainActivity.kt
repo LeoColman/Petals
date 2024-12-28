@@ -55,7 +55,6 @@ import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
 import java.time.LocalDateTime
 
-@Suppress("FunctionName")
 class MainActivity : AppCompatActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
   private var authorizedUntil = LocalDateTime.MIN
