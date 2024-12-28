@@ -19,16 +19,10 @@
 package br.com.colman.petals
 
 import android.app.Application
-import android.content.Context
-import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import br.com.colman.petals.BuildConfig.DEBUG
-import br.com.colman.petals.use.io.UseIOModule
-import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
-import org.koin.dsl.module
 import timber.log.Timber
 
 lateinit var koin: Koin
@@ -37,31 +31,20 @@ lateinit var koin: Koin
 class PetalsApplication : Application() {
   override fun onCreate() {
     super.onCreate()
+    startKoin()
+    startTimber()
+  }
+
+  private fun startKoin() {
     koin = startKoin {
       androidContext(this@PetalsApplication)
       modules(KoinModule)
-      modules(AndroidModule)
-      modules(UseIOModule)
-      modules(SqlDelightModule)
     }.koin
-    startTimber()
   }
-}
 
-private fun startTimber() {
-  if (DEBUG) {
-    Timber.plant(Timber.DebugTree())
+  private fun startTimber() {
+    if (DEBUG) {
+      Timber.plant(Timber.DebugTree())
+    }
   }
-}
-
-private val AndroidModule = module {
-  single { get<Context>().resources }
-  single { get<Context>().contentResolver }
-}
-
-private val SqlDelightModule = module {
-  single<SqlDriver> {
-    AndroidSqliteDriver(Database.Schema, get(), "Database", RequerySQLiteOpenHelperFactory())
-  }
-  single { Database(get()) }
 }
