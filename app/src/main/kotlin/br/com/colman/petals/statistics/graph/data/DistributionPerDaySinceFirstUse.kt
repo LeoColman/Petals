@@ -10,6 +10,7 @@ import br.com.colman.petals.statistics.graph.formatter.GramsValueFormatter
 import br.com.colman.petals.use.repository.Use
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
+import java.math.BigDecimal
 import java.time.LocalDate.now
 
 @Composable
@@ -41,7 +42,7 @@ private fun calculateAllTimeGramsDistribution(uses: List<Use>): List<Entry> {
   val lastUseDay = now().toEpochDay()
 
   return (firstUseDay..lastUseDay).map { day ->
-    val totalGrams = usesByDay[day]!!.sumOf { it.amountGrams }
+    val totalGrams = usesByDay[day]?.sumOf { it.amountGrams } ?: BigDecimal.ZERO
     Entry((day - firstUseDay).toFloat(), totalGrams.toFloat())
   }
 }
