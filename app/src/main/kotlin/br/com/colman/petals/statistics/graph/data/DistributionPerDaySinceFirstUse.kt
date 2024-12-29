@@ -5,17 +5,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
-import br.com.colman.petals.R
+import br.com.colman.petals.R.string.grams_distribution_over_days_since_first_use
 import br.com.colman.petals.statistics.graph.formatter.GramsValueFormatter
 import br.com.colman.petals.use.repository.Use
-import br.com.colman.petals.use.repository.totalGrams
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import java.time.LocalDate.now
 
 @Composable
 fun createAllTimeDistribution(uses: List<Use>): LineDataSet {
-  val label = stringResource(R.string.grams_distribution_over_days_since_first_use)
+  val label = stringResource(grams_distribution_over_days_since_first_use)
   return createAllTimeLineDataSet(calculateAllTimeGramsDistribution(uses), label)
 }
 
@@ -34,10 +33,16 @@ fun createAllTimeLineDataSet(entryList: List<Entry>, label: String): LineDataSet
 }
 
 private fun calculateAllTimeGramsDistribution(uses: List<Use>): List<Entry> {
-  val firstUseDay = uses.minBy { it.date }.localDate.toEpochDay()
-  val daysSinceFirstUse = (firstUseDay..now().toEpochDay()).toList()
-  return daysSinceFirstUse.associateWith { uses.filter { u -> u.localDate.toEpochDay() == it } }.toSortedMap()
-    .map { (k, v) ->
-      Entry((k - firstUseDay).toFloat(), v.totalGrams.toFloat())
-    }
+  if (uses.isEmpty()) return emptyList()
+
+  val usesByDay = uses.groupBy { it.localDate.toEpochDay() }
+
+  val firstUseDay = usesByDay.keys.min()
+  val lastUseDay = now().toEpochDay()
+
+  return (firstUseDay..lastUseDay).map { day ->
+    val totalGrams = usesByDay[day]!!.sumOf { it.amountGrams }
+    Entry((day - firstUseDay).toFloat(), totalGrams.toFloat())
+  }
 }
+
