@@ -46,4 +46,3 @@ private fun calculateAllTimeGramsDistribution(uses: List<Use>): List<Entry> {
     Entry((day - firstUseDay).toFloat(), totalGrams.toFloat())
   }
 }
-
