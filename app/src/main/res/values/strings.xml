@@ -172,11 +172,12 @@
     <string name="no_break_period">No break period</string>
     <string name="hours_12">12 hours</string>
     <string name="hours_24">24 hours</string>
-    <string name="grams_distribution_over_days_since_first_use">Grams distribution over days since first use</string>
+    <string name="grams_distribution_over_days_since_first_use">Grams per Day</string>
     <plurals name="last_x_days">
         <item quantity="one">Last %s day</item>
         <item quantity="other">Last %s days</item>
     </plurals>
 	<string name="language_label">App language</string>
 	<string name="what_language_should_be_used">What language should be used</string>
+    <string name="moving_average_grams_distribution">Average Grams per Day</string>
 </resources>
