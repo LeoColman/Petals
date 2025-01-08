@@ -133,7 +133,7 @@
     <string name="wait_until_3am_to_show_a_new_day">Новий день настає в 03:00 ночі. Корисно для тих хто лягає пізно.</string>
     <string name="current_anger">Поточна злість: %s</string>
     <plurals name="last_x_days">
-        <item quantity="one">Останній день</item>
+        <item quantity="one">Останній %s день</item>
         <item quantity="few">Останні %s дні</item>
         <item quantity="many">Останні %s днів</item>
         <item quantity="other">Останні %s днів</item>
@@ -161,7 +161,7 @@
     <string name="what_language_should_be_used">Якою мовою слід користуватися</string>
     <string name="edit_pause">Редагувати паузу</string>
     <string name="hours_24">24 години</string>
-    <string name="grams_distribution_over_days_since_first_use">Розподіл у грамах за дні з моменту першого використання</string>
+    <string name="grams_distribution_over_days_since_first_use">Грами на день</string>
     <string name="language_label">Мова програми</string>
     <string name="restlessness">Неспокійність</string>
     <string name="current_restlessness">Поточний неспокій: %s</string>
@@ -169,4 +169,5 @@
     <string name="what_clock_format_should_be_used">Який формат годинника слід використовувати</string>
     <string name="remove_ads_title">Видалити рекламу</string>
     <string name="remove_ads">Оновіть без реклами</string>
+    <string name="moving_average_grams_distribution">Середні грами на день</string>
 </resources>
