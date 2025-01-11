@@ -184,5 +184,8 @@
     <string name="what_language_should_be_used">Que idioma deve ser exibido</string>
     <string name="enable_or_disable_hour_of_day_line_in_stats">Ativar ou desativar linha da hora do dia em gráficos</string>
     <string name="language_label">Idioma do App</string>
+    <string name="moving_average_grams_distribution">Média de Gramas por Dia</string>
     <string name="description_label">descrição</string>
+    <string name="description">Descrição</string>
+    <string name="because_i_wanted">Porque eu queria</string>
 </resources>
