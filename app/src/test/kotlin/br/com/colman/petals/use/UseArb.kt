@@ -9,15 +9,23 @@ import io.kotest.matchers.sequences.shouldNotContainDuplicates
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeUUID
 import io.kotest.property.Arb
+import io.kotest.property.arbitrary.Codepoint
 import io.kotest.property.arbitrary.arbitrary
+import io.kotest.property.arbitrary.az
 import io.kotest.property.arbitrary.bigDecimal
 import io.kotest.property.arbitrary.localDateTime
+import io.kotest.property.arbitrary.string
 import io.kotest.property.arbitrary.take
 import io.kotest.property.checkAll
 
 val UseArb = arbitrary {
   val bigDecimals = Arb.bigDecimal((-100.0).toBigDecimal(), 100.0.toBigDecimal())
-  Use(Arb.localDateTime().bind(), bigDecimals.bind(), bigDecimals.bind())
+  Use(
+    Arb.localDateTime().bind(),
+    bigDecimals.bind(),
+    bigDecimals.bind(),
+    description = Arb.string(codepoints = Codepoint.az()).bind()
+  )
 }
 
 class UseArbitraryTest : FunSpec({
