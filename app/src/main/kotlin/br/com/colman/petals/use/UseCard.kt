@@ -50,6 +50,7 @@ import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Cash
+import compose.icons.tablericons.Notebook
 import compose.icons.tablericons.ReportMoney
 import compose.icons.tablericons.Scale
 import compose.icons.tablericons.Trash
@@ -128,6 +129,13 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
           val total = (amountGrams * costPerGram).setScale(decimalPrecision, HALF_UP)
           Text("$currencySymbol " + stringResource(total_spent, total))
         }
+
+        if(use.description.isNotBlank()) {
+          Row(Modifier, spacedBy(8.dp), CenterVertically) {
+            Icon(TablerIcons.Notebook, null)
+            Text(use.description)
+          }
+        }
       }
 
       Column(
@@ -203,17 +211,19 @@ private fun EditUseDialog(
   val costPerGram = remember { mutableStateOf(use.costPerGram.toString()) }
   val date = remember { mutableStateOf(use.localDate) }
   val time = remember { mutableStateOf(use.date.toLocalTime()) }
+  val description = remember { mutableStateOf(use.description) }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
     amount.value.toBigDecimalOrNull() ?: BigDecimal.ZERO,
     costPerGram.value.toBigDecimalOrNull() ?: BigDecimal.ZERO,
-    use.id
+    use.id,
+    description.value
   )
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time) },
+    text = { AddUseForm(amount, costPerGram, date, time, description) },
     confirmButton = { ConfirmEdit(onEditUse, use, onDismiss) }
   )
 }

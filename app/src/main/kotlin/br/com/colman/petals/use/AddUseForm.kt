@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import br.com.colman.petals.R.string
 import br.com.colman.petals.R.string.add_use
 import br.com.colman.petals.R.string.amount_grams_title
+import br.com.colman.petals.R.string.because_i_wanted
 import br.com.colman.petals.R.string.cost_per_gram_title
 import br.com.colman.petals.components.ClickableTextField
 import br.com.colman.petals.components.dateDialogState
@@ -33,6 +34,7 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.Calendar
 import compose.icons.tablericons.Cash
 import compose.icons.tablericons.Clock
+import compose.icons.tablericons.Notebook
 import compose.icons.tablericons.Scale
 import org.koin.compose.koinInject
 import java.time.LocalDate
@@ -44,7 +46,8 @@ fun AddUseForm(
   amount: MutableState<String>,
   cost: MutableState<String>,
   date: MutableState<LocalDate>,
-  time: MutableState<LocalTime>
+  time: MutableState<LocalTime>,
+  description: MutableState<String>,
 ) {
   val settingsRepository = koinInject<SettingsRepository>()
   val is24HoursFormat by settingsRepository.is24HoursFormat.collectAsState(false)
@@ -57,6 +60,8 @@ fun AddUseForm(
 
   var time by time
   val timeDialog = timeDialogState(is24HoursFormat = is24HoursFormat) { time = it }
+
+  var description by description
 
   Column(Modifier, Arrangement.spacedBy(8.dp)) {
     Text(stringResource(add_use), fontWeight = Bold, fontSize = 16.sp)
@@ -95,5 +100,13 @@ fun AddUseForm(
         }
       }
     }
+
+    OutlinedTextField(
+      value = description,
+      onValueChange = { description = it },
+      leadingIcon = { Icon(TablerIcons.Notebook, null) },
+      label = { Text(stringResource(string.description)) },
+      placeholder = { Text(stringResource(because_i_wanted)) }
+    )
   }
 }
