@@ -2,13 +2,15 @@ CREATE TABLE Use(
     date TEXT NOT NULL,
     amount_grams TEXT NOT NULL,
     cost_per_gram TEXT NOT NULL,
-    id TEXT PRIMARY KEY
+    id TEXT PRIMARY KEY,
+    description TEXT NOT NULL DEFAULT ""
 );
 
 upsert:
-INSERT INTO Use(date, amount_grams, cost_per_gram, id) VALUES ?
+INSERT INTO Use(date, amount_grams, cost_per_gram, id, description) VALUES ?
 ON CONFLICT (id) DO UPDATE SET date = excluded.date,
  amount_grams = excluded.amount_grams,
+ description = excluded.description,
   cost_per_gram = excluded.cost_per_gram;
 
 selectLast:

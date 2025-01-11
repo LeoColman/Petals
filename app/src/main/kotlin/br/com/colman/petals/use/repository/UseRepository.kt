@@ -44,12 +44,14 @@ fun Use.toEntity(): UseEntity = UseEntity(
   date.format(ISO_LOCAL_DATE_TIME),
   amountGrams.toPlainString(),
   costPerGram.toPlainString(),
-  id
+  id,
+  description
 )
 
 fun UseEntity.toUse() = Use(
   parse(date),
   amount_grams.toBigDecimal(),
   cost_per_gram.toBigDecimal(),
-  id
+  id,
+  description
 )
