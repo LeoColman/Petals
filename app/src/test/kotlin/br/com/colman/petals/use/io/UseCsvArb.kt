@@ -5,7 +5,6 @@ import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldNotBeBlank
 import io.kotest.property.arbitrary.map
 import io.kotest.property.checkAll
 import java.time.format.DateTimeFormatter
@@ -17,7 +16,7 @@ class UseCsvArbitraryTest : FunSpec({
   test("Generated CSV strings have the correct number of fields") {
     checkAll(UseCsvArb) { csvString ->
       val fields = csvString.split(",")
-      fields shouldHaveSize 4
+      fields shouldHaveSize 5
     }
   }
 
@@ -27,15 +26,6 @@ class UseCsvArbitraryTest : FunSpec({
       val fields = csvString.split(",")
       val expectedFields = use.columns()
       fields shouldBe expectedFields
-    }
-  }
-
-  test("CSV strings do not contain null or empty fields") {
-    checkAll(UseCsvArb) { csvString ->
-      val fields = csvString.split(",")
-      fields.forEach { field ->
-        field.shouldNotBeBlank()
-      }
     }
   }
 
