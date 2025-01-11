@@ -13,7 +13,9 @@ data class Use(
 
   val costPerGram: BigDecimal = BigDecimal.ZERO,
 
-  val id: String = UUID.randomUUID().toString()
+  val id: String = UUID.randomUUID().toString(),
+
+  val description: String = ""
 ) {
 
   @Transient
@@ -35,6 +37,7 @@ data class Use(
     if (date != other.date) return false
     if (amountGrams != other.amountGrams) return false
     if (costPerGram != other.costPerGram) return false
+    if (description != other.description) return false
 
     return true
   }
@@ -43,6 +46,7 @@ data class Use(
     var result = date.hashCode()
     result = 31 * result + amountGrams.hashCode()
     result = 31 * result + costPerGram.hashCode()
+    result = 31 * result + description.hashCode()
     return result
   }
 }
