@@ -184,4 +184,5 @@
     <string name="what_language_should_be_used">Que idioma deve ser exibido</string>
     <string name="enable_or_disable_hour_of_day_line_in_stats">Ativar ou desativar linha da hora do dia em gráficos</string>
     <string name="language_label">Idioma do App</string>
+    <string name="description_label">descrição</string>
 </resources>

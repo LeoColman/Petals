@@ -16,8 +16,9 @@ object UseCsvParser {
     val amount = values[1].toBigDecimal()
     val cost = values[2].toBigDecimal()
     val id = parseOrGenerateUUID(values.getOrNull(3))
+    val description = values.getOrElse(4) { "" }
 
-    Use(dateTime, amount, cost, id)
+    Use(dateTime, amount, cost, id, description)
   }
 
   private fun parseDateTime(date: String) = LocalDateTime.parse(date, ISO_LOCAL_DATE_TIME)

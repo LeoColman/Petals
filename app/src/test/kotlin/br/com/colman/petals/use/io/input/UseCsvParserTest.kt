@@ -61,6 +61,22 @@ class UseCsvParserTest : FunSpec({
     parsed.getOrThrow().id.shouldBeUUID()
   }
 
+  test("Parsers the description field if present") {
+    val use = UseArb.next().copy(description = "my description")
+    val useCsv = use.columns().joinToString(",")
+    val parsed = UseCsvParser.parse(useCsv)
+
+    parsed.getOrThrow().description shouldBe "my description"
+  }
+
+  test("Parsers the description field to empty if absent") {
+    val use = UseArb.next().copy(description = "my description")
+    val useCsv = use.columns().dropLast(1).joinToString(",")
+    val parsed = UseCsvParser.parse(useCsv)
+
+    parsed.getOrThrow().description shouldBe ""
+  }
+
   test("Parses successfully even if extra fields are present") {
     val use = UseArb.next()
     val extraField = "extra"
