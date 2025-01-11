@@ -82,6 +82,7 @@ fun UseCards(
   }
 }
 
+@Suppress("LongMethod")
 @Preview
 @Composable
 fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use) -> Unit = {}) {
@@ -130,7 +131,7 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
           Text("$currencySymbol " + stringResource(total_spent, total))
         }
 
-        if(use.description.isNotBlank()) {
+        if (use.description.isNotBlank()) {
           Row(Modifier, spacedBy(8.dp), CenterVertically) {
             Icon(TablerIcons.Notebook, null)
             Text(use.description)

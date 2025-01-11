@@ -22,9 +22,8 @@ import android.content.res.Resources
 import br.com.colman.petals.R.string.amount_label
 import br.com.colman.petals.R.string.cost_per_gram_label
 import br.com.colman.petals.R.string.date_label
-import br.com.colman.petals.R.string.id_label
-import br.com.colman.petals.R
 import br.com.colman.petals.R.string.description_label
+import br.com.colman.petals.R.string.id_label
 import br.com.colman.petals.use.UseArb
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
