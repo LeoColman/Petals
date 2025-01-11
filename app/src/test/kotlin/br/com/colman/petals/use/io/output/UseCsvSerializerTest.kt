@@ -23,6 +23,8 @@ import br.com.colman.petals.R.string.amount_label
 import br.com.colman.petals.R.string.cost_per_gram_label
 import br.com.colman.petals.R.string.date_label
 import br.com.colman.petals.R.string.id_label
+import br.com.colman.petals.R
+import br.com.colman.petals.R.string.description_label
 import br.com.colman.petals.use.UseArb
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
@@ -41,7 +43,7 @@ import java.time.LocalDateTime
 
 class UseCsvSerializerTest : FunSpec({
   val useRepository = mockk<UseRepository>()
-  val useCsvHeaders = UseCsvHeaders("date", "amount", "cost", "id")
+  val useCsvHeaders = UseCsvHeaders("date", "amount", "cost", "id", "description")
   val target = UseCsvSerializer(useRepository, useCsvHeaders)
 
   test("Includes all values in resulting file") {
@@ -60,7 +62,7 @@ class UseCsvSerializerTest : FunSpec({
 
     val file = target.computeUseCsv()
 
-    file shouldStartWith "date,amount,cost,id\n"
+    file shouldStartWith "date,amount,cost,id,description\n"
   }
 
   test("Produces CSV with only headers when there is no data") {
@@ -69,7 +71,7 @@ class UseCsvSerializerTest : FunSpec({
 
     val file = target.computeUseCsv()
 
-    file shouldBe "date,amount,cost,id"
+    file shouldBe "date,amount,cost,id,description"
   }
 
   test("Initializes headers from resources correctly") {
@@ -78,11 +80,12 @@ class UseCsvSerializerTest : FunSpec({
       every { getString(amount_label) } returns "b"
       every { getString(cost_per_gram_label) } returns "c"
       every { getString(id_label) } returns "d"
+      every { getString(description_label) } returns "e"
     }
 
     val localizedHeaders = UseCsvHeaders(resources)
 
-    localizedHeaders.toList() shouldBe listOf("a", "b", "c", "d")
+    localizedHeaders.toList() shouldBe listOf("a", "b", "c", "d", "e")
   }
 
   test("Throws exception when data retrieval fails") {
@@ -117,19 +120,19 @@ class UseCsvSerializerTest : FunSpec({
 
     val file = target.computeUseCsv()
 
-    val expectedDataLine = "2024-02-09T12:34:56,1234.56,78.90,d483262c-ed3f-4457-8e23-2302c8c7a43e"
+    val expectedDataLine = "2024-02-09T12:34:56,1234.56,78.90,d483262c-ed3f-4457-8e23-2302c8c7a43e,"
 
     file shouldContain expectedDataLine
   }
 
   test("Handles headers with non-ASCII characters") {
-    val localizedHeaders = UseCsvHeaders("ã", "æ", "̉ħ", "ŋ")
+    val localizedHeaders = UseCsvHeaders("ã", "æ", "̉ħ", "ŋ", "®")
     val targetWithLocalizedHeaders = UseCsvSerializer(useRepository, localizedHeaders)
     val uses = UseArb.take(1).toList()
     every { useRepository.all() } returns flowOf(uses)
 
     val file = targetWithLocalizedHeaders.computeUseCsv()
 
-    file shouldStartWith "ã,æ,̉ħ,ŋ\n"
+    file shouldStartWith "ã,æ,̉ħ,ŋ,®\n"
   }
 })

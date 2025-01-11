@@ -19,6 +19,7 @@
 package br.com.colman.petals.use.io.output
 
 import android.content.res.Resources
+import br.com.colman.petals.R
 import br.com.colman.petals.R.string.amount_label
 import br.com.colman.petals.R.string.cost_per_gram_label
 import br.com.colman.petals.R.string.date_label
@@ -29,15 +30,22 @@ import kotlinx.coroutines.flow.first
 import java.io.ByteArrayOutputStream
 import kotlin.text.Charsets.UTF_8
 
-data class UseCsvHeaders(val date: String, val amount: String, val costPerGram: String, val id: String) {
+data class UseCsvHeaders(
+  val date: String,
+  val amount: String,
+  val costPerGram: String,
+  val id: String,
+  val description: String
+) {
   constructor(resources: Resources) : this(
     resources.getString(date_label),
     resources.getString(amount_label),
     resources.getString(cost_per_gram_label),
-    resources.getString(id_label)
+    resources.getString(id_label),
+    resources.getString(R.string.description_label)
   )
 
-  fun toList() = listOf(date, amount, costPerGram, id)
+  fun toList() = listOf(date, amount, costPerGram, id, description)
 }
 
 class UseCsvSerializer(

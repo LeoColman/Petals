@@ -25,7 +25,8 @@ data class Use(
     date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
     amountGrams.toPlainString(),
     costPerGram.toPlainString(),
-    id
+    id,
+    description
   )
 
   override fun equals(other: Any?): Boolean {
