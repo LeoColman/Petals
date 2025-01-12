@@ -25,6 +25,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FileDataPart
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.lang.Thread.sleep
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.util.Locale
@@ -157,7 +158,7 @@ class ScreenshotTakerTest : FunSpec({
         onNodeWithTag("Days 60").performClick()
         waitForIdle()
         onNodeWithTag("StatisticsMainColumn").performTouchInput {
-          swipeUp(endY = bottom * 0.5f)
+          swipeUp(endY = bottom * 0.25f)
         }
         waitForIdle()
 
@@ -231,6 +232,7 @@ private fun MainActivity.setLocale(locale: Locale) {
 }
 
 private fun AndroidComposeUiTest<*>.takeScreenshot(file: String, lang: String, country: String) {
+  sleep(3000)
   val bitmap = onRoot().captureToImage().asAndroidBitmap()
   uploadScreenshot(bitmap, file, lang, country)
 }
@@ -243,7 +245,7 @@ private fun uploadScreenshot(bitmap: Bitmap, fileName: String, lang: String, cou
   val tempFile = File.createTempFile(fileName, null).also { it.writeBytes(byteArray) }
 
   val computerIpAddress = "10.0.2.2"
-  Fuel.upload("http://$computerIpAddress:8080/upload?country=$country&lang=$lang")
+  Fuel.upload("http://$computerIpAddress:8081/upload?country=$country&lang=$lang")
     .add(FileDataPart(tempFile, name = "file", filename = fileName))
     .response()
 }
