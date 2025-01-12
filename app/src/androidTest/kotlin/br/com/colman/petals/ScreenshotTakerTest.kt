@@ -25,6 +25,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FileDataPart
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.lang.Thread.sleep
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.util.Locale
@@ -32,12 +33,11 @@ import java.util.Locale
 val locales = listOf(
   "de" to "DE",
   "en" to "US",
-  "fr" to "FR",
   "es" to "ES",
+  "fr" to "FR",
   "it" to "IT",
   "pt" to "BR",
   "ru" to "RU",
-  "ta" to "IN",
   "tr" to "TR",
   "uk" to ""
 )
@@ -157,52 +157,11 @@ class ScreenshotTakerTest : FunSpec({
         onNodeWithTag("Days 60").performClick()
         waitForIdle()
         onNodeWithTag("StatisticsMainColumn").performTouchInput {
-          swipeUp(endY = bottom * 0.5f)
+          swipeUp(endY = bottom * 0.25f)
         }
         waitForIdle()
 
         takeScreenshot("6.png", lang, country)
-      }
-    }
-  }
-
-  test("ScreenShot 7") {
-    runAndroidComposeUiTest<MainActivity> {
-      locales.forEach { (lang, country) ->
-        activity?.setLocale(Locale(lang, country))
-
-        onNodeWithTag("InfoButton").performClick()
-        onAllNodesWithTag("ExpandCollapseLine").onFirst().performClick()
-
-        waitForIdle()
-
-        takeScreenshot("7.png", lang, country)
-      }
-    }
-  }
-
-  test("ScreenShot 8") {
-    runAndroidComposeUiTest<MainActivity> {
-      locales.forEach { (lang, country) ->
-        activity?.setLocale(Locale(lang, country))
-
-        onNodeWithTag("InfoButton").performClick()
-        onAllNodesWithTag("ExpandCollapseLine").onFirst().performClick()
-        onNodeWithTag("InformationViewMainColumn").performTouchInput {
-          swipeUp()
-        }
-        waitForIdle()
-        onNodeWithTag("SelectCountry").performClick()
-        onAllNodesWithTag("DropdownMenuItem").onFirst().performClick()
-        waitForIdle()
-
-        onNodeWithTag("InformationViewMainColumn").performTouchInput {
-          swipeUp(endY = bottom * 0.7f)
-        }
-
-        waitForIdle()
-
-        takeScreenshot("8.png", lang, country)
       }
     }
   }
@@ -231,6 +190,7 @@ private fun MainActivity.setLocale(locale: Locale) {
 }
 
 private fun AndroidComposeUiTest<*>.takeScreenshot(file: String, lang: String, country: String) {
+  sleep(3000)
   val bitmap = onRoot().captureToImage().asAndroidBitmap()
   uploadScreenshot(bitmap, file, lang, country)
 }
@@ -243,7 +203,7 @@ private fun uploadScreenshot(bitmap: Bitmap, fileName: String, lang: String, cou
   val tempFile = File.createTempFile(fileName, null).also { it.writeBytes(byteArray) }
 
   val computerIpAddress = "10.0.2.2"
-  Fuel.upload("http://$computerIpAddress:8080/upload?country=$country&lang=$lang")
+  Fuel.upload("http://$computerIpAddress:8081/upload?country=$country&lang=$lang")
     .add(FileDataPart(tempFile, name = "file", filename = fileName))
     .response()
 }

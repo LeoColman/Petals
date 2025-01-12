@@ -1,11 +1,11 @@
 #!/usr/bin/env kotlin
 
-@file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.1")
-@file:DependsOn("io.ktor:ktor-server-core-jvm:3.0.3")
-@file:DependsOn("io.ktor:ktor-server-netty-jvm:3.0.3")
-@file:DependsOn("io.ktor:ktor-server-content-negotiation-jvm:3.0.3")
-@file:DependsOn("io.ktor:ktor-serialization-kotlinx-json-jvm:3.0.3")
-@file:DependsOn("io.ktor:ktor-server-host-common-jvm:3.0.3")
+@file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0")
+@file:DependsOn("io.ktor:ktor-server-core-jvm:2.3.12")
+@file:DependsOn("io.ktor:ktor-server-netty-jvm:2.3.12")
+@file:DependsOn("io.ktor:ktor-server-content-negotiation-jvm:2.3.12")
+@file:DependsOn("io.ktor:ktor-serialization-kotlinx-json-jvm:2.3.12")
+@file:DependsOn("io.ktor:ktor-server-host-common-jvm:2.3.12")
 
 import io.ktor.http.*
 import io.ktor.http.content.*
@@ -38,7 +38,7 @@ fun disableAnimations() {
 
 // Function to start the server
 fun startServer(): NettyApplicationEngine {
-  return embeddedServer(Netty, port = 8080) {
+  return embeddedServer(Netty, port = 8081) {
     install(ContentNegotiation) {
       json()
     }
