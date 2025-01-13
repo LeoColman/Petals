@@ -50,6 +50,13 @@ workflow(
   sourceFile = __FILE__
 ) {
   job(id = "create-apk", runsOn = UbuntuLatest) {
+    run(
+      name = "Set up Git Identity",
+      command = """
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "actions@github.com"
+        """.trimIndent()
+    )
 
     uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
     uses(action = Checkout(sshKey = expr { secrets["RELEASE_KEY"]!!}))
