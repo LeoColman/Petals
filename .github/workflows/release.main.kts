@@ -16,8 +16,6 @@ import io.github.typesafegithub.workflows.actions.entrostat.GitSecretAction
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildAction
 import io.github.typesafegithub.workflows.actions.ruby.SetupRuby
 import io.github.typesafegithub.workflows.actions.softprops.ActionGhRelease
-import io.github.typesafegithub.workflows.domain.Mode.Write
-import io.github.typesafegithub.workflows.domain.Permission.Contents
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch.Input
@@ -51,17 +49,10 @@ workflow(
   ),
   sourceFile = __FILE__
 ) {
-  job(id = "create-apk", runsOn = UbuntuLatest, permissions = mapOf(Contents to Write)) {
-    run(
-      name = "Set up Git Identity",
-      command = """
-            git config --global user.name "GitHub Actions"
-            git config --global user.email "actions@github.com"
-        """.trimIndent()
-    )
+  job(id = "create-apk", runsOn = UbuntuLatest) {
 
     uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
-    uses(action = Checkout())
+    uses(action = Checkout(sshKey = expr { secrets["RELEASE_KEY"]!!}))
     uses(name = "reveal-secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
 
     val versionTypeExpr = expr { github["event.inputs.version_type"]!! }
