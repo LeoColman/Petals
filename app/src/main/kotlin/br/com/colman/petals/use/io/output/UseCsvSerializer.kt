@@ -19,6 +19,7 @@
 package br.com.colman.petals.use.io.output
 
 import android.content.res.Resources
+import androidx.compose.ui.graphics.Path
 import br.com.colman.petals.R
 import br.com.colman.petals.R.string.amount_label
 import br.com.colman.petals.R.string.cost_per_gram_label
@@ -28,6 +29,7 @@ import br.com.colman.petals.use.repository.UseRepository
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import kotlinx.coroutines.flow.first
 import java.io.ByteArrayOutputStream
+import java.util.regex.Matcher
 import kotlin.text.Charsets.UTF_8
 
 data class UseCsvHeaders(

@@ -15,11 +15,7 @@ val currentVersionName = versionNameRegex.find(buildGradleContent)!!.groupValues
 
 println("Current version: $currentVersionName ($currentVersionCode)")
 println("Detecting bump type...")
-var bumpType = args.getOrNull(0)
-if(bumpType == null) {
-  println("BUMP_TYPE not set, input one of: major, minor, patch")
-  exitProcess(1)
-}
+var bumpType = args[0]
 
 check(bumpType in listOf("major", "minor", "patch")) { "BUMP_TYPE must be one of: major, minor, patch" }
 
@@ -54,11 +50,9 @@ if (!changelogFile.exists()) {
   changelogFile.createNewFile()
 }
 
-val changelog = args.getOrNull(1)
-if(changelog != null) {
-  println("Writing changelog...")
-  changelogFile.writeText(changelog)
-}
+val changelog = args[1].replace("\\n", "\n")
+println("Writing changelog...")
+changelogFile.writeText(changelog)
 
 ProcessBuilder("git", "add", buildGradleFile.absolutePath, changelogFile.absolutePath).inheritIO().start().waitFor()
 ProcessBuilder("git", "commit", "-m", "🔖 Prepare Release $newVersionName ($newVersionCode)").inheritIO().start().waitFor()
