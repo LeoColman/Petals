@@ -17,9 +17,7 @@ import io.github.typesafegithub.workflows.actions.gradle.GradleBuildAction
 import io.github.typesafegithub.workflows.actions.ruby.SetupRuby
 import io.github.typesafegithub.workflows.actions.softprops.ActionGhRelease
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
-import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
-import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch.Input
-import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch.Type.String
+import io.github.typesafegithub.workflows.domain.triggers.Push
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -30,44 +28,13 @@ val GITHUB_REF_NAME by Contexts.github
 
 workflow(
   name = "Release",
-  on = listOf(
-    WorkflowDispatch(
-      inputs = mapOf(
-        "version_type" to Input(
-          description = "Type of version bump (major, minor, patch)",
-          required = true,
-          type = WorkflowDispatch.Type.Choice,
-          options = listOf("major", "minor", "patch")
-        ),
-        "changelog" to Input(
-          description = "Changelog content for this release",
-          required = true,
-          type = String,
-        )
-      )
-    )
-  ),
+  on = listOf(Push(tags = listOf("*"))),
   sourceFile = __FILE__
 ) {
   job(id = "create-apk", runsOn = UbuntuLatest) {
     uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
-    run(
-      name = "Set up Kotlin",
-      command = """
-          sudo apt-get update &&
-          sudo apt-get install -y kotlin
-        """.trimIndent()
-    )
     uses(action = Checkout())
     uses(name = "reveal-secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
-
-    val versionTypeExpr = expr { github["event.inputs.version_type"]!! }
-    val changelogExpr = expr { github["event.inputs.changelog"]!! }
-    run(
-      name = "Run Bump Version Script",
-      command = "app/bump_version.main.kts $versionTypeExpr $changelogExpr"
-    )
-
 
     uses(name = "Create APK", action = GradleBuildAction(arguments = "assembleGithubRelease"))
 
