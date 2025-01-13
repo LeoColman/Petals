@@ -16,6 +16,8 @@ import io.github.typesafegithub.workflows.actions.entrostat.GitSecretAction
 import io.github.typesafegithub.workflows.actions.gradle.GradleBuildAction
 import io.github.typesafegithub.workflows.actions.ruby.SetupRuby
 import io.github.typesafegithub.workflows.actions.softprops.ActionGhRelease
+import io.github.typesafegithub.workflows.domain.Mode.Write
+import io.github.typesafegithub.workflows.domain.Permission.Contents
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch.Input
@@ -49,7 +51,7 @@ workflow(
   ),
   sourceFile = __FILE__
 ) {
-  job(id = "create-apk", runsOn = UbuntuLatest) {
+  job(id = "create-apk", runsOn = UbuntuLatest, permissions = mapOf(Contents to Write)) {
     uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
     uses(action = Checkout())
     uses(name = "reveal-secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
@@ -58,7 +60,8 @@ workflow(
     val changelogExpr = expr { github["event.inputs.changelog"]!! }
     run(
       name = "Run Bump Version Script",
-      command = "app/bump_version.main.kts $versionTypeExpr $changelogExpr"
+      command = "app/bump_version.main.kts $versionTypeExpr $changelogExpr",
+
     )
 
 

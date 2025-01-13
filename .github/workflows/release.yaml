@@ -34,6 +34,8 @@ jobs:
       run: 'git diff --exit-code ''.github/workflows/release.yaml'''
   create-apk:
     runs-on: 'ubuntu-latest'
+    permissions:
+      contents: 'write'
     needs:
     - 'check_yaml_consistency'
     steps:
