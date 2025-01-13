@@ -59,7 +59,7 @@ jobs:
         gpg-private-key: '${{ secrets.GPG_KEY }}'
     - id: 'step-4'
       name: 'Run Bump Version Script'
-      run: 'app/bump_version.main.kts ${{ github.event.inputs.version_type }} ${{ github.event.inputs.changelog }}'
+      run: 'app/bump_version.main.kts "${{ github.event.inputs.version_type }}" "${{ github.event.inputs.changelog }}"'
     - id: 'step-5'
       name: 'Create APK'
       uses: 'gradle/gradle-build-action@v3'
@@ -69,8 +69,8 @@ jobs:
       name: 'Create release'
       uses: 'softprops/action-gh-release@v2'
       with:
-        name: '${{ github.GITHUB_REF_NAME }}'
-        tag_name: '${{ github.GITHUB_REF_NAME }}'
+        name: '${{ steps.step-4.outputs.version }}'
+        tag_name: '${{ steps.step-4.outputs.version }}'
         draft: 'false'
         files: |-
           app/build/outputs/apk/github/release/app-github-release.apk
