@@ -4,9 +4,20 @@
 
 name: 'Release'
 on:
-  push:
-    tags:
-    - '*'
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Type of version bump (major, minor, patch)'
+        type: 'choice'
+        required: true
+        options:
+        - 'major'
+        - 'minor'
+        - 'patch'
+      changelog:
+        description: 'Changelog content for this release'
+        type: 'string'
+        required: true
 jobs:
   check_yaml_consistency:
     name: 'Check YAML consistency'
@@ -40,11 +51,14 @@ jobs:
       with:
         gpg-private-key: '${{ secrets.GPG_KEY }}'
     - id: 'step-3'
+      name: 'Run Bump Version Script'
+      run: 'app/bump_version.main.kts ${{ github.event.inputs.version_type }} ${{ github.event.inputs.changelog }}'
+    - id: 'step-4'
       name: 'Create APK'
       uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'assembleGithubRelease'
-    - id: 'step-4'
+    - id: 'step-5'
       name: 'Create release'
       uses: 'softprops/action-gh-release@v2'
       with:
@@ -57,16 +71,16 @@ jobs:
           app/build/outputs/mapping/githubRelease/configuration.txt
           app/build/outputs/mapping/githubRelease/seeds.txt
           app/build/outputs/mapping/githubRelease/usage.txt
-    - id: 'step-5'
+    - id: 'step-6'
       name: 'Create Bundle'
       uses: 'gradle/gradle-build-action@v3'
       with:
         arguments: 'clean bundlePlaystoreRelease'
-    - id: 'step-6'
+    - id: 'step-7'
       uses: 'ruby/setup-ruby@v1'
       with:
         ruby-version: '3.2.3'
-    - id: 'step-7'
+    - id: 'step-8'
       name: 'Publish to Playstore'
       working-directory: 'fastlane'
       run: |-
