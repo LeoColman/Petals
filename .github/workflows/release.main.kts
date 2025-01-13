@@ -64,7 +64,7 @@ workflow(
 
     val versionTypeExpr = expr { github["event.inputs.version_type"]!! }
     val changelogExpr = expr { github["event.inputs.changelog"]!! }
-    run(
+    val bumpStep = run(
       name = "Run Bump Version Script",
       command = "app/bump_version.main.kts \"$versionTypeExpr\" \"$changelogExpr\"",
     )
@@ -73,8 +73,8 @@ workflow(
 
     uses(
       name = "Create release", action = ActionGhRelease(
-        tagName = expr { GITHUB_REF_NAME },
-        name = expr { GITHUB_REF_NAME },
+        tagName = expr { bumpStep.outputs["version"] },
+        name = expr { bumpStep.outputs["version"] },
         draft = false,
         files = listOf(
           "app/build/outputs/apk/github/release/app-github-release.apk",

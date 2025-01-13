@@ -64,3 +64,5 @@ ProcessBuilder("git", "add", buildGradleFile.absolutePath, changelogFile.absolut
 ProcessBuilder("git", "commit", "-m", "🔖 Prepare Release $newVersionName ($newVersionCode)").inheritIO().start().waitFor()
 ProcessBuilder("git", "tag", "-a", newVersionName, "-m", "Release version $newVersionName").inheritIO().start().waitFor()
 ProcessBuilder("git", "push", "origin", "main", "--tags").inheritIO().start().waitFor()
+
+println("::set-output name=version::$newVersionName")
