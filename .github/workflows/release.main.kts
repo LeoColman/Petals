@@ -66,10 +66,8 @@ workflow(
     val changelogExpr = expr { github["event.inputs.changelog"]!! }
     run(
       name = "Run Bump Version Script",
-      command = "app/bump_version.main.kts $versionTypeExpr $changelogExpr",
-
+      command = "app/bump_version.main.kts \"$versionTypeExpr\" \"$changelogExpr\"",
     )
-
 
     uses(name = "Create APK", action = GradleBuildAction(arguments = "assembleGithubRelease"))
 
