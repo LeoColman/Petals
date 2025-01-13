@@ -3,9 +3,9 @@
 import java.io.File
 import kotlin.system.exitProcess
 
-val buildGradleFile = File("./build.gradle.kts")
-val changelogs = "../fastlane/metadata/android/en-US/changelogs"
-val buildGradleContent = File("./build.gradle.kts").readText()
+val buildGradleFile = File("app/build.gradle.kts")
+val changelogs = "fastlane/metadata/android/en-US/changelogs"
+val buildGradleContent = buildGradleFile.readText()
 
 val versionCodeRegex = Regex("""versionCode\s*=\s*(\d+)""")
 val versionNameRegex = Regex("""versionName\s*=\s*"([\d.]+)"""")
@@ -50,6 +50,7 @@ buildGradleFile.writeText(updatedContent)
 
 val changelogFile = File(changelogs, "$newVersionCode.txt")
 if (!changelogFile.exists()) {
+  println("Creating changelog file... $changelogFile")
   changelogFile.createNewFile()
 }
 
