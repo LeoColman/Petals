@@ -30,6 +30,9 @@ class UseRepository(
 
   fun getLastUseDate() = getLastUse().map { it?.date }
 
+  fun getCount():Flow<Int> = useQueries.selectCountAll().asFlow().mapToOneOrNull(Dispatchers.IO).map { it?.toInt()!! }
+
+
   fun all(): Flow<List<Use>> = useQueries.selectAll().asFlow().mapToList(
     Dispatchers.IO
   ).map { it.map(UseEntity::toUse) }

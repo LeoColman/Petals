@@ -14,19 +14,30 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import br.com.colman.petals.KOFI_URL
 import br.com.colman.petals.R.string.add_use
 import br.com.colman.petals.R.string.add_use_during_pause_alert
+import br.com.colman.petals.R.string.later
 import br.com.colman.petals.R.string.no
 import br.com.colman.petals.R.string.ok
+import br.com.colman.petals.R.string.support_my_work
+import br.com.colman.petals.R.string.support_now
+import br.com.colman.petals.R.string.thank_your_for_using_message
 import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.R.string.yes_timer
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
+import br.com.colman.petals.utils.launchBrowser
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Lock
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import java.math.BigDecimal.ZERO
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -38,11 +49,30 @@ fun AddUseButton(
   isAnyPauseActive: Boolean
 ) {
   var openAddUseDialog by remember { mutableStateOf(false) }
+  var openSupportDialog by remember { mutableStateOf(false) }
   var openConfirmAddUseDialog by remember { mutableStateOf(false) }
   val lastUse by repository.getLastUse().collectAsState(null)
+  val context = LocalContext.current
 
   if (openAddUseDialog) {
-    AddUseDialog(lastUse, { repository.upsert(it) }) { openAddUseDialog = false }
+    AddUseDialog(lastUse, {
+      repository.upsert(it)
+      runBlocking {
+        val usesCounter = repository.getCount().first()
+        if (usesCounter > 0 && usesCounter % 3 == 0) {
+          openSupportDialog = true
+        }
+      }
+    }) { openAddUseDialog = false }
+  }
+
+  if (openSupportDialog) {
+    SupportDeveloperDialogAfterUses({
+      openSupportDialog = false
+    }, {
+      openSupportDialog = false
+      launchBrowser(KOFI_URL, context)
+    })
   }
 
   if (openConfirmAddUseDialog) {
@@ -77,6 +107,33 @@ private fun PauseUseButton(onClick: () -> Unit = { }) {
     }
   }
 }
+
+
+@Composable
+@Preview
+private fun SupportDeveloperDialogAfterUses(
+  onDismiss: () -> Unit = {},
+  onConfirm: () -> Unit = {}
+) {
+  AlertDialog(
+    onDismissRequest = onDismiss,
+    title = { Text(stringResource(support_my_work)) },
+    text = { Text(stringResource(thank_your_for_using_message), fontWeight = FontWeight.Bold) },
+    confirmButton = {
+      TextButton(onConfirm) {
+        Text(stringResource(support_now))
+      }
+    },
+    dismissButton = {
+      TextButton(onDismiss) {
+        Text(
+          stringResource(later), color = Color.LightGray
+        )
+      }
+    }
+  )
+}
+
 
 @Composable
 @Preview
