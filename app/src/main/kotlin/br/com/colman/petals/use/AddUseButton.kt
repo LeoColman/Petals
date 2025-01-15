@@ -59,7 +59,7 @@ fun AddUseButton(
       repository.upsert(it)
       runBlocking {
         val usesCounter = repository.getCount().first()
-        if (usesCounter > 0 && usesCounter % 3 == 0) {
+        if (usesCounter > 0 && usesCounter % 42 == 0) {
           openSupportDialog = true
         }
       }
