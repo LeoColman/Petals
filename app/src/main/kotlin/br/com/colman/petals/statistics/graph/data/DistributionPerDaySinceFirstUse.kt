@@ -51,7 +51,6 @@ fun createAllTimeAverageDataSet(entryList: List<Entry>, label: String): LineData
     color = Color.Green.toArgb()
     mode = LineDataSet.Mode.CUBIC_BEZIER
     enableDashedLine(10f, 5f, 0f)
-
   }
 }
 

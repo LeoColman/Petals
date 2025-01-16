@@ -7,8 +7,6 @@ import br.com.colman.petals.statistics.graph.component.LineChart
 import br.com.colman.petals.statistics.graph.data.createAllTimeDistributionWithMovingAverage
 import br.com.colman.petals.statistics.graph.formatter.DaysSinceFirstUseFormatter
 import br.com.colman.petals.use.repository.Use
-import com.github.mikephil.charting.components.LimitLine
-import java.time.YearMonth
 
 @Composable
 fun AllTimeGraph(uses: List<Use>, dateFormat: String) {
@@ -21,6 +19,5 @@ fun AllTimeGraph(uses: List<Use>, dateFormat: String) {
     labelCount = 5
     granularity = 1f
     valueFormatter = DaysSinceFirstUseFormatter(uses, dateFormat).formatDate
-
   }
 }
