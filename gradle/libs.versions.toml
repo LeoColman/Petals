@@ -2,7 +2,7 @@
 androidx = "1.6.1"
 composeCompiler = "1.5.11"
 compose = "1.7.6"
-datastore = "1.0.0"
+datastore = "1.1.2"
 detekt = "1.23.7"
 koin = "4.0.1"
 kotest = "5.9.1"
