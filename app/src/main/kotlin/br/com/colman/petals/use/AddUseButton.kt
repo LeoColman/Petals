@@ -1,5 +1,8 @@
 package br.com.colman.petals.use
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -19,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.colman.petals.KOFI_URL
 import br.com.colman.petals.R.string.add_use
 import br.com.colman.petals.R.string.add_use_during_pause_alert
 import br.com.colman.petals.R.string.later
@@ -32,12 +34,9 @@ import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.R.string.yes_timer
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
-import br.com.colman.petals.utils.launchBrowser
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Lock
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import java.math.BigDecimal.ZERO
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -53,26 +52,22 @@ fun AddUseButton(
   var openConfirmAddUseDialog by remember { mutableStateOf(false) }
   val lastUse by repository.getLastUse().collectAsState(null)
   val context = LocalContext.current
+  val totalUseCount by repository.countAll().collectAsState(0)
 
   if (openAddUseDialog) {
     AddUseDialog(lastUse, {
       repository.upsert(it)
-      runBlocking {
-        val usesCounter = repository.getCount().first()
-        if (usesCounter > 0 && usesCounter % 42 == 0) {
+        if ((totalUseCount > 0 && totalUseCount % 42 == 0) || it.description == "Secret") {
           openSupportDialog = true
         }
-      }
     }) { openAddUseDialog = false }
   }
 
   if (openSupportDialog) {
-    SupportDeveloperDialogAfterUses({
+    SupportDeveloperDialog({ openSupportDialog = false}) {
       openSupportDialog = false
-    }, {
-      openSupportDialog = false
-      launchBrowser(KOFI_URL, context)
-    })
+      context.launchKofi()
+    }
   }
 
   if (openConfirmAddUseDialog) {
@@ -111,7 +106,7 @@ private fun PauseUseButton(onClick: () -> Unit = { }) {
 
 @Composable
 @Preview
-private fun SupportDeveloperDialogAfterUses(
+private fun SupportDeveloperDialog(
   onDismiss: () -> Unit = {},
   onConfirm: () -> Unit = {}
 ) {
@@ -206,5 +201,14 @@ private fun ConfirmNewUseButton(
     onDismiss()
   }) {
     Text(stringResource(ok))
+  }
+}
+
+private const val KofiUrl = "https://ko-fi.com/leocolman"
+
+private fun Context.launchKofi() {
+  val intent = Intent(Intent.ACTION_VIEW, Uri.parse(KofiUrl))
+  intent.resolveActivity(packageManager)?.let {
+    startActivity(intent)
   }
 }
