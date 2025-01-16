@@ -57,14 +57,14 @@ fun AddUseButton(
   if (openAddUseDialog) {
     AddUseDialog(lastUse, {
       repository.upsert(it)
-        if ((totalUseCount > 0 && totalUseCount % 42 == 0) || it.description == "Secret") {
-          openSupportDialog = true
-        }
+      if (totalUseCount > 0 && totalUseCount % 42 == 0) {
+        openSupportDialog = true
+      }
     }) { openAddUseDialog = false }
   }
 
   if (openSupportDialog) {
-    SupportDeveloperDialog({ openSupportDialog = false}) {
+    SupportDeveloperDialog({ openSupportDialog = false }) {
       openSupportDialog = false
       context.launchKofi()
     }
@@ -103,7 +103,6 @@ private fun PauseUseButton(onClick: () -> Unit = { }) {
   }
 }
 
-
 @Composable
 @Preview
 private fun SupportDeveloperDialog(
@@ -122,13 +121,13 @@ private fun SupportDeveloperDialog(
     dismissButton = {
       TextButton(onDismiss) {
         Text(
-          stringResource(later), color = Color.LightGray
+          stringResource(later),
+          color = Color.LightGray
         )
       }
     }
   )
 }
-
 
 @Composable
 @Preview
