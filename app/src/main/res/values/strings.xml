@@ -100,6 +100,10 @@
     <string name="delete">Delete</string>
     <string name="yes">Yes</string>
     <string name="yes_timer">Yes (%ss)</string>
+    <string name="support_now">Support Now</string>
+    <string name="later">Later</string>
+    <string name="support_my_work">Support My Work ❤️</string>
+    <string name="thank_your_for_using_message">Thank you for using Petals! Just a reminder that you can support my work on improving this free app.</string>
     <string name="no">No</string>
     <string name="add_use_during_pause_alert">You scheduled this period to be a pause. Are you sure you want to add a use now?</string>
     <string name="grams_distribution_per_day_of_week">Grams distribution per day of week</string>

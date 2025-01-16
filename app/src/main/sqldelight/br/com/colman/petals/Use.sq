@@ -21,3 +21,6 @@ SELECT * FROM Use;
 
 delete:
 DELETE FROM Use WHERE id IS (?);
+
+countAll:
+SELECT COUNT(*) FROM Use;

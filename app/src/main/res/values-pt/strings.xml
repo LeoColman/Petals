@@ -99,6 +99,9 @@
     <string name="delete">Remover</string>
     <string name="yes">Sim</string>
     <string name="yes_timer">Sim (%ss)</string>
+    <string name="thank_your_for_using_message">Obrigado por usar o Petals! Este é um lembrete para você colaborar para
+        manter este projeto gratuito e melhorando!
+    </string>
     <string name="no">Não</string>
     <string name="add_use_during_pause_alert">Você marcou este horário como uma pause. Tem certeza que deseja adicionar um uso agora?</string>
     <string name="grams_distribution_per_day_of_week">Distribuição de gramas por dia da semana</string>
@@ -188,4 +191,7 @@
     <string name="description_label">descrição</string>
     <string name="description">Descrição</string>
     <string name="because_i_wanted">Porque eu queria</string>
+    <string name="support_now">Colaborar Agora</string>
+    <string name="later">Mais Tarde</string>
+    <string name="support_my_work">Colabore com o Petals ❤️</string>
 </resources>
