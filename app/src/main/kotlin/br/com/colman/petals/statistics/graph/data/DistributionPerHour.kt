@@ -6,6 +6,7 @@ import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.totalGrams
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.LineDataSet.Mode.HORIZONTAL_BEZIER
 
 private fun calculateGramDistributionPerHour(uses: List<Use>): List<Entry> {
   val hoursInDay = (0..23)
@@ -22,5 +23,6 @@ fun createDistributionPerHourDataset(days: Int, uses: List<Use>, label: String):
     fillColor = createColor(days).toArgb()
     color = createColor(days).toArgb()
     setCircleColor(createColor(days).toArgb())
+    mode = HORIZONTAL_BEZIER
   }
 }
