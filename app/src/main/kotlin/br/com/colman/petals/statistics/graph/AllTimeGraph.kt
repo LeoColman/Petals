@@ -21,6 +21,6 @@ fun AllTimeGraph(uses: List<Use>, dateFormat: String) {
     labelCount = 5
     granularity = 1f
     valueFormatter = DaysSinceFirstUseFormatter(uses, dateFormat).formatDate
-    addLimitLine(LimitLine(YearMonth.now().monthValue.toFloat()).apply { lineWidth = 2f })
+
   }
 }

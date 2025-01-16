@@ -31,13 +31,15 @@ fun createAllTimeDistributionWithMovingAverage(uses: List<Use>): List<LineDataSe
 fun createAllTimeLineDataSet(entryList: List<Entry>, label: String): LineDataSet {
   return LineDataSet(entryList, label).apply {
     valueFormatter = GramsValueFormatter
-    lineWidth = 6f
+    lineWidth = 3f
     setDrawFilled(true)
-    setDrawCircles(false)
+    setDrawCircles(true)
+    setDrawCircleHole(true)
     fillColor = Color.Cyan.copy(alpha = 0.3f).toArgb()
     color = Color.Cyan.toArgb()
     valueTextColor = Gray.toArgb()
     valueTextSize = 14f
+    mode = LineDataSet.Mode.CUBIC_BEZIER
   }
 }
 
@@ -45,8 +47,11 @@ fun createAllTimeAverageDataSet(entryList: List<Entry>, label: String): LineData
   return LineDataSet(entryList, label).apply {
     setDrawValues(false)
     setDrawCircles(false)
-    lineWidth = 6f
+    lineWidth = 3f
     color = Color.Green.toArgb()
+    mode = LineDataSet.Mode.CUBIC_BEZIER
+    enableDashedLine(10f, 5f, 0f)
+
   }
 }
 
@@ -69,7 +74,7 @@ private fun calculateMovingAverage(entries: List<Entry>): List<Entry> {
 
   val result = mutableListOf<Entry>()
   for (i in entries.indices) {
-    val start = maxOf(0, i - 14 + 1)
+    val start = maxOf(0, i - 7 + 1)
     val end = i + 1
     val windowEntries = entries.subList(start, end)
 

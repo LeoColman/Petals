@@ -30,6 +30,7 @@ fun LineChart(
       chart.description.text = description
       chart.description.textColor = colors.primary.toArgb()
       chart.legend.textColor = colors.primary.toArgb()
+      chart.setMaxVisibleValueCount(30)
 
       chart.data = LineData(datasets)
       chart.notifyDataSetChanged()
