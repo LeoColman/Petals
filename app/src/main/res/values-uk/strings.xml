@@ -173,4 +173,8 @@
     <string name="description">Опис</string>
     <string name="description_label">опис</string>
     <string name="because_i_wanted">Тому що я хотів</string>
+    <string name="support_now">Підтримайте зараз</string>
+    <string name="later">Пізніше</string>
+    <string name="support_my_work">Підтримайте мою роботу❤️</string>
+    <string name="thank_your_for_using_message">Дякуємо за використання Petals! Просто нагадую, що ви можете підтримати мою роботу над покращенням цієї безкоштовної програми.</string>
 </resources>
