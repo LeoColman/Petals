@@ -1,0 +1,4 @@
+- Update release process to make it easier 
+ - Add donation suggestion every 42 uses 
+ - Improve charts UI 
+ - Sync translations from weblate
