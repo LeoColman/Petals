@@ -85,7 +85,7 @@ fun StatsBlocks(uses: List<Use>) {
   val isDayExtended by settingsRepository.isDayExtended.collectAsState(false)
 
   Row(Modifier.horizontalScroll(rememberScrollState()).width(Max).testTag("StatsBlockMainRow")) {
-    DayUseBlock(isDayExtended, uses, isTodayCensored)
+    TodayUseBlock(isDayExtended, uses, isTodayCensored)
 
     UseBlock(Modifier.weight(1f), ThisWeek, uses.filter { it.localDate isSameWeekAs now() }, isThisWeekCensored)
 
@@ -101,7 +101,7 @@ private infix fun LocalDate.isSameWeekAs(other: LocalDate) = with(MONDAY) == oth
 private infix fun LocalDate.isSameMonthAs(other: LocalDate) = withDayOfMonth(1) == other.withDayOfMonth(1)
 
 @Composable
-private fun RowScope.DayUseBlock(isDayExtended: Boolean, uses: List<Use>, isTodayCensored: Boolean) {
+private fun RowScope.TodayUseBlock(isDayExtended: Boolean, uses: List<Use>, isTodayCensored: Boolean) {
   val todayUses = if (isDayExtended) adjustTodayFilter(uses) else uses.filter { it.localDate == now() }
 
   UseBlock(Modifier.weight(1f), Today, todayUses, isTodayCensored)
@@ -117,7 +117,7 @@ private fun UseBlock(modifier: Modifier, blockType: BlockType, uses: List<Use>, 
 
   // HALF_UP is necessary because the default rounding
   // mode is "throw an exception".
-  LaunchedEffect(uses) {
+  LaunchedEffect(uses, decimalPrecision) {
     totalGrams = uses.sumOf { it.amountGrams }.setScale(decimalPrecision, HALF_UP).toString()
     totalCost = uses.sumOf { it.costPerGram * it.amountGrams }.setScale(decimalPrecision, HALF_UP).toString()
   }
