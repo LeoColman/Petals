@@ -1,0 +1,1 @@
+- Fix UseBlock to respect decimal precision set in settings
