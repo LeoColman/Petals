@@ -4,7 +4,8 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import br.com.colman.petals.UseQueries
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
@@ -26,14 +27,16 @@ class UseRepository(
     useQueries.upsert(use.toEntity())
   }
 
-  fun getLastUse() = useQueries.selectLast().asFlow().mapToOneOrNull(Dispatchers.IO).map { it?.toUse() }
+  fun getLastUse(dispatcher: CoroutineDispatcher = IO) =
+    useQueries.selectLast().asFlow().mapToOneOrNull(dispatcher).map { it?.toUse() }
 
   fun getLastUseDate() = getLastUse().map { it?.date }
 
-  fun countAll() = useQueries.countAll().asFlow().mapToOneOrNull(Dispatchers.IO).map { it?.toInt() ?: 0 }
+  fun countAll(dispatcher: CoroutineDispatcher = IO) =
+    useQueries.countAll().asFlow().mapToOneOrNull(dispatcher).map { it?.toInt() ?: 0 }
 
-  fun all(): Flow<List<Use>> = useQueries.selectAll().asFlow().mapToList(
-    Dispatchers.IO
+  fun all(dispatchers: CoroutineDispatcher = IO): Flow<List<Use>> = useQueries.selectAll().asFlow().mapToList(
+    dispatchers
   ).map { it.map(UseEntity::toUse) }
 
   fun delete(use: Use) {

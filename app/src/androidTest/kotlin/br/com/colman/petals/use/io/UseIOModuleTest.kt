@@ -10,14 +10,11 @@ import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.koin
 import br.com.colman.petals.use.io.input.UseCsvFileImporter
 import br.com.colman.petals.use.io.output.UseExporter
-import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.matchers.file.shouldHaveSameStructureAndContentAs
 import io.mockk.mockk
 import io.mockk.verify
 import java.io.File
 import java.time.LocalDate
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
 
 class UseIOModuleTest : FunSpec({
 
@@ -41,20 +38,19 @@ class UseIOModuleTest : FunSpec({
     useExporter.exportUses(mockLauncher)
 
     verify {
-      mockLauncher.launch(match { intent ->
-        intent.action == Intent.ACTION_SEND &&
-          intent.type == "text/plain" &&
-          intent.flags == Intent.FLAG_GRANT_READ_URI_PERMISSION
-      })
+      mockLauncher.launch(
+        match { intent ->
+          intent.action == Intent.ACTION_SEND &&
+            intent.type == "text/plain" &&
+            intent.flags == Intent.FLAG_GRANT_READ_URI_PERMISSION
+        }
+      )
     }
 
     val exportsDir = File(ApplicationProvider.getApplicationContext<Context>().filesDir, "exports")
     val expectedFileName = "PetalsExport-${LocalDate.now()}.csv"
     val exportedFile = File(exportsDir, expectedFileName)
 
-
     inputFile shouldHaveSameStructureAndContentAs exportedFile
-
   }
-
 })

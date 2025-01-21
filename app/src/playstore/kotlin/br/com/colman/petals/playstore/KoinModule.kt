@@ -16,5 +16,3 @@ val KoinModule = module {
     AdsSettingsRepository(get<Context>().adsSettings)
   }
 }
-
-

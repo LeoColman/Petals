@@ -35,7 +35,7 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
 
   private fun calculateMillisLeft(): Long {
     if (startDate == null) return durationMillis
-    val elapsed = startDate!!.until(now(), MILLIS)
+    val elapsed = startDate?.until(now(), MILLIS) ?: 0
     return (durationMillis - elapsed).coerceAtLeast(0)
   }
 

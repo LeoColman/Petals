@@ -12,7 +12,7 @@ class AdsSettingsRepository(
   private val datastore: DataStore<Preferences>
 ) {
 
-   val isAdsFree: Flow<Boolean> = datastore.data.map { it[isAdFree] ?: false }
+  val isAdsFree: Flow<Boolean> = datastore.data.map { it[isAdFree] ?: false }
 
   fun setAdFree(value: Boolean): Unit = runBlocking {
     datastore.edit {
@@ -23,5 +23,4 @@ class AdsSettingsRepository(
   companion object {
     val isAdFree = booleanPreferencesKey("is_adfree")
   }
-
 }
