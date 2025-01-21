@@ -227,6 +227,9 @@ tasks.withType<Test> {
   useJUnitPlatform()
 }
 
+tasks.detekt {
+  dependsOn("detektMain", "detektTest")
+}
 detekt {
   buildUponDefaultConfig = true
   autoCorrect = true

@@ -4,7 +4,8 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import br.com.colman.petals.PauseQueries
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalTime
@@ -15,12 +16,13 @@ class PauseRepository(
   private val pauseQueries: PauseQueries
 ) {
 
-  fun getAll() = pauseQueries.selectAll().asFlow().mapToList(Dispatchers.IO).map { pauses ->
-    pauses.map(PauseEntity::toPause).sortedWith(compareBy({ it.startTime }, { it.endTime }))
-  }
+  fun getAll(dispatcher: CoroutineDispatcher = IO) = pauseQueries.selectAll().asFlow()
+    .mapToList(dispatcher).map { pauses ->
+      pauses.map(PauseEntity::toPause).sortedWith(compareBy({ it.startTime }, { it.endTime }))
+    }
 
-  fun get(): Flow<Pause?> {
-    return pauseQueries.selectFirst().asFlow().mapToOneOrNull(Dispatchers.IO).map { it?.toPause() }
+  fun get(dispatcher: CoroutineDispatcher = IO): Flow<Pause?> {
+    return pauseQueries.selectFirst().asFlow().mapToOneOrNull(dispatcher).map { it?.toPause() }
   }
 
   fun insert(pause: Pause) {

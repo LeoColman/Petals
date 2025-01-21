@@ -1,6 +1,5 @@
 package br.com.colman.petals.playstore
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,7 +27,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.android.inject
 
-
 @Suppress("FunctionName")
 class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
@@ -40,26 +38,27 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
     super.onCreate(savedInstanceState)
     MobileAds.initialize(this)
 
-
     setContent {
       settingsMigrations.migrateOldKeysValues()
       settingsMigrations.removeOldKeysValues()
-      koin.loadModules(listOf(
-        KoinModule
-      ))
+      koin.loadModules(
+        listOf(
+          KoinModule
+        )
+      )
       val navController = rememberNavController()
       MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
         Surface {
           Scaffold(
             topBar = {
-                MyTopAppBar(navController)  {
-                  AdFreeButton()
-                }
+              MyTopAppBar(navController) {
+                AdFreeButton()
+              }
             },
             bottomBar = {
               Column {
                 BottomNavigationBar(navController)
-                if(!isAdFree()){
+                if (!isAdFree()) {
                   AdsView()
                 }
               }
@@ -70,7 +69,6 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
       }
     }
   }
-
 
   @Composable
   fun isDarkModeEnabled(): Boolean {

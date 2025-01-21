@@ -2,7 +2,6 @@ package br.com.colman.petals.widget
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,20 +30,14 @@ import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ofPattern
 import java.time.temporal.ChronoUnit
 import java.util.*
 
 @Composable
 fun WidgetUsagePart() {
-  val settingsRepository = koinInject<SettingsRepository>()
   val useRepository: UseRepository = koinInject()
   val lastUseDate = useRepository.getLastUseDate().collectAsState(LocalDateTime.now())
-  val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
-  val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
-  val dateString =
-    DateTimeFormatter.ofPattern(String.format(Locale.US, "%s %s", dateFormat, timeFormat))
-      .format(lastUseDate.value)
   var millis by remember {
     mutableStateOf(
       ChronoUnit.MILLIS.between(
@@ -85,7 +78,7 @@ fun WidgetUsagePart() {
     verticalAlignment = Alignment.Vertical.CenterVertically,
     horizontalAlignment = Alignment.Horizontal.CenterHorizontally
   ) {
-    LastUseDateView(lastUseDate, dateString)
+    LastUseDateView()
     Column(
       verticalAlignment = Alignment.CenterVertically,
       horizontalAlignment = Alignment.CenterHorizontally
@@ -97,10 +90,15 @@ fun WidgetUsagePart() {
 }
 
 @Composable
-private fun LastUseDateView(
-  lastUseDate: State<LocalDateTime?>,
-  dateString: String?
-) {
+private fun LastUseDateView() {
+  val useRepository: UseRepository = koinInject()
+  val settingsRepository = koinInject<SettingsRepository>()
+
+  val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
+  val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
+  val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
+  val dateString = lastUseDate?.let { ofPattern("%s %s".format(dateFormat, timeFormat)).format(it) }.orEmpty()
+
   Column(
     verticalAlignment = Alignment.CenterVertically,
     horizontalAlignment = Alignment.CenterHorizontally
@@ -113,9 +111,9 @@ private fun LastUseDateView(
         fontSize = 20.sp
       )
     )
-    val dateStringWithExtras = if (!lastUseDate.value!!.is420()) dateString else "$dateString 🥦🥦"
+    val dateStringWithExtras = if (lastUseDate?.is420() == true) dateString else "$dateString 🥦🥦"
     Text(
-      text = dateStringWithExtras!!,
+      text = dateStringWithExtras,
       style = TextStyle(
         fontWeight = FontWeight.Medium,
         color = ColorProvider(Color.White),

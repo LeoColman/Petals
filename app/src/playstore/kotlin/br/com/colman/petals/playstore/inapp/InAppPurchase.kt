@@ -16,13 +16,15 @@ import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
-class InAppPurchase(val context: Context) : PurchasesUpdatedListener {
-  private var myBilled: BillingClient = BillingClient.newBuilder(context)
+class InAppPurchase(val context: Context, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) :
+  PurchasesUpdatedListener {
+  private val myBilled: BillingClient = BillingClient.newBuilder(context)
     .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
     .setListener(this)
     .build()
@@ -33,6 +35,8 @@ class InAppPurchase(val context: Context) : PurchasesUpdatedListener {
 
   init {
     myBilled.startConnection(object : BillingClientStateListener {
+      override fun onBillingServiceDisconnected() = Unit
+
       override fun onBillingSetupFinished(billingResult: BillingResult) {
         myBilled.queryProductDetailsAsync(
           QueryProductDetailsParams.newBuilder().setProductList(
@@ -45,17 +49,15 @@ class InAppPurchase(val context: Context) : PurchasesUpdatedListener {
           lstProductDetails = productDetails
         }
       }
-
-      override fun onBillingServiceDisconnected() {}
     })
   }
-
 
   fun purchase(activity: Activity) {
     lstProductDetails?.let {
       if (it.isNotEmpty()) {
         myBilled.launchBillingFlow(
-          activity, BillingFlowParams.newBuilder()
+          activity,
+          BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(
               listOf(
                 ProductDetailsParams.newBuilder().setProductDetails(
@@ -74,13 +76,12 @@ class InAppPurchase(val context: Context) : PurchasesUpdatedListener {
     }
     purchase?.forEach {
       if (!it.isAcknowledged) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(dispatcher).launch {
           myBilled.acknowledgePurchase(
             AcknowledgePurchaseParams.newBuilder().setPurchaseToken(
               it.purchaseToken
             ).build()
           ) {
-
           }
         }
       }
@@ -89,7 +90,4 @@ class InAppPurchase(val context: Context) : PurchasesUpdatedListener {
       }
     }
   }
-
 }
-
-

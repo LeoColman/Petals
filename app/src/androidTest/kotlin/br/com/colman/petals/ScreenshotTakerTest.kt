@@ -7,8 +7,6 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.AndroidComposeUiTest
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.captureToImage
-import androidx.compose.ui.test.onAllNodesWithTag
-import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
@@ -19,8 +17,8 @@ import androidx.compose.ui.test.swipeUp
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.navigation.Page
 import br.com.colman.petals.use.io.input.UseImporter
-import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.BlockType
+import br.com.colman.petals.use.repository.CensorshipRepository
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FileDataPart
 import java.io.ByteArrayOutputStream

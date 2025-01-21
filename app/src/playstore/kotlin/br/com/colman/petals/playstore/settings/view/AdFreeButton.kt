@@ -21,7 +21,6 @@ import br.com.colman.petals.playstore.inapp.InAppPurchase
 import br.com.colman.petals.playstore.settings.AdsSettingsRepository
 import org.koin.compose.koinInject
 
-
 @Preview
 @Composable
 fun AdFreeButton() {
@@ -32,7 +31,8 @@ fun AdFreeButton() {
 
   if (isAdFree) return
 
-  Image(painter = painterResource(R.drawable.ic_ad_circle),
+  Image(
+    painter = painterResource(R.drawable.ic_ad_circle),
     contentDescription = "ads",
     colorFilter = ColorFilter.tint(
       color = LocalContentColor.current.copy(
@@ -42,5 +42,6 @@ fun AdFreeButton() {
     ),
     modifier = Modifier.size(42.dp).clickable {
       inApp.purchase(activity)
-    })
+    }
+  )
 }
