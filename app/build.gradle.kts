@@ -213,6 +213,9 @@ dependencies {
   // Google Billing
   "playstoreImplementation"(libs.play.services.billing)
 
+  // Google Reviews
+  "playstoreImplementation"(libs.bundles.review)
+
   // Glance
   implementation(libs.bundles.glance)
 

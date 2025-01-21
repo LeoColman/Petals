@@ -12,6 +12,7 @@ vanpra-material-dialogs = "0.9.0"
 sqldelight = "2.0.2"
 glance = "1.1.1"
 mockk = "1.13.16"
+review = "2.0.2"
 
 [libraries]
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.1.4"
@@ -67,8 +68,11 @@ glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "g
 fuel = "com.github.kittinunf.fuel:fuel:2.3.1"
 androidx-test-core = "androidx.test:core:1.6.1"
 androidx-test-ext-junit = "androidx.test.ext:junit:1.2.1"
+review = { module = "com.google.android.play:review", version.ref = "review" }
+review-ktx = { module = "com.google.android.play:review-ktx", version.ref = "review" }
 
 [bundles]
+review = ["review", "review-ktx"]
 androidx-test = [
     "androidx-test-rules",
     "androidx-test-runner",
