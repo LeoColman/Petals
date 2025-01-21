@@ -1,6 +1,8 @@
 package br.com.colman.petals.use
 
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Row
@@ -32,6 +34,7 @@ import br.com.colman.petals.R.string.support_now
 import br.com.colman.petals.R.string.thank_your_for_using_message
 import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.R.string.yes_timer
+import br.com.colman.petals.review.ReviewAppRequester
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 import compose.icons.TablerIcons
@@ -44,6 +47,7 @@ import java.time.LocalTime
 
 @Composable
 fun AddUseButton(
+  reviewAppRequester: ReviewAppRequester,
   repository: UseRepository,
   isAnyPauseActive: Boolean
 ) {
@@ -52,6 +56,7 @@ fun AddUseButton(
   var openConfirmAddUseDialog by remember { mutableStateOf(false) }
   val lastUse by repository.getLastUse().collectAsState(null)
   val context = LocalContext.current
+  val activity = context.getActivity()
   val totalUseCount by repository.countAll().collectAsState(0)
 
   if (openAddUseDialog) {
@@ -59,6 +64,8 @@ fun AddUseButton(
       repository.upsert(it)
       if (totalUseCount > 0 && totalUseCount % 42 == 0) {
         openSupportDialog = true
+      } else if ((totalUseCount > 0 && totalUseCount % 100 == 0)) {
+        activity?.let { activity -> reviewAppRequester.requestReview(activity) }
       }
     }) { openAddUseDialog = false }
   }
@@ -210,4 +217,15 @@ private fun Context.launchKofi() {
   intent.resolveActivity(packageManager)?.let {
     startActivity(intent)
   }
+}
+
+fun Context.getActivity(): Activity? {
+  var currentContext = this
+  while (currentContext is ContextWrapper) {
+    if (currentContext is Activity) {
+      return currentContext
+    }
+    currentContext = currentContext.baseContext
+  }
+  return null
 }

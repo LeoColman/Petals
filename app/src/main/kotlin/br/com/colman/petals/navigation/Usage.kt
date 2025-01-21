@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import br.com.colman.petals.review.ReviewAppRequester
 import br.com.colman.petals.use.AddUseButton
 import br.com.colman.petals.use.LastUseDateTimer
 import br.com.colman.petals.use.PauseCards
@@ -53,7 +54,8 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun Usage(
   useRepository: UseRepository = koinInject(),
-  pauseRepository: PauseRepository = koinInject()
+  pauseRepository: PauseRepository = koinInject(),
+  reviewAppRequester: ReviewAppRequester = koinInject()
 ) {
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
   var currentTime by remember {
@@ -79,7 +81,7 @@ fun Usage(
     lastUseDate?.let { LastUseDateTimer(it) }
 
     Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {
-      AddUseButton(useRepository, isAnyPauseActive)
+      AddUseButton(reviewAppRequester, useRepository, isAnyPauseActive)
       PauseButton(pauseRepository)
     }
 
