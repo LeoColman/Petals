@@ -18,7 +18,7 @@ import io.github.typesafegithub.workflows.dsl.workflow
 
 workflow(
   name = "Lint",
-  on = listOf(Push(), PullRequest()),
+  on = listOf(Push(branches = listOf("main")), PullRequest()),
   sourceFile = __FILE__
 ) {
   job(id = "detekt", runsOn = UbuntuLatest) {

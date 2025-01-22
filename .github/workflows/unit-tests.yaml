@@ -4,7 +4,9 @@
 
 name: 'Unit Tests'
 on:
-  push: {}
+  push:
+    branches:
+    - 'main'
   pull_request: {}
 jobs:
   check_yaml_consistency:
