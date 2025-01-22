@@ -275,4 +275,8 @@ licensee {
   allowUrl("https://developer.android.com/studio/terms.html") {
     because("Android Software Development Kit License Agreement.")
   }
+
+  allowUrl("https://developer.android.com/guide/playcore/license") {
+    because("Google Play License Agreement.")
+  }
 }
