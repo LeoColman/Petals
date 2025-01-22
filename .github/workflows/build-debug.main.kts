@@ -19,7 +19,7 @@ import io.github.typesafegithub.workflows.dsl.workflow
 
 workflow(
   name = "Build Universal Debug APK",
-  on = listOf(Push(), PullRequest()),
+  on = listOf(Push(branches = listOf("main")), PullRequest()),
   sourceFile = __FILE__
 ) {
   job(id = "build", runsOn = RunnerType.UbuntuLatest) {
