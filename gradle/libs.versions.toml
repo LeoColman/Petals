@@ -45,7 +45,7 @@ kotest-runner-android = { module = "br.com.colman:kotest-runner-android", versio
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
 kotest-extensions-now = { module = "io.kotest:kotest-extensions-now", version.ref = "kotest" }
-kotlin-csv = "com.github.doyaaaaaken:kotlin-csv-jvm:1.10.0"
+kotlin-csv = "com.jsoizo:kotlin-csv:1.10.0"
 kotlin-date-range = "me.moallemi.tools:kotlin-date-range:1.0.0"
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1"
