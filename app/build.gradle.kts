@@ -259,7 +259,7 @@ licensee {
   allow("BSD-3-Clause")
   allow("MIT")
 
-  allowUrl("https://github.com/doyaaaaaken/kotlin-csv/blob/master/LICENSE") {
+  allowUrl("https://github.com/jsoizo/kotlin-csv/blob/master/LICENSE") {
     because("Apache-2.0 but self-hosted")
   }
 
