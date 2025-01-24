@@ -21,9 +21,13 @@ package br.com.colman.petals.navigation
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -36,7 +40,10 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import br.com.colman.petals.R.string.filter_data_by_description_containing
+import br.com.colman.petals.R.string.with_a_friend
 import br.com.colman.petals.review.ReviewAppRequester
 import br.com.colman.petals.use.AddUseButton
 import br.com.colman.petals.use.LastUseDateTimer
@@ -46,7 +53,10 @@ import br.com.colman.petals.use.UseCards
 import br.com.colman.petals.use.pause.PauseButton
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.UseRepository
+import compose.icons.TablerIcons
+import compose.icons.tablericons.ListSearch
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
 import org.koin.compose.koinInject
 import java.time.LocalTime
 import kotlin.time.Duration.Companion.seconds
@@ -87,10 +97,31 @@ fun Usage(
 
     PauseCards(pauseRepository)
 
-    val uses by useRepository.all().collectAsState(emptyList())
+    var descriptionContains by remember { mutableStateOf("") }
+    val uses by useRepository.all().map { uses ->
+      uses.filter {
+        it.description.contains(
+          descriptionContains,
+          true
+        )
+      }
+    }.collectAsState(emptyList())
     if (uses.isNotEmpty()) {
       StatsBlocks(uses)
+      UsageFilter(descriptionContains) { descriptionContains = it }
       UseCards(uses, { useRepository.upsert(it) }, { useRepository.delete(it) })
     }
   }
+}
+
+@Composable
+private fun UsageFilter(value: String, onValueChange: (String) -> Unit) {
+  OutlinedTextField(
+    value = value,
+    onValueChange = onValueChange,
+    modifier = Modifier.fillMaxWidth().padding(16.dp),
+    leadingIcon = { Icon(TablerIcons.ListSearch, null) },
+    label = { Text(stringResource(filter_data_by_description_containing)) },
+    placeholder = { Text(stringResource(with_a_friend)) }
+  )
 }
