@@ -17,7 +17,7 @@ import io.github.typesafegithub.workflows.dsl.workflow
 
 
 workflow(
-  name = "Dependency License Analysis",
+  name = "Kover Coverage",
   on = listOf(Push(branches = listOf("main"))),
   sourceFile = __FILE__
 ) {
