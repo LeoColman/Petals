@@ -24,7 +24,7 @@ fun disableAnimations() {
   listOf(
     "adb shell settings put global window_animation_scale 0",
     "adb shell settings put global transition_animation_scale 0",
-    "adb shell settings put global animator_duration_scale 0",
+    "adb shell settings put global animator_duration_scale 0"
   ).forEach { command ->
     try {
       val process = Runtime.getRuntime().exec(command)
@@ -33,10 +33,9 @@ fun disableAnimations() {
       println("Error while trying to disable animations via ADB: ${e.localizedMessage}")
     }
   }
-  println("Animations in the emulator has been disabled")
+  println("Animations in the emulator have been disabled")
 }
 
-// Function to start the server
 fun startServer(): NettyApplicationEngine {
   return embeddedServer(Netty, port = 8081) {
     install(ContentNegotiation) {
@@ -44,8 +43,6 @@ fun startServer(): NettyApplicationEngine {
     }
     routing {
       post("/upload") {
-        println("Received upload")
-        println(call.parameters)
         val multipart = call.receiveMultipart()
         val lang = call.parameters["lang"] ?: "unknown"
         val country = call.parameters["country"] ?: "unknown"
@@ -68,14 +65,14 @@ fun startServer(): NettyApplicationEngine {
   }.start(wait = false)
 }
 
+
 // Start the server
 val server = startServer()
 
-// Disable Animations
+// Disable animations
 disableAnimations()
 
-// Run the Android tests
-println("Running Android tests...")
+// Run Android tests
 val process = ProcessBuilder(
   "../gradlew",
   "connectedFdroidDebugAndroidTest",
@@ -83,13 +80,5 @@ val process = ProcessBuilder(
 ).inheritIO().start()
 val exitCode = process.waitFor()
 
-if (exitCode == 0) {
-  println("Tests ran successfully")
-} else {
-  println("Tests failed with exit code $exitCode")
-}
-
 // Stop the server
-println("Stopping server...")
 server.stop(1000, 10000)
-println("Server stopped")
