@@ -30,7 +30,7 @@ plugins {
   alias(libs.plugins.kotlinx.serialization)
   alias(libs.plugins.kotlinx.kover)
   alias(libs.plugins.compose.compiler)
-  id("app.cash.licensee")
+  alias(libs.plugins.licensee)
 }
 
 repositories {

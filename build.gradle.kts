@@ -28,7 +28,6 @@ buildscript {
       }
     }
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
-    classpath(libs.licensee.gradle.plugin)
   }
 }
 
