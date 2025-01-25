@@ -194,4 +194,6 @@
     <string name="support_now">Colaborar Agora</string>
     <string name="later">Mais Tarde</string>
     <string name="support_my_work">Colabore com o Petals ❤️</string>
+    <string name="with_a_friend">com uma amiga</string>
+    <string name="filter_data_by_description_containing">Filtrar dados por descrição contendo...</string>
 </resources>
