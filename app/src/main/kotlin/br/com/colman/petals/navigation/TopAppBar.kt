@@ -26,9 +26,12 @@ import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -56,7 +59,9 @@ import org.koin.compose.koinInject
 
 @Composable
 fun MyTopAppBar(navController: NavController, options: (@Composable () -> Unit)? = null) {
-  TopAppBar {
+  TopAppBar(
+    Modifier.padding(top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding())
+  ) {
     Box(
       Modifier.padding(16.dp).height(56.dp).fillMaxWidth()
     ) {
