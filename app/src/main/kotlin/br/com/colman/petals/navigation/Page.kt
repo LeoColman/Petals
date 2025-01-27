@@ -20,7 +20,10 @@ package br.com.colman.petals.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -80,7 +83,9 @@ fun BottomNavigationBar(navController: NavHostController) {
   val navBackStackEntry by navController.currentBackStackEntryAsState()
   val currentRoute = navBackStackEntry?.destination?.route
 
-  BottomNavigation {
+  BottomNavigation(
+    Modifier.padding(bottom = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding())
+  ) {
     Page.entries.forEach { page ->
       BottomNavigationItem(
         modifier = Modifier.testTag(page.name),
