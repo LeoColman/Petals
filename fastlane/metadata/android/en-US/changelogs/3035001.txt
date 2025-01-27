@@ -1,0 +1,1 @@
+- Remove edge-to-edge rendering for Android 15
