@@ -83,9 +83,7 @@ fun BottomNavigationBar(navController: NavHostController) {
   val navBackStackEntry by navController.currentBackStackEntryAsState()
   val currentRoute = navBackStackEntry?.destination?.route
 
-  BottomNavigation(
-    Modifier.padding(bottom = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding())
-  ) {
+  BottomNavigation(WindowInsets(bottom = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding())) {
     Page.entries.forEach { page ->
       BottomNavigationItem(
         modifier = Modifier.testTag(page.name),
