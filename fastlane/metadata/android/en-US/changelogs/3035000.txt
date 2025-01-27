@@ -1,0 +1,3 @@
+- Sync Weblate Translations
+-Ask user for a review every 100 uses
+- Add the option to filter by description on home page
