@@ -40,3 +40,39 @@ jobs:
         arguments: 'koverHtmlReport'
     - id: 'step-3'
       run: 'cat app/build/reports/kover/html/index.html >> $GITHUB_STEP_SUMMARY'
+    - id: 'step-4'
+      uses: 'gradle/gradle-build-action@v3'
+      with:
+        arguments: 'koverXmlReport'
+    - id: 'step-5'
+      name: 'Generate coverage output'
+      run: |-
+        COVERAGE=$(${{ github.workspace }}/gradlew -q printLineCoverage)
+        echo "Raw Coverage: $COVERAGE"
+        COVERAGE=$(printf "%.0f" "$COVERAGE")  # Round to integer
+        echo "Rounded Coverage: $COVERAGE"
+        echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
+    - id: 'step-6'
+      name: 'Generate Coverage Badge'
+      run: |-
+        mkdir -p badge
+        COLOR=$(
+            if [ "$COVERAGE" -ge 90 ]; then
+                echo "brightgreen"
+            elif [ "$COVERAGE" -ge 70 ]; then
+                echo "yellow"
+            else
+                echo "red"
+            fi
+        )
+        URL="https://img.shields.io/badge/Coverage-$COVERAGE%25-$COLOR"
+        curl -sS "$URL" -o badge/coverage-badge.svg
+    - id: 'step-7'
+      name: 'Deploy Badge to GitHub Pages'
+      uses: 'peaceiris/actions-gh-pages@v3'
+      with:
+        github_token: '${{ secrets.GITHUB_TOKEN }}'
+        publish_branch: 'gh-pages'
+        publish_dir: 'badge'
+        allow_empty_commit: 'false'
+        force_orphan: 'true'
