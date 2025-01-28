@@ -42,10 +42,10 @@
     <string name="cost_per_gram_short">%s/g</string>
     <string name="amount_grams">%s</string>
     <string name="amount_grams_short">%s.சி.</string>
-    <string name="total_spent">மொத்தம்</string>
+    <string name="total_spent">மொத்தம் %s</string>
     <string name="date_label">திகதி</string>
     <string name="amount_label">தொகை</string>
-    <string name="cost_per_gram_label">cost_per_gram</string>
+    <string name="cost_per_gram_label">ஒரு_கிராமுக்கு_விலை</string>
     <string name="import_import">இறக்குமதி</string>
     <string name="export_export">ஏற்றுமதி</string>
     <string name="end_date">இறுதி தேதி</string>
@@ -79,7 +79,7 @@
     <string name="repository_link_title">மூலக் குறியீடு அணுகல்</string>
     <string name="start_time">தொடக்க நேரம்</string>
     <string name="end_time">இறுதி நேரம்</string>
-    <string name="pause_change_minutes">%+டி மணித்துளி</string>
+    <string name="pause_change_minutes">%+d மணித்துளி</string>
     <string name="delete">நீக்கு</string>
     <string name="yes">ஆம்</string>
     <string name="yes_timer">ஆம் (%s.எச்)</string>
@@ -140,7 +140,7 @@
     <string name="current_decreased_appetite">தற்போதைய பசி: %s</string>
     <string name="decreased_appetite">பசி குறைந்தது</string>
     <string name="current_nervousness_anxiety">தற்போதைய பதட்டம்/கவலை: %s</string>
-    <string name="nervousness_anxiety">பதட்டம் / பதட்டம்</string>
+    <string name="nervousness_anxiety">பதற்றம் / பதட்டம்</string>
     <string name="current_restlessness">தற்போதைய அமைதியின்மை: %s</string>
     <string name="restlessness">அமைதியின்மை</string>
     <string name="current_anger">தற்போதைய கோபம்: %s</string>
