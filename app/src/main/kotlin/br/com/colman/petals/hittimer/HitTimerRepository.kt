@@ -1,21 +1,21 @@
 package br.com.colman.petals.hittimer
 
-import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
-class HitTimerRepository(private val context: Context) {
+class HitTimerRepository(
+  private val sharedPreferences: DataStore<Preferences>
+) {
 
-  private val Context.sharedPreferences by preferencesDataStore("hittimer_preferences")
-
-  val shouldVibrate = context.sharedPreferences.data.map { it[ShouldVibrate] ?: false }
+  val shouldVibrate = sharedPreferences.data.map { it[ShouldVibrate] ?: false }
 
   fun setShouldVibrate(value: Boolean) {
     runBlocking {
-      context.sharedPreferences.edit { it[ShouldVibrate] = value }
+      sharedPreferences.edit { it[ShouldVibrate] = value }
     }
   }
 

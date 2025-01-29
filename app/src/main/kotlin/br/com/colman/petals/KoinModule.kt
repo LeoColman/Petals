@@ -36,6 +36,7 @@ import org.koin.dsl.module
 
 private val Context.settingsDatastore by preferencesDataStore("settings")
 private val Context.blockDataStore by preferencesDataStore("block")
+private val Context.hitTimerPreferencesDataStore by preferencesDataStore("hittimer_preferences")
 
 private val AndroidModule = module {
   single { get<Context>().resources }
@@ -56,7 +57,7 @@ val KoinModule = module {
   single { object : ReviewAppRequester {} } bind ReviewAppRequester::class
   single { UseRepository(get<Database>().useQueries) }
   single { PauseRepository(get<Database>().pauseQueries) }
-  single { HitTimerRepository(get()) }
+  single { HitTimerRepository(get<Context>().hitTimerPreferencesDataStore) }
   single { SettingsRepository(get<Context>().settingsDatastore) }
   single { SettingsMigrations(get<Context>().settingsDatastore) }
   single { CensorshipRepository(get<Context>().blockDataStore) }

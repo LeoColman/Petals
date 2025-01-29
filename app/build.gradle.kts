@@ -155,6 +155,7 @@ dependencies {
 
   // AndroidX
   androidTestImplementation(libs.bundles.androidx.test)
+  testImplementation(libs.bundles.androidx.test)
 
   // Datastore
   implementation(libs.bundles.datastore)
