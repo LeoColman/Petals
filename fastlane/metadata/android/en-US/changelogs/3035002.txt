@@ -1,0 +1,2 @@
+- Sync Weblate Translations
+- Properly fix edge-to-edge screen formatting
