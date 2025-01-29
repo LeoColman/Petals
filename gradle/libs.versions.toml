@@ -1,6 +1,6 @@
 [versions]
 androidx = "1.6.1"
-compose = "1.7.6"
+compose = "1.7.7"
 datastore = "1.1.2"
 detekt = "1.23.7"
 koin = "4.0.2"
