@@ -30,6 +30,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.property.arbitrary.take
 import kotlinx.coroutines.flow.first
 import java.math.BigDecimal
+import java.util.UUID
 import kotlin.system.measureTimeMillis
 
 class UseRepositoryTest : FunSpec({
@@ -69,6 +70,17 @@ class UseRepositoryTest : FunSpec({
     target.all().first().single() shouldBe use
   }
 
+  test("Count All should return 0 when empty") {
+    target.countAll().first() shouldBe 0
+  }
+
+  test("Count All should return number of elements") {
+    val otherUse = use.copy(amountGrams = 1.0.toBigDecimal(), id = UUID.randomUUID().toString())
+    target.upsert(use)
+    target.upsert(otherUse)
+    target.countAll().first() shouldBe 2L
+  }
+
   test("Delete") {
     database.useQueries.upsert(use.toEntity())
     target.delete(use)
@@ -91,6 +103,10 @@ class UseRepositoryTest : FunSpec({
 
     target.getLastUse().first() shouldBe use
     target.getLastUseDate().first() shouldBe use.date
+  }
+
+  test("Last use date should return null when no nulls are added") {
+    target.getLastUseDate().first() shouldBe null
   }
 
   test("Last use performance") {
