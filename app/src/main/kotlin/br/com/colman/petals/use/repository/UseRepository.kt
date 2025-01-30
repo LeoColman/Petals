@@ -7,6 +7,7 @@ import br.com.colman.petals.UseQueries
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.time.LocalDateTime.parse
@@ -33,7 +34,7 @@ class UseRepository(
   fun getLastUseDate() = getLastUse().map { it?.date }
 
   fun countAll(dispatcher: CoroutineDispatcher = IO) =
-    useQueries.countAll().asFlow().mapToOneOrNull(dispatcher).map { it?.toInt() ?: 0 }
+    useQueries.countAll().asFlow().mapToOneOrNull(dispatcher).filterNotNull().map { it.toInt() }
 
   fun all(dispatchers: CoroutineDispatcher = IO): Flow<List<Use>> = useQueries.selectAll().asFlow().mapToList(
     dispatchers
