@@ -4,6 +4,7 @@ import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import kotlin.math.roundToInt
 
+@Suppress("MagicNumber")
 val TwelveHourFormatter = object : IAxisValueFormatter {
   override fun getFormattedValue(value: Float, axis: AxisBase?): String {
     if (value.roundToInt() == 12) return "12"
