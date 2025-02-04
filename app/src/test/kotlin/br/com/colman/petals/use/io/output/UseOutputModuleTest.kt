@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.res.Resources
 import br.com.colman.petals.use.repository.UseRepository
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.shouldNotBe
+import io.mockk.every
 import io.mockk.mockk
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
@@ -16,7 +18,11 @@ class UseOutputModuleTest : FunSpec({
       module {
         single { mockk<UseRepository>() }
         single { mockk<Resources>(relaxed = true) }
-        single { mockk<Context>() }
+        single {
+          mockk<Context> {
+            every { filesDir } returns tempdir()
+          }
+        }
       }
     )
   }.koin
