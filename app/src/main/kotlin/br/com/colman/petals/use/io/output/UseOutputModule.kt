@@ -6,6 +6,6 @@ import org.koin.dsl.module
 val UseOutputModule = module {
   single { UseCsvHeaders(get()) }
   singleOf(::UseCsvSerializer)
-  singleOf(::FileWriter)
+  single { FileWriter(get()) }
   singleOf(::UseExporter)
 }
