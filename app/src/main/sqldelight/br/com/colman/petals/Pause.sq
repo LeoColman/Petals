@@ -8,9 +8,6 @@ CREATE TABLE Pause(
 insert:
 INSERT INTO Pause(start_time, end_time, id, is_enabled) VALUES ?;
 
-selectFirst:
-SELECT * FROM Pause LIMIT 1;
-
 selectAll:
 SELECT * FROM Pause;
 
