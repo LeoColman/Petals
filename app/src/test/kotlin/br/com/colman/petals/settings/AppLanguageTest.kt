@@ -17,6 +17,7 @@ class AppLanguageTest : FunSpec({
       "no" to "Norsk",
       "pt" to "Português",
       "ru" to "Русский",
+      "ta" to "தமிழ்",
       "tr" to "Türkçe",
       "uk" to "Українськ",
     ) { (code, expectedName) ->
@@ -50,6 +51,7 @@ class AppLanguageTest : FunSpec({
       "Norsk" to "no",
       "Português" to "pt",
       "Русский" to "ru",
+      "தமிழ்" to "ta",
       "Türkçe" to "tr",
       "Українськ" to "uk",
     ) { (languageName, expectedCode) ->
