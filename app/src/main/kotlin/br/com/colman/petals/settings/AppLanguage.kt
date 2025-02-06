@@ -16,11 +16,11 @@ enum class AppLanguage(val languageName: String, val languageCode: String) {
 
   companion object {
     fun getAppLanguageName(code: String): String {
-      return entries.firstOrNull { it.languageCode == code }?.languageName ?: English.languageName
+      return (entries.firstOrNull { it.languageCode == code } ?: English).languageName
     }
 
     fun getAppLanguageCode(languageName: String): String {
-      return entries.firstOrNull { it.languageName == languageName }?.languageCode ?: English.languageCode
+      return (entries.firstOrNull { it.languageName == languageName } ?: English).languageCode
     }
   }
 }
