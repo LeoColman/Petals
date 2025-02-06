@@ -10,6 +10,7 @@ enum class AppLanguage(val languageName: String, val languageCode: String) {
   Norwegian("Norsk", "no"),
   Portuguese("Português", "pt"),
   Russian("Русский", "ru"),
+  Tamil("தமிழ்", "ta"),
   Turkish("Türkçe", "tr"),
   Ukrainian("Українськ", "uk");
 

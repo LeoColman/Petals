@@ -53,7 +53,7 @@
     <string name="change_period">காலம்</string>
     <string name="grams">கிராம்</string>
     <string name="grams_distribution_per_hour_of_day">ஒரு மணி நேரத்திற்கு கிராம் வழங்கல்</string>
-    <string name="current_thc_concentration">தற்போதைய THC செறிவு: %s %</string>
+    <string name="current_thc_concentration">தற்போதைய THC செறிவு: %s %%</string>
     <string name="thc_concentration">THC செறிவு (%)</string>
     <string name="current_withdrawal_discomfort">தற்போதைய திரும்பப் பெறுதல் அச om கரியம்: %s</string>
     <string name="discomfort_strength">அச om கரியம் வலிமை</string>
