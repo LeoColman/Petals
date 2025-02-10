@@ -23,45 +23,42 @@ sealed class ChartConfig(
   val data: Map<Duration, Double>,
   @StringRes val title: Int,
   @StringRes val verticalAxisTitle: Int,
-  @StringRes val horizontalAxisTitle: Int,
   val maxX: Double = 25.0,
   val maxY: Double = 10.0
 ) {
 
-  private data object ThcConcentration : ChartConfig(
+  @StringRes val horizontalAxisTitle = days
+
+  data object ThcConcentration : ChartConfig(
     ThcConcentrationDataPoints,
     current_thc_concentration,
     thc_concentration,
-    days,
     20.0,
     100.0
   )
-  private data object Discomfort : ChartConfig(
+  data object Discomfort : ChartConfig(
     DiscomfortDataPoints,
     current_withdrawal_discomfort,
     discomfort_strength,
-    days
   )
-  private data object DecreasedAppetite : ChartConfig(
+  data object DecreasedAppetite : ChartConfig(
     DecreasedAppetiteDataPoints,
     current_decreased_appetite,
     decreased_appetite,
-    days
   )
-  private data object Irritability : ChartConfig(IrritabilityDataPoints, current_irritability, irritability, days)
-  private data object NervousnessAnxiety : ChartConfig(
+  data object Irritability : ChartConfig(IrritabilityDataPoints, current_irritability, irritability)
+  data object NervousnessAnxiety : ChartConfig(
     NervousnessAnxietyDataPoints,
     current_nervousness_anxiety,
     nervousness_anxiety,
-    days
   )
-  private data object Anger : ChartConfig(AngerDataPoints, R.string.current_anger, R.string.anger, days)
-  private data object Restlessness : ChartConfig(RestlessnessDataPoints, current_restlessness, restlessness, days)
-  private data object SleepDifficulty : ChartConfig(
+  data object Anger : ChartConfig(AngerDataPoints, R.string.current_anger, R.string.anger,)
+  data object Restlessness : ChartConfig(RestlessnessDataPoints, current_restlessness, restlessness,)
+  data object SleepDifficulty : ChartConfig(
     SleepDifficultyDataPoints,
     current_sleep_difficulty,
     sleep_difficulty,
-    days
+
   )
 
   companion object {
