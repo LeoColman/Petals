@@ -6,7 +6,6 @@ import org.apache.commons.math3.analysis.interpolation.UnivariateInterpolator
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction
 import java.time.Duration
 
-// TODO Add tests
 class Interpolator(
   val data: Map<Duration, Double>
 ) : UnivariateInterpolator, UnivariateFunction {
@@ -21,10 +20,4 @@ class Interpolator(
   override fun interpolate(xs: DoubleArray?, ys: DoubleArray?): UnivariateFunction = dataInterpolator
 
   override fun value(x: Double): Double = dataInterpolator.value(x.coerceAtMost(maxPossibleX.toDouble()))
-
-  fun calculatePercentage(secondsQuit: Long): Double {
-    val maxValue = data.values.max()
-    val currentValue = value(secondsQuit.coerceAtMost(maxPossibleX).toDouble())
-    return currentValue / maxValue
-  }
 }
