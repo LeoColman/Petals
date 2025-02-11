@@ -47,7 +47,6 @@ import br.com.colman.petals.R.string.pin_main_screen
 import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
 import br.com.colman.petals.navigation.NavHostContainer
-import br.com.colman.petals.settings.SettingsMigrations
 import br.com.colman.petals.settings.SettingsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -59,13 +58,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope by CoroutineScope(Dispa
 
   private var authorizedUntil = LocalDateTime.MIN
   private val settingsRepository by inject<SettingsRepository>()
-  private val settingsMigrations by inject<SettingsMigrations>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      settingsMigrations.migrateOldKeysValues()
-      settingsMigrations.removeOldKeysValues()
       val navController = rememberNavController()
 
       var isAuthorized by remember { mutableStateOf(false) }

@@ -112,17 +112,5 @@ class SettingsRepository(
     val IsHitTimerMillisecondsEnabled = booleanPreferencesKey("is_hit_timer_milliseconds_enabled")
     val IsDayExtended = booleanPreferencesKey("is_day_extended_enabled")
     val IsHourOfDayLineInStatsEnabled = booleanPreferencesKey("is_hour_of_day_line_in_stats_enabled")
-
-    @Deprecated("This Key is no longer in use")
-    val ClockFormat = stringPreferencesKey("clock_format")
-
-    @Deprecated("This Key is no longer in use")
-    val MillisecondsEnabled = stringPreferencesKey("milliseconds_enabled")
-
-    @Deprecated("Use IsHitTimerMillisecondsEnabled instead", ReplaceWith("IsHitTimerMillisecondsEnabled"))
-    val HitTimerMillisecondsEnabled = stringPreferencesKey("hit_timer_milliseconds_enabled")
-
-    @Deprecated("Use IsDayExtendedEnabled instead", ReplaceWith("IsDayExtended"))
-    val ExtendedDayEnabled = stringPreferencesKey("is_day_extended")
   }
 }

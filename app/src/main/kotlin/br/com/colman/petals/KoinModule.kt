@@ -24,7 +24,6 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import br.com.colman.petals.hittimer.HitTimerRepository
 import br.com.colman.petals.review.ReviewAppRequester
-import br.com.colman.petals.settings.SettingsMigrations
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.io.UseIOModules
 import br.com.colman.petals.use.pause.repository.PauseRepository
@@ -59,6 +58,5 @@ val KoinModule = module {
   single { PauseRepository(get<Database>().pauseQueries) }
   single { HitTimerRepository(get<Context>().hitTimerPreferencesDataStore) }
   single { SettingsRepository(get<Context>().settingsDatastore) }
-  single { SettingsMigrations(get<Context>().settingsDatastore) }
   single { CensorshipRepository(get<Context>().blockDataStore) }
 }

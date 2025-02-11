@@ -20,7 +20,6 @@ import br.com.colman.petals.navigation.MyTopAppBar
 import br.com.colman.petals.navigation.NavHostContainer
 import br.com.colman.petals.playstore.settings.AdsSettingsRepository
 import br.com.colman.petals.playstore.settings.view.AdFreeButton
-import br.com.colman.petals.settings.SettingsMigrations
 import br.com.colman.petals.settings.SettingsRepository
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
@@ -32,15 +31,12 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
 
   private val adsSettingsRepository by inject<AdsSettingsRepository>()
   private val settingsRepository by inject<SettingsRepository>()
-  private val settingsMigrations by inject<SettingsMigrations>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     MobileAds.initialize(this)
 
     setContent {
-      settingsMigrations.migrateOldKeysValues()
-      settingsMigrations.removeOldKeysValues()
       koin.loadModules(
         listOf(
           KoinModule
