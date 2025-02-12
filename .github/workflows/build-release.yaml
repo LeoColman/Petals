@@ -21,36 +21,34 @@ jobs:
     - id: 'step-2'
       name: 'Consistency check'
       run: 'git diff --exit-code ''.github/workflows/build-release.yaml'''
-  build:
+  build-release:
     runs-on: 'ubuntu-latest'
     needs:
     - 'check_yaml_consistency'
+    strategy:
+      matrix:
+        variant:
+        - 'Fdroid'
+        - 'Playstore'
+        - 'Github'
     steps:
     - id: 'step-0'
-      name: 'Set up JDK'
+      name: 'Setup JDK'
       uses: 'actions/setup-java@v4'
       with:
         java-version: '17'
         distribution: 'adopt'
     - id: 'step-1'
+      name: 'Checkout'
       uses: 'actions/checkout@v4'
     - id: 'step-2'
-      name: 'reveal-secrets'
+      name: 'Reveal Secrets'
       uses: 'entrostat/git-secret-action@v4'
       with:
         gpg-private-key: '${{ secrets.GPG_KEY }}'
     - id: 'step-3'
-      name: 'Create Fdroid APK'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'assembleFdroidRelease'
+      name: 'Setup Gradle'
+      uses: 'gradle/actions/setup-gradle@v3'
     - id: 'step-4'
-      name: 'Create Playstore APK'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'assemblePlaystoreRelease'
-    - id: 'step-5'
-      name: 'Create Github APK'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'assembleGithubRelease'
+      name: 'Create ${{ matrix.variant }} APK'
+      run: './gradlew assemble${{ matrix.variant }}Release'

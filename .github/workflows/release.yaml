@@ -32,45 +32,47 @@ jobs:
     - id: 'step-2'
       name: 'Consistency check'
       run: 'git diff --exit-code ''.github/workflows/release.yaml'''
-  create-apk:
+  release:
     runs-on: 'ubuntu-latest'
     needs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      name: 'Set up Git Identity'
+      name: 'Setup Git Identity'
       run: |-
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
     - id: 'step-1'
-      name: 'Set up JDK'
+      name: 'Setup JDK'
       uses: 'actions/setup-java@v4'
       with:
         java-version: '17'
         distribution: 'adopt'
     - id: 'step-2'
+      name: 'Setup Gradle'
+      uses: 'gradle/actions/setup-gradle@v3'
+    - id: 'step-3'
+      name: 'Checkout with SSHKey'
       uses: 'actions/checkout@v4'
       with:
         ssh-key: '${{ secrets.RELEASE_KEY }}'
-    - id: 'step-3'
-      name: 'reveal-secrets'
+    - id: 'step-4'
+      name: 'Reveal Secrets'
       uses: 'entrostat/git-secret-action@v4'
       with:
         gpg-private-key: '${{ secrets.GPG_KEY }}'
-    - id: 'step-4'
+    - id: 'step-5'
       name: 'Run Bump Version Script'
       run: 'app/bump_version.main.kts "${{ github.event.inputs.version_type }}" "${{ github.event.inputs.changelog }}"'
-    - id: 'step-5'
-      name: 'Create APK'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'assembleGithubRelease'
     - id: 'step-6'
-      name: 'Create release'
+      name: 'Create APK'
+      run: './gradlew assembleGithubRelease'
+    - id: 'step-7'
+      name: 'Create Github Release'
       uses: 'softprops/action-gh-release@v2'
       with:
-        name: '${{ steps.step-4.outputs.version }}'
-        tag_name: '${{ steps.step-4.outputs.version }}'
+        name: '${{ steps.step-5.outputs.version }}'
+        tag_name: '${{ steps.step-5.outputs.version }}'
         draft: 'false'
         files: |-
           app/build/outputs/apk/github/release/app-github-release.apk
@@ -78,16 +80,14 @@ jobs:
           app/build/outputs/mapping/githubRelease/configuration.txt
           app/build/outputs/mapping/githubRelease/seeds.txt
           app/build/outputs/mapping/githubRelease/usage.txt
-    - id: 'step-7'
-      name: 'Create Bundle'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'clean bundlePlaystoreRelease'
     - id: 'step-8'
+      name: 'Create Playstore Bundle'
+      run: './gradlew clean bundlePlaystoreRelease'
+    - id: 'step-9'
       uses: 'ruby/setup-ruby@v1'
       with:
         ruby-version: '3.2.3'
-    - id: 'step-9'
+    - id: 'step-10'
       name: 'Publish to Playstore'
       working-directory: 'fastlane'
       run: |-
