@@ -15,7 +15,7 @@ fun AdsView() {
     AdView(it).apply {
       setAdSize(AdSize.BANNER)
       adUnitId =
-        if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/6300978111" else "ca-app-pub-4066886200642192/3952973327"
+        if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/6300978111" else "ca-app-pub-9745951044027822/3267619176"
       loadAd(AdRequest.Builder().build())
     }
   }, Modifier.fillMaxWidth())
