@@ -161,9 +161,19 @@
     <string name="no_break_period">Nessun periodo di pausa</string>
     <string name="hours_12">12 ore</string>
     <string name="hours_24">24 ore</string>
-    <string name="grams_distribution_over_days_since_first_use">Distribuzione dei grammi nei giorni dal primo utilizzo</string>
+    <string name="grams_distribution_over_days_since_first_use">Grammi al giorno</string>
     <string name="language_label">Lingua dell\'app</string>
     <string name="what_language_should_be_used">Quale lingua dovrebbe essere usata</string>
     <string name="hour_of_day_line_in_stats_enabled">Attiva la linea dell\'ora del giorno</string>
     <string name="enable_or_disable_hour_of_day_line_in_stats">Abilita o disabilita la linea dell\'ora del giorno sui grafici</string>
+    <string name="filter_data_by_description_containing">Filtra i dati per descrizione contenente...</string>
+    <string name="support_my_work">Sostieni il mio lavoro ❤️</string>
+    <string name="with_a_friend">con un amico</string>
+    <string name="support_now">Sostieni ora</string>
+    <string name="later">Dopo</string>
+    <string name="thank_your_for_using_message">Grazie per aver utilizzato Petals! Solo un promemoria: puoi supportare il mio lavoro per migliorare questa app gratuita.</string>
+    <string name="moving_average_grams_distribution">Grammi medi al giorno</string>
+    <string name="description_label">descrizione</string>
+    <string name="description">Descrizione</string>
+    <string name="because_i_wanted">Perché volevo</string>
 </resources>
