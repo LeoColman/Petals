@@ -22,22 +22,26 @@ jobs:
     - id: 'step-2'
       name: 'Consistency check'
       run: 'git diff --exit-code ''.github/workflows/dependency-license-analysis.yaml'''
-  analyse:
+  dependency-license-analysis:
     runs-on: 'ubuntu-latest'
     needs:
     - 'check_yaml_consistency'
     steps:
     - id: 'step-0'
-      name: 'Set up JDK'
+      name: 'Setup JDK'
       uses: 'actions/setup-java@v4'
       with:
         java-version: '17'
         distribution: 'adopt'
     - id: 'step-1'
+      name: 'Checkout'
       uses: 'actions/checkout@v4'
     - id: 'step-2'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'licensee'
+      name: 'Setup Gradle'
+      uses: 'gradle/actions/setup-gradle@v3'
     - id: 'step-3'
+      name: 'Run Licensee'
+      run: './gradlew licensee'
+    - id: 'step-4'
+      name: 'Upload Licensee to Summary'
       run: 'cat app/build/reports/licensee/androidFdroidDebug/validation.txt >> $GITHUB_STEP_SUMMARY'

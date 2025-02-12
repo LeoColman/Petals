@@ -5,7 +5,7 @@
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:setup-java:v4")
-@file:DependsOn("gradle:gradle-build-action:v3")
+@file:DependsOn("gradle:actions__setup-gradle:v3")
 @file:DependsOn("entrostat:git-secret-action:v4")
 @file:DependsOn("ruby:setup-ruby:v1")
 @file:DependsOn("softprops:action-gh-release:v2")
@@ -13,7 +13,7 @@
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
 import io.github.typesafegithub.workflows.actions.entrostat.GitSecretAction
-import io.github.typesafegithub.workflows.actions.gradle.GradleBuildAction
+import io.github.typesafegithub.workflows.actions.gradle.ActionsSetupGradle
 import io.github.typesafegithub.workflows.actions.ruby.SetupRuby
 import io.github.typesafegithub.workflows.actions.softprops.ActionGhRelease
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
@@ -49,18 +49,19 @@ workflow(
   ),
   sourceFile = __FILE__
 ) {
-  job(id = "create-apk", runsOn = UbuntuLatest) {
+  job(id = "release", runsOn = UbuntuLatest) {
     run(
-      name = "Set up Git Identity",
+      name = "Setup Git Identity",
       command = """
             git config --global user.name "GitHub Actions"
             git config --global user.email "actions@github.com"
         """.trimIndent()
     )
 
-    uses(name = "Set up JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
-    uses(action = Checkout(sshKey = expr { secrets["RELEASE_KEY"]!!}))
-    uses(name = "reveal-secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
+    uses(name = "Setup JDK", action = SetupJava(javaVersion = "17", distribution = SetupJava.Distribution.Adopt))
+    uses(name = "Setup Gradle", action = ActionsSetupGradle())
+    uses(name = "Checkout with SSHKey", action = Checkout(sshKey = expr { secrets["RELEASE_KEY"]!!}))
+    uses(name = "Reveal Secrets", action = GitSecretAction(gpgPrivateKey = expr { GPG_KEY }))
 
     val versionTypeExpr = expr { github["event.inputs.version_type"]!! }
     val changelogExpr = expr { github["event.inputs.changelog"]!! }
@@ -69,10 +70,11 @@ workflow(
       command = "app/bump_version.main.kts \"$versionTypeExpr\" \"$changelogExpr\"",
     )
 
-    uses(name = "Create APK", action = GradleBuildAction(arguments = "assembleGithubRelease"))
+    run(name = "Create APK", command = "./gradlew assembleGithubRelease")
 
     uses(
-      name = "Create release", action = ActionGhRelease(
+      name = "Create Github Release",
+      action = ActionGhRelease(
         tagName = expr { bumpStep.outputs["version"] },
         name = expr { bumpStep.outputs["version"] },
         draft = false,
@@ -87,7 +89,7 @@ workflow(
       )
     )
 
-    uses(name = "Create Bundle", action = GradleBuildAction(arguments = "clean bundlePlaystoreRelease"))
+    run(name = "Create Playstore Bundle", command = "./gradlew clean bundlePlaystoreRelease")
 
     uses(action = SetupRuby(rubyVersion = "3.2.3"))
     run(
