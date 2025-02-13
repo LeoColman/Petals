@@ -36,7 +36,7 @@ jobs:
     - id: 'step-1'
       uses: 'actions/checkout@v4'
     - id: 'step-2'
-      uses: 'gradle/gradle-build-action@v3'
+      uses: 'gradle/actions/setup-gradle@v3'
       with:
         arguments: 'licensee'
     - id: 'step-3'
