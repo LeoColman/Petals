@@ -26,6 +26,12 @@ jobs:
     runs-on: 'ubuntu-latest'
     needs:
     - 'check_yaml_consistency'
+    strategy:
+      matrix:
+        variant:
+        - 'Fdroid'
+        - 'Playstore'
+        - 'Github'
     steps:
     - id: 'step-0'
       name: 'Set up JDK'
@@ -36,17 +42,7 @@ jobs:
     - id: 'step-1'
       uses: 'actions/checkout@v4'
     - id: 'step-2'
-      name: 'Create Fdroid APK'
-      uses: 'gradle/gradle-build-action@v3'
+      name: 'Builds APK'
+      uses: 'gradle/actions/setup-gradle@v3'
       with:
-        arguments: 'assembleFdroidDebug'
-    - id: 'step-3'
-      name: 'Create Playstore APK'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'assemblePlaystoreDebug'
-    - id: 'step-4'
-      name: 'Create Github APK'
-      uses: 'gradle/gradle-build-action@v3'
-      with:
-        arguments: 'assembleGithubDebug'
+        arguments: 'assemble${{ matrix.variant }}Debug'
