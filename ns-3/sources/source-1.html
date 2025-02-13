@@ -1,0 +1,246 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > ClickableTextFieldKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.components</a>
+</div>
+
+<h1>Coverage Summary for Class: ClickableTextFieldKt (br.com.colman.petals.components)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">ClickableTextFieldKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/280)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ClickableTextFieldKt$ClickableTextField$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/47)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ClickableTextFieldKt$ClickableTextField$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/30)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/357)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.components
+&nbsp;
+&nbsp;import androidx.annotation.StringRes
+&nbsp;import androidx.compose.foundation.interaction.MutableInteractionSource
+&nbsp;import androidx.compose.foundation.interaction.collectIsPressedAsState
+&nbsp;import androidx.compose.material.Icon
+&nbsp;import androidx.compose.material.OutlinedTextField
+&nbsp;import androidx.compose.material.Text
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.runtime.remember
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.graphics.vector.ImageVector
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun ClickableTextField(
+&nbsp;  @StringRes label: Int,
+&nbsp;  leadingIcon: ImageVector,
+&nbsp;  value: String,
+<b class="nc">&nbsp;  modifier: Modifier = Modifier,</b>
+&nbsp;  onClick: () -&gt; Unit,
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  val interactionSource = remember { MutableInteractionSource() }</b>
+<b class="nc">&nbsp;  val isPressed by interactionSource.collectIsPressedAsState()</b>
+<b class="nc">&nbsp;  if (isPressed) {</b>
+<b class="nc">&nbsp;    onClick()</b>
+&nbsp;  }
+&nbsp;
+<b class="nc">&nbsp;  OutlinedTextField(</b>
+<b class="nc">&nbsp;    value,</b>
+<b class="nc">&nbsp;    onValueChange = {},</b>
+<b class="nc">&nbsp;    leadingIcon = { Icon(leadingIcon, null) },</b>
+<b class="nc">&nbsp;    label = { Text(stringResource(label)) },</b>
+<b class="nc">&nbsp;    readOnly = true,</b>
+<b class="nc">&nbsp;    interactionSource = interactionSource,</b>
+<b class="nc">&nbsp;    modifier = modifier</b>
+&nbsp;  )
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

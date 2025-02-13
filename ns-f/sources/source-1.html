@@ -1,0 +1,177 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > StatisticsPageKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.statistics</a>
+</div>
+
+<h1>Coverage Summary for Class: StatisticsPageKt (br.com.colman.petals.statistics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">StatisticsPageKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/316)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.statistics
+&nbsp;
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.rememberScrollState
+&nbsp;import androidx.compose.foundation.verticalScroll
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.collectAsState
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.runtime.mutableStateOf
+&nbsp;import androidx.compose.runtime.remember
+&nbsp;import androidx.compose.runtime.setValue
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.platform.testTag
+&nbsp;import br.com.colman.petals.settings.SettingsRepository
+&nbsp;import br.com.colman.petals.statistics.card.AverageUseCard
+&nbsp;import br.com.colman.petals.statistics.component.MultiPeriodSelect
+&nbsp;import br.com.colman.petals.statistics.component.Period
+&nbsp;import br.com.colman.petals.statistics.component.Period.Zero
+&nbsp;import br.com.colman.petals.statistics.graph.AllTimeGraph
+&nbsp;import br.com.colman.petals.statistics.graph.UsePerDayOfWeekGraph
+&nbsp;import br.com.colman.petals.statistics.graph.UsePerHourGraph
+&nbsp;import br.com.colman.petals.use.repository.Use
+&nbsp;import br.com.colman.petals.use.repository.UseRepository
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;fun StatisticsPage(useRepository: UseRepository, settingsRepository: SettingsRepository) {</b>
+<b class="nc">&nbsp;  var selectedPeriods by remember { mutableStateOf(listOf&lt;Period&gt;(Zero)) }</b>
+<b class="nc">&nbsp;  val uses by useRepository.all().collectAsState(emptyList())</b>
+<b class="nc">&nbsp;  val usesInPeriod = selectedPeriods.associateWith(uses)</b>
+<b class="nc">&nbsp;  val dateFormat = settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList.first())</b>
+&nbsp;
+<b class="nc">&nbsp;  Column(Modifier.verticalScroll(rememberScrollState()).testTag(&quot;StatisticsMainColumn&quot;)) {</b>
+<b class="nc">&nbsp;    MultiPeriodSelect(selectedPeriods) { selectedPeriods = it }</b>
+<b class="nc">&nbsp;    if (selectedPeriods.isEmpty()) return</b>
+&nbsp;
+<b class="nc">&nbsp;    UsePerHourGraph(usesInPeriod)</b>
+<b class="nc">&nbsp;    UsePerDayOfWeekGraph(usesInPeriod)</b>
+<b class="nc">&nbsp;    if (uses.isNotEmpty()) {</b>
+<b class="nc">&nbsp;      AllTimeGraph(uses, dateFormat.value)</b>
+&nbsp;    }
+<b class="nc">&nbsp;    usesInPeriod.forEach { (period, uses) -&gt;</b>
+<b class="nc">&nbsp;      AverageUseCard(uses, period.toDateRange())</b>
+<b class="nc">&nbsp;    }</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+<b class="nc">&nbsp;private fun List&lt;Period&gt;.associateWith(uses: List&lt;Use&gt;) = associateWith { period -&gt;</b>
+<b class="nc">&nbsp;  uses.filter { it.localDate in period.toDateRange() }</b>
+<b class="nc">&nbsp;}.toSortedMap()</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

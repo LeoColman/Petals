@@ -1,0 +1,202 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > PauseQueries</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals</a>
+</div>
+
+<h1>Coverage Summary for Class: PauseQueries (br.com.colman.petals)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">PauseQueries</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/14)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (34/34)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (151/151)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals
+&nbsp;
+&nbsp;import app.cash.sqldelight.Query
+&nbsp;import app.cash.sqldelight.TransacterImpl
+&nbsp;import app.cash.sqldelight.db.SqlDriver
+&nbsp;import kotlin.Any
+&nbsp;import kotlin.Long
+&nbsp;import kotlin.String
+&nbsp;
+&nbsp;public class PauseQueries(
+&nbsp;  driver: SqlDriver,
+<b class="fc">&nbsp;) : TransacterImpl(driver) {</b>
+&nbsp;  public fun &lt;T : Any&gt; selectAll(mapper: (
+&nbsp;    start_time: String,
+&nbsp;    end_time: String,
+&nbsp;    id: String,
+&nbsp;    is_enabled: Long,
+<b class="fc">&nbsp;  ) -&gt; T): Query&lt;T&gt; = Query(748_835_209, arrayOf(&quot;Pause&quot;), driver, &quot;Pause.sq&quot;, &quot;selectAll&quot;,</b>
+<b class="fc">&nbsp;      &quot;SELECT Pause.start_time, Pause.end_time, Pause.id, Pause.is_enabled FROM Pause&quot;) { cursor -&gt;</b>
+<b class="fc">&nbsp;    mapper(</b>
+<b class="fc">&nbsp;      cursor.getString(0)!!,</b>
+<b class="fc">&nbsp;      cursor.getString(1)!!,</b>
+<b class="fc">&nbsp;      cursor.getString(2)!!,</b>
+<b class="fc">&nbsp;      cursor.getLong(3)!!</b>
+&nbsp;    )
+&nbsp;  }
+&nbsp;
+<b class="fc">&nbsp;  public fun selectAll(): Query&lt;Pause&gt; = selectAll { start_time, end_time, id, is_enabled -&gt;</b>
+<b class="fc">&nbsp;    Pause(</b>
+<b class="fc">&nbsp;      start_time,</b>
+<b class="fc">&nbsp;      end_time,</b>
+<b class="fc">&nbsp;      id,</b>
+<b class="fc">&nbsp;      is_enabled</b>
+&nbsp;    )
+&nbsp;  }
+&nbsp;
+&nbsp;  public fun insert(Pause: Pause) {
+<b class="fc">&nbsp;    driver.execute(-14_058_827,</b>
+<b class="fc">&nbsp;        &quot;&quot;&quot;INSERT INTO Pause(start_time, end_time, id, is_enabled) VALUES (?, ?, ?, ?)&quot;&quot;&quot;, 4) {</b>
+<b class="fc">&nbsp;          bindString(0, Pause.start_time)</b>
+<b class="fc">&nbsp;          bindString(1, Pause.end_time)</b>
+<b class="fc">&nbsp;          bindString(2, Pause.id)</b>
+<b class="fc">&nbsp;          bindLong(3, Pause.is_enabled)</b>
+&nbsp;        }
+<b class="fc">&nbsp;    notifyQueries(-14_058_827) { emit -&gt;</b>
+<b class="fc">&nbsp;      emit(&quot;Pause&quot;)</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public fun update(
+&nbsp;    start_time: String,
+&nbsp;    end_time: String,
+&nbsp;    is_enabled: Long,
+&nbsp;    id: String,
+&nbsp;  ) {
+<b class="fc">&nbsp;    driver.execute(330_887_365, &quot;&quot;&quot;</b>
+&nbsp;        |UPDATE Pause
+&nbsp;        |SET start_time = ?,
+&nbsp;        |    end_time = ?,
+&nbsp;        |    is_enabled = ?
+&nbsp;        |WHERE id = ?
+<b class="fc">&nbsp;        &quot;&quot;&quot;.trimMargin(), 4) {</b>
+<b class="fc">&nbsp;          bindString(0, start_time)</b>
+<b class="fc">&nbsp;          bindString(1, end_time)</b>
+<b class="fc">&nbsp;          bindLong(2, is_enabled)</b>
+<b class="fc">&nbsp;          bindString(3, id)</b>
+&nbsp;        }
+<b class="fc">&nbsp;    notifyQueries(330_887_365) { emit -&gt;</b>
+<b class="fc">&nbsp;      emit(&quot;Pause&quot;)</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public fun delete(id: String) {
+<b class="fc">&nbsp;    driver.execute(-165_724_761, &quot;&quot;&quot;DELETE FROM Pause WHERE id = ?&quot;&quot;&quot;, 1) {</b>
+<b class="fc">&nbsp;          bindString(0, id)</b>
+&nbsp;        }
+<b class="fc">&nbsp;    notifyQueries(-165_724_761) { emit -&gt;</b>
+<b class="fc">&nbsp;      emit(&quot;Pause&quot;)</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

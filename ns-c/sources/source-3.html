@@ -1,0 +1,237 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > SettingsRepositoryKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.settings</a>
+</div>
+
+<h1>Coverage Summary for Class: SettingsRepositoryKt (br.com.colman.petals.settings)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SettingsRepositoryKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (68/68)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.settings
+&nbsp;
+&nbsp;import androidx.datastore.core.DataStore
+&nbsp;import androidx.datastore.preferences.core.Preferences
+&nbsp;import androidx.datastore.preferences.core.booleanPreferencesKey
+&nbsp;import androidx.datastore.preferences.core.edit
+&nbsp;import androidx.datastore.preferences.core.intPreferencesKey
+&nbsp;import androidx.datastore.preferences.core.stringPreferencesKey
+&nbsp;import br.com.colman.petals.R.string.hours_12
+&nbsp;import br.com.colman.petals.R.string.hours_24
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import kotlinx.coroutines.runBlocking
+&nbsp;import java.time.format.DateTimeFormatter
+&nbsp;
+&nbsp;/**
+&nbsp; * @see DateTimeFormatter
+&nbsp; */
+<b class="fc">&nbsp;private val DateFormats = listOf(</b>
+<b class="fc">&nbsp;  &quot;yyyy-MM-dd&quot;,</b>
+<b class="fc">&nbsp;  &quot;yyyy/MM/dd&quot;,</b>
+<b class="fc">&nbsp;  &quot;dd-MM-yyyy&quot;,</b>
+<b class="fc">&nbsp;  &quot;dd.MM.yyyy&quot;,</b>
+<b class="fc">&nbsp;  &quot;MM/dd/yyyy&quot;,</b>
+<b class="fc">&nbsp;  &quot;MM-dd-yyyy&quot;</b>
+&nbsp;)
+&nbsp;
+&nbsp;/**
+&nbsp; * @see DateTimeFormatter
+&nbsp; */
+<b class="fc">&nbsp;private val TimeFormats = listOf(</b>
+<b class="fc">&nbsp;  &quot;HH:mm&quot;,</b>
+<b class="fc">&nbsp;  &quot;KK:mm a&quot;,</b>
+<b class="fc">&nbsp;  &quot;HH:mm:ss&quot;,</b>
+<b class="fc">&nbsp;  &quot;KK:mm:ss a&quot;</b>
+&nbsp;)
+&nbsp;
+<b class="fc">&nbsp;private val ClockFormats = listOf(hours_12, hours_24)</b>
+&nbsp;
+&nbsp;class SettingsRepository(
+&nbsp;  private val datastore: DataStore&lt;Preferences&gt;
+&nbsp;) {
+&nbsp;
+&nbsp;  val currencyIcon = datastore.data.map { it[CurrencyIcon] ?: &quot;$&quot; }
+&nbsp;  val dateFormatList = DateFormats
+&nbsp;  val dateFormat = datastore.data.map { it[DateFormat] ?: dateFormatList.first() }
+&nbsp;  val timeFormatList = TimeFormats
+&nbsp;  val timeFormat = datastore.data.map { it[TimeFormat] ?: timeFormatList.first() }
+&nbsp;  val clockFormatList = ClockFormats
+&nbsp;  val is24HoursFormat = datastore.data.map { it[Is24HoursFormat] ?: false }
+&nbsp;  val decimalPrecisionList = listOf(0, 1, 2, 3)
+&nbsp;  val decimalPrecision = datastore.data.map { it[DecimalPrecision] ?: decimalPrecisionList[2] }
+&nbsp;  val isDarkModeEnabled: Flow&lt;Boolean&gt; = datastore.data.map { it[IsDarkModeOn] ?: true }
+&nbsp;  val isHitTimerMillisecondsEnabled = datastore.data.map { it[IsHitTimerMillisecondsEnabled] ?: false }
+&nbsp;  val isHourOfDayLineInStatsEnabled = datastore.data.map { it[IsHourOfDayLineInStatsEnabled] ?: false }
+&nbsp;  val isDayExtended = datastore.data.map { it[IsDayExtended] ?: false }
+&nbsp;  val appLanguages = AppLanguage.entries.map { it.languageName }
+&nbsp;
+&nbsp;  fun setCurrencyIcon(value: String): Unit = runBlocking {
+&nbsp;    datastore.edit { it[CurrencyIcon] = value }
+&nbsp;  }
+&nbsp;
+&nbsp;  fun setDateFormat(value: String): Unit = runBlocking {
+&nbsp;    datastore.edit { it[DateFormat] = value }
+&nbsp;  }
+&nbsp;
+&nbsp;  fun setTimeFormat(value: String): Unit = runBlocking {
+&nbsp;    datastore.edit { it[TimeFormat] = value }
+&nbsp;  }
+&nbsp;
+&nbsp;  fun setIs24HoursFormat(value: Boolean): Unit = runBlocking {
+&nbsp;    datastore.edit { it[Is24HoursFormat] = value }
+&nbsp;  }
+&nbsp;
+&nbsp;  fun setDecimalPrecision(value: Int): Unit = runBlocking {
+&nbsp;    datastore.edit { it[DecimalPrecision] = value }
+&nbsp;  }
+&nbsp;
+&nbsp;  fun setDarkMode(value: Boolean): Unit = runBlocking {
+&nbsp;    datastore.edit { it[IsDarkModeOn] = value }
+&nbsp;  }
+&nbsp;
+&nbsp;  val pin: Flow&lt;String?&gt;
+&nbsp;    get() = datastore.data.map { it[Pin] }
+&nbsp;
+&nbsp;  fun setPin(pin: String?): Unit = runBlocking {
+&nbsp;    datastore.edit {
+&nbsp;      if (pin == null) it.remove(Pin) else it[Pin] = pin
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  fun setIsHitTimerMillisecondsEnabled(value: Boolean): Unit = runBlocking {
+&nbsp;    datastore.edit { it[IsHitTimerMillisecondsEnabled] = value }
+&nbsp;  }
+&nbsp;
+&nbsp;  fun setDayExtended(value: Boolean): Unit = runBlocking {
+&nbsp;    datastore.edit { it[IsDayExtended] = value }
+&nbsp;  }
+&nbsp;
+&nbsp;  fun setIsHourOfDayLineInStatsEnabled(value: Boolean): Unit = runBlocking {
+&nbsp;    datastore.edit { it[IsHourOfDayLineInStatsEnabled] = value }
+&nbsp;  }
+&nbsp;
+&nbsp;  companion object {
+&nbsp;    val CurrencyIcon = stringPreferencesKey(&quot;currency_icon&quot;)
+&nbsp;    val DateFormat = stringPreferencesKey(&quot;date_format&quot;)
+&nbsp;    val TimeFormat = stringPreferencesKey(&quot;time_format&quot;)
+&nbsp;    val Is24HoursFormat = booleanPreferencesKey(&quot;is_24_hours_format&quot;)
+&nbsp;    val Pin = stringPreferencesKey(&quot;pin&quot;)
+&nbsp;    val DecimalPrecision = intPreferencesKey(&quot;decimal_precision&quot;)
+&nbsp;    val IsDarkModeOn: Preferences.Key&lt;Boolean&gt; = booleanPreferencesKey(&quot;is_dark_mode_on&quot;)
+&nbsp;    val IsHitTimerMillisecondsEnabled = booleanPreferencesKey(&quot;is_hit_timer_milliseconds_enabled&quot;)
+&nbsp;    val IsDayExtended = booleanPreferencesKey(&quot;is_day_extended_enabled&quot;)
+&nbsp;    val IsHourOfDayLineInStatsEnabled = booleanPreferencesKey(&quot;is_hour_of_day_line_in_stats_enabled&quot;)
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,367 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > LastUseDateTimerKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.use</a>
+</div>
+
+<h1>Coverage Summary for Class: LastUseDateTimerKt (br.com.colman.petals.use)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">LastUseDateTimerKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/54)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/745)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LastUseDateTimerKt$LastUseDateTimer$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">LastUseDateTimerKt$LastUseDateTimer$2$1$1$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/28)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/58)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/796)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/*
+&nbsp; * Petals APP
+&nbsp; * Copyright (C) 2021 Leonardo Colman Lopes
+&nbsp; *
+&nbsp; * This program is free software: you can redistribute it and/or modify
+&nbsp; * it under the terms of the GNU Affero General Public License as published by
+&nbsp; * the Free Software Foundation, either version 3 of the License, or
+&nbsp; * (at your option) any later version.
+&nbsp; *
+&nbsp; * This program is distributed in the hope that it will be useful,
+&nbsp; * but WITHOUT ANY WARRANTY; without even the implied warranty of
+&nbsp; * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+&nbsp; * GNU Affero General Public License for more details.
+&nbsp; *
+&nbsp; * You should have received a copy of the GNU Affero General Public License
+&nbsp; * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+&nbsp; */
+&nbsp;
+&nbsp;package br.com.colman.petals.use
+&nbsp;
+&nbsp;import androidx.annotation.StringRes
+&nbsp;import androidx.compose.foundation.isSystemInDarkTheme
+&nbsp;import androidx.compose.foundation.layout.Arrangement
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.layout.Row
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.layout.height
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.foundation.layout.size
+&nbsp;import androidx.compose.material.Icon
+&nbsp;import androidx.compose.material.IconButton
+&nbsp;import androidx.compose.material.LinearProgressIndicator
+&nbsp;import androidx.compose.material.Text
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.LaunchedEffect
+&nbsp;import androidx.compose.runtime.collectAsState
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.runtime.mutableStateOf
+&nbsp;import androidx.compose.runtime.remember
+&nbsp;import androidx.compose.runtime.setValue
+&nbsp;import androidx.compose.ui.Alignment
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import androidx.compose.ui.unit.sp
+&nbsp;import br.com.colman.petals.R.string.days
+&nbsp;import br.com.colman.petals.R.string.hours
+&nbsp;import br.com.colman.petals.R.string.milliseconds
+&nbsp;import br.com.colman.petals.R.string.minutes
+&nbsp;import br.com.colman.petals.R.string.months
+&nbsp;import br.com.colman.petals.R.string.quit_date_text
+&nbsp;import br.com.colman.petals.R.string.seconds
+&nbsp;import br.com.colman.petals.R.string.years
+&nbsp;import br.com.colman.petals.settings.SettingsRepository
+&nbsp;import br.com.colman.petals.use.TimeUnit.Day
+&nbsp;import br.com.colman.petals.use.TimeUnit.Hour
+&nbsp;import br.com.colman.petals.use.TimeUnit.Millisecond
+&nbsp;import br.com.colman.petals.use.TimeUnit.Minute
+&nbsp;import br.com.colman.petals.use.TimeUnit.Month
+&nbsp;import br.com.colman.petals.use.TimeUnit.Second
+&nbsp;import br.com.colman.petals.use.TimeUnit.Year
+&nbsp;import br.com.colman.petals.utils.truncatedToMinute
+&nbsp;import compose.icons.TablerIcons
+&nbsp;import compose.icons.tablericons.Moon
+&nbsp;import compose.icons.tablericons.Sun
+&nbsp;import kotlinx.coroutines.delay
+&nbsp;import org.koin.compose.koinInject
+&nbsp;import java.time.LocalDateTime
+&nbsp;import java.time.LocalDateTime.now
+&nbsp;import java.time.LocalTime
+&nbsp;import java.time.format.DateTimeFormatter
+&nbsp;import java.time.temporal.ChronoUnit
+&nbsp;import java.util.Locale
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;fun LastUseDateTimer(lastUseDate: LocalDateTime) {</b>
+<b class="nc">&nbsp;  val settingsRepository = koinInject&lt;SettingsRepository&gt;()</b>
+<b class="nc">&nbsp;  val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])</b>
+<b class="nc">&nbsp;  val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])</b>
+<b class="nc">&nbsp;  val darkMode: Boolean by settingsRepository.isDarkModeEnabled.collectAsState(isSystemInDarkTheme())</b>
+<b class="nc">&nbsp;  val dateString = DateTimeFormatter.ofPattern(</b>
+<b class="nc">&nbsp;    String.format(Locale.US, &quot;%s %s&quot;, dateFormat, timeFormat)</b>
+<b class="nc">&nbsp;  ).format(lastUseDate)</b>
+&nbsp;
+<b class="nc">&nbsp;  var millis by remember { mutableStateOf(ChronoUnit.MILLIS.between(lastUseDate, now())) }</b>
+&nbsp;
+<b class="nc">&nbsp;  LaunchedEffect(millis) {</b>
+<b class="nc">&nbsp;    while (true) {</b>
+<b class="nc">&nbsp;      delay(11)</b>
+<b class="nc">&nbsp;      millis = ChronoUnit.MILLIS.between(lastUseDate, now())</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+<b class="nc">&nbsp;  val enabledLabels = listOf(Year, Month, Day, Hour, Minute, Second)</b>
+&nbsp;
+<b class="nc">&nbsp;  var millisCopy = millis</b>
+<b class="nc">&nbsp;  val labels = enabledLabels.map {</b>
+<b class="nc">&nbsp;    val unitsTotal = millisCopy / it.millis</b>
+<b class="nc">&nbsp;    millisCopy -= unitsTotal * it.millis</b>
+<b class="nc">&nbsp;    it to unitsTotal</b>
+&nbsp;  }
+&nbsp;
+<b class="nc">&nbsp;  Column(Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {</b>
+<b class="nc">&nbsp;    Column {</b>
+<b class="nc">&nbsp;      Row(</b>
+<b class="nc">&nbsp;        modifier = Modifier.fillMaxWidth(),</b>
+<b class="nc">&nbsp;        horizontalArrangement = Arrangement.SpaceBetween</b>
+&nbsp;      ) {
+<b class="nc">&nbsp;        Column {</b>
+<b class="nc">&nbsp;          Text(stringResource(quit_date_text))</b>
+<b class="nc">&nbsp;          val dateStringWithExtras = if (!lastUseDate.is420()) dateString else &quot;$dateString 🥦🥦&quot;</b>
+<b class="nc">&nbsp;          Text(dateStringWithExtras, fontSize = 24.sp)</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        IconButton({ settingsRepository.setDarkMode(!darkMode) }) {</b>
+<b class="nc">&nbsp;          SetDarkModeIcon(darkMode)</b>
+&nbsp;        }
+<b class="nc">&nbsp;      }</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+<b class="nc">&nbsp;    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {</b>
+<b class="nc">&nbsp;      labels.forEach { (label, amount) -&gt;</b>
+&nbsp;
+<b class="nc">&nbsp;        Row(Modifier, Arrangement.spacedBy(8.dp), Alignment.CenterVertically) {</b>
+<b class="nc">&nbsp;          Row(Modifier.weight(0.5f), Arrangement.SpaceBetween) {</b>
+<b class="nc">&nbsp;            Text(stringResource(label.unitName))</b>
+<b class="nc">&nbsp;            Text(&quot;$amount&quot;)</b>
+<b class="nc">&nbsp;          }</b>
+<b class="nc">&nbsp;          LinearProgressIndicator(</b>
+<b class="nc">&nbsp;            amount.toFloat() / label.max,</b>
+<b class="nc">&nbsp;            Modifier</b>
+<b class="nc">&nbsp;              .height(8.dp)</b>
+<b class="nc">&nbsp;              .weight(0.5f)</b>
+&nbsp;          )
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;      }</b>
+<b class="nc">&nbsp;    }</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;enum class TimeUnit(@StringRes val unitName: Int, val max: Long, val millis: Long) {
+&nbsp;  Millisecond(milliseconds, 1000L, 1),
+&nbsp;  Second(seconds, 60L, Millisecond.max),
+&nbsp;  Minute(minutes, 60L, Second.max * Millisecond.max),
+&nbsp;  Hour(hours, 24L, Minute.max * Minute.millis),
+&nbsp;  Day(days, 31L, Hour.max * Hour.millis),
+&nbsp;  Month(months, 12L, Day.max * Day.millis),
+&nbsp;  Year(years, 60L, Month.max * Month.millis),
+&nbsp;}
+&nbsp;
+<b class="nc">&nbsp;private fun LocalDateTime.is420() = toLocalTime().truncatedToMinute() == LocalTime.of(16, 20)</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;fun SetDarkModeIcon(isDarkModeOn: Boolean?) {</b>
+<b class="nc">&nbsp;  if (isDarkModeOn != null) {</b>
+<b class="nc">&nbsp;    val chosenIcon = if (isDarkModeOn) TablerIcons.Sun else TablerIcons.Moon</b>
+<b class="nc">&nbsp;    Icon(chosenIcon, null, Modifier.size(26.dp))</b>
+<b class="nc">&nbsp;  } else {</b>
+<b class="nc">&nbsp;    Icon(TablerIcons.Moon, null, Modifier.size(26.dp))</b>
+&nbsp;  }
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

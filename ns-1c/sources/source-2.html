@@ -1,0 +1,299 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > DeletePauseDialogKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.use.pause</a>
+</div>
+
+<h1>Coverage Summary for Class: DeletePauseDialogKt (br.com.colman.petals.use.pause)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">DeletePauseDialogKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/542)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DeletePauseDialogKt$DeletePauseDialog$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/29)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">DeletePauseDialogKt$DeletePauseDialog$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/27)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">DeletePauseDialogKt$DeletePauseDialog$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/66)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/28)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/664)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.use.pause
+&nbsp;
+&nbsp;import androidx.compose.material.AlertDialog
+&nbsp;import androidx.compose.material.MaterialTheme
+&nbsp;import androidx.compose.material.Text
+&nbsp;import androidx.compose.material.TextButton
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import br.com.colman.petals.R
+&nbsp;import br.com.colman.petals.use.pause.repository.Pause
+&nbsp;import br.com.colman.petals.utils.truncatedToMinute
+&nbsp;import java.time.format.DateTimeFormatter.ISO_TIME
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+&nbsp;fun DeletePauseDialog(
+<b class="nc">&nbsp;  pause: Pause = Pause(),</b>
+<b class="nc">&nbsp;  onDelete: () -&gt; Unit = { },</b>
+<b class="nc">&nbsp;  onDismiss: () -&gt; Unit = { }</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  AlertDialog(</b>
+<b class="nc">&nbsp;    onDismissRequest = onDismiss,</b>
+&nbsp;    title = {
+&nbsp;      Text(
+&nbsp;        stringResource(R.string.confirm_deletion),
+&nbsp;        style = MaterialTheme.typography.h5,
+&nbsp;      )
+&nbsp;    },
+<b class="nc">&nbsp;    text = {</b>
+<b class="nc">&nbsp;      Text(</b>
+<b class="nc">&nbsp;        stringResource(</b>
+<b class="nc">&nbsp;          R.string.are_you_sure_delete_pause,</b>
+<b class="nc">&nbsp;          pause.startTime.truncatedToMinute().format(ISO_TIME),</b>
+<b class="nc">&nbsp;          pause.endTime.truncatedToMinute().format(ISO_TIME)</b>
+&nbsp;        ),
+&nbsp;      )
+&nbsp;    },
+<b class="nc">&nbsp;    confirmButton = { ConfirmPauseButton(onDelete, onDismiss) },</b>
+<b class="nc">&nbsp;    dismissButton = { DeletePauseButton(onDismiss) }</b>
+&nbsp;  )
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+&nbsp;private fun ConfirmPauseButton(
+<b class="nc">&nbsp;  deletePause: () -&gt; Unit = {},</b>
+<b class="nc">&nbsp;  onDismiss: () -&gt; Unit = {}</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  TextButton({</b>
+<b class="nc">&nbsp;    deletePause()</b>
+<b class="nc">&nbsp;    onDismiss()</b>
+&nbsp;  }) {
+&nbsp;    Text(stringResource(R.string.delete))
+&nbsp;  }
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+&nbsp;private fun DeletePauseButton(
+<b class="nc">&nbsp;  onDismiss: () -&gt; Unit = {}</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  TextButton(onDismiss) {</b>
+&nbsp;    Text(stringResource(R.string.cancel))
+&nbsp;  }
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

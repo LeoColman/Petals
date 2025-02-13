@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > DatabaseImplKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.app</a>
+</div>
+
+<h1>Coverage Summary for Class: DatabaseImplKt (br.com.colman.petals.app)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">DatabaseImplKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.app
+&nbsp;
+&nbsp;import app.cash.sqldelight.TransacterImpl
+&nbsp;import app.cash.sqldelight.db.AfterVersion
+&nbsp;import app.cash.sqldelight.db.QueryResult
+&nbsp;import app.cash.sqldelight.db.SqlDriver
+&nbsp;import app.cash.sqldelight.db.SqlSchema
+&nbsp;import br.com.colman.petals.Database
+&nbsp;import br.com.colman.petals.PauseQueries
+&nbsp;import br.com.colman.petals.UseQueries
+&nbsp;import kotlin.Long
+&nbsp;import kotlin.Unit
+&nbsp;import kotlin.reflect.KClass
+&nbsp;
+&nbsp;internal val KClass&lt;Database&gt;.schema: SqlSchema&lt;QueryResult.Value&lt;Unit&gt;&gt;
+<b class="fc">&nbsp;  get() = DatabaseImpl.Schema</b>
+&nbsp;
+<b class="fc">&nbsp;internal fun KClass&lt;Database&gt;.newInstance(driver: SqlDriver): Database = DatabaseImpl(driver)</b>
+&nbsp;
+&nbsp;private class DatabaseImpl(
+&nbsp;  driver: SqlDriver,
+&nbsp;) : TransacterImpl(driver), Database {
+&nbsp;  override val pauseQueries: PauseQueries = PauseQueries(driver)
+&nbsp;
+&nbsp;  override val useQueries: UseQueries = UseQueries(driver)
+&nbsp;
+&nbsp;  public object Schema : SqlSchema&lt;QueryResult.Value&lt;Unit&gt;&gt; {
+&nbsp;    override val version: Long
+&nbsp;      get() = 4
+&nbsp;
+&nbsp;    override fun create(driver: SqlDriver): QueryResult.Value&lt;Unit&gt; {
+&nbsp;      driver.execute(null, &quot;&quot;&quot;
+&nbsp;          |CREATE TABLE Pause(
+&nbsp;          |  start_time TEXT NOT NULL,
+&nbsp;          |  end_time TEXT NOT NULL,
+&nbsp;          |  id TEXT PRIMARY KEY,
+&nbsp;          |  is_enabled INTEGER NOT NULL DEFAULT 1
+&nbsp;          |)
+&nbsp;          &quot;&quot;&quot;.trimMargin(), 0)
+&nbsp;      driver.execute(null, &quot;&quot;&quot;
+&nbsp;          |CREATE TABLE Use(
+&nbsp;          |    date TEXT NOT NULL,
+&nbsp;          |    amount_grams TEXT NOT NULL,
+&nbsp;          |    cost_per_gram TEXT NOT NULL,
+&nbsp;          |    id TEXT PRIMARY KEY,
+&nbsp;          |    description TEXT NOT NULL DEFAULT &quot;&quot;
+&nbsp;          |)
+&nbsp;          &quot;&quot;&quot;.trimMargin(), 0)
+&nbsp;      return QueryResult.Unit
+&nbsp;    }
+&nbsp;
+&nbsp;    private fun migrateInternal(
+&nbsp;      driver: SqlDriver,
+&nbsp;      oldVersion: Long,
+&nbsp;      newVersion: Long,
+&nbsp;    ): QueryResult.Value&lt;Unit&gt; {
+&nbsp;      if (oldVersion &lt;= 1 &amp;&amp; newVersion &gt; 1) {
+&nbsp;        driver.execute(null, &quot;&quot;&quot;
+&nbsp;            |CREATE TABLE Pause(
+&nbsp;            |  start_time TEXT NOT NULL,
+&nbsp;            |  end_time TEXT NOT NULL,
+&nbsp;            |  id TEXT PRIMARY KEY
+&nbsp;            |)
+&nbsp;            &quot;&quot;&quot;.trimMargin(), 0)
+&nbsp;      }
+&nbsp;      if (oldVersion &lt;= 2 &amp;&amp; newVersion &gt; 2) {
+&nbsp;        driver.execute(null, &quot;ALTER TABLE Pause ADD COLUMN is_enabled INTEGER NOT NULL DEFAULT 1&quot;,
+&nbsp;            0)
+&nbsp;      }
+&nbsp;      if (oldVersion &lt;= 3 &amp;&amp; newVersion &gt; 3) {
+&nbsp;        driver.execute(null, &quot;ALTER TABLE Use ADD COLUMN description TEXT NOT NULL DEFAULT \&quot;\&quot;&quot;, 0)
+&nbsp;      }
+&nbsp;      return QueryResult.Unit
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun migrate(
+&nbsp;      driver: SqlDriver,
+&nbsp;      oldVersion: Long,
+&nbsp;      newVersion: Long,
+&nbsp;      vararg callbacks: AfterVersion,
+&nbsp;    ): QueryResult.Value&lt;Unit&gt; {
+&nbsp;      var lastVersion = oldVersion
+&nbsp;
+&nbsp;      callbacks.filter { it.afterVersion in oldVersion until newVersion }
+&nbsp;      .sortedBy { it.afterVersion }
+&nbsp;      .forEach { callback -&gt;
+&nbsp;        migrateInternal(driver, oldVersion = lastVersion, newVersion = callback.afterVersion + 1)
+&nbsp;        callback.block(driver)
+&nbsp;        lastVersion = callback.afterVersion + 1
+&nbsp;      }
+&nbsp;
+&nbsp;      if (lastVersion &lt; newVersion) {
+&nbsp;        migrateInternal(driver, lastVersion, newVersion)
+&nbsp;      }
+&nbsp;      return QueryResult.Unit
+&nbsp;    }
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

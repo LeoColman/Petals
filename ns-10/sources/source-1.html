@@ -1,0 +1,331 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > AverageUseCardKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.statistics.card</a>
+</div>
+
+<h1>Coverage Summary for Class: AverageUseCardKt (br.com.colman.petals.statistics.card)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">AverageUseCardKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/66)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1236)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AverageUseCardKt$AverageUseCard$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/70)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/70)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1306)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;
+&nbsp;package br.com.colman.petals.statistics.card
+&nbsp;
+&nbsp;import androidx.compose.foundation.horizontalScroll
+&nbsp;import androidx.compose.foundation.layout.Arrangement
+&nbsp;import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.layout.IntrinsicSize.Max
+&nbsp;import androidx.compose.foundation.layout.Row
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.foundation.layout.width
+&nbsp;import androidx.compose.foundation.rememberScrollState
+&nbsp;import androidx.compose.material.Card
+&nbsp;import androidx.compose.material.Icon
+&nbsp;import androidx.compose.material.Text
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.collectAsState
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.ui.Alignment.Companion.CenterVertically
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.graphics.vector.ImageVector
+&nbsp;import androidx.compose.ui.res.pluralStringResource
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import br.com.colman.petals.R.plurals.amount_days
+&nbsp;import br.com.colman.petals.R.plurals.amount_uses
+&nbsp;import br.com.colman.petals.R.string.amount_grams
+&nbsp;import br.com.colman.petals.R.string.amount_grams_short
+&nbsp;import br.com.colman.petals.R.string.average_per
+&nbsp;import br.com.colman.petals.R.string.day
+&nbsp;import br.com.colman.petals.R.string.month
+&nbsp;import br.com.colman.petals.R.string.week
+&nbsp;import br.com.colman.petals.R.string.year
+&nbsp;import br.com.colman.petals.settings.SettingsRepository
+&nbsp;import br.com.colman.petals.use.repository.Use
+&nbsp;import br.com.colman.petals.use.repository.totalCost
+&nbsp;import br.com.colman.petals.use.repository.totalGrams
+&nbsp;import compose.icons.TablerIcons
+&nbsp;import compose.icons.tablericons.CalendarStats
+&nbsp;import compose.icons.tablericons.ChartPie
+&nbsp;import compose.icons.tablericons.Scale
+&nbsp;import me.moallemi.tools.daterange.localdate.LocalDateRange
+&nbsp;import me.moallemi.tools.daterange.localdate.rangeTo
+&nbsp;import org.koin.compose.koinInject
+&nbsp;import java.math.BigDecimal
+&nbsp;import java.time.LocalDate.now
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+<b class="nc">&nbsp;fun AverageUseCardPreview() {</b>
+<b class="nc">&nbsp;  val hoursInDay = (0..23).toList()</b>
+<b class="nc">&nbsp;  val minutesInHour = (0..59).toList()</b>
+<b class="nc">&nbsp;  val uses = List(293) {</b>
+<b class="nc">&nbsp;    Use(</b>
+<b class="nc">&nbsp;      now().minusDays(it.toLong()).atTime(hoursInDay.random(), minutesInHour.random()),</b>
+<b class="nc">&nbsp;      &quot;3.37&quot;.toBigDecimal(),</b>
+<b class="nc">&nbsp;      (it % 4).toBigDecimal()</b>
+<b class="nc">&nbsp;    )</b>
+&nbsp;  }
+&nbsp;
+<b class="nc">&nbsp;  AverageUseCard(uses, LocalDateRange(now().minusDays(293L), now()))</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;fun AverageUseCard(uses: List&lt;Use&gt;, period: LocalDateRange) {</b>
+<b class="nc">&nbsp;  if (uses.isEmpty()) return</b>
+&nbsp;
+<b class="nc">&nbsp;  Card(Modifier.padding(8.dp).fillMaxWidth().horizontalScroll(rememberScrollState()).width(Max)) {</b>
+<b class="nc">&nbsp;    Column(Modifier.padding(8.dp).fillMaxWidth().width(Max), spacedBy(8.dp)) {</b>
+<b class="nc">&nbsp;      AverageUseCardTitle(uses.count(), uses.totalGrams, period)</b>
+<b class="nc">&nbsp;      AverageUseList(uses, period)</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;  }
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun AverageUseCardTitlePreview() {</b>
+<b class="nc">&nbsp;  val now = now()</b>
+<b class="nc">&nbsp;  Column {</b>
+<b class="nc">&nbsp;    AverageUseCardTitle(1, 1.toBigDecimal(), now..now)</b>
+<b class="nc">&nbsp;    AverageUseCardTitle(5, 5.toBigDecimal(), now.minusDays(1L)..now)</b>
+<b class="nc">&nbsp;    AverageUseCardTitle(32, 32.25.toBigDecimal(), now.minusDays(3L)..now)</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun AverageUseCardTitle(uses: Int, grams: BigDecimal, period: LocalDateRange) {</b>
+<b class="nc">&nbsp;  val amountDays = period.count()</b>
+&nbsp;
+<b class="nc">&nbsp;  Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(16.dp), CenterVertically) {</b>
+<b class="nc">&nbsp;    IconText(TablerIcons.ChartPie, pluralStringResource(amount_uses, uses, uses))</b>
+<b class="nc">&nbsp;    IconText(TablerIcons.Scale, stringResource(amount_grams, &quot;%.2f&quot;.format(grams)))</b>
+<b class="nc">&nbsp;    IconText(TablerIcons.CalendarStats, pluralStringResource(amount_days, amountDays, amountDays))</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun IconTextPreview() {</b>
+<b class="nc">&nbsp;  IconText(TablerIcons.ChartPie, &quot;25 uses&quot;)</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun IconText(icon: ImageVector, text: String) {</b>
+<b class="nc">&nbsp;  Row(Modifier, spacedBy(8.dp), CenterVertically) {</b>
+<b class="nc">&nbsp;    Icon(icon, text)</b>
+<b class="nc">&nbsp;    Text(text)</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun AverageUseList(uses: List&lt;Use&gt;, period: LocalDateRange) {</b>
+<b class="nc">&nbsp;  val totalGrams = uses.totalGrams.toDouble()</b>
+<b class="nc">&nbsp;  val totalCost = uses.totalCost.toDouble()</b>
+&nbsp;
+<b class="nc">&nbsp;  val days = period.count().toDouble()</b>
+<b class="nc">&nbsp;  val weeks = days / 7.0</b>
+<b class="nc">&nbsp;  val months = days / 30.0</b>
+<b class="nc">&nbsp;  val years = days / 365.25</b>
+&nbsp;
+&nbsp;  @Composable
+&nbsp;  fun AverageListItem(label: String, value: Double) {
+<b class="nc">&nbsp;    if (value &gt;= 1.0) {</b>
+<b class="nc">&nbsp;      AverageListItem(label, totalGrams / value, totalCost / value, uses.size / value)</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+<b class="nc">&nbsp;  AverageListItem(stringResource(day), days)</b>
+<b class="nc">&nbsp;  AverageListItem(stringResource(week), weeks)</b>
+<b class="nc">&nbsp;  AverageListItem(stringResource(month), months)</b>
+<b class="nc">&nbsp;  AverageListItem(stringResource(year), years)</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun AverageListItem(label: String, grams: Double, cost: Double, uses: Double) {</b>
+<b class="nc">&nbsp;  Row(Modifier.fillMaxWidth(), Arrangement.SpaceEvenly) {</b>
+<b class="nc">&nbsp;    Text(stringResource(average_per, label), Modifier.padding(2.dp))</b>
+<b class="nc">&nbsp;    Text(stringResource(amount_grams_short, &quot;%.2f&quot;.format(grams)), Modifier.padding(2.dp))</b>
+<b class="nc">&nbsp;    Text(getCurrencyIcon() + &quot;%.2f&quot;.format(cost), Modifier.padding(2.dp))</b>
+<b class="nc">&nbsp;    Text(pluralStringResource(amount_uses, uses.toInt(), uses.toInt()), Modifier.padding(2.dp))</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun getCurrencyIcon(): String {</b>
+<b class="nc">&nbsp;  val settingsRepository = koinInject&lt;SettingsRepository&gt;()</b>
+<b class="nc">&nbsp;  val currencyIcon by settingsRepository.currencyIcon.collectAsState(&quot;$&quot;)</b>
+<b class="nc">&nbsp;  return currencyIcon</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

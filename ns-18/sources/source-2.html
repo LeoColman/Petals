@@ -1,0 +1,240 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > AddUseFormKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.use</a>
+</div>
+
+<h1>Coverage Summary for Class: AddUseFormKt (br.com.colman.petals.use)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">AddUseFormKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/39)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/724)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.use
+&nbsp;
+&nbsp;import androidx.compose.foundation.layout.Arrangement
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.layout.Row
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.text.KeyboardOptions
+&nbsp;import androidx.compose.material.Icon
+&nbsp;import androidx.compose.material.OutlinedTextField
+&nbsp;import androidx.compose.material.Text
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.MutableState
+&nbsp;import androidx.compose.runtime.collectAsState
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.runtime.setValue
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+&nbsp;import androidx.compose.ui.text.input.KeyboardType
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import androidx.compose.ui.unit.sp
+&nbsp;import br.com.colman.petals.R.string
+&nbsp;import br.com.colman.petals.R.string.add_use
+&nbsp;import br.com.colman.petals.R.string.amount_grams_title
+&nbsp;import br.com.colman.petals.R.string.because_i_wanted
+&nbsp;import br.com.colman.petals.R.string.cost_per_gram_title
+&nbsp;import br.com.colman.petals.components.ClickableTextField
+&nbsp;import br.com.colman.petals.components.dateDialogState
+&nbsp;import br.com.colman.petals.components.timeDialogState
+&nbsp;import br.com.colman.petals.settings.SettingsRepository
+&nbsp;import br.com.colman.petals.utils.truncatedToMinute
+&nbsp;import compose.icons.TablerIcons
+&nbsp;import compose.icons.tablericons.Calendar
+&nbsp;import compose.icons.tablericons.Cash
+&nbsp;import compose.icons.tablericons.Clock
+&nbsp;import compose.icons.tablericons.Notebook
+&nbsp;import compose.icons.tablericons.Scale
+&nbsp;import org.koin.compose.koinInject
+&nbsp;import java.time.LocalDate
+&nbsp;import java.time.LocalTime
+&nbsp;
+&nbsp;@Suppress(&quot;NAME_SHADOWING&quot;)
+&nbsp;@Composable
+&nbsp;fun AddUseForm(
+&nbsp;  amount: MutableState&lt;String&gt;,
+&nbsp;  cost: MutableState&lt;String&gt;,
+&nbsp;  date: MutableState&lt;LocalDate&gt;,
+&nbsp;  time: MutableState&lt;LocalTime&gt;,
+&nbsp;  description: MutableState&lt;String&gt;,
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  val settingsRepository = koinInject&lt;SettingsRepository&gt;()</b>
+<b class="nc">&nbsp;  val is24HoursFormat by settingsRepository.is24HoursFormat.collectAsState(false)</b>
+&nbsp;
+<b class="nc">&nbsp;  var amount by amount</b>
+<b class="nc">&nbsp;  var cost by cost</b>
+&nbsp;
+<b class="nc">&nbsp;  var date by date</b>
+<b class="nc">&nbsp;  val dateDialog = dateDialogState { date = it }</b>
+&nbsp;
+<b class="nc">&nbsp;  var time by time</b>
+<b class="nc">&nbsp;  val timeDialog = timeDialogState(is24HoursFormat = is24HoursFormat) { time = it }</b>
+&nbsp;
+<b class="nc">&nbsp;  var description by description</b>
+&nbsp;
+<b class="nc">&nbsp;  Column(Modifier, Arrangement.spacedBy(8.dp)) {</b>
+<b class="nc">&nbsp;    Text(stringResource(add_use), fontWeight = Bold, fontSize = 16.sp)</b>
+&nbsp;
+<b class="nc">&nbsp;    OutlinedTextField(</b>
+<b class="nc">&nbsp;      value = amount,</b>
+<b class="nc">&nbsp;      onValueChange = { amount = it },</b>
+&nbsp;      leadingIcon = { Icon(TablerIcons.Scale, null) },
+<b class="nc">&nbsp;      keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),</b>
+&nbsp;      label = { Text(stringResource(amount_grams_title)) },
+&nbsp;      placeholder = { Text(&quot;0.25&quot;) }
+&nbsp;    )
+&nbsp;
+<b class="nc">&nbsp;    OutlinedTextField(</b>
+<b class="nc">&nbsp;      value = cost,</b>
+<b class="nc">&nbsp;      onValueChange = { cost = it },</b>
+&nbsp;      leadingIcon = { Icon(TablerIcons.Cash, null) },
+<b class="nc">&nbsp;      keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),</b>
+&nbsp;      label = { Text(stringResource(cost_per_gram_title)) },
+&nbsp;      placeholder = { Text(&quot;18.00&quot;) }
+&nbsp;    )
+&nbsp;
+<b class="nc">&nbsp;    Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(8.dp)) {</b>
+<b class="nc">&nbsp;      Box(Modifier.weight(0.55f)) {</b>
+<b class="nc">&nbsp;        ClickableTextField(label = string.date, leadingIcon = TablerIcons.Calendar, value = &quot;$date&quot;) {</b>
+<b class="nc">&nbsp;          dateDialog.show()</b>
+&nbsp;        }
+<b class="nc">&nbsp;      }</b>
+<b class="nc">&nbsp;      Box(Modifier.weight(0.45f)) {</b>
+<b class="nc">&nbsp;        ClickableTextField(</b>
+<b class="nc">&nbsp;          label = string.time,</b>
+<b class="nc">&nbsp;          leadingIcon = TablerIcons.Clock,</b>
+<b class="nc">&nbsp;          value = &quot;${time.truncatedToMinute()}&quot;</b>
+<b class="nc">&nbsp;        ) {</b>
+<b class="nc">&nbsp;          timeDialog.show()</b>
+&nbsp;        }
+<b class="nc">&nbsp;      }</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+<b class="nc">&nbsp;    OutlinedTextField(</b>
+<b class="nc">&nbsp;      value = description,</b>
+<b class="nc">&nbsp;      onValueChange = { description = it },</b>
+&nbsp;      leadingIcon = { Icon(TablerIcons.Notebook, null) },
+&nbsp;      label = { Text(stringResource(string.description)) },
+&nbsp;      placeholder = { Text(stringResource(because_i_wanted)) }
+&nbsp;    )
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

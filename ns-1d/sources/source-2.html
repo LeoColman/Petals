@@ -1,0 +1,269 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > PauseRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.use.pause.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: PauseRepository (br.com.colman.petals.use.pause.repository)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">PauseRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (48/48)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">PauseRepository$getAll$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">PauseRepository$getAll$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">PauseRepository$getAll$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">PauseRepository$getAll$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PauseRepository$getAll$1$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (9/12)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (54/54)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.use.pause.repository
+&nbsp;
+&nbsp;import app.cash.sqldelight.coroutines.asFlow
+&nbsp;import app.cash.sqldelight.coroutines.mapToList
+&nbsp;import br.com.colman.petals.PauseQueries
+&nbsp;import kotlinx.coroutines.CoroutineDispatcher
+&nbsp;import kotlinx.coroutines.Dispatchers.IO
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import java.time.LocalTime
+&nbsp;import java.time.format.DateTimeFormatter
+&nbsp;import br.com.colman.petals.Pause as PauseEntity
+&nbsp;
+<b class="fc">&nbsp;class PauseRepository(</b>
+<b class="fc">&nbsp;  private val pauseQueries: PauseQueries</b>
+&nbsp;) {
+&nbsp;
+<b class="fc">&nbsp;  fun getAll(dispatcher: CoroutineDispatcher = IO) = pauseQueries.selectAll().asFlow()</b>
+<b class="fc">&nbsp;    .mapToList(dispatcher).map { pauses -&gt;</b>
+<b class="fc">&nbsp;      pauses.map(PauseEntity::toPause).sortedWith(compareBy({ it.startTime }, { it.endTime }))</b>
+&nbsp;    }
+&nbsp;
+&nbsp;  fun insert(pause: Pause) {
+<b class="fc">&nbsp;    pauseQueries.insert(pause.toEntity())</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  fun update(pause: Pause) {
+<b class="fc">&nbsp;    val pauseEntity = pause.toEntity()</b>
+<b class="fc">&nbsp;    pauseQueries.update(pauseEntity.start_time, pauseEntity.end_time, pauseEntity.is_enabled, pauseEntity.id)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  fun delete(pause: Pause) {
+<b class="fc">&nbsp;    pauseQueries.delete(pause.id)</b>
+&nbsp;  }
+&nbsp;}
+&nbsp;
+&nbsp;fun PauseEntity.toPause() = Pause(
+&nbsp;  LocalTime.parse(start_time),
+&nbsp;  LocalTime.parse(end_time),
+&nbsp;  id,
+&nbsp;  is_enabled == 1L
+&nbsp;)
+&nbsp;
+&nbsp;fun Pause.toEntity() = PauseEntity(
+&nbsp;  startTime.format(DateTimeFormatter.ISO_LOCAL_TIME),
+&nbsp;  endTime.format(DateTimeFormatter.ISO_LOCAL_TIME),
+&nbsp;  id,
+&nbsp;  if (isEnabled) 1 else 0
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

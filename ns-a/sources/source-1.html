@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > AdFreeButtonKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.playstore.settings.view</a>
+</div>
+
+<h1>Coverage Summary for Class: AdFreeButtonKt (br.com.colman.petals.playstore.settings.view)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">AdFreeButtonKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/198)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.playstore.settings.view
+&nbsp;
+&nbsp;import android.app.Activity
+&nbsp;import androidx.compose.foundation.Image
+&nbsp;import androidx.compose.foundation.clickable
+&nbsp;import androidx.compose.foundation.layout.size
+&nbsp;import androidx.compose.material.LocalContentAlpha
+&nbsp;import androidx.compose.material.LocalContentColor
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.collectAsState
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.graphics.BlendMode
+&nbsp;import androidx.compose.ui.graphics.ColorFilter
+&nbsp;import androidx.compose.ui.platform.LocalContext
+&nbsp;import androidx.compose.ui.res.painterResource
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import br.com.colman.petals.R
+&nbsp;import br.com.colman.petals.playstore.inapp.InAppPurchase
+&nbsp;import br.com.colman.petals.playstore.settings.AdsSettingsRepository
+&nbsp;import org.koin.compose.koinInject
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+<b class="nc">&nbsp;fun AdFreeButton() {</b>
+<b class="nc">&nbsp;  val inApp = koinInject&lt;InAppPurchase&gt;()</b>
+<b class="nc">&nbsp;  val adsSettingsRepository = koinInject&lt;AdsSettingsRepository&gt;()</b>
+<b class="nc">&nbsp;  val activity: Activity = LocalContext.current as Activity</b>
+<b class="nc">&nbsp;  val isAdFree by adsSettingsRepository.isAdsFree.collectAsState(initial = false)</b>
+&nbsp;
+<b class="nc">&nbsp;  if (isAdFree) return</b>
+&nbsp;
+<b class="nc">&nbsp;  Image(</b>
+<b class="nc">&nbsp;    painter = painterResource(R.drawable.ic_ad_circle),</b>
+<b class="nc">&nbsp;    contentDescription = &quot;ads&quot;,</b>
+<b class="nc">&nbsp;    colorFilter = ColorFilter.tint(</b>
+<b class="nc">&nbsp;      color = LocalContentColor.current.copy(</b>
+<b class="nc">&nbsp;        LocalContentAlpha.current</b>
+&nbsp;      ),
+<b class="nc">&nbsp;      blendMode = BlendMode.SrcIn</b>
+&nbsp;    ),
+<b class="nc">&nbsp;    modifier = Modifier.size(42.dp).clickable {</b>
+<b class="nc">&nbsp;      inApp.purchase(activity)</b>
+&nbsp;    }
+&nbsp;  )
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

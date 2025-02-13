@@ -1,0 +1,341 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > UsageKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.navigation</a>
+</div>
+
+<h1>Coverage Summary for Class: UsageKt (br.com.colman.petals.navigation)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">UsageKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/35)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/735)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UsageKt$Usage$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/30)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">UsageKt$Usage$lambda$24$$inlined$map$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">UsageKt$Usage$lambda$24$$inlined$map$1$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+  </tr>
+  <tr>
+    <td class="name">UsageKt$Usage$lambda$24$$inlined$map$1$2$1</td>
+    <td class="coverageStat"/>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/40)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/765)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/*
+&nbsp; * Petals APP
+&nbsp; * Copyright (C) 2021 Leonardo Colman Lopes
+&nbsp; *
+&nbsp; * This program is free software: you can redistribute it and/or modify
+&nbsp; * it under the terms of the GNU Affero General Public License as published by
+&nbsp; * the Free Software Foundation, either version 3 of the License, or
+&nbsp; * (at your option) any later version.
+&nbsp; *
+&nbsp; * This program is distributed in the hope that it will be useful,
+&nbsp; * but WITHOUT ANY WARRANTY; without even the implied warranty of
+&nbsp; * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+&nbsp; * GNU Affero General Public License for more details.
+&nbsp; *
+&nbsp; * You should have received a copy of the GNU Affero General Public License
+&nbsp; * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+&nbsp; */
+&nbsp;
+&nbsp;package br.com.colman.petals.navigation
+&nbsp;
+&nbsp;import androidx.compose.foundation.layout.Arrangement.spacedBy
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.layout.Row
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.foundation.rememberScrollState
+&nbsp;import androidx.compose.foundation.verticalScroll
+&nbsp;import androidx.compose.material.Icon
+&nbsp;import androidx.compose.material.OutlinedTextField
+&nbsp;import androidx.compose.material.Text
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.LaunchedEffect
+&nbsp;import androidx.compose.runtime.collectAsState
+&nbsp;import androidx.compose.runtime.derivedStateOf
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.runtime.mutableStateOf
+&nbsp;import androidx.compose.runtime.remember
+&nbsp;import androidx.compose.runtime.setValue
+&nbsp;import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+&nbsp;import androidx.compose.ui.Alignment.Companion.CenterVertically
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.platform.testTag
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import br.com.colman.petals.R.string.filter_data_by_description_containing
+&nbsp;import br.com.colman.petals.R.string.with_a_friend
+&nbsp;import br.com.colman.petals.review.ReviewAppRequester
+&nbsp;import br.com.colman.petals.use.AddUseButton
+&nbsp;import br.com.colman.petals.use.LastUseDateTimer
+&nbsp;import br.com.colman.petals.use.PauseCards
+&nbsp;import br.com.colman.petals.use.StatsBlocks
+&nbsp;import br.com.colman.petals.use.UseCards
+&nbsp;import br.com.colman.petals.use.pause.PauseButton
+&nbsp;import br.com.colman.petals.use.pause.repository.PauseRepository
+&nbsp;import br.com.colman.petals.use.repository.UseRepository
+&nbsp;import compose.icons.TablerIcons
+&nbsp;import compose.icons.tablericons.ListSearch
+&nbsp;import kotlinx.coroutines.delay
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import org.koin.compose.koinInject
+&nbsp;import java.time.LocalTime
+&nbsp;import kotlin.time.Duration.Companion.seconds
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun Usage(
+<b class="nc">&nbsp;  useRepository: UseRepository = koinInject(),</b>
+<b class="nc">&nbsp;  pauseRepository: PauseRepository = koinInject(),</b>
+<b class="nc">&nbsp;  reviewAppRequester: ReviewAppRequester = koinInject()</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  val lastUseDate by useRepository.getLastUseDate().collectAsState(null)</b>
+<b class="nc">&nbsp;  var currentTime by remember {</b>
+<b class="nc">&nbsp;    mutableStateOf(LocalTime.now())</b>
+&nbsp;  }
+<b class="nc">&nbsp;  LaunchedEffect(Unit) {</b>
+<b class="nc">&nbsp;    while (true) {</b>
+<b class="nc">&nbsp;      val now = LocalTime.now()</b>
+<b class="nc">&nbsp;      if (currentTime.minute != now.minute) {</b>
+<b class="nc">&nbsp;        currentTime = now</b>
+&nbsp;      }
+<b class="nc">&nbsp;      delay(10.seconds)</b>
+&nbsp;    }
+&nbsp;  }
+<b class="nc">&nbsp;  val pauses by pauseRepository.getAll().collectAsState(listOf())</b>
+<b class="nc">&nbsp;  val isAnyPauseActive by remember { derivedStateOf { pauses.any { it.isActive(currentTime) } } }</b>
+&nbsp;
+<b class="nc">&nbsp;  Column(</b>
+<b class="nc">&nbsp;    Modifier.verticalScroll(rememberScrollState()).testTag(&quot;UsageMainColumn&quot;),</b>
+<b class="nc">&nbsp;    spacedBy(8.dp),</b>
+<b class="nc">&nbsp;    CenterHorizontally</b>
+&nbsp;  ) {
+<b class="nc">&nbsp;    lastUseDate?.let { LastUseDateTimer(it) }</b>
+&nbsp;
+<b class="nc">&nbsp;    Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {</b>
+<b class="nc">&nbsp;      AddUseButton(reviewAppRequester, useRepository, isAnyPauseActive)</b>
+<b class="nc">&nbsp;      PauseButton(pauseRepository)</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+<b class="nc">&nbsp;    PauseCards(pauseRepository)</b>
+&nbsp;
+<b class="nc">&nbsp;    var descriptionContains by remember { mutableStateOf(&quot;&quot;) }</b>
+<b class="nc">&nbsp;    val uses by useRepository.all().map { uses -&gt;</b>
+&nbsp;      uses.filter {
+&nbsp;        it.description.contains(
+&nbsp;          descriptionContains,
+&nbsp;          true
+&nbsp;        )
+&nbsp;      }
+<b class="nc">&nbsp;    }.collectAsState(emptyList())</b>
+<b class="nc">&nbsp;    if (uses.isNotEmpty()) {</b>
+<b class="nc">&nbsp;      StatsBlocks(uses)</b>
+<b class="nc">&nbsp;      UsageFilter(descriptionContains) { descriptionContains = it }</b>
+<b class="nc">&nbsp;      UseCards(uses, { useRepository.upsert(it) }, { useRepository.delete(it) })</b>
+&nbsp;    }
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun UsageFilter(value: String, onValueChange: (String) -&gt; Unit) {</b>
+<b class="nc">&nbsp;  OutlinedTextField(</b>
+<b class="nc">&nbsp;    value = value,</b>
+<b class="nc">&nbsp;    onValueChange = onValueChange,</b>
+<b class="nc">&nbsp;    modifier = Modifier.fillMaxWidth().padding(16.dp),</b>
+&nbsp;    leadingIcon = { Icon(TablerIcons.ListSearch, null) },
+&nbsp;    label = { Text(stringResource(filter_data_by_description_containing)) },
+&nbsp;    placeholder = { Text(stringResource(with_a_friend)) }
+&nbsp;  )
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

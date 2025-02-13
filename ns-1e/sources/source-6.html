@@ -1,0 +1,184 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > UseRepositoryKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.use.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: UseRepositoryKt (br.com.colman.petals.use.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">UseRepositoryKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (50/50)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.use.repository
+&nbsp;
+&nbsp;import app.cash.sqldelight.coroutines.asFlow
+&nbsp;import app.cash.sqldelight.coroutines.mapToList
+&nbsp;import app.cash.sqldelight.coroutines.mapToOneOrNull
+&nbsp;import br.com.colman.petals.UseQueries
+&nbsp;import kotlinx.coroutines.CoroutineDispatcher
+&nbsp;import kotlinx.coroutines.Dispatchers.IO
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.filterNotNull
+&nbsp;import kotlinx.coroutines.flow.map
+&nbsp;import timber.log.Timber
+&nbsp;import java.time.LocalDateTime.parse
+&nbsp;import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
+&nbsp;import br.com.colman.petals.Use as UseEntity
+&nbsp;
+&nbsp;class UseRepository(
+&nbsp;  private val useQueries: UseQueries
+&nbsp;) {
+&nbsp;
+&nbsp;  fun upsertAll(uses: Iterable&lt;Use&gt;) {
+&nbsp;    useQueries.transaction {
+&nbsp;      uses.forEach(::upsert)
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  fun upsert(use: Use) {
+&nbsp;    useQueries.upsert(use.toEntity())
+&nbsp;  }
+&nbsp;
+&nbsp;  fun getLastUse(dispatcher: CoroutineDispatcher = IO) =
+&nbsp;    useQueries.selectLast().asFlow().mapToOneOrNull(dispatcher).map { it?.toUse() }
+&nbsp;
+&nbsp;  fun getLastUseDate() = getLastUse().map { it?.date }
+&nbsp;
+&nbsp;  fun countAll(dispatcher: CoroutineDispatcher = IO) =
+&nbsp;    useQueries.countAll().asFlow().mapToOneOrNull(dispatcher).filterNotNull().map { it.toInt() }
+&nbsp;
+&nbsp;  fun all(dispatchers: CoroutineDispatcher = IO): Flow&lt;List&lt;Use&gt;&gt; = useQueries.selectAll().asFlow().mapToList(
+&nbsp;    dispatchers
+&nbsp;  ).map { it.map(UseEntity::toUse) }
+&nbsp;
+&nbsp;  fun delete(use: Use) {
+&nbsp;    Timber.d(&quot;Deleting use: $use&quot;)
+&nbsp;    useQueries.delete(use.id)
+&nbsp;  }
+&nbsp;}
+&nbsp;
+<b class="fc">&nbsp;fun Use.toEntity(): UseEntity = UseEntity(</b>
+<b class="fc">&nbsp;  date.format(ISO_LOCAL_DATE_TIME),</b>
+<b class="fc">&nbsp;  amountGrams.toPlainString(),</b>
+<b class="fc">&nbsp;  costPerGram.toPlainString(),</b>
+<b class="fc">&nbsp;  id,</b>
+<b class="fc">&nbsp;  description</b>
+&nbsp;)
+&nbsp;
+<b class="fc">&nbsp;fun UseEntity.toUse() = Use(</b>
+<b class="fc">&nbsp;  parse(date),</b>
+<b class="fc">&nbsp;  amount_grams.toBigDecimal(),</b>
+<b class="fc">&nbsp;  cost_per_gram.toBigDecimal(),</b>
+<b class="fc">&nbsp;  id,</b>
+<b class="fc">&nbsp;  description</b>
+&nbsp;)
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,198 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > PauseButtonKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.use.pause</a>
+</div>
+
+<h1>Coverage Summary for Class: PauseButtonKt (br.com.colman.petals.use.pause)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">PauseButtonKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/480)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.use.pause
+&nbsp;
+&nbsp;import androidx.compose.foundation.clickable
+&nbsp;import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
+&nbsp;import androidx.compose.foundation.layout.Row
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.material.Icon
+&nbsp;import androidx.compose.material.Switch
+&nbsp;import androidx.compose.material.Text
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.runtime.mutableStateOf
+&nbsp;import androidx.compose.runtime.remember
+&nbsp;import androidx.compose.runtime.setValue
+&nbsp;import androidx.compose.ui.Alignment.Companion.CenterVertically
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import br.com.colman.petals.R.string
+&nbsp;import br.com.colman.petals.use.pause.repository.Pause
+&nbsp;import br.com.colman.petals.use.pause.repository.PauseRepository
+&nbsp;import compose.icons.TablerIcons
+&nbsp;import compose.icons.tablericons.Alarm
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun PauseButton(
+&nbsp;  pauseRepository: PauseRepository
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  var openPauseDialog by remember { mutableStateOf(false) }</b>
+<b class="nc">&nbsp;  PauseButtonView { openPauseDialog = true }</b>
+&nbsp;
+<b class="nc">&nbsp;  if (openPauseDialog) {</b>
+<b class="nc">&nbsp;    PauseDialog(</b>
+<b class="nc">&nbsp;      pause = Pause(),</b>
+<b class="nc">&nbsp;      setPause = {</b>
+<b class="nc">&nbsp;        if (it != null) {</b>
+<b class="nc">&nbsp;          pauseRepository.insert(it)</b>
+&nbsp;        }
+&nbsp;      },
+<b class="nc">&nbsp;      onDismiss = { openPauseDialog = false }</b>
+&nbsp;    )
+&nbsp;  }
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+&nbsp;private fun PauseButtonView(
+<b class="nc">&nbsp;  onClick: () -&gt; Unit = { }</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  Row(</b>
+<b class="nc">&nbsp;    Modifier</b>
+<b class="nc">&nbsp;      .padding(8.dp)</b>
+<b class="nc">&nbsp;      .clickable { onClick() },</b>
+<b class="nc">&nbsp;    spacedBy(8.dp),</b>
+<b class="nc">&nbsp;    CenterVertically,</b>
+&nbsp;  ) {
+<b class="nc">&nbsp;    Icon(TablerIcons.Alarm, null)</b>
+<b class="nc">&nbsp;    Text(stringResource(string.pause_time))</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+&nbsp;fun DisablePauseView(
+&nbsp;  isEnabled: Boolean,
+&nbsp;  onClick: (Boolean) -&gt; Unit
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  Switch(checked = isEnabled, onCheckedChange = onClick)</b>
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

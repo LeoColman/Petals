@@ -1,0 +1,220 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > DateListItemKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.settings.view.listitem</a>
+</div>
+
+<h1>Coverage Summary for Class: DateListItemKt (br.com.colman.petals.settings.view.listitem)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">DateListItemKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/382)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DateListItemKt$DateListItem$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/36)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/418)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.settings.view.listitem
+&nbsp;
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import br.com.colman.petals.R.string.date_format_label
+&nbsp;import br.com.colman.petals.R.string.what_date_format_should_be_used
+&nbsp;import br.com.colman.petals.settings.view.dialog.SelectFromListDialog
+&nbsp;import compose.icons.TablerIcons
+&nbsp;import compose.icons.tablericons.Calendar
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+&nbsp;fun DateListItem(
+<b class="nc">&nbsp;  dateFormat: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;  dateFormatList: List&lt;String&gt; = listOf(),</b>
+<b class="nc">&nbsp;  setDateFormat: (String) -&gt; Unit = {}</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  DialogListItem(</b>
+<b class="nc">&nbsp;    icon = TablerIcons.Calendar,</b>
+<b class="nc">&nbsp;    textId = date_format_label,</b>
+<b class="nc">&nbsp;    descriptionId = what_date_format_should_be_used,</b>
+<b class="nc">&nbsp;    dialog = { hideDialog -&gt; DateDialog(dateFormat, dateFormatList, setDateFormat, hideDialog) }</b>
+&nbsp;  )
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+&nbsp;private fun DateDialog(
+<b class="nc">&nbsp;  initialDateFormat: String = &quot;&quot;,</b>
+<b class="nc">&nbsp;  dateFormatList: List&lt;String&gt; = listOf(),</b>
+<b class="nc">&nbsp;  setDateFormat: (String) -&gt; Unit = {},</b>
+<b class="nc">&nbsp;  onDismiss: () -&gt; Unit = {},</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  SelectFromListDialog(</b>
+<b class="nc">&nbsp;    initialValue = initialDateFormat,</b>
+<b class="nc">&nbsp;    possibleValues = dateFormatList,</b>
+<b class="nc">&nbsp;    setValue = setDateFormat,</b>
+<b class="nc">&nbsp;    onDismiss = onDismiss,</b>
+<b class="nc">&nbsp;    label = date_format_label</b>
+&nbsp;  )
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

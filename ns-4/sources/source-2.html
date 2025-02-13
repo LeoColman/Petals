@@ -1,0 +1,347 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > ComposeHitTimerKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.hittimer</a>
+</div>
+
+<h1>Coverage Summary for Class: ComposeHitTimerKt (br.com.colman.petals.hittimer)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">ComposeHitTimerKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/52)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/891)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ComposeHitTimerKt$TimerText$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/45)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/28)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/58)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/936)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/*
+&nbsp; * Petals APP
+&nbsp; * Copyright (C) 2021 Leonardo Colman Lopes
+&nbsp; *
+&nbsp; * This program is free software: you can redistribute it and/or modify
+&nbsp; * it under the terms of the GNU Affero General Public License as published by
+&nbsp; * the Free Software Foundation, either version 3 of the License, or
+&nbsp; * (at your option) any later version.
+&nbsp; *
+&nbsp; * This program is distributed in the hope that it will be useful,
+&nbsp; * but WITHOUT ANY WARRANTY; without even the implied warranty of
+&nbsp; * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+&nbsp; * GNU Affero General Public License for more details.
+&nbsp; *
+&nbsp; * You should have received a copy of the GNU Affero General Public License
+&nbsp; * along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+&nbsp; */
+&nbsp;
+&nbsp;package br.com.colman.petals.hittimer
+&nbsp;
+&nbsp;import android.content.Context
+&nbsp;import android.os.Build
+&nbsp;import android.os.VibrationEffect
+&nbsp;import android.os.VibrationEffect.DEFAULT_AMPLITUDE
+&nbsp;import android.os.Vibrator
+&nbsp;import androidx.compose.foundation.background
+&nbsp;import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
+&nbsp;import androidx.compose.foundation.layout.Arrangement.Start
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.layout.Row
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.layout.height
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.foundation.layout.width
+&nbsp;import androidx.compose.foundation.rememberScrollState
+&nbsp;import androidx.compose.foundation.verticalScroll
+&nbsp;import androidx.compose.material.Button
+&nbsp;import androidx.compose.material.Checkbox
+&nbsp;import androidx.compose.material.MaterialTheme
+&nbsp;import androidx.compose.material.Text
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.LaunchedEffect
+&nbsp;import androidx.compose.runtime.collectAsState
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.runtime.mutableStateOf
+&nbsp;import androidx.compose.runtime.remember
+&nbsp;import androidx.compose.runtime.saveable.rememberSaveable
+&nbsp;import androidx.compose.runtime.setValue
+&nbsp;import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+&nbsp;import androidx.compose.ui.Alignment.Companion.CenterVertically
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.platform.LocalContext
+&nbsp;import androidx.compose.ui.res.colorResource
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import androidx.compose.ui.unit.sp
+&nbsp;import androidx.core.content.getSystemService
+&nbsp;import br.com.colman.petals.R.color.smokeColor
+&nbsp;import br.com.colman.petals.R.string.reset
+&nbsp;import br.com.colman.petals.R.string.start
+&nbsp;import br.com.colman.petals.R.string.vibrate_on_timer_end
+&nbsp;import br.com.colman.petals.settings.SettingsRepository
+&nbsp;import kotlinx.coroutines.delay
+&nbsp;import org.koin.compose.koinInject
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+<b class="nc">&nbsp;fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {</b>
+<b class="nc">&nbsp;  val hitTimer = rememberSaveable { HitTimer() }</b>
+&nbsp;
+<b class="nc">&nbsp;  val ctx = LocalContext.current</b>
+<b class="nc">&nbsp;  val millisLeft by hitTimer.millisLeft.collectAsState(hitTimer.durationMillis)</b>
+<b class="nc">&nbsp;  val shouldVibrate by repository.shouldVibrate.collectAsState(false)</b>
+&nbsp;
+<b class="nc">&nbsp;  val alpha = millisLeft.toFloat() / hitTimer.durationMillis</b>
+<b class="nc">&nbsp;  val backgroundColor = colorResource(smokeColor).copy(1 - alpha)</b>
+&nbsp;
+<b class="nc">&nbsp;  if (millisLeft == 0L &amp;&amp; shouldVibrate) {</b>
+<b class="nc">&nbsp;    ctx.vibrate()</b>
+&nbsp;  }
+&nbsp;
+<b class="nc">&nbsp;  Column(</b>
+<b class="nc">&nbsp;    Modifier</b>
+<b class="nc">&nbsp;      .fillMaxWidth()</b>
+<b class="nc">&nbsp;      .background(backgroundColor)</b>
+<b class="nc">&nbsp;      .verticalScroll(rememberScrollState()),</b>
+<b class="nc">&nbsp;    spacedBy(24.dp),</b>
+<b class="nc">&nbsp;    CenterHorizontally</b>
+&nbsp;  ) {
+<b class="nc">&nbsp;    Box(Modifier.padding(top = 60.dp)) {</b>
+<b class="nc">&nbsp;      TimerText(millisLeft)</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+<b class="nc">&nbsp;    Column(Modifier.width(180.dp), spacedBy(8.dp)) {</b>
+<b class="nc">&nbsp;      Button(onClick = { hitTimer.start() }, Modifier.fillMaxWidth()) {</b>
+&nbsp;        Text(stringResource(start), fontSize = 24.sp)
+&nbsp;      }
+&nbsp;
+<b class="nc">&nbsp;      Button(onClick = { hitTimer.reset() }, Modifier.fillMaxWidth()) {</b>
+&nbsp;        Text(stringResource(reset), fontSize = 24.sp)
+&nbsp;      }
+&nbsp;
+<b class="nc">&nbsp;      Row(Modifier.fillMaxWidth(), Start, CenterVertically) {</b>
+<b class="nc">&nbsp;        Checkbox(shouldVibrate, { repository.setShouldVibrate(it) })</b>
+<b class="nc">&nbsp;        Text(stringResource(vibrate_on_timer_end))</b>
+<b class="nc">&nbsp;      }</b>
+<b class="nc">&nbsp;    }</b>
+<b class="nc">&nbsp;    WhyTenSeconds()</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun TimerText(millisLeft: Long) {</b>
+<b class="nc">&nbsp;  val isTimerRunning = millisLeft &gt; 0L</b>
+<b class="nc">&nbsp;  var blinking by remember { mutableStateOf(false) }</b>
+&nbsp;
+<b class="nc">&nbsp;  val settingsRepository = koinInject&lt;SettingsRepository&gt;()</b>
+<b class="nc">&nbsp;  val hitTimerMillisecondsEnabled by settingsRepository.isHitTimerMillisecondsEnabled.collectAsState(true)</b>
+&nbsp;
+<b class="nc">&nbsp;  LaunchedEffect(isTimerRunning) {</b>
+<b class="nc">&nbsp;    if (isTimerRunning) {</b>
+<b class="nc">&nbsp;      blinking = false</b>
+&nbsp;      return@LaunchedEffect
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    repeat(7) {</b>
+<b class="nc">&nbsp;      blinking = !blinking</b>
+<b class="nc">&nbsp;      delay(150)</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;  }
+&nbsp;
+<b class="nc">&nbsp;  var duration = HitTimer.duration(millisLeft)</b>
+<b class="nc">&nbsp;  if (!hitTimerMillisecondsEnabled) {</b>
+<b class="nc">&nbsp;    duration = HitTimer.durationMillisecondsDisabled(millisLeft)</b>
+&nbsp;  }
+&nbsp;
+<b class="nc">&nbsp;  if (blinking) BlinkingText(duration) else NonBlinkingText(duration)</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun BlinkingText(text: String) {</b>
+<b class="nc">&nbsp;  Text(text, fontSize = 60.sp, color = MaterialTheme.colors.error, modifier = Modifier.height(100.dp))</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun NonBlinkingText(text: String) {</b>
+<b class="nc">&nbsp;  Text(text, fontSize = 52.sp, color = MaterialTheme.colors.primary, modifier = Modifier.height(100.dp))</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Suppress(&quot;DEPRECATION&quot;)
+&nbsp;private fun Context.vibrate() {
+<b class="nc">&nbsp;  val vibrator = getSystemService&lt;Vibrator&gt;()</b>
+<b class="nc">&nbsp;  if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {</b>
+<b class="nc">&nbsp;    val effect = VibrationEffect.createOneShot(500, DEFAULT_AMPLITUDE)</b>
+<b class="nc">&nbsp;    vibrator?.vibrate(effect)</b>
+&nbsp;  } else {
+<b class="nc">&nbsp;    vibrator?.vibrate(500)</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

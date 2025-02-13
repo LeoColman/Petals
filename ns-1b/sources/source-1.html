@@ -1,0 +1,166 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > FileWriter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.use.io.output</a>
+</div>
+
+<h1>Coverage Summary for Class: FileWriter (br.com.colman.petals.use.io.output)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">FileWriter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (15/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (67/67)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.use.io.output
+&nbsp;
+&nbsp;import android.content.Context
+&nbsp;import android.net.Uri
+&nbsp;import androidx.core.content.FileProvider.getUriForFile
+&nbsp;import br.com.colman.petals.BuildConfig.APPLICATION_ID
+&nbsp;import java.io.File
+&nbsp;import java.time.LocalDate
+&nbsp;
+<b class="fc">&nbsp;class FileWriter(</b>
+<b class="fc">&nbsp;  private val exportDirectory: File,</b>
+<b class="fc">&nbsp;  private val fileToUriConverter: (File) -&gt; Uri,</b>
+&nbsp;) {
+&nbsp;
+<b class="fc">&nbsp;  init {</b>
+<b class="fc">&nbsp;    if (!exportDirectory.exists()) exportDirectory.mkdirs()</b>
+<b class="fc">&nbsp;  }</b>
+&nbsp;
+<b class="fc">&nbsp;  constructor(context: Context) : this(</b>
+<b class="fc">&nbsp;    File(context.filesDir, &quot;exports&quot;),</b>
+<b class="fc">&nbsp;    { getUriForFile(context, APPLICATION_ID, it) }</b>
+&nbsp;  )
+&nbsp;
+&nbsp;  fun write(content: String): Uri {
+<b class="fc">&nbsp;    val exportedFile = createAndWriteFile(content)</b>
+<b class="fc">&nbsp;    return fileToUriConverter(exportedFile)</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  private fun createAndWriteFile(content: String): File {
+<b class="fc">&nbsp;    val fileName = generateFileName()</b>
+<b class="fc">&nbsp;    return File(exportDirectory, fileName).apply { writeText(content) }</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  private fun generateFileName(): String {
+<b class="fc">&nbsp;    val date = LocalDate.now()</b>
+<b class="fc">&nbsp;    return &quot;PetalsExport-$date.csv&quot;</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

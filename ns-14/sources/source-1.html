@@ -1,0 +1,190 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > LineChartKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.statistics.graph.component</a>
+</div>
+
+<h1>Coverage Summary for Class: LineChartKt (br.com.colman.petals.statistics.graph.component)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">LineChartKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/33)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/380)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.statistics.graph.component
+&nbsp;
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.aspectRatio
+&nbsp;import androidx.compose.foundation.layout.fillMaxSize
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.material.MaterialTheme
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.graphics.toArgb
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import androidx.compose.ui.viewinterop.AndroidView
+&nbsp;import com.github.mikephil.charting.charts.LineChart
+&nbsp;import com.github.mikephil.charting.components.XAxis
+&nbsp;import com.github.mikephil.charting.data.LineData
+&nbsp;import com.github.mikephil.charting.data.LineDataSet
+&nbsp;
+&nbsp;@Composable
+&nbsp;fun LineChart(
+&nbsp;  datasets: List&lt;LineDataSet&gt;,
+&nbsp;  description: String,
+<b class="nc">&nbsp;  visibleXRange: Float? = null,</b>
+&nbsp;  configureXAxis: XAxis.() -&gt; Unit
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  val colors = MaterialTheme.colors</b>
+&nbsp;
+<b class="nc">&nbsp;  Box(Modifier.fillMaxWidth().aspectRatio(1f).padding(8.dp)) {</b>
+<b class="nc">&nbsp;    AndroidView(::LineChart, Modifier.fillMaxSize()) { chart -&gt;</b>
+<b class="nc">&nbsp;      chart.description.text = description</b>
+<b class="nc">&nbsp;      chart.description.textColor = colors.primary.toArgb()</b>
+<b class="nc">&nbsp;      chart.legend.textColor = colors.primary.toArgb()</b>
+<b class="nc">&nbsp;      chart.setMaxVisibleValueCount(30)</b>
+&nbsp;
+<b class="nc">&nbsp;      chart.data = LineData(datasets)</b>
+<b class="nc">&nbsp;      chart.notifyDataSetChanged()</b>
+<b class="nc">&nbsp;      chart.invalidate()</b>
+&nbsp;
+<b class="nc">&nbsp;      visibleXRange?.let {</b>
+<b class="nc">&nbsp;        chart.setVisibleXRange(it, it)</b>
+<b class="nc">&nbsp;        chart.setVisibleXRangeMaximum(datasets[0].xMax)</b>
+<b class="nc">&nbsp;        chart.moveViewToX(datasets[0].xMax)</b>
+<b class="nc">&nbsp;        chart.notifyDataSetChanged()</b>
+<b class="nc">&nbsp;      }</b>
+&nbsp;
+<b class="nc">&nbsp;      chart.axisRight.isEnabled = false</b>
+<b class="nc">&nbsp;      chart.axisLeft.apply {</b>
+<b class="nc">&nbsp;        axisMinimum = 0f</b>
+<b class="nc">&nbsp;        textColor = colors.primary.toArgb()</b>
+<b class="nc">&nbsp;        axisLineColor = colors.primary.toArgb()</b>
+<b class="nc">&nbsp;      }</b>
+&nbsp;
+<b class="nc">&nbsp;      chart.xAxis.apply {</b>
+<b class="nc">&nbsp;        position = XAxis.XAxisPosition.BOTTOM</b>
+<b class="nc">&nbsp;        setDrawLimitLinesBehindData(true)</b>
+<b class="nc">&nbsp;        textColor = colors.primary.toArgb()</b>
+<b class="nc">&nbsp;        axisLineColor = colors.primary.toArgb()</b>
+<b class="nc">&nbsp;        configureXAxis(this)</b>
+<b class="nc">&nbsp;      }</b>
+&nbsp;    }
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

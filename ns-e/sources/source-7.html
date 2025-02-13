@@ -1,0 +1,152 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > HitTimerMillisecondsEnabledListItemKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.settings.view.listitem</a>
+</div>
+
+<h1>Coverage Summary for Class: HitTimerMillisecondsEnabledListItemKt (br.com.colman.petals.settings.view.listitem)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">HitTimerMillisecondsEnabledListItemKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/130)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.settings.view.listitem
+&nbsp;
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import br.com.colman.petals.R.string.enable_or_disable_milliseconds_on_hit_timer_page
+&nbsp;import br.com.colman.petals.R.string.hit_timer_milliseconds_enabled
+&nbsp;import br.com.colman.petals.settings.view.dialog.SwitchListItem
+&nbsp;import compose.icons.TablerIcons
+&nbsp;import compose.icons.tablericons.ToggleLeft
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+&nbsp;fun HitTimerMillisecondsEnabledListItem(
+&nbsp;  hitTimerMillisecondsEnabled: Boolean,
+<b class="nc">&nbsp;  setHitTimerMillisecondsEnabled: (Boolean) -&gt; Unit = {}</b>
+<b class="nc">&nbsp;) {</b>
+<b class="nc">&nbsp;  SwitchListItem(</b>
+<b class="nc">&nbsp;    icon = TablerIcons.ToggleLeft,</b>
+<b class="nc">&nbsp;    textId = hit_timer_milliseconds_enabled,</b>
+<b class="nc">&nbsp;    descriptionId = enable_or_disable_milliseconds_on_hit_timer_page,</b>
+<b class="nc">&nbsp;    initialState = hitTimerMillisecondsEnabled,</b>
+<b class="nc">&nbsp;    onChangeState = setHitTimerMillisecondsEnabled</b>
+&nbsp;  )
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

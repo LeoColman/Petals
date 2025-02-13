@@ -1,0 +1,239 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > WhyTenSecondsKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.hittimer</a>
+</div>
+
+<h1>Coverage Summary for Class: WhyTenSecondsKt (br.com.colman.petals.hittimer)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">WhyTenSecondsKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/55)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/358)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.hittimer
+&nbsp;
+&nbsp;import android.content.Context
+&nbsp;import androidx.compose.foundation.layout.Arrangement
+&nbsp;import androidx.compose.foundation.layout.Box
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.layout.fillMaxWidth
+&nbsp;import androidx.compose.foundation.layout.height
+&nbsp;import androidx.compose.foundation.layout.padding
+&nbsp;import androidx.compose.material.Card
+&nbsp;import androidx.compose.material.Colors
+&nbsp;import androidx.compose.material.MaterialTheme
+&nbsp;import androidx.compose.material.Text
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.graphics.toArgb
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;import androidx.compose.ui.tooling.preview.Preview
+&nbsp;import androidx.compose.ui.unit.dp
+&nbsp;import androidx.compose.ui.unit.sp
+&nbsp;import androidx.compose.ui.viewinterop.AndroidView
+&nbsp;import androidx.core.content.ContextCompat
+&nbsp;import br.com.colman.petals.R
+&nbsp;import com.jjoe64.graphview.GraphView
+&nbsp;import com.jjoe64.graphview.series.DataPoint
+&nbsp;import com.jjoe64.graphview.series.LineGraphSeries
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+<b class="nc">&nbsp;fun WhyTenSeconds() {</b>
+<b class="nc">&nbsp;  Card(</b>
+<b class="nc">&nbsp;    Modifier</b>
+<b class="nc">&nbsp;      .fillMaxWidth()</b>
+<b class="nc">&nbsp;      .padding(16.dp)</b>
+&nbsp;  ) {
+&nbsp;    Column(
+&nbsp;      Modifier
+&nbsp;        .fillMaxWidth()
+&nbsp;        .padding(16.dp),
+&nbsp;      Arrangement.Absolute.spacedBy(16.dp)
+&nbsp;    ) {
+&nbsp;      Text(stringResource(R.string.hittimer_why_ten_secs), fontSize = 24.sp)
+&nbsp;
+&nbsp;      Text(stringResource(R.string.tenSecondsIntro), fontSize = 18.sp)
+&nbsp;
+&nbsp;      SubjectiveHigh()
+&nbsp;      Text(stringResource(R.string.hittime_source), fontSize = 12.sp)
+&nbsp;    }
+&nbsp;  }
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;@Preview
+&nbsp;@Composable
+<b class="nc">&nbsp;private fun SubjectiveHigh() {</b>
+<b class="nc">&nbsp;  val colors = MaterialTheme.colors</b>
+<b class="nc">&nbsp;  Box(Modifier.height(300.dp)) {</b>
+<b class="nc">&nbsp;    AndroidView({ createGraph(it, colors) })</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;// TODO sync graph and timer
+<b class="nc">&nbsp;private fun createGraph(context: Context, colors: Colors) = GraphView(context).apply {</b>
+<b class="nc">&nbsp;  addSeries(subjectiveHighWeakSeries(context))</b>
+<b class="nc">&nbsp;  addSeries(subjectiveHighStrongSeries(context))</b>
+&nbsp;
+<b class="nc">&nbsp;  viewport.apply {</b>
+<b class="nc">&nbsp;    isYAxisBoundsManual = true</b>
+<b class="nc">&nbsp;    setMaxY(60.0)</b>
+<b class="nc">&nbsp;    setMinY(0.0)</b>
+<b class="nc">&nbsp;    isXAxisBoundsManual = true</b>
+<b class="nc">&nbsp;    setMaxX(25.0)</b>
+<b class="nc">&nbsp;    setMinX(0.0)</b>
+<b class="nc">&nbsp;  }</b>
+&nbsp;
+<b class="nc">&nbsp;  legendRenderer.apply {</b>
+<b class="nc">&nbsp;    backgroundColor = colors.background.toArgb()</b>
+<b class="nc">&nbsp;    textColor = colors.primary.toArgb()</b>
+<b class="nc">&nbsp;    isVisible = true</b>
+<b class="nc">&nbsp;  }</b>
+&nbsp;
+<b class="nc">&nbsp;  gridLabelRenderer.apply {</b>
+<b class="nc">&nbsp;    verticalLabelsColor = colors.primary.toArgb()</b>
+<b class="nc">&nbsp;    horizontalLabelsColor = colors.primary.toArgb()</b>
+<b class="nc">&nbsp;    horizontalAxisTitleColor = colors.primary.toArgb()</b>
+<b class="nc">&nbsp;    verticalAxisTitleColor = colors.primary.toArgb()</b>
+&nbsp;
+<b class="nc">&nbsp;    verticalAxisTitle = context.resources.getString(R.string.subjectve_high)</b>
+<b class="nc">&nbsp;    horizontalAxisTitle = context.getString(R.string.breathhold_duration)</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+&nbsp;
+&nbsp;private fun subjectiveHighWeakSeries(context: Context): LineGraphSeries&lt;DataPoint&gt; {
+<b class="nc">&nbsp;  val datapoints = arrayOf(</b>
+<b class="nc">&nbsp;    DataPoint(0.0, 30.0),</b>
+<b class="nc">&nbsp;    DataPoint(10.0, 40.0),</b>
+<b class="nc">&nbsp;    DataPoint(20.0, 35.0)</b>
+&nbsp;  )
+&nbsp;
+<b class="nc">&nbsp;  return LineGraphSeries(datapoints).apply {</b>
+<b class="nc">&nbsp;    color = ContextCompat.getColor(context, R.color.lightGreen)</b>
+<b class="nc">&nbsp;    isDrawDataPoints = true</b>
+<b class="nc">&nbsp;    title = context.getString(R.string._175thc)</b>
+<b class="nc">&nbsp;  }</b>
+&nbsp;}
+&nbsp;
+&nbsp;private fun subjectiveHighStrongSeries(context: Context): LineGraphSeries&lt;DataPoint&gt; {
+<b class="nc">&nbsp;  val datapoints = arrayOf(</b>
+<b class="nc">&nbsp;    DataPoint(0.0, 37.0),</b>
+<b class="nc">&nbsp;    DataPoint(10.0, 47.0),</b>
+<b class="nc">&nbsp;    DataPoint(20.0, 43.0)</b>
+&nbsp;  )
+&nbsp;
+<b class="nc">&nbsp;  return LineGraphSeries(datapoints).apply {</b>
+<b class="nc">&nbsp;    color = ContextCompat.getColor(context, R.color.darkGreen)</b>
+<b class="nc">&nbsp;    isDrawDataPoints = true</b>
+<b class="nc">&nbsp;    title = context.getString(R.string._355thc)</b>
+<b class="nc">&nbsp;  }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

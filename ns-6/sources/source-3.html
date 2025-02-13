@@ -1,0 +1,144 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > KoinModuleKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.playstore</a>
+</div>
+
+<h1>Coverage Summary for Class: KoinModuleKt (br.com.colman.petals.playstore)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">KoinModuleKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+    <td class="coverageStat"/>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/52)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.playstore
+&nbsp;
+&nbsp;import android.content.Context
+&nbsp;import androidx.datastore.preferences.preferencesDataStore
+&nbsp;import br.com.colman.petals.playstore.inapp.InAppPurchase
+&nbsp;import br.com.colman.petals.playstore.review.ReviewAppPlaystoreRequester
+&nbsp;import br.com.colman.petals.playstore.settings.AdsSettingsRepository
+&nbsp;import br.com.colman.petals.review.ReviewAppRequester
+&nbsp;import org.koin.dsl.bind
+&nbsp;import org.koin.dsl.module
+&nbsp;
+<b class="nc">&nbsp;private val Context.adsSettings by preferencesDataStore(&quot;ads_settings&quot;)</b>
+&nbsp;
+<b class="nc">&nbsp;val KoinModule = module {</b>
+<b class="nc">&nbsp;  single {</b>
+<b class="nc">&nbsp;    InAppPurchase(get&lt;Context&gt;())</b>
+&nbsp;  }
+<b class="nc">&nbsp;  single {</b>
+<b class="nc">&nbsp;    AdsSettingsRepository(get&lt;Context&gt;().adsSettings)</b>
+&nbsp;  }
+&nbsp;
+<b class="nc">&nbsp;  single { ReviewAppPlaystoreRequester(get()) } bind ReviewAppRequester::class</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>

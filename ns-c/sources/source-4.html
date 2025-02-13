@@ -1,0 +1,213 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>app Coverage Report > SettingsViewKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope: app<span class="separator">|</span>    <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.colman.petals.settings</a>
+</div>
+
+<h1>Coverage Summary for Class: SettingsViewKt (br.com.colman.petals.settings)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+<th class="coverageStat 
+">
+  Instruction, %
+</th>
+</tr>
+<tr>
+  <td class="name">SettingsViewKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/46)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/625)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.colman.petals.settings
+&nbsp;
+&nbsp;import androidx.appcompat.app.AppCompatDelegate
+&nbsp;import androidx.compose.foundation.layout.Column
+&nbsp;import androidx.compose.foundation.rememberScrollState
+&nbsp;import androidx.compose.foundation.verticalScroll
+&nbsp;import androidx.compose.runtime.Composable
+&nbsp;import androidx.compose.runtime.collectAsState
+&nbsp;import androidx.compose.runtime.getValue
+&nbsp;import androidx.compose.ui.Modifier
+&nbsp;import androidx.compose.ui.res.stringResource
+&nbsp;import androidx.core.os.LocaleListCompat
+&nbsp;import br.com.colman.petals.settings.view.listitem.ClockListItem
+&nbsp;import br.com.colman.petals.settings.view.listitem.CurrencyListItem
+&nbsp;import br.com.colman.petals.settings.view.listitem.DateListItem
+&nbsp;import br.com.colman.petals.settings.view.listitem.ExtendDayListItem
+&nbsp;import br.com.colman.petals.settings.view.listitem.HitTimerMillisecondsEnabledListItem
+&nbsp;import br.com.colman.petals.settings.view.listitem.LanguageListItem
+&nbsp;import br.com.colman.petals.settings.view.listitem.PinListItem
+&nbsp;import br.com.colman.petals.settings.view.listitem.PrecisionListItem
+&nbsp;import br.com.colman.petals.settings.view.listitem.RepositoryListItem
+&nbsp;import br.com.colman.petals.settings.view.listitem.ShareApp
+&nbsp;import br.com.colman.petals.settings.view.listitem.TimeListItem
+&nbsp;import br.com.colman.petals.statistics.view.listitem.HourOfDayLineInStatsEnabledListItem
+&nbsp;
+&nbsp;@Composable
+<b class="nc">&nbsp;fun SettingsView(settingsRepository: SettingsRepository) {</b>
+<b class="nc">&nbsp;  val currentCurrency by settingsRepository.currencyIcon.collectAsState(&quot;$&quot;)</b>
+<b class="nc">&nbsp;  val currentDateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])</b>
+<b class="nc">&nbsp;  val currentTimeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])</b>
+<b class="nc">&nbsp;  val is24HoursFormat by settingsRepository.is24HoursFormat.collectAsState(false)</b>
+<b class="nc">&nbsp;  val currentHitTimerMillisecondsEnabled by settingsRepository.isHitTimerMillisecondsEnabled.collectAsState(true)</b>
+<b class="nc">&nbsp;  val currentDecimalPrecision by settingsRepository.decimalPrecision.collectAsState(</b>
+<b class="nc">&nbsp;    settingsRepository.decimalPrecisionList[2]</b>
+&nbsp;  )
+<b class="nc">&nbsp;  val currentExtendDay by settingsRepository.isDayExtended.collectAsState(false)</b>
+&nbsp;
+<b class="nc">&nbsp;  val setAppLanguage = { language: String -&gt;</b>
+<b class="nc">&nbsp;    val languageCode = AppLanguage.getAppLanguageCode(language)</b>
+<b class="nc">&nbsp;    if (languageCode.isNotEmpty()) {</b>
+<b class="nc">&nbsp;      val appLocale = LocaleListCompat.forLanguageTags(languageCode)</b>
+<b class="nc">&nbsp;      AppCompatDelegate.setApplicationLocales(appLocale)</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+<b class="nc">&nbsp;  val currentHourOfDayInLineStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(true)</b>
+&nbsp;
+<b class="nc">&nbsp;  Column(Modifier.verticalScroll(rememberScrollState())) {</b>
+<b class="nc">&nbsp;    CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)</b>
+<b class="nc">&nbsp;    PinListItem(settingsRepository::setPin)</b>
+<b class="nc">&nbsp;    RepositoryListItem()</b>
+<b class="nc">&nbsp;    DateListItem(currentDateFormat, settingsRepository.dateFormatList, settingsRepository::setDateFormat)</b>
+<b class="nc">&nbsp;    TimeListItem(currentTimeFormat, settingsRepository.timeFormatList, settingsRepository::setTimeFormat)</b>
+<b class="nc">&nbsp;    ClockListItem(</b>
+<b class="nc">&nbsp;      is24HoursFormat,</b>
+<b class="nc">&nbsp;      settingsRepository.clockFormatList.map {</b>
+<b class="nc">&nbsp;        stringResource(it)</b>
+&nbsp;      },
+<b class="nc">&nbsp;      settingsRepository::setIs24HoursFormat</b>
+&nbsp;    )
+<b class="nc">&nbsp;    PrecisionListItem(</b>
+<b class="nc">&nbsp;      currentDecimalPrecision,</b>
+<b class="nc">&nbsp;      settingsRepository.decimalPrecisionList,</b>
+<b class="nc">&nbsp;      settingsRepository::setDecimalPrecision</b>
+&nbsp;    )
+<b class="nc">&nbsp;    LanguageListItem(</b>
+<b class="nc">&nbsp;      AppLanguage.getAppLanguageName(AppCompatDelegate.getApplicationLocales().toLanguageTags()),</b>
+<b class="nc">&nbsp;      settingsRepository.appLanguages,</b>
+<b class="nc">&nbsp;      setAppLanguage</b>
+&nbsp;    )
+<b class="nc">&nbsp;    HitTimerMillisecondsEnabledListItem(</b>
+<b class="nc">&nbsp;      currentHitTimerMillisecondsEnabled,</b>
+<b class="nc">&nbsp;      settingsRepository::setIsHitTimerMillisecondsEnabled</b>
+&nbsp;    )
+<b class="nc">&nbsp;    ExtendDayListItem(</b>
+<b class="nc">&nbsp;      currentExtendDay,</b>
+<b class="nc">&nbsp;      settingsRepository::setDayExtended</b>
+&nbsp;    )
+<b class="nc">&nbsp;    HourOfDayLineInStatsEnabledListItem(</b>
+<b class="nc">&nbsp;      currentHourOfDayInLineStatsEnabled,</b>
+<b class="nc">&nbsp;      settingsRepository::setIsHourOfDayLineInStatsEnabled</b>
+&nbsp;    )
+<b class="nc">&nbsp;    ShareApp()</b>
+<b class="nc">&nbsp;  }</b>
+<b class="nc">&nbsp;}</b>
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-02-13 20:53</div>
+</div>
+</body>
+</html>
