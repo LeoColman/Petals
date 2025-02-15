@@ -5,7 +5,7 @@
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
 @file:DependsOn("actions:setup-java:v4")
-@file:DependsOn("gradle:actions__setup-gradle:v3")
+@file:DependsOn("gradle:actions__setup-gradle:v4")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
