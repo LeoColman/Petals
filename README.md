@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/github/license/LeoColman/Petals)](https://github.com/LeoColman/Petals/blob/main/LICENSE)
 [![Unit Tests](https://github.com/LeoColman/Petals/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/unit-tests.yaml)
-[![Lint](https://github.com/LeoColman/Petals/actions/workflows/lint.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/lint.yaml)
+[![Detekt](https://github.com/LeoColman/Petals/actions/workflows/detekt.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/detekt.yaml)
 [![Dependency Analysis](https://github.com/LeoColman/Petals/actions/workflows/dependency-license-analysis.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/dependency-analysis.yaml)
 <a href="https://hosted.weblate.org/engage/petals-app/">
 <img src="https://hosted.weblate.org/widgets/petals-app/-/svg-badge.svg" alt="Translation status" />
