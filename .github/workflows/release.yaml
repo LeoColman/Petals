@@ -50,7 +50,7 @@ jobs:
         distribution: 'adopt'
     - id: 'step-2'
       name: 'Setup Gradle'
-      uses: 'gradle/actions/setup-gradle@v3'
+      uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-3'
       name: 'Checkout with SSHKey'
       uses: 'actions/checkout@v4'
