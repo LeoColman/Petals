@@ -48,7 +48,7 @@ jobs:
         gpg-private-key: '${{ secrets.GPG_KEY }}'
     - id: 'step-3'
       name: 'Setup Gradle'
-      uses: 'gradle/actions/setup-gradle@v3'
+      uses: 'gradle/actions/setup-gradle@v4'
     - id: 'step-4'
       name: 'Create ${{ matrix.variant }} APK'
       run: './gradlew assemble${{ matrix.variant }}Release'
