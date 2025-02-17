@@ -75,10 +75,10 @@ workflow(
     )
 
     uses(
-      name = "Deploy Coverage Report & Badge",
+      name = "Deploy Badge to GitHub Pages",
       action = ActionsGhPages(
-        githubToken = expr { "secrets.GITHUB_TOKEN" },
-        publishDir = "app/build/reports/kover/html",
+        githubToken = expr { secrets.GITHUB_TOKEN },
+        publishDir = "badge",
         publishBranch = "gh-pages",
         allowEmptyCommit = false,
         forceOrphan = true
