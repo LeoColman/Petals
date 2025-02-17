@@ -76,11 +76,11 @@ jobs:
         URL="https://img.shields.io/badge/Coverage-$COVERAGE%25-$COLOR"
         curl -sS "$URL" -o badge/coverage-badge.svg
     - id: 'step-8'
-      name: 'Deploy Coverage Report & Badge'
+      name: 'Deploy Badge to GitHub Pages'
       uses: 'peaceiris/actions-gh-pages@v4'
       with:
         github_token: '${{ secrets.GITHUB_TOKEN }}'
         publish_branch: 'gh-pages'
-        publish_dir: 'app/build/reports/kover/html'
+        publish_dir: 'badge'
         allow_empty_commit: 'false'
         force_orphan: 'true'
