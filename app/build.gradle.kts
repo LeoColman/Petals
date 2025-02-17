@@ -229,6 +229,19 @@ dependencies {
 
 }
 
+kover {
+  reports {
+    filters {
+      excludes {
+        annotatedBy("androidx.compose.runtime.Composable")
+        classes("*ComposableSingletons*")
+        classes("*DatabaseImpl*")
+        classes("*BuildConfig*")
+      }
+    }
+  }
+}
+
 tasks.withType<Test> {
   useJUnitPlatform()
 }
