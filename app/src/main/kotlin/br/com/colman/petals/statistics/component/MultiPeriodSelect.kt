@@ -35,7 +35,7 @@ fun MultiPeriodSelect(selectedPeriods: List<Period>, setSelectedDays: (List<Peri
   fun putPeriod(period: Period, condition: Boolean) { if (condition) addPeriod(period) else removePeriod(period) }
 
   FlowRow(Modifier, Arrangement.Center, Arrangement.Center) {
-    Period.values().forEach { period ->
+    Period.entries().forEach { period ->
       DaysCheckbox(period in selectedPeriods, { putPeriod(period, it) }, period)
     }
   }
