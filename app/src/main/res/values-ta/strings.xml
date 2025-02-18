@@ -17,11 +17,11 @@
     <string name="hit_timer">டைமரை அடியுங்கள்</string>
     <string name="start">தொடங்கு</string>
     <string name="reset">மீட்டமை</string>
-    <string name="tenSecondsIntro">10 வினாடிகளுக்கு மேல் வைத்திருப்பது உங்கள் உயர்ந்ததை அதிகரிக்காது, ஆனால் களை உங்களுக்கு ஏற்படுத்தும் மோசமான விசயங்களை அதிகரிக்கும்.</string>
-    <string name="hittime_source">ஆதாரம்: அசோர்லோசா சே.எல்., கிரீன்வால்ட் எம்.கே, ச்டிட்சர் எம்.எல். மரிசுவானா புகைத்தல்: மாறுபட்ட பஃப் அளவு மற்றும் சுவாச காலத்தின் விளைவுகள். சே பார்மகோல் எக்ச்ப் தெர். 1995. பிப்ரவரி; 272 (2): 560–9. பி.எம்.ஐ.டி: 7853169.</string>
-    <string name="hittimer_why_ten_secs">ஏன் 10 வினாடிகள்?</string>
+    <string name="ten_seconds_introduction">10 வினாடிகளுக்கு மேல் வைத்திருப்பது உங்கள் உயர்ந்ததை அதிகரிக்காது, ஆனால் களை உங்களுக்கு ஏற்படுத்தும் மோசமான விசயங்களை அதிகரிக்கும்.</string>
+    <string name="ten_seconds_source">ஆதாரம்: அசோர்லோசா சே.எல்., கிரீன்வால்ட் எம்.கே, ச்டிட்சர் எம்.எல். மரிசுவானா புகைத்தல்: மாறுபட்ட பஃப் அளவு மற்றும் சுவாச காலத்தின் விளைவுகள். சே பார்மகோல் எக்ச்ப் தெர். 1995. பிப்ரவரி; 272 (2): 560–9. பி.எம்.ஐ.டி: 7853169.</string>
+    <string name="why_ten_seconds">ஏன் 10 வினாடிகள்?</string>
     <string name="subjectve_high">அகநிலை \"உயர் \\</string>
-    <string name="breathhold_duration">மூச்சுஓல்ட் காலம் (விநாடிகள்)</string>
+    <string name="breathhold_duration_seconds">மூச்சுஓல்ட் காலம் (விநாடிகள்)</string>
     <string name="_175thc" formatted="false">1.75% THC</string>
     <string name="_355thc" formatted="false">3.55% THC</string>
     <string name="add_use">பயன்பாடு சேர்க்கவும்</string>

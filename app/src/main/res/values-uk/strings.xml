@@ -2,10 +2,10 @@
 <resources>
     <string name="minutes">Хвилин</string>
     <string name="stats">Статистика</string>
-    <string name="tenSecondsIntro">Затримка диму у легенях більше ніж на 10 секунд не вплине на ефект, але збільшить довгострокові ризики вживання трави.</string>
-    <string name="hittimer_why_ten_secs">Чому 10 секунд?</string>
+    <string name="ten_seconds_introduction">Затримка диму у легенях більше ніж на 10 секунд не вплине на ефект, але збільшить довгострокові ризики вживання трави.</string>
+    <string name="why_ten_seconds">Чому 10 секунд?</string>
     <string name="subjectve_high">Поняття \"Вмазаний\"</string>
-    <string name="breathhold_duration">Тривалість затримки дихання (секунди)</string>
+    <string name="breathhold_duration_seconds">Тривалість затримки дихання (секунди)</string>
     <string name="_355thc" formatted="false">3.55% ТГК</string>
     <string name="add_use">Додати вжиток</string>
     <string name="date">Дата</string>
@@ -139,7 +139,7 @@
         <item quantity="other">Останні %s днів</item>
     </plurals>
     <string name="are_you_sure_delete_pause">Ви впевнені що бажаєте видалити паузу з %s по %s?</string>
-    <string name="hittime_source">Джерело: Azorlosa JL, Greenwald MK, Stitzer ML. Куріння марихуани: вплив різної гучності затяжки та тривалості затримки дихання. J Pharmacol Exp Ther. 1995. Лютий; 272 (2): 560–9. PMID: 7853169.</string>
+    <string name="ten_seconds_source">Джерело: Azorlosa JL, Greenwald MK, Stitzer ML. Куріння марихуани: вплив різної гучності затяжки та тривалості затримки дихання. J Pharmacol Exp Ther. 1995. Лютий; 272 (2): 560–9. PMID: 7853169.</string>
     <string name="no_country_selected">Країна не вибрана</string>
     <string name="possession">Володіння</string>
     <string name="legislation_and_rights">Законодавство і права</string>

@@ -15,11 +15,11 @@
     <string name="hit_timer">Vuruş Zamanlayıcısı</string>
     <string name="start">Başlat</string>
     <string name="reset">Sıfırla</string>
-    <string name="tenSecondsIntro">10 saniyeden fazla tutmak sizi daha yüksek yapmaz, ancak esrarın size verdiği zararları artırır.</string>
-    <string name="hittime_source">Kaynak: Azorlosa JL, Greenwald MK, Stitzer ML. Esrar içmek: farklı nefes tutma süresi ve nefes hacminin etkileri. J Pharmacol Exp Ther. 1995. Şubat;272(2):560–9. PMID: 7853169.</string>
-    <string name="hittimer_why_ten_secs">Neden 10 saniye?</string>
+    <string name="ten_seconds_introduction">10 saniyeden fazla tutmak sizi daha yüksek yapmaz, ancak esrarın size verdiği zararları artırır.</string>
+    <string name="ten_seconds_source">Kaynak: Azorlosa JL, Greenwald MK, Stitzer ML. Esrar içmek: farklı nefes tutma süresi ve nefes hacminin etkileri. J Pharmacol Exp Ther. 1995. Şubat;272(2):560–9. PMID: 7853169.</string>
+    <string name="why_ten_seconds">Neden 10 saniye?</string>
     <string name="subjectve_high">Öznel Yükseklik</string>
-    <string name="breathhold_duration">Nefes Tutma Süresi (saniye)</string>
+    <string name="breathhold_duration_seconds">Nefes Tutma Süresi (saniye)</string>
     <string name="_175thc" formatted="false">1.75% THC</string>
     <string name="_355thc" formatted="false">3.55% THC</string>
     <string name="add_use">Kullanım Ekle</string>
