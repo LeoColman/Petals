@@ -6,7 +6,7 @@
     <string name="years">Années</string>
     <string name="hit_timer">Minuterie tactile</string>
     <string name="start">Démarrer</string>
-    <string name="hittimer_why_ten_secs">Pourquoi 10 secondes ?</string>
+    <string name="why_ten_seconds">Pourquoi 10 secondes ?</string>
     <string name="add_use">Ajouter une utilisation</string>
     <string name="amount_grams_title">Quantité (g)</string>
     <string name="cost_per_gram_title">Coût par gramme</string>
@@ -36,12 +36,12 @@
     <string name="seconds">Secondes</string>
     <string name="symptoms">Symptômes</string>
     <string name="reset">Réinitialiser</string>
-    <string name="tenSecondsIntro">Tenir pendant plus de 10 secondes n’augmentera pas votre euphorie mais augmentera les mauvaises choses que le cannabis vous causera.</string>
+    <string name="ten_seconds_introduction">Tenir pendant plus de 10 secondes n’augmentera pas votre euphorie mais augmentera les mauvaises choses que le cannabis vous causera.</string>
     <string name="total_spent">%s total</string>
     <string name="import_import">Importer</string>
-    <string name="hittime_source">Source : JL Azorlosa, MK Greenwald, ML Stitzer. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560-9. PMID : 7853169.</string>
+    <string name="ten_seconds_source">Source : JL Azorlosa, MK Greenwald, ML Stitzer. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560-9. PMID : 7853169.</string>
     <string name="date">Date</string>
-    <string name="breathhold_duration">Durée de la respiration (secondes)</string>
+    <string name="breathhold_duration_seconds">Durée de la respiration (secondes)</string>
     <string name="subjectve_high">« Euphorie » subjective</string>
     <string name="time">Temps</string>
     <string name="today">Aujourd’hui</string>

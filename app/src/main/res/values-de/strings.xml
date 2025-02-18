@@ -12,9 +12,9 @@
     <string name="hit_timer">Hit Timer</string>
     <string name="start">Start</string>
     <string name="reset">Reset</string>
-    <string name="tenSecondsIntro">Wenn du den Rauch länger als 10 Sekunden hältst, wird dein Rausch nicht stärker aber die negativen Auswirkungen des Kiffens auf dich nehmen zu.</string>
+    <string name="ten_seconds_introduction">Wenn du den Rauch länger als 10 Sekunden hältst, wird dein Rausch nicht stärker aber die negativen Auswirkungen des Kiffens auf dich nehmen zu.</string>
     <string name="subjectve_high">Subjektives \"High\"</string>
-    <string name="breathhold_duration">Atemzugdauer (Sekunden)</string>
+    <string name="breathhold_duration_seconds">Atemzugdauer (Sekunden)</string>
     <string name="_175thc">1,75% THC</string>
     <string name="_355thc">3,55% THC</string>
     <string name="add_use">Konsum hinzufügen</string>
@@ -63,7 +63,7 @@
     <string name="hours">Stunden</string>
     <string name="repository_link_title">Zugang zum Quellcode</string>
     <string name="seconds">Sekunden</string>
-    <string name="hittimer_why_ten_secs">Warum 10 Sekunden?</string>
+    <string name="why_ten_seconds">Warum 10 Sekunden?</string>
     <plurals name="amount_days">
         <item quantity="one">%s Tag</item>
         <item quantity="other">%s Tage</item>
@@ -80,7 +80,7 @@
         <item quantity="one">%s Konsum</item>
         <item quantity="other">%s Konsum</item>
     </plurals>
-    <string name="hittime_source">Quelle: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
+    <string name="ten_seconds_source">Quelle: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
     <string name="repository_link_description">Diese App ist Open Source und freie Software unter der AGPL-3.0-Lizenz. Der Quellcode ist auf GitHub unter github.com/LeoColman/Petals verfügbar</string>
     <string name="symptoms_introduction">In einer Studie von Budney et al. von der University of Vermont wurde ermittelt, wie sich Entzugserscheinungen auf Cannabiskonsumenten auswirken und abklingen. Unten siehst du eine Schätzung deiner aktuellen Situation auf der Grundlage des Datums deines letzten Konsums.</string>
     <string name="date_format_label">Datumsformat</string>
