@@ -39,15 +39,15 @@ open class Period(val days: Int) : Comparable<Period> {
     return days
   }
 
-  data object Zero : Period(0)
-  data object Week : Period(7)
-  data object TwoWeek : Period(14)
-  data object Month : Period(30)
-  data object TwoMonth : Period(60)
-  data object ThreeMonth : Period(90)
+  object Zero : Period(0)
+  object Week : Period(7)
+  object TwoWeek : Period(14)
+  object Month : Period(30)
+  object TwoMonth : Period(60)
+  object ThreeMonth : Period(90)
 
   companion object {
-    fun values(): Array<Period> {
+    fun entries(): Array<Period> {
       return arrayOf(Zero, Week, TwoWeek, Month, TwoMonth, ThreeMonth)
     }
   }
