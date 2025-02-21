@@ -2,7 +2,7 @@
 androidx = "1.6.1"
 compose = "1.7.8"
 datastore = "1.1.2"
-detekt = "1.23.7"
+detekt = "1.23.8"
 koin = "4.0.2"
 kotest = "5.9.1"
 kotest-extensions-android = "0.1.6"
