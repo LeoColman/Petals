@@ -85,6 +85,7 @@ android {
 
     create("playstore") {
       dimension = "distribution"
+      minSdk = 23
       signingConfig = signingConfigs.findByName("self-sign")
     }
 
