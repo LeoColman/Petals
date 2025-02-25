@@ -15,7 +15,7 @@ mockk = "1.13.16"
 review = "2.0.2"
 
 [libraries]
-android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.1.4"
+android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.1.5"
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx" }
 androidx-test-runner = "androidx.test:runner:1.6.2"
 apache-commons-lang = "org.apache.commons:commons-lang3:3.17.0"
