@@ -54,7 +54,7 @@ licensee-gradle-plugin = { module = "app.cash.licensee:licensee-gradle-plugin", 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
-mp-android-chart = "com.github.AppDevNext:AndroidChart:3.1.0.25"
+mp-android-chart = "com.github.AppDevNext:AndroidChart:3.1.0.26"
 snodge = "com.natpryce:snodge:3.7.0.0"
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 timber = "com.jakewharton.timber:timber:5.0.1"
