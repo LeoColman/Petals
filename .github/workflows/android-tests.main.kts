@@ -38,7 +38,7 @@ workflow(
     uses(
       name = "Android Tests",
       action = AndroidEmulatorRunner(
-        apiLevel = 33,
+        apiLevel = 29,
         emulatorOptions = "-no-snapshot -no-audio -no-boot-anim",
         disableAnimations = true,
         script = "./gradlew connectedAndroidTest",
