@@ -44,6 +44,8 @@ jobs:
       uses: 'ReactiveCircus/android-emulator-runner@v2'
       with:
         api-level: '33'
+        target: 'default'
+        arch: 'x86'
         emulator-options: '-no-snapshot -no-audio -no-boot-anim'
         disable-animations: 'true'
         script: './gradlew connectedAndroidTest'
