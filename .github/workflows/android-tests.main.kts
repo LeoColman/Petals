@@ -39,11 +39,7 @@ workflow(
       name = "Android Tests",
       action = AndroidEmulatorRunner(
         apiLevel = 29,
-        emulatorOptions = "-no-snapshot -no-audio -no-boot-anim",
-        disableAnimations = true,
         script = "./gradlew connectedAndroidTest",
-        target = AndroidEmulatorRunner.Target.Default,
-        arch = AndroidEmulatorRunner.Arch.X86,
       )
     )
   }
