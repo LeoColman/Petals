@@ -21,12 +21,16 @@ import br.com.colman.petals.use.repository.BlockType
 import br.com.colman.petals.use.repository.CensorshipRepository
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FileDataPart
+import io.kotest.core.annotation.EnabledCondition
+import io.kotest.core.annotation.EnabledIf
+import io.kotest.core.spec.Spec
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.lang.Thread.sleep
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.util.Locale
+import kotlin.reflect.KClass
 
 val locales = listOf(
   "de" to "DE",
@@ -41,6 +45,13 @@ val locales = listOf(
   "uk" to ""
 )
 
+object EnabledIfNotOnCi : EnabledCondition {
+  override fun enabled(kclass: KClass<out Spec>): Boolean {
+    return System.getenv("CI") != "true"
+  }
+}
+
+@EnabledIf(EnabledIfNotOnCi::class)
 class ScreenshotTakerTest : FunSpec({
 
   var usesImported = false
