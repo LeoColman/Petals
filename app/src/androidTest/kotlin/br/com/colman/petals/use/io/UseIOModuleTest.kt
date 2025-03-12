@@ -26,8 +26,8 @@ class UseIOModuleTest : FunSpec({
 
     inputFile.writeText(
       """
-        date,amount,cost_per_gram,id
-        2024-03-21T19:01:47.163,0.08,22.2,80204597-00eb-4412-b7ee-223388806fe2
+        date,amount,cost_per_gram,id,description
+        2024-03-21T19:01:47.163,0.08,22.2,80204597-00eb-4412-b7ee-223388806fe2,description
       """.trimIndent()
     )
 

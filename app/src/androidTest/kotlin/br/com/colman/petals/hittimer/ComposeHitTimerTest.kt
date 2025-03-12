@@ -16,7 +16,7 @@ class ComposeHitTimerTest : FunSpec({
   test("Start Timer Test") {
     runAndroidComposeUiTest<MainActivity> {
       activity!!.setContent {
-        ComposeHitTimer()
+        ComposeHitTimer(isMillisecondsEnabled = true, shouldVibrate = true, setShouldVibrate = {})
       }
 
       onNodeWithText("10:000").assertExists()
@@ -29,7 +29,7 @@ class ComposeHitTimerTest : FunSpec({
   test("Reset Timer Test") {
     runAndroidComposeUiTest<MainActivity> {
       activity!!.setContent {
-        ComposeHitTimer()
+        ComposeHitTimer(isMillisecondsEnabled = true, shouldVibrate = true, setShouldVibrate = {})
       }
 
       onNodeWithText("Start").performClick()
@@ -42,7 +42,7 @@ class ComposeHitTimerTest : FunSpec({
   test("Timer Completes Test") {
     runAndroidComposeUiTest<MainActivity> {
       activity!!.setContent {
-        ComposeHitTimer()
+        ComposeHitTimer(isMillisecondsEnabled = true, shouldVibrate = true, setShouldVibrate = {})
       }
 
       onNodeWithText("Start").performClick()
@@ -54,7 +54,7 @@ class ComposeHitTimerTest : FunSpec({
   test("UI Element Visibility Test") {
     runAndroidComposeUiTest<MainActivity> {
       activity!!.setContent {
-        ComposeHitTimer()
+        ComposeHitTimer(isMillisecondsEnabled = true, shouldVibrate = true, setShouldVibrate = {})
       }
 
       onNodeWithText("10:000").assertExists()
