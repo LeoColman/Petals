@@ -65,14 +65,32 @@ import br.com.colman.petals.settings.SettingsRepository
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 
-@Preview
 @Composable
-fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
+@Preview
+private fun ComposeHitTimerPreview() {
+  ComposeHitTimer(isMillisecondsEnabled = true, shouldVibrate = true) {}
+}
+
+@Composable
+fun ComposeHitTimer() {
+  val settingsRepository = koinInject<SettingsRepository>()
+  val hitTimerRepository = koinInject<HitTimerRepository>()
+  val isMillisecondsEnabled by settingsRepository.isHitTimerMillisecondsEnabled.collectAsState(false)
+  val shouldVibrate by hitTimerRepository.shouldVibrate.collectAsState(false)
+
+  ComposeHitTimer(isMillisecondsEnabled, shouldVibrate, hitTimerRepository::setShouldVibrate)
+}
+
+@Composable
+fun ComposeHitTimer(
+  isMillisecondsEnabled: Boolean,
+  shouldVibrate: Boolean,
+  setShouldVibrate: (Boolean) -> Unit
+) {
   val hitTimer = rememberSaveable { HitTimer() }
 
   val ctx = LocalContext.current
   val millisLeft by hitTimer.millisLeft.collectAsState(hitTimer.durationMillis)
-  val shouldVibrate by repository.shouldVibrate.collectAsState(false)
 
   val alpha = millisLeft.toFloat() / hitTimer.durationMillis
   val backgroundColor = colorResource(smokeColor).copy(1 - alpha)
@@ -90,7 +108,7 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
     CenterHorizontally
   ) {
     Box(Modifier.padding(top = 60.dp)) {
-      TimerText(millisLeft)
+      TimerText(isMillisecondsEnabled, millisLeft)
     }
 
     Column(Modifier.width(180.dp), spacedBy(8.dp)) {
@@ -103,7 +121,7 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
       }
 
       Row(Modifier.fillMaxWidth(), Start, CenterVertically) {
-        Checkbox(shouldVibrate, { repository.setShouldVibrate(it) })
+        Checkbox(shouldVibrate, setShouldVibrate)
         Text(stringResource(vibrate_on_timer_end))
       }
     }
@@ -112,12 +130,9 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
 }
 
 @Composable
-private fun TimerText(millisLeft: Long) {
+private fun TimerText(isMillisecondsEnabled: Boolean, millisLeft: Long) {
   val isTimerRunning = millisLeft > 0L
   var blinking by remember { mutableStateOf(false) }
-
-  val settingsRepository = koinInject<SettingsRepository>()
-  val hitTimerMillisecondsEnabled by settingsRepository.isHitTimerMillisecondsEnabled.collectAsState(true)
 
   LaunchedEffect(isTimerRunning) {
     if (isTimerRunning) {
@@ -132,7 +147,7 @@ private fun TimerText(millisLeft: Long) {
   }
 
   var duration = HitTimer.duration(millisLeft)
-  if (!hitTimerMillisecondsEnabled) {
+  if (!isMillisecondsEnabled) {
     duration = HitTimer.durationMillisecondsDisabled(millisLeft)
   }
 
