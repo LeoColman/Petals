@@ -106,11 +106,9 @@ fun Usage(
         )
       }
     }.collectAsState(emptyList())
-    if (uses.isNotEmpty()) {
-      StatsBlocks(uses)
-      UsageFilter(descriptionContains) { descriptionContains = it }
-      UseCards(uses, { useRepository.upsert(it) }, { useRepository.delete(it) })
-    }
+    StatsBlocks(uses)
+    UsageFilter(descriptionContains) { descriptionContains = it }
+    UseCards(uses, { useRepository.upsert(it) }, { useRepository.delete(it) })
   }
 }
 
