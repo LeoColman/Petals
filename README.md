@@ -4,9 +4,7 @@
 [![Unit Tests](https://github.com/LeoColman/Petals/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/unit-tests.yaml)
 [![Detekt](https://github.com/LeoColman/Petals/actions/workflows/detekt.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/detekt.yaml)
 [![Dependency Analysis](https://github.com/LeoColman/Petals/actions/workflows/dependency-license-analysis.yaml/badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/dependency-analysis.yaml)
-<a href="https://hosted.weblate.org/engage/petals-app/">
-<img src="https://hosted.weblate.org/widgets/petals-app/-/svg-badge.svg" alt="Translation status" />
-</a>
+[![Weblate](https://hosted.weblate.org/widgets/petals-app/-/svg-badge.svg)](https://hosted.weblate.org/engage/petals-app/)
 [![GitHub Repo stars](https://img.shields.io/github/stars/LeoColman/Petals?style=plastic)](https://star-history.com/#LeoColman/Petals&Date)
 [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=plastic)](https://gitmoji.dev/)
 [![Git Secrets](https://img.shields.io/badge/git%20secrets-enabled-green)](https://github.com/sobolevn/git-secret)
@@ -48,15 +46,9 @@ For an ad free experience download the app either from F-Droid or from the Relea
 Translations are hosted at Weblate. You can contribute to your
 language [here](https://hosted.weblate.org/engage/petals-app)
 
-<a href="https://hosted.weblate.org/engage/petals-app/">
-<img src="https://hosted.weblate.org/widgets/petals-app/-/287x66-grey.png" alt="Translation status" />
-</a>
+[![Translation status](https://hosted.weblate.org/widgets/petals-app/-/287x66-grey.png)](https://hosted.weblate.org/engage/petals-app/)
 
-<br>
-
-<a href="https://hosted.weblate.org/engage/petals-app/">
-<img src="https://hosted.weblate.org/widgets/petals-app/-/multi-red.svg" alt="Translation status" />
-</a>
+[![Translation Status](https://hosted.weblate.org/widgets/petals-app/-/multi-red.svg)](https://hosted.weblate.org/engage/petals-app/)
 
 ## Screenshots
 
