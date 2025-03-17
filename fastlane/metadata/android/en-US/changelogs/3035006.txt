@@ -1,0 +1,1 @@
+- Fix bug where part of the UI would disappear for an empty search result
