@@ -51,40 +51,42 @@ import br.com.colman.petals.settings.SettingsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import org.koin.android.ext.android.inject
+import org.koin.compose.KoinContext
 import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
   private var authorizedUntil = LocalDateTime.MIN
-  private val settingsRepository by inject<SettingsRepository>()
+  private val settingsRepository by koin.inject<SettingsRepository>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      val navController = rememberNavController()
+      KoinContext(koin) {
+        val navController = rememberNavController()
 
-      var isAuthorized by remember { mutableStateOf(false) }
-      val correctPin by settingsRepository.pin.collectAsState(null)
+        var isAuthorized by remember { mutableStateOf(false) }
+        val correctPin by settingsRepository.pin.collectAsState(null)
 
-      LaunchedEffect(authorizedUntil) {
-        while (true) {
-          isAuthorized = isAuthorized()
-          delay(1000)
-        }
-      }
-
-      MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
-        if (isAuthorized || correctPin == null) {
-          Surface {
-            Scaffold(
-              topBar = { MyTopAppBar(navController) },
-              bottomBar = { BottomNavigationBar(navController) },
-              content = { NavHostContainer(navController, it) }
-            )
+        LaunchedEffect(authorizedUntil) {
+          while (true) {
+            isAuthorized = isAuthorized()
+            delay(1000)
           }
-        } else {
-          Authorization(correctPin)
+        }
+
+        MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
+          if (isAuthorized || correctPin == null) {
+            Surface {
+              Scaffold(
+                topBar = { MyTopAppBar(navController) },
+                bottomBar = { BottomNavigationBar(navController) },
+                content = { NavHostContainer(navController, it) }
+              )
+            }
+          } else {
+            Authorization(correctPin)
+          }
         }
       }
     }
