@@ -1,7 +1,6 @@
 package br.com.colman.petals.withdrawal.view
 
 import android.content.Context
-import android.graphics.Color
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -39,9 +38,11 @@ fun WithdrawalChart(
     val currentValue = lastUseDate?.let { lud -> interpolator.value(lud.daysToTodayInSeconds().times(SecondsPerDay)) }
     it.title = graphTitle(it.context, currentValue)
     it.removeAllSeries()
-    it.addSeries(scaledData.toLineGraphSeries())
+    it.addSeries(scaledData.toLineGraphSeries().apply { color = colors.secondary.toArgb() })
 
-    if (lastUseDate != null) it.addSeries(interpolator.currentPointSeries(lastUseDate))
+    if (lastUseDate != null) {
+      it.addSeries(interpolator.currentPointSeries(lastUseDate).apply { color = colors.primary.toArgb() })
+    }
     it.invalidate()
   })
 }
@@ -77,11 +78,12 @@ private fun createGraph(
   }
 
   gridLabelRenderer.apply {
-    titleColor = colors.primary.toArgb()
-    verticalAxisTitleColor = colors.primary.toArgb()
-    horizontalAxisTitleColor = colors.primary.toArgb()
+    titleColor = colors.onSurface.toArgb()
+    verticalAxisTitleColor = colors.onSurface.toArgb()
+    horizontalAxisTitleColor = colors.onSurface.toArgb()
     horizontalLabelsColor = colors.primary.toArgb()
     verticalLabelsColor = colors.primary.toArgb()
+    gridColor = colors.primary.toArgb()
 
     this.verticalAxisTitle = verticalAxisTitle
     this.horizontalAxisTitle = horizontalAxisTitle
@@ -100,7 +102,6 @@ private fun Interpolator.currentPointSeries(lastUseDate: LocalDateTime): PointsG
   val daysQuit = lastUseDate.daysToTodayInSeconds()
   return PointsGraphSeries(arrayOf(DataPoint(daysQuit, value(daysQuit.times(SecondsPerDay))))).apply {
     size = 15f
-    color = Color.parseColor("#059033")
     shape = PointsGraphSeries.Shape.POINT
   }
 }

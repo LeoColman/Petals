@@ -24,13 +24,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -48,6 +47,8 @@ import br.com.colman.petals.navigation.BottomNavigationBar
 import br.com.colman.petals.navigation.MyTopAppBar
 import br.com.colman.petals.navigation.NavHostContainer
 import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.theme.darkColors
+import br.com.colman.petals.theme.lightColors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by CoroutineScope(Dispa
         }
       }
 
-      MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
+      MaterialTheme(getAppColors()) {
         if (isAuthorized || correctPin == null) {
           Surface {
             Scaffold(
@@ -107,6 +108,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope by CoroutineScope(Dispa
       OutlinedTextField(pin, { pin = it }, visualTransformation = PasswordVisualTransformation())
     }
   }
+
+  @Composable
+  fun getAppColors(): Colors = if (isDarkModeEnabled()) darkColors else lightColors
 
   @Composable
   fun isDarkModeEnabled(): Boolean {
