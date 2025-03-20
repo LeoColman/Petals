@@ -7,16 +7,21 @@
 @file:DependsOn("io.ktor:ktor-serialization-kotlinx-json-jvm:2.3.13")
 @file:DependsOn("io.ktor:ktor-server-host-common-jvm:2.3.13")
 
-import io.ktor.http.*
-import io.ktor.http.content.*
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.PartData
+import io.ktor.http.content.forEachPart
+import io.ktor.http.content.streamProvider
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.server.application.call
+import io.ktor.server.application.install
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
+import io.ktor.server.netty.NettyApplicationEngine
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.request.receiveMultipart
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.post
+import io.ktor.server.routing.routing
 import java.io.File
 
 // Function to disable animations via ADB
@@ -26,12 +31,8 @@ fun disableAnimations() {
     "adb shell settings put global transition_animation_scale 0",
     "adb shell settings put global animator_duration_scale 0"
   ).forEach { command ->
-    try {
-      val process = Runtime.getRuntime().exec(command)
-      process.waitFor()
-    } catch (e: Exception) {
-      println("Error while trying to disable animations via ADB: ${e.localizedMessage}")
-    }
+    val process = Runtime.getRuntime().exec(command)
+    process.waitFor()
   }
   println("Animations in the emulator have been disabled")
 }
@@ -73,12 +74,11 @@ val server = startServer()
 disableAnimations()
 
 // Run Android tests
-val process = ProcessBuilder(
+ProcessBuilder(
   "../gradlew",
   "connectedFdroidDebugAndroidTest",
   "-Pandroid.testInstrumentationRunnerArguments.class=br.com.colman.petals.ScreenshotTakerTest"
-).inheritIO().start()
-val exitCode = process.waitFor()
+).inheritIO().start().waitFor()
 
 // Stop the server
 server.stop(1000, 10000)
