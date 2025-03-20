@@ -17,7 +17,9 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2025)
 
 
-![repobeats](https://repobeats.axiom.co/api/embed/fc784a940119497476ba4d6694b88876e01aecbc.svg "Repobeats analytics image")
+<p align="center" width="100%">
+    <img  src="https://repobeats.axiom.co/api/embed/fc784a940119497476ba4d6694b88876e01aecbc.svg">
+</p>
 
 ------
 The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're
