@@ -40,14 +40,22 @@ height="80">](https://play.google.com/store/apps/details?id=br.com.colman.petals
 
 For an ad free experience download the app either from F-Droid or from the Releases Page.
 
-## Translations
-
-Translations are hosted at Weblate. You can contribute to your
-language [here](https://hosted.weblate.org/engage/petals-app)
+## 🌐 Contributing Translations
 
 [![Translation status](https://hosted.weblate.org/widgets/petals-app/-/287x66-grey.png)](https://hosted.weblate.org/engage/petals-app/)
 
+Petals welcomes community contributions for translations! To contribute translations, please follow these guidelines:
+
+- ✨ **New Languages**: If you are adding a new language, translations must be 100% complete before submission.
+- ⚠️ **Minimum Completion**: Translations that fall below 60% completion will be removed to maintain quality.
+- 🤝 **Contribution Methods**:
+  - 🌍 Non-programmers are encouraged to collaborate via [Weblate](https://hosted.weblate.org/engage/petals-app/).
+  - 🖥️ Programmers may contribute translations via pull requests directly on GitHub.
+
 [![Translation Status](https://hosted.weblate.org/widgets/petals-app/-/multi-red.svg)](https://hosted.weblate.org/engage/petals-app/)
+
+Translations are hosted at Weblate. You can contribute to your language [here](https://hosted.weblate.org/engage/petals-app/).
+
 
 ## Screenshots
 
