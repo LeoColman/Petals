@@ -25,20 +25,16 @@
 The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're
 using.
 
-[<img src="https://user-images.githubusercontent.com/1577251/236347752-5c312036-27d1-4515-ab86-dc2aa9a09e66.png"
-alt="Get it on GitHub"
-height="80">](https://github.com/LeoColman/Petals/releases)
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-alt="Get it on F-Droid"
-height="80">](https://f-droid.org/packages/br.com.colman.petals/)
+[<img src="https://user-images.githubusercontent.com/1577251/236347752-5c312036-27d1-4515-ab86-dc2aa9a09e66.png" alt="Get it on GitHub" height="80">](https://github.com/LeoColman/Petals/releases)
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/br.com.colman.petals/)
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/br.com.colman.petals)
-[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-alt="Get it on Play Store"
-height="80">](https://play.google.com/store/apps/details?id=br.com.colman.petals)
+[<img src="https://www.openapk.net/images/openapk-badge.png" alt="Get it on OpenAPK" height="80">](https://www.openapk.net/petals/br.com.colman.petals/)
+[<img src="https://www.androidfreeware.net/images/androidfreeware-badge.png" alt="Get it on AndroidFreeware" height="80">](https://www.androidfreeware.net/download-petals-apk.html)
+[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Play Store" height="80">](https://play.google.com/store/apps/details?id=br.com.colman.petals)
 
 ### ⚠️ The Google Play Store version contains advertisements
 
-For an ad free experience download the app either from F-Droid or from the Releases Page.
+For an ad free experience download the app from other release channels.
 
 ## 🌐 Contributing Translations
 
