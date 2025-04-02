@@ -33,7 +33,6 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
     startDate = null
   }
 
-  @Suppress("UnsafeCallOnNullableType")
   private fun calculateMillisLeft(): Long {
     if (startDate == null) return durationMillis
     val elapsed = startDate!!.until(now(), MILLIS)

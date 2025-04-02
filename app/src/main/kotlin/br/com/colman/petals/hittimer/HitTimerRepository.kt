@@ -13,10 +13,8 @@ class HitTimerRepository(
 
   val shouldVibrate = sharedPreferences.data.map { it[ShouldVibrate] ?: false }
 
-  fun setShouldVibrate(value: Boolean) {
-    runBlocking {
-      sharedPreferences.edit { it[ShouldVibrate] = value }
-    }
+  fun setShouldVibrate(value: Boolean) = runBlocking {
+    sharedPreferences.edit { it[ShouldVibrate] = value }
   }
 
   private companion object {

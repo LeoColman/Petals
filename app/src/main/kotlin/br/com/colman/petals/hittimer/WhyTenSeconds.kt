@@ -50,12 +50,14 @@ fun WhyTenSeconds() {
 
 @Composable
 fun SubjectiveHigh() {
-  val colors = MaterialTheme.colors
+  val primaryColor = MaterialTheme.colors.primary.toArgb()
+  val backgroundColor = MaterialTheme.colors.background.toArgb()
 
   AndroidView({ context ->
     GraphView(context).apply {
       addSeries(
         LineGraphSeries(getSubjectiveHighWeakSeries().toTypedArray()).apply {
+          // TODO Replace with color from color palette
           color = ContextCompat.getColor(context, lightGreen)
           isDrawDataPoints = true
           title = context.getString(_175thc)
@@ -64,6 +66,7 @@ fun SubjectiveHigh() {
 
       addSeries(
         LineGraphSeries(getSubjectiveHighStrongSeries().toTypedArray()).apply {
+          // TODO Replace with color from color palette
           color = ContextCompat.getColor(context, darkGreen)
           isDrawDataPoints = true
           title = context.getString(_355thc)
@@ -80,16 +83,16 @@ fun SubjectiveHigh() {
       }
 
       legendRenderer.apply {
-        backgroundColor = colors.background.toArgb()
-        textColor = colors.primary.toArgb()
+        this.backgroundColor = backgroundColor
+        textColor = primaryColor
         isVisible = true
       }
 
       gridLabelRenderer.apply {
-        verticalLabelsColor = colors.primary.toArgb()
-        horizontalLabelsColor = colors.primary.toArgb()
-        horizontalAxisTitleColor = colors.primary.toArgb()
-        verticalAxisTitleColor = colors.primary.toArgb()
+        verticalLabelsColor = primaryColor
+        horizontalLabelsColor = primaryColor
+        horizontalAxisTitleColor = primaryColor
+        verticalAxisTitleColor = primaryColor
 
         verticalAxisTitle = context.resources.getString(subjectve_high)
         horizontalAxisTitle = context.getString(breathhold_duration_seconds)
@@ -98,12 +101,20 @@ fun SubjectiveHigh() {
   })
 }
 
+/**
+ * Source: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold
+ * duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.
+ */
 fun getSubjectiveHighWeakSeries() = listOf(
   DataPoint(0.0, 30.0),
   DataPoint(10.0, 40.0),
   DataPoint(20.0, 35.0)
 )
 
+/**
+ * Source: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold
+ * duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.
+ */
 fun getSubjectiveHighStrongSeries() = listOf(
   DataPoint(0.0, 37.0),
   DataPoint(10.0, 47.0),

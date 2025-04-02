@@ -28,7 +28,7 @@ fun ClickableTextField(
   }
 
   OutlinedTextField(
-    value,
+    value = value,
     onValueChange = {},
     leadingIcon = { Icon(leadingIcon, null) },
     label = { Text(stringResource(label)) },
