@@ -131,9 +131,9 @@ private fun TimerText(millisLeft: Long) {
     }
   }
 
-  var duration = HitTimer.duration(millisLeft)
+  var duration = HitTimer.formatDuration(millisLeft)
   if (!hitTimerMillisecondsEnabled) {
-    duration = HitTimer.durationMillisecondsDisabled(millisLeft)
+    duration = HitTimer.formatDurationShort(millisLeft)
   }
 
   if (blinking) BlinkingText(duration) else NonBlinkingText(duration)

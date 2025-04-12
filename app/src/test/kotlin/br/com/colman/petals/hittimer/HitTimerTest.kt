@@ -82,7 +82,7 @@ class HitTimerTest : FunSpec({
       9999L to "09:999",
       10_000L to "10:000"
     ) { (millis, expected) ->
-      HitTimer.duration(millis) shouldBe expected
+      HitTimer.formatDuration(millis) shouldBe expected
     }
   }
 
@@ -90,14 +90,14 @@ class HitTimerTest : FunSpec({
     withData(
       nameFn = { (millis, string) -> "$millis ms -> $string" },
       999L to "1.0",
-      1000L to "1.0",
+      1000L to "1",
       1001L to "1",
       500L to "0.5",
       499L to "0.5",
       1L to "0.0",
       0L to "0.0"
     ) { (millis, string) ->
-      HitTimer.durationMillisecondsDisabled(millis) shouldBe string
+      HitTimer.formatDurationShort(millis) shouldBe string
     }
   }
 

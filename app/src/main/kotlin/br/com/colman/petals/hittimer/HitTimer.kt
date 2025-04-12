@@ -21,7 +21,7 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
   val millisLeft = flow {
     while (true) {
       emit(calculateMillisLeft())
-      delay(3)
+      delay(100)
     }
   }
 
@@ -40,10 +40,10 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
   }
 
   companion object {
-    fun duration(millis: Long): String = DurationFormatUtils.formatDuration(millis, "ss:SSS")
-    fun durationMillisecondsDisabled(millis: Long): String = when {
-      millis > 1000 -> (millis / 1000).toString()
-      millis > 0 -> "%.1f".format(Locale.US, millis / 1000.0)
+    fun formatDuration(millis: Long): String = DurationFormatUtils.formatDuration(millis, "ss:SSS")
+    fun formatDurationShort(millis: Long): String = when {
+      millis >= 1_000 -> (millis / 1_000).toString()
+      millis > 0 -> "%.1f".format(Locale.US, millis / 1_000.0)
       else -> "0.0"
     }
   }
