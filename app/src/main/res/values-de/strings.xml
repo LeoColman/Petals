@@ -139,4 +139,13 @@
     <string name="nervousness_anxiety">Nervosität/ Angst</string>
     <string name="current_anger">Aktueller Wut: %s</string>
     <string name="current_nervousness_anxiety">Aktuelle Nervosität/Angst: %s</string>
+    <string name="support_my_work">Unterstützung meiner Arbeit ❤</string>
+    <string name="thank_your_for_using_message">Danke für die Verwendung von Petals! Sie können meine Arbeit bei der Verbesserung dieser kostenlosen App unterstützen.</string>
+    <string name="support_now">Jetzt unterstützen</string>
+    <string name="later">Später</string>
+    <string name="clock_format_label">Zeit-Format</string>
+    <string name="what_clock_format_should_be_used">Welches Uhr-Format soll genutzt werden?</string>
+    <string name="remove_ads_title">Werbung entfernen</string>
+    <string name="remove_ads">Upgrade zu Werbefreier Version</string>
+    <string name="extend_day_a_few_hours">Erweiter Tag einige Stunden nach Mitternacht</string>
 </resources>
