@@ -67,10 +67,12 @@ import compose.icons.tablericons.Scale
 import compose.icons.tablericons.ZoomMoney
 import org.koin.compose.koinInject
 import java.math.RoundingMode.HALF_UP
+import java.text.NumberFormat
 import java.time.DayOfWeek.MONDAY
 import java.time.LocalDate
 import java.time.LocalDate.now
 import java.time.LocalTime
+import java.util.Locale
 
 @Composable
 fun StatsBlocks(uses: List<Use>) {
@@ -111,15 +113,24 @@ private fun RowScope.TodayUseBlock(isDayExtended: Boolean, uses: List<Use>, isTo
 private fun UseBlock(modifier: Modifier, blockType: BlockType, uses: List<Use>, isCensored: Boolean) {
   var totalGrams by remember { mutableStateOf("") }
   var totalCost by remember { mutableStateOf("") }
+  val locale = Locale.getDefault()
 
   val settingsRepository = koinInject<SettingsRepository>()
   val decimalPrecision by settingsRepository.decimalPrecision.collectAsState(settingsRepository.decimalPrecisionList[2])
 
+  val numberFormat = NumberFormat.getNumberInstance(locale).apply {
+    minimumFractionDigits = decimalPrecision
+    maximumFractionDigits = decimalPrecision
+    roundingMode = HALF_UP
+  }
+
   // HALF_UP is necessary because the default rounding
   // mode is "throw an exception".
   LaunchedEffect(uses, decimalPrecision) {
-    totalGrams = uses.sumOf { it.amountGrams }.setScale(decimalPrecision, HALF_UP).toString()
-    totalCost = uses.sumOf { it.costPerGram * it.amountGrams }.setScale(decimalPrecision, HALF_UP).toString()
+    totalGrams = uses.sumOf { it.amountGrams }.setScale(decimalPrecision, HALF_UP).let { numberFormat.format(it) }
+    totalCost = uses.sumOf {
+      it.costPerGram * it.amountGrams
+    }.setScale(decimalPrecision, HALF_UP).let { numberFormat.format(it) }
   }
 
   UseBlock(modifier, blockType, totalGrams, totalCost, isCensored)
