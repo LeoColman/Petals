@@ -42,7 +42,7 @@ kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref =
 kotest-assertions-android = { module = "br.com.colman:kotest-assertions-android", version = "1.1.2" }
 kotest-extensions-android = { module = "br.com.colman:kotest-extensions-android", version.ref = "kotest-extensions-android" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
-kotest-runner-android = { module = "br.com.colman:kotest-runner-android", version = "1.1.1" }
+kotest-runner-android = { module = "br.com.colman:kotest-runner-android", version = "1.1.2" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
 kotest-extensions-now = { module = "io.kotest:kotest-extensions-now", version.ref = "kotest" }
