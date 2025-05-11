@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Petals APP
   ~ Copyright (C) 2021 Leonardo Colman Lopes
   ~
@@ -14,8 +15,7 @@
   ~
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-<resources>
+  --><resources>
     <string name="app_name" translatable="false">Petals</string>
     <string name="quit_date_text">Last use date</string>
     <string name="years">Years</string>
@@ -181,12 +181,12 @@
         <item quantity="one">Last %s day</item>
         <item quantity="other">Last %s days</item>
     </plurals>
-	<string name="language_label">App language</string>
-	<string name="what_language_should_be_used">What language should be used</string>
+    <string name="language_label">App language</string>
+    <string name="what_language_should_be_used">What language should be used</string>
     <string name="moving_average_grams_distribution">Average Grams per Day</string>
     <string name="description_label">description</string>
     <string name="description">Description</string>
     <string name="because_i_wanted">Because I wanted to</string>
-    <string name="filter_data_by_description_containing">Filter data by description containing...</string>
+    <string name="filter_data_by_description_containing">Filter data by description containing…</string>
     <string name="with_a_friend">with a friend</string>
 </resources>
