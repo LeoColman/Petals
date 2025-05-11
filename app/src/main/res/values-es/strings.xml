@@ -151,7 +151,7 @@
     <string name="select_time">Seleccionar hora</string>
     <string name="pause_time">Tiempo de pausa</string>
     <string name="clock_format_label">Formato del reloj</string>
-    <string name="what_clock_format_should_be_used">¿Qué formato de reloj debe utilizarse?</string>
+    <string name="what_clock_format_should_be_used">Formato de reloj que debe utilizarse</string>
     <string name="pause_dialog_description">Durante este periodo de tiempo, la aplicación te recordará tu descanso</string>
     <string name="edit_pause">Modificar la pausa</string>
     <string name="delete_pause">Borrar la pausa</string>
@@ -161,9 +161,10 @@
     <string name="hours_24">24 horas</string>
     <string name="remove_ads_title">Eliminar anuncios</string>
     <string name="remove_ads">Actualiza a una experiencia sin publicidad</string>
-    <string name="grams_distribution_over_days_since_first_use">Distribución de gramos en días desde el primer uso</string>
+    <string name="grams_distribution_over_days_since_first_use">Gramos por día</string>
     <string name="language_label">Idioma de la aplicación</string>
     <string name="what_language_should_be_used">Qué idioma se debe utilizar</string>
     <string name="enable_or_disable_hour_of_day_line_in_stats">Activar o desactivar la línea de la hora del día en los gráficos</string>
     <string name="hour_of_day_line_in_stats_enabled">Conmutar hora del día</string>
+    <string name="moving_average_grams_distribution">Promedio de gramos por día</string>
 </resources>
