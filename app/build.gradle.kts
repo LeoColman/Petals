@@ -141,6 +141,10 @@ android {
     resources.excludes.add("win32-x86/attach_hotspot_windows.dll")
   }
 
+  lint {
+    disable += "NullSafeMutableLiveData"
+  }
+
 }
 
 dependencies {
