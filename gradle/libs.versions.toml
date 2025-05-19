@@ -5,7 +5,6 @@ datastore = "1.1.6"
 detekt = "1.23.8"
 koin = "4.0.4"
 kotest = "5.9.1"
-kotest-extensions-android = "0.1.6"
 kotlin = "2.1.21"
 licensee = "1.13.0"
 vanpra-material-dialogs = "0.9.0"
@@ -40,7 +39,6 @@ koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = 
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-assertions-android = { module = "br.com.colman:kotest-assertions-android", version = "1.1.2" }
-kotest-extensions-android = { module = "br.com.colman:kotest-extensions-android", version.ref = "kotest-extensions-android" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 kotest-runner-android = { module = "br.com.colman:kotest-runner-android", version = "1.1.2" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
@@ -50,7 +48,6 @@ kotlin-csv = "com.jsoizo:kotlin-csv:1.10.0"
 kotlin-date-range = "me.moallemi.tools:kotlin-date-range:1.0.0"
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
-licensee-gradle-plugin = { module = "app.cash.licensee:licensee-gradle-plugin", version.ref = "licensee" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
@@ -114,7 +111,7 @@ koin = [
     "koin-android",
     "koin-compose",
 ]
-kotest-jvm = ["kotest-runner-junit5", "kotest-extensions-now", "kotest-extensions-android"]
+kotest-jvm = ["kotest-runner-junit5", "kotest-extensions-now"]
 kotest-android = ["kotest-runner-android", "kotest-assertions-android"]
 kotest-common = ["kotest-assertions", "kotest-property", "kotest-framework-datatest"]
 mockk-android = ["mockk-android", "mockk-agent"]
