@@ -58,7 +58,7 @@ timber = "com.jakewharton.timber:timber:5.0.1"
 sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-sqlite-dialect = { module = "app.cash.sqldelight:sqlite-3-25-dialect", version.ref = "sqldelight" }
-requery-sqlite = "com.github.requery:sqlite-android:3.45.0"
+requery-sqlite = "com.github.requery:sqlite-android:3.49.0"
 play-services-ads = "com.google.android.gms:play-services-ads:24.3.0"
 play-services-billing = "com.android.billingclient:billing:7.1.1"
 glance = { module = "androidx.glance:glance", version.ref = "glance" }
