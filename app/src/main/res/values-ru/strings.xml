@@ -7,7 +7,7 @@
     <string name="minutes">Минуты</string>
     <string name="seconds">Секунды</string>
     <string name="milliseconds">Миллисекунды</string>
-    <string name="usage">Употребление</string>
+    <string name="usage">Использование</string>
     <string name="stats">Статистика</string>
     <string name="hit_timer">Таймер</string>
     <string name="start">Старт</string>
@@ -66,7 +66,7 @@
     <string name="delete">Удалить</string>
     <string name="yes_timer">Да (%sс)</string>
     <string name="no">Нет</string>
-    <string name="add_use_during_pause_alert">Вы запланировали этот период как паузу. Вы уверенны, что хотите добавить употребление сейчас?</string>
+    <string name="add_use_during_pause_alert">Вы запланировали этот период как паузу. Вы уверены, что хотите добавить использование сейчас?</string>
     <string name="quit_date_text">Последняя дата употребления</string>
     <string name="hours">Часы</string>
     <string name="symptoms">Симптомы</string>
@@ -102,11 +102,11 @@
     <string name="what_date_format_should_be_used">Какой формат даты должен быть использован</string>
     <string name="time_format_label">Формат времени</string>
     <string name="app_pin">PIN приложения</string>
-    <string name="password_description">Для дополнительной приватности вы можете задать пароль для доступа к приложению. Задание в настройках пустого пароля удаляет прежде установленный пароль. ВНИМАНИЕ! Невозможно восстановить установленный пароль если он утрачен (забыт)</string>
+    <string name="password_description">Для дополнительной конфиденциальности вы можете установить пароль для доступа к приложению. Установка пустого пароля удаляет его. ВНИМАНИЕ! Восстановить установленный пароль невозможно</string>
     <string name="pin_main_screen">Это приложение защищено паролем. Введите верный пароль для продолжения.</string>
     <string name="what_time_format_should_be_used">Какой формат времени должен быть использован</string>
     <string name="milliseconds_enabled">Включить строку миллисекунд</string>
-    <string name="enable_or_disable_milliseconds_bar_on_home_page">Включить или выключить строку миллисекунд на домашней странице</string>
+    <string name="enable_or_disable_milliseconds_bar_on_home_page">Включение или отключение строки миллисекунд на странице \"Использование“</string>
     <string name="hit_timer_milliseconds_enabled">Включить миллисекунды на странице Таймера</string>
     <string name="enable_or_disable_milliseconds_on_hit_timer_page">Включить или выключить миллисекунды на странице Таймера</string>
     <plurals name="last_x_days">
@@ -140,17 +140,17 @@
     <string name="filter_data_by_description_containing">Фильтровать данные по описанию содержащему…</string>
     <string name="with_a_friend">с другом</string>
     <string name="clock_format_label">Формат часов</string>
-    <string name="what_clock_format_should_be_used">Какой формат часов использовать?</string>
+    <string name="what_clock_format_should_be_used">Какой формат часов следует использовать</string>
     <string name="possession">Владение</string>
     <string name="wait_until_3am_to_show_a_new_day">Новый день настанет в 03:00 часа ночи. Для тех кто обычно ложится спать поздно.</string>
     <string name="keep_in_mind_that_laws_can_change">Помните, что законы могут меняться, поэтому для получения наиболее актуальной информации следует обращаться к последним юридическим источникам или местным адвокатам.</string>
     <string name="later">Позже</string>
-    <string name="support_now">Поддержите теперь</string>
+    <string name="support_now">Поддержка сейчас</string>
     <string name="support_my_work">Поддержите мою работу ❤️</string>
     <string name="thank_your_for_using_message">Спасибо за использование Petals! Просто напоминание что вы поддержать мою работу над улучшением этого бесплатного приложения.</string>
     <string name="legislation_and_rights">Законодательство и права</string>
     <string name="no_country_selected">Страна не выбрана</string>
-    <string name="consumption">Употребление</string>
+    <string name="consumption">Потребление</string>
     <string name="medical_use">Медицинское применение</string>
     <string name="cultivation">Выращивание</string>
     <string name="purchase_and_sale">Покупка и продажа</string>
@@ -170,4 +170,13 @@
     <string name="remove_ads_title">Убрать рекламу</string>
     <string name="remove_ads">Перейти на безрекламный режим</string>
     <string name="decimal_precision">Десятичная точность</string>
+    <string name="what_decimal_precision_should_be_used">Какая точность десятичных дробей должна отображаться на странице \"Использование“</string>
+    <string name="extend_day">Переключатель Продленный день</string>
+    <string name="extend_day_a_few_hours">Продлить день на несколько часов после полуночи</string>
+    <string name="hour_of_day_line_in_stats_enabled">Переключатель Час дня</string>
+    <string name="enable_or_disable_hour_of_day_line_in_stats">Включение или отключение линии времени суток на графиках</string>
+    <string name="custom">Пользовательское</string>
+    <string name="enforcement">Исполнение</string>
+    <string name="current_nervousness_anxiety">Текущая нервозность/тревожность: %s</string>
+    <string name="nervousness_anxiety">Нервозность / беспокойство</string>
 </resources>
