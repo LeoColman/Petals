@@ -2,4 +2,4 @@ CREATE TABLE Pause(
   start_time TEXT NOT NULL,
   end_time TEXT NOT NULL,
   id TEXT PRIMARY KEY
-);
+);  
