@@ -20,7 +20,6 @@ import java.util.Properties
 import javax.xml.parsers.DocumentBuilderFactory
 import org.gradle.api.JavaVersion.VERSION_17
 
-@Suppress("DSL_SCOPE_VIOLATION") //KTIJ-19369
 plugins {
   id("com.android.application")
   id("kotlin-android")
