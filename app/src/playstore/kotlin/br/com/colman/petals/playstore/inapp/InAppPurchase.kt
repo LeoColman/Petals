@@ -46,7 +46,7 @@ class InAppPurchase(val context: Context, private val dispatcher: CoroutineDispa
             )
           ).build()
         ) { _, productDetails ->
-          lstProductDetails = productDetails
+          lstProductDetails = productDetails.productDetailsList
         }
       }
     })
