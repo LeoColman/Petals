@@ -64,7 +64,7 @@ play-services-billing = "com.android.billingclient:billing:8.0.0"
 glance = { module = "androidx.glance:glance", version.ref = "glance" }
 glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 fuel = "com.github.kittinunf.fuel:fuel:2.3.1"
-androidx-test-core = "androidx.test:core:1.6.1"
+androidx-test-core = "androidx.test:core:1.7.0"
 androidx-test-ext-junit = "androidx.test.ext:junit:1.2.1"
 review = { module = "com.google.android.play:review", version.ref = "review" }
 review-ktx = { module = "com.google.android.play:review-ktx", version.ref = "review" }
