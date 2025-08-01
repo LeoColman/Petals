@@ -1,5 +1,5 @@
 [versions]
-androidx = "1.6.1"
+androidx = "1.7.0"
 compose = "1.8.3"
 datastore = "1.1.7"
 detekt = "1.23.8"
