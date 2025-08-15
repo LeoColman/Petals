@@ -25,14 +25,48 @@ class CensorshipRepositoryTest : FunSpec({
     }
   }
 
-  test("Changes today's block censure") {
-    target.isTodayCensored.first() shouldBe false
-    target.setBlockCensure(BlockType.Today, true)
-    target.isTodayCensored.first() shouldBe true
+  context("Changes block censure for all types") {
+    BlockType.entries.forEach { blockType ->
+      test("Sets and reflects censure for $blockType") {
+        // Initially should be false
+        val before = when (blockType) {
+          BlockType.Today -> target.isTodayCensored.first()
+          BlockType.ThisWeek -> target.isThisWeekCensored.first()
+          BlockType.ThisMonth -> target.isThisMonthCensored.first()
+          BlockType.ThisYear -> target.isThisYearCensored.first()
+          BlockType.AllTime -> target.isAllTimeCensored.first()
+        }
+        before shouldBe false
+
+        // Set to true and verify
+        target.setBlockCensure(blockType, true)
+        val afterTrue = when (blockType) {
+          BlockType.Today -> target.isTodayCensored.first()
+          BlockType.ThisWeek -> target.isThisWeekCensored.first()
+          BlockType.ThisMonth -> target.isThisMonthCensored.first()
+          BlockType.ThisYear -> target.isThisYearCensored.first()
+          BlockType.AllTime -> target.isAllTimeCensored.first()
+        }
+        afterTrue shouldBe true
+
+        // Set back to false and verify
+        target.setBlockCensure(blockType, false)
+        val afterFalse = when (blockType) {
+          BlockType.Today -> target.isTodayCensored.first()
+          BlockType.ThisWeek -> target.isThisWeekCensored.first()
+          BlockType.ThisMonth -> target.isThisMonthCensored.first()
+          BlockType.ThisYear -> target.isThisYearCensored.first()
+          BlockType.AllTime -> target.isAllTimeCensored.first()
+        }
+        afterFalse shouldBe false
+      }
+    }
   }
 
-  test("Persists specified block censure") {
-    target.setBlockCensure(BlockType.Today, true)
-    datastore.data.first()[BlockType.Today.preferencesKey] shouldBe true
+  test("Persists specified block censure for all block types") {
+    BlockType.entries.forEach { blockType ->
+      target.setBlockCensure(blockType, true)
+      datastore.data.first()[blockType.preferencesKey] shouldBe true
+    }
   }
 })
