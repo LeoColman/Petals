@@ -15,7 +15,7 @@ jobs:
     steps:
     - id: 'step-0'
       name: 'Check out'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v5'
     - id: 'step-1'
       name: 'Execute script'
       run: 'rm ''.github/workflows/dependency-license-analysis.yaml'' && ''.github/workflows/dependency-license-analysis.main.kts'''
@@ -35,7 +35,7 @@ jobs:
         distribution: 'adopt'
     - id: 'step-1'
       name: 'Checkout'
-      uses: 'actions/checkout@v4'
+      uses: 'actions/checkout@v5'
     - id: 'step-2'
       name: 'Setup Gradle'
       uses: 'gradle/actions/setup-gradle@v4'
