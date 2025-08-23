@@ -222,9 +222,6 @@ dependencies {
   // Google Reviews
   "playstoreImplementation"(libs.bundles.review)
 
-  // Glance
-  implementation(libs.bundles.glance)
-
   // Fuel
   androidTestImplementation(libs.fuel) {
     because("Specifically to make Screenshots and upload them to a localhost server")
