@@ -52,7 +52,7 @@ class UseImporterTest : FunSpec({
 
   context("Data ingestion") {
     test("Doesn't call database when a line is wrong") {
-      val wrongLine = "invalid,csv,line"
+      val wrongLine = "invalid,csv,line,is,invalid"
 
       target.import(List(2) { wrongLine })
 

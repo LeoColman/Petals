@@ -245,6 +245,7 @@ kover {
 
 tasks.withType<Test> {
   useJUnitPlatform()
+  systemProperty("kotest.framework.config.fqn", "br.com.colman.petals.KotestConfig")
 }
 
 tasks.detekt {
