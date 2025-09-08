@@ -51,7 +51,7 @@ sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", ver
 sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-sqlite-dialect = { module = "app.cash.sqldelight:sqlite-3-25-dialect", version.ref = "sqldelight" }
 requery-sqlite = "com.github.requery:sqlite-android:3.49.0"
-play-services-ads = "com.google.android.gms:play-services-ads:24.5.0"
+play-services-ads = "com.google.android.gms:play-services-ads:24.6.0"
 play-services-billing = "com.android.billingclient:billing:8.0.0"
 fuel = "com.github.kittinunf.fuel:fuel:2.3.1"
 androidx-test-core = "androidx.test:core:1.7.0"
