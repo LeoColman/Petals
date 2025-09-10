@@ -21,7 +21,7 @@ compose-material-dialogs-core = { module = "io.github.vanpra.compose-material-di
 compose-material-dialogs-date-time = { module = "io.github.vanpra.compose-material-dialogs:datetime", version.ref = "vanpra-material-dialogs" }
 compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version = "1.7.8" }
 compose-material-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-compose-navigation = "androidx.navigation:navigation-compose:2.9.3"
+compose-navigation = "androidx.navigation:navigation-compose:2.9.4"
 compose-tabler-icons = "br.com.devsrsouza.compose.icons:tabler-icons:1.1.1"
 compose-ui-test = { module = "androidx.compose.ui:ui-test", version.ref = "compose" }
 datastore-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
