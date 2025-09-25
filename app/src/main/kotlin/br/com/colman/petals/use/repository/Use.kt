@@ -17,7 +17,6 @@ data class Use(
 
   val description: String = ""
 ) {
-
   @Transient
   val localDate: LocalDate = date.toLocalDate()
 

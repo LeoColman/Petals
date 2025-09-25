@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -37,9 +38,11 @@ import br.com.colman.petals.R.string.yes_timer
 import br.com.colman.petals.review.ReviewAppRequester
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
+import br.com.colman.petals.widgets.updateWidget
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Lock
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.math.BigDecimal.ZERO
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -58,10 +61,15 @@ fun AddUseButton(
   val context = LocalContext.current
   val activity = context.getActivity()
   val totalUseCount by repository.countAll().collectAsState(0)
-
+  val scope = rememberCoroutineScope()
   if (openAddUseDialog) {
     AddUseDialog(lastUse, {
       repository.upsert(it)
+
+      scope.launch {
+        context.updateWidget(it)
+      }
+
       if (totalUseCount > 0 && totalUseCount % 42 == 0) {
         openSupportDialog = true
       } else if ((totalUseCount > 0 && totalUseCount % 100 == 0)) {
