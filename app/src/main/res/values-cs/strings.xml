@@ -1,3 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="quit_date_text">Čas posledního užití</string>
+    <string name="years">Roky</string>
+    <string name="months">Měsíce</string>
+    <string name="days">Dny</string>
+    <string name="hours">Hodiny</string>
+    <string name="minutes">Minuty</string>
+    <string name="seconds">Sekundy</string>
+    <string name="milliseconds">Milisekundy</string>
+    <string name="usage">Užití</string>
+    <string name="symptoms">Symptomy</string>
+    <string name="stats">Statistika</string>
 </resources>
