@@ -78,7 +78,7 @@
     <string name="repository_link_title">Kaynak Kod Erişimi</string>
     <string name="start_time">Başlangıç Saati</string>
     <string name="end_time">Bitiş Saati</string>
-    <string name="pause_change_minutes">+%d dakika</string>
+    <string name="pause_change_minutes">%+d dakika</string>
     <string name="delete">Sil</string>
     <string name="yes">Evet</string>
     <string name="yes_timer">Evet (%ss)</string>
