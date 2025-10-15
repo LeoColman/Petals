@@ -3,7 +3,7 @@ compose = "1.9.3"
 datastore = "1.1.7"
 detekt = "1.23.8"
 koin = "4.1.1"
-kotest = "6.0.3"
+kotest = "6.0.4"
 kotlin = "2.2.20"
 licensee = "1.14.1"
 vanpra-material-dialogs = "0.9.0"
@@ -51,7 +51,7 @@ sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", ver
 sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-sqlite-dialect = { module = "app.cash.sqldelight:sqlite-3-25-dialect", version.ref = "sqldelight" }
 requery-sqlite = "com.github.requery:sqlite-android:3.49.0"
-play-services-ads = "com.google.android.gms:play-services-ads:24.6.0"
+play-services-ads = "com.google.android.gms:play-services-ads:24.7.0"
 play-services-billing = "com.android.billingclient:billing:8.0.0"
 fuel = "com.github.kittinunf.fuel:fuel:2.3.1"
 androidx-test-core = "androidx.test:core:1.7.0"
