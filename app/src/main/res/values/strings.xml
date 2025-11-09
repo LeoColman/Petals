@@ -189,4 +189,8 @@
     <string name="because_i_wanted">Because I wanted to</string>
     <string name="filter_data_by_description_containing">Filter data by description containing…</string>
     <string name="with_a_friend">with a friend</string>
+    <string name="add_a_copy_of_my_last_use">Add a copy of my last use</string>
+    <string name="no_previous_use_found">No previous use found</string>
+    <string name="amount_with_grams">Amount: %1$sg</string>
+    <string name="last_used_details">Last Use Details</string>
 </resources>

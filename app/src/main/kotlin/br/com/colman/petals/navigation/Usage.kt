@@ -18,6 +18,7 @@
 
 package br.com.colman.petals.navigation
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,10 +36,12 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -52,11 +55,15 @@ import br.com.colman.petals.use.StatsBlocks
 import br.com.colman.petals.use.UseCards
 import br.com.colman.petals.use.pause.PauseButton
 import br.com.colman.petals.use.pause.repository.PauseRepository
+import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
+import br.com.colman.petals.widgets.updateWidget
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ListSearch
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import java.time.LocalTime
 import kotlin.time.Duration.Companion.seconds
@@ -68,9 +75,18 @@ fun Usage(
   reviewAppRequester: ReviewAppRequester = koinInject()
 ) {
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
+  val lastUse = useRepository.getLastUse().collectAsState(null)
+  val context = LocalContext.current
+
   var currentTime by remember {
     mutableStateOf(LocalTime.now())
   }
+  LaunchedEffect(lastUse.value) {
+    lastUse.value?.let {
+      context.updateWidget(it)
+    }
+  }
+
   LaunchedEffect(Unit) {
     while (true) {
       val now = LocalTime.now()
@@ -80,11 +96,14 @@ fun Usage(
       delay(10.seconds)
     }
   }
+
   val pauses by pauseRepository.getAll().collectAsState(listOf())
   val isAnyPauseActive by remember { derivedStateOf { pauses.any { it.isActive(currentTime) } } }
 
   Column(
-    Modifier.verticalScroll(rememberScrollState()).testTag("UsageMainColumn"),
+    Modifier
+      .verticalScroll(rememberScrollState())
+      .testTag("UsageMainColumn"),
     spacedBy(8.dp),
     CenterHorizontally
   ) {
@@ -106,9 +125,36 @@ fun Usage(
         )
       }
     }.collectAsState(emptyList())
+
     StatsBlocks(uses)
     UsageFilter(descriptionContains) { descriptionContains = it }
-    UseCards(uses, { useRepository.upsert(it) }, { useRepository.delete(it) })
+    val scope = rememberCoroutineScope()
+    UseCards(uses, {
+      scope.launch {
+        updateUse(useRepository, it, context)
+      }
+    }, {
+      scope.launch {
+        fetchCountAndUpdateWidget(useRepository, context, it)
+      }
+    })
+  }
+}
+
+private suspend fun updateUse(
+  useRepository: UseRepository,
+  use: Use,
+  context: Context
+) {
+  useRepository.upsert(use)
+  context.updateWidget(use)
+}
+
+suspend fun fetchCountAndUpdateWidget(useRepository: UseRepository, context: Context, use: Use) {
+  useRepository.delete(use)
+  val data = useRepository.countAll().first()
+  if (data == 0) {
+    context.updateWidget(null)
   }
 }
 
@@ -117,7 +163,9 @@ private fun UsageFilter(value: String, onValueChange: (String) -> Unit) {
   OutlinedTextField(
     value = value,
     onValueChange = onValueChange,
-    modifier = Modifier.fillMaxWidth().padding(16.dp),
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(16.dp),
     leadingIcon = { Icon(TablerIcons.ListSearch, null) },
     label = { Text(stringResource(filter_data_by_description_containing)) },
     placeholder = { Text(stringResource(with_a_friend)) }
