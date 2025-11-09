@@ -1,15 +1,15 @@
 [versions]
-compose = "1.9.2"
+compose = "1.9.4"
 datastore = "1.1.7"
 detekt = "1.23.8"
 glance = "1.1.1"
 koin = "4.1.1"
-kotest = "6.0.3"
-kotlin = "2.2.20"
-licensee = "1.13.0"
+kotest = "6.0.4"
+kotlin = "2.2.21"
+licensee = "1.14.1"
 vanpra-material-dialogs = "0.9.0"
 sqldelight = "2.1.0"
-mockk = "1.14.5"
+mockk = "1.14.6"
 review = "2.0.2"
 
 [libraries]
@@ -22,7 +22,7 @@ compose-material-dialogs-core = { module = "io.github.vanpra.compose-material-di
 compose-material-dialogs-date-time = { module = "io.github.vanpra.compose-material-dialogs:datetime", version.ref = "vanpra-material-dialogs" }
 compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version = "1.7.8" }
 compose-material-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-compose-navigation = "androidx.navigation:navigation-compose:2.9.5"
+compose-navigation = "androidx.navigation:navigation-compose:2.9.6"
 compose-tabler-icons = "br.com.devsrsouza.compose.icons:tabler-icons:1.1.1"
 compose-ui-test = { module = "androidx.compose.ui:ui-test", version.ref = "compose" }
 datastore-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
@@ -52,13 +52,13 @@ sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", ver
 sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-sqlite-dialect = { module = "app.cash.sqldelight:sqlite-3-25-dialect", version.ref = "sqldelight" }
 requery-sqlite = "com.github.requery:sqlite-android:3.49.0"
-play-services-ads = "com.google.android.gms:play-services-ads:24.6.0"
-play-services-billing = "com.android.billingclient:billing:8.0.0"
 glance = { module = "androidx.glance:glance", version.ref = "glance" }
 glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 glance-widget-preview = { group = "androidx.glance", name = "glance-appwidget-preview", version.ref = "glance" }
 glance-preview = { group = "androidx.glance", name = "glance-preview", version.ref = "glance" }
 glance-material = { group = "androidx.glance", name = "glance-material", version.ref = "glance" }
+play-services-ads = "com.google.android.gms:play-services-ads:24.7.0"
+play-services-billing = "com.android.billingclient:billing:8.1.0"
 fuel = "com.github.kittinunf.fuel:fuel:2.3.1"
 androidx-test-core = "androidx.test:core:1.7.0"
 review = { module = "com.google.android.play:review", version.ref = "review" }
@@ -111,6 +111,6 @@ mockk-android = ["mockk-android", "mockk-agent"]
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.9.2" }
+kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.9.3" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 licensee = { id = "app.cash.licensee", version.ref = "licensee" }
