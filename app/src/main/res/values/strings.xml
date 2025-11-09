@@ -192,5 +192,5 @@
     <string name="add_a_copy_of_my_last_use">Add a copy of my last use</string>
     <string name="no_previous_use_found">No previous use found</string>
     <string name="amount_with_grams">Amount: %1$sg</string>
-    <string name="last_used_details">Last Used Details</string>
+    <string name="last_used_details">Last Use Details</string>
 </resources>
