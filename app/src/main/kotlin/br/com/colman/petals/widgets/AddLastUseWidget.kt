@@ -64,8 +64,7 @@ import java.time.format.DateTimeFormatter.ofPattern
 class AddLastUseWidget : GlanceAppWidget() {
 
   override suspend fun provideGlance(context: Context, id: GlanceId) {
-    val useRepository =
-      getKoin().get<UseRepository>()
+    val useRepository = getKoin().get<UseRepository>()
     val lastUse = useRepository.getLastUse().first()
 
     updateAppWidgetState(context, id) { prefs ->
@@ -97,12 +96,6 @@ class AddLastUseWidget : GlanceAppWidget() {
     val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
     val timeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
 
-    val context = LocalContext.current
-    val addCopyOfMyLastUse = context.getString(R.string.add_a_copy_of_my_last_use)
-    val addUse = context.getString(R.string.add_use)
-    val amountGrams = context.getString(R.string.amount_with_grams)
-    val dateResource = context.getString(R.string.date)
-
     val hasData = usedDateString != null && usedAmount != null
     val currentTime = System.currentTimeMillis()
     val isLocked = lockUntilTimestamp > currentTime
@@ -124,49 +117,61 @@ class AddLastUseWidget : GlanceAppWidget() {
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
       LastUsedDetailText()
-
       Spacer(modifier = GlanceModifier.height(8.dp))
 
       if (hasData) {
-        UseDetails(dateResource, amountGrams, usedDateString, dateFormat, timeFormat)
+        val context = LocalContext.current
+        UseDetails(
+          dateResource = context.getString(R.string.date),
+          amountGrams = context.getString(R.string.amount_with_grams),
+          usedDateString = usedDateString,
+          dateFormat = dateFormat,
+          timeFormat = timeFormat
+        )
       } else {
         NoUseFound()
       }
 
       Spacer(modifier = GlanceModifier.height(16.dp))
+      ActionButton(hasData = hasData, isLocked = isLocked)
+    }
+  }
 
-      Row(
-        modifier = GlanceModifier
-          .cornerRadius(12.dp)
-          .background(ButtonDefaults.buttonColors().backgroundColor.getColor(LocalContext.current))
-          .padding(10.dp)
-          .clickable(
-            if (isLocked) {
-              actionRunCallback<DoNothingCallback>()
-            } else if (!hasData) {
-              actionStartActivity<MainActivity>()
-            } else {
-              actionRunCallback<AddUseActionCallback>()
-            }
-          )
-      ) {
-        Text(
-          text = if (!hasData) addUse else addCopyOfMyLastUse,
-          style = TextStyle(
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Medium
-          )
+  @Composable
+  private fun ActionButton(hasData: Boolean, isLocked: Boolean) {
+    val context = LocalContext.current
+    val addCopyOfMyLastUse = context.getString(R.string.add_a_copy_of_my_last_use)
+    val addUse = context.getString(R.string.add_use)
+
+    Row(
+      modifier = GlanceModifier
+        .cornerRadius(12.dp)
+        .background(ButtonDefaults.buttonColors().backgroundColor.getColor(LocalContext.current))
+        .padding(10.dp)
+        .clickable(
+          if (!hasData) {
+            actionStartActivity<MainActivity>()
+          } else {
+            actionRunCallback<AddUseActionCallback>()
+          }
         )
+    ) {
+      Text(
+        text = if (!hasData) addUse else addCopyOfMyLastUse,
+        style = TextStyle(
+          fontSize = 16.sp,
+          fontWeight = FontWeight.Medium
+        )
+      )
 
-        if (isLocked) {
-          Image(
-            provider = ImageProvider(R.drawable.ic_lock),
-            contentDescription = "Lock Icon",
-            modifier = GlanceModifier
-              .size(20.dp)
-              .padding(start = 4.dp)
-          )
-        }
+      if (isLocked) {
+        Image(
+          provider = ImageProvider(R.drawable.ic_lock),
+          contentDescription = "Lock Icon",
+          modifier = GlanceModifier
+            .size(20.dp)
+            .padding(start = 4.dp)
+        )
       }
     }
   }
@@ -215,18 +220,11 @@ class AddLastUseWidget : GlanceAppWidget() {
     timeFormat: String
   ) {
     val usedAmount = currentState(UsedAmount)
-
-    val timeString = if (usedDateString != null) {
-      formatDateTime(usedDateString, timeFormat)
-    } else {
-      ""
-    }
-    val dateString = if (usedDateString != null) {
-      formatDateTime(usedDateString, dateFormat)
-    } else {
-      ""
-    }
     val context = LocalContext.current
+
+    val timeString = usedDateString?.let { formatDateTime(it, timeFormat) }.orEmpty()
+    val dateString = usedDateString?.let { formatDateTime(it, dateFormat) }.orEmpty()
+
     val dateLabel = context.getString(R.string.date_at_time, dateString, timeString)
 
     Row(
@@ -270,10 +268,9 @@ class AddLastUseWidget : GlanceAppWidget() {
     }
   }
 
-  @Composable
-  private fun formatDateTime(usedDateString: String, timeFormat: String): String? = try {
+  private fun formatDateTime(usedDateString: String, format: String): String = try {
     val dateTime = LocalDateTime.parse(usedDateString)
-    dateTime.format(ofPattern(timeFormat))
+    dateTime.format(ofPattern(format))
   } catch (_: Exception) {
     ""
   }
@@ -283,16 +280,7 @@ class AddLastUseWidget : GlanceAppWidget() {
     val UsedAmount = stringPreferencesKey("used_amount")
     val LockUntilTimestamp = longPreferencesKey("lock_until_timestamp")
 
-    const val LOCK_DURATION_MS = 3000L
-  }
-}
-
-class DoNothingCallback : ActionCallback {
-  override suspend fun onAction(
-    context: Context,
-    glanceId: GlanceId,
-    parameters: ActionParameters
-  ) {
+    const val LockDurationMS = 3000L
   }
 }
 
@@ -302,7 +290,7 @@ class AddUseActionCallback : ActionCallback {
     glanceId: GlanceId,
     parameters: ActionParameters
   ) {
-    val lockUntil = System.currentTimeMillis() + AddLastUseWidget.LOCK_DURATION_MS
+    val lockUntil = System.currentTimeMillis() + AddLastUseWidget.LockDurationMS
     updateAppWidgetState(context, glanceId) { prefs ->
       prefs[AddLastUseWidget.LockUntilTimestamp] = lockUntil
     }
@@ -320,7 +308,7 @@ class AddUseActionCallback : ActionCallback {
       context.updateWidget(updatedUse)
     }
 
-    delay(AddLastUseWidget.LOCK_DURATION_MS)
+    delay(AddLastUseWidget.LockDurationMS)
 
     updateAppWidgetState(context, glanceId) { prefs ->
       prefs[AddLastUseWidget.LockUntilTimestamp] = 0L
