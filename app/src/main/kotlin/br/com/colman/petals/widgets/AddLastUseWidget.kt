@@ -143,18 +143,25 @@ class AddLastUseWidget : GlanceAppWidget() {
     val addCopyOfMyLastUse = context.getString(R.string.add_a_copy_of_my_last_use)
     val addUse = context.getString(R.string.add_use)
 
+    val baseModifier = GlanceModifier
+      .cornerRadius(12.dp)
+      .background(ButtonDefaults.buttonColors().backgroundColor.getColor(LocalContext.current))
+      .padding(10.dp)
+
+    val actionButtonModifier = if (isLocked) {
+      baseModifier
+    } else {
+      baseModifier.clickable(
+        if (!hasData) {
+          actionStartActivity<MainActivity>()
+        } else {
+          actionRunCallback<AddUseActionCallback>()
+        }
+      )
+    }
+
     Row(
-      modifier = GlanceModifier
-        .cornerRadius(12.dp)
-        .background(ButtonDefaults.buttonColors().backgroundColor.getColor(LocalContext.current))
-        .padding(10.dp)
-        .clickable(
-          if (!hasData) {
-            actionStartActivity<MainActivity>()
-          } else {
-            actionRunCallback<AddUseActionCallback>()
-          }
-        )
+      modifier = actionButtonModifier
     ) {
       Text(
         text = if (!hasData) addUse else addCopyOfMyLastUse,
