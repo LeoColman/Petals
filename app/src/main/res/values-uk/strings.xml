@@ -179,4 +179,8 @@
     <string name="thank_your_for_using_message">Дякуємо за використання Petals! Просто нагадую, що ви можете підтримати мою роботу над покращенням цієї безкоштовної програми.</string>
     <string name="filter_data_by_description_containing">Фільтрувати дані за описом, що містить…</string>
     <string name="with_a_friend">з другом</string>
+    <string name="add_a_copy_of_my_last_use">Додати копію мого останнього використання</string>
+    <string name="no_previous_use_found">Попереднього використання не знайдено</string>
+    <string name="amount_with_grams">Сума: %1$sg</string>
+    <string name="last_used_details">Деталі останнього використання</string>
 </resources>
