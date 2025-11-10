@@ -171,4 +171,8 @@
     <string name="because_i_wanted">Çünkü istedim</string>
     <string name="filter_data_by_description_containing">Verileri açıklamaya göre filtrele…</string>
     <string name="with_a_friend">bir arkadaşla</string>
+    <string name="add_a_copy_of_my_last_use">Son kullanımımın bir kopyasını ekle</string>
+    <string name="no_previous_use_found">Önceki kullanım bulunamadı</string>
+    <string name="amount_with_grams">Miktar: %1$sg</string>
+    <string name="last_used_details">Son Kullanım Ayrıntıları</string>
 </resources>
