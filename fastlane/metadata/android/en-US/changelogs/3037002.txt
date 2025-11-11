@@ -1,0 +1,1 @@
+- Hotfix: Create new use instead of moving the last use when using the widget
