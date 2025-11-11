@@ -60,6 +60,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter.ofPattern
+import java.util.UUID
 
 class AddLastUseWidget : GlanceAppWidget() {
 
@@ -310,7 +311,7 @@ class AddUseActionCallback : ActionCallback {
 
     lastUse?.let { use ->
       val dateTime = LocalDateTime.of(LocalDate.now(), LocalTime.now())
-      val updatedUse = use.copy(date = dateTime)
+      val updatedUse = use.copy(date = dateTime, id = UUID.randomUUID().toString())
       useRepository.upsert(updatedUse)
       context.updateWidget(updatedUse)
     }
