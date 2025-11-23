@@ -176,4 +176,8 @@
     <string name="description_label">descrizione</string>
     <string name="description">Descrizione</string>
     <string name="because_i_wanted">Perché volevo</string>
+    <string name="add_a_copy_of_my_last_use">Aggiungi una copia del mio ultimo utilizzo</string>
+    <string name="no_previous_use_found">Nessun utilizzo precedente trovato</string>
+    <string name="amount_with_grams">Importo: %1$sg</string>
+    <string name="last_used_details">Dettagli dell\'ultimo utilizzo</string>
 </resources>
