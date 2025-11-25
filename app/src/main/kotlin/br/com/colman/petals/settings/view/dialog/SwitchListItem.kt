@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.semantics.semantics
+
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -26,7 +28,9 @@ fun SwitchListItem(
   initialState: Boolean,
   onChangeState: (Boolean) -> Unit,
 ) {
-  Row {
+  Row(
+    modifier = Modifier.semantics(mergeDescendants = true) {}
+  ) {
     ListItem(
       modifier = Modifier.fillMaxWidth().weight(0.7f),
       icon = { Icon(icon, null, Modifier.size(42.dp)) },
@@ -37,3 +41,4 @@ fun SwitchListItem(
     Switch(initialState, onChangeState, modifier = Modifier.align(CenterVertically).padding(end = 8.dp))
   }
 }
+
