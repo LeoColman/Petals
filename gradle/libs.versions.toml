@@ -1,6 +1,6 @@
 [versions]
+datastore = "1.2.0"
 compose = "1.10.0"
-datastore = "1.1.7"
 detekt = "1.23.8"
 glance = "1.1.1"
 koin = "4.1.1"
