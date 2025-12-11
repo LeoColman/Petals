@@ -57,7 +57,7 @@ glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "g
 glance-widget-preview = { group = "androidx.glance", name = "glance-appwidget-preview", version.ref = "glance" }
 glance-preview = { group = "androidx.glance", name = "glance-preview", version.ref = "glance" }
 glance-material = { group = "androidx.glance", name = "glance-material", version.ref = "glance" }
-play-services-ads = "com.google.android.gms:play-services-ads:24.8.0"
+play-services-ads = "com.google.android.gms:play-services-ads:24.9.0"
 play-services-billing = "com.android.billingclient:billing:8.2.0"
 fuel = "com.github.kittinunf.fuel:fuel:2.3.1"
 androidx-test-core = "androidx.test:core:1.7.0"
