@@ -14,7 +14,7 @@
 [![GitHub All Releases](https://img.shields.io/github/downloads/LeoColman/Petals/total?label=Downloads%20All%20Time%20(GitHub))](https://github.com/LeoColman/Petals/releases)
 [![GitHub Release Downloads](https://img.shields.io/github/downloads/LeoColman/Petals/latest/total?label=Downloads%20Latest%20Release%20(GitHub))](https://github.com/LeoColman/Petals/releases/latest)
 ![Coverage](https://leocolman.github.io/Petals/coverage-badge.svg)
-![Maintenance](https://img.shields.io/maintenance/yes/2025)
+![Maintenance](https://img.shields.io/maintenance/yes/2026)
 [![Alternatives](https://img.shields.io/badge/Alternative.to-6-blue)](https://alternativeto.net/software/petals-app/)
 
 
