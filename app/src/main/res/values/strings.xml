@@ -26,8 +26,9 @@
     <string name="seconds">Seconds</string>
     <string name="milliseconds">Milliseconds</string>
     <string name="usage">Usage</string>
-    <string name="symptoms">Symptoms</string>
+    <string name="status">Status</string>
     <string name="stats">Stats</string>
+    <string name="drug_test">Drug Test</string>
     <string name="symptoms_introduction">A study from Budney et al. from the University of Vermont established how withdrawal symptoms affect and decay on cannabis users. Below you\'ll see an estimate of your current situation based on your last use date.</string>
     <string name="hit_timer">Hit Timer</string>
     <string name="start">Start</string>
@@ -193,4 +194,5 @@
     <string name="no_previous_use_found">No previous use found</string>
     <string name="amount_with_grams">Amount: %1$sg</string>
     <string name="last_used_details">Last Use Details</string>
+    <string name="drug_test_placeholder">Drug Test page placeholder</string>
 </resources>

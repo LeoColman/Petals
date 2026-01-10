@@ -34,7 +34,7 @@
     <string name="months">Mois</string>
     <string name="minutes">Minutes</string>
     <string name="seconds">Secondes</string>
-    <string name="symptoms">Symptômes</string>
+    <string name="status">Symptômes</string>
     <string name="reset">Réinitialiser</string>
     <string name="ten_seconds_introduction">Tenir pendant plus de 10 secondes n’augmentera pas votre euphorie mais augmentera les mauvaises choses que le cannabis vous causera.</string>
     <string name="total_spent">%s total</string>

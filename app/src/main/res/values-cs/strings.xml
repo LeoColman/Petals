@@ -9,6 +9,6 @@
     <string name="seconds">Sekundy</string>
     <string name="milliseconds">Milisekundy</string>
     <string name="usage">Užití</string>
-    <string name="symptoms">Symptomy</string>
+    <string name="status">Symptomy</string>
     <string name="stats">Statistika</string>
 </resources>

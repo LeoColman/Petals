@@ -7,7 +7,7 @@
     <string name="seconds">Segundos</string>
     <string name="milliseconds">Milisegundos</string>
     <string name="usage">Uso</string>
-    <string name="symptoms">Síntomas</string>
+    <string name="status">Síntomas</string>
     <string name="stats">Estadísticas</string>
     <string name="hit_timer">Temporizador</string>
     <string name="start">Inicio</string>

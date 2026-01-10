@@ -10,7 +10,7 @@
     <string name="seconds">Saniye</string>
     <string name="milliseconds">Milisaniye</string>
     <string name="usage">Kullanım</string>
-    <string name="symptoms">Belirtiler</string>
+    <string name="status">Belirtiler</string>
     <string name="stats">İstatistikler</string>
     <string name="symptoms_introduction">Vermont Üniversitesi\'nden Budney ve diğerleri tarafından yapılan bir çalışma, yoksunluk belirtilerinin esrar kullanıcılarını nasıl etkilediğini ve zamanla nasıl azaldığını ortaya koydu. Aşağıda, son kullanım tarihinize göre mevcut durumunuzun bir tahmini yer alıyor.</string>
     <string name="hit_timer">Vuruş Zamanlayıcısı</string>
