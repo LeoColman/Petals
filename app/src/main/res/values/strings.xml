@@ -194,7 +194,6 @@
     <string name="no_previous_use_found">No previous use found</string>
     <string name="amount_with_grams">Amount: %1$sg</string>
     <string name="last_used_details">Last Use Details</string>
-    <string name="drug_test_placeholder">Drug Test page placeholder</string>
     <string name="until_hair_test">until Hair Test (90 days)</string>
     <string name="hair_test_ready">Ready for Hair Test</string>
     <string name="until_urine_test">until Urine Test (28 days)</string>
