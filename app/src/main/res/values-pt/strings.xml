@@ -211,4 +211,5 @@
     <string name="urine_test_source">Fonte: Goodwin RS, Darwin WD, Chiang CN, Shih M, Li S-H, Huestis MA. Urinary Elimination of 11-Nor-9-Carboxy-Δ9-Tetrahydrocannabinol in Cannabis Users During Continuously Monitored Abstinence. J Anal Toxicol. 2008;32(8):562-569. doi:10.1093/jat/32.8.562.</string>
     <string name="hair_test_source">Fonte: Taylor M, Lees R, Henderson G, Lingford-Hughes A, Macleod J, Sullivan J, Hickman M. Comparison of cannabinoids in hair with self-reported cannabis consumption in heavy, light and non-cannabis users. Drug Alcohol Rev. 2017;36(2):220-226. doi:10.1111/dar.12412. Epub 2016 Jun 14. PMID: 27296783; PMCID: PMC5396143.</string>
     <string name="drug_test_intro">Os prazos abaixo são estimativas de quanto tempo pode levar até que testes de drogas deem negativo. Os resultados individuais podem variar.</string>
+    <string name="drug_test">Teste Lab.</string>
 </resources>
