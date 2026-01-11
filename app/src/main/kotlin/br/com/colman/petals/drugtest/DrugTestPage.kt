@@ -19,8 +19,6 @@
 package br.com.colman.petals.drugtest
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,12 +29,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
@@ -97,7 +97,6 @@ fun DrugTestPage(useRepository: UseRepository = koinInject()) {
 
   Box(Modifier.fillMaxSize().padding(16.dp), Alignment.Center) {
     Column(Modifier.verticalScroll(rememberScrollState()), Arrangement.Center, Alignment.CenterHorizontally) {
-
       Text(stringResource(drug_test_intro), style = typography.body1, textAlign = TextAlign.Center)
 
       Spacer(Modifier.size(24.dp))
@@ -138,7 +137,6 @@ fun HairTestContent(lastUseDate: LocalDate?) {
 fun BloodTestContent(lastUseDate: LocalDate?) {
   DrugTestSection(lastUseDate, BloodTestDays, blood_test_ready, until_blood_test, blood_test_source)
 }
-
 
 @Composable
 private fun DrugTestSection(
@@ -215,4 +213,3 @@ private fun ProgressBarWithEndpoints(daysSince: Int?, limitDays: Int) {
     }
   }
 }
-
