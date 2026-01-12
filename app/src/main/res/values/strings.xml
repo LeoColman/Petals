@@ -26,8 +26,9 @@
     <string name="seconds">Seconds</string>
     <string name="milliseconds">Milliseconds</string>
     <string name="usage">Usage</string>
-    <string name="symptoms">Symptoms</string>
+    <string name="status">Status</string>
     <string name="stats">Stats</string>
+    <string name="drug_test">Drug Test</string>
     <string name="symptoms_introduction">A study from Budney et al. from the University of Vermont established how withdrawal symptoms affect and decay on cannabis users. Below you\'ll see an estimate of your current situation based on your last use date.</string>
     <string name="hit_timer">Hit Timer</string>
     <string name="start">Start</string>
@@ -193,4 +194,17 @@
     <string name="no_previous_use_found">No previous use found</string>
     <string name="amount_with_grams">Amount: %1$sg</string>
     <string name="last_used_details">Last Use Details</string>
+    <string name="until_hair_test">until Hair Test (90 days)</string>
+    <string name="hair_test_ready">Ready for Hair Test</string>
+    <string name="until_urine_test">until Urine Test (28 days)</string>
+    <string name="urine_test_ready">Ready for Urine Test</string>
+    <string name="until_saliva_test">until Saliva Test (8 days)</string>
+    <string name="saliva_test_ready">Ready for Saliva Test</string>
+    <string name="until_blood_test">until Blood Test (30 days)</string>
+    <string name="blood_test_ready">Ready for Blood Test</string>
+    <string name="blood_test_source">Source: Bergamaschi MM, Karschner EL, Goodwin RS, Scheidweiler KB, Hirvonen J, Queiroz RH, Huestis MA. Impact of prolonged cannabinoid excretion in chronic daily cannabis smokers\' blood on per se drugged driving laws. Clin Chem. 2013;59(3):519-526. doi:10.1373/clinchem.2012.195503. PMID: 23449702; PMCID: PMC3717350.</string>
+    <string name="saliva_test_source">Source: Andås HT, Krabseth HM, Enger A, Marcussen BN, Haneborg AM, Christophersen AS, Vindenes V, Øiestad EL. Detection time for THC in oral fluid after frequent cannabis smoking. Ther Drug Monit. 2014 Dec;36(6):808-14. doi: 10.1097/FTD.0000000000000092. PMID: 24819969.</string>
+    <string name="urine_test_source">Source: Goodwin RS, Darwin WD, Chiang CN, Shih M, Li S-H, Huestis MA. Urinary Elimination of 11-Nor-9-Carboxy-Δ9-Tetrahydrocannabinol in Cannabis Users During Continuously Monitored Abstinence. J Anal Toxicol. 2008;32(8):562-569. doi:10.1093/jat/32.8.562.</string>
+    <string name="hair_test_source">Source: Taylor M, Lees R, Henderson G, Lingford-Hughes A, Macleod J, Sullivan J, Hickman M. Comparison of cannabinoids in hair with self-reported cannabis consumption in heavy, light and non-cannabis users. Drug Alcohol Rev. 2017;36(2):220-226. doi:10.1111/dar.12412. Epub 2016 Jun 14. PMID: 27296783; PMCID: PMC5396143.</string>
+    <string name="drug_test_intro">The timelines below are estimates of how long it may take until drug tests return negative. Individual results may vary.</string>
 </resources>

@@ -64,7 +64,7 @@
     <string name="days">Днів</string>
     <string name="usage">Вжиток</string>
     <string name="hours">Годин</string>
-    <string name="symptoms">Відходняки</string>
+    <string name="status">Відходняки</string>
     <string name="symptoms_introduction">Дослідження Університету Вермонта встановили, як симптоми відміни проявляються з часом. Нижче ви побачите оцінку вашої поточної ситуації на основі дати останнього вживання.</string>
     <string name="hit_timer">Хап Час</string>
     <string name="reset">Заново</string>

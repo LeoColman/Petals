@@ -45,11 +45,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import br.com.colman.petals.R
 import br.com.colman.petals.R.drawable.ic_cannabis
+import br.com.colman.petals.drugtest.DrugTestPage
 import br.com.colman.petals.hittimer.ComposeHitTimer
 import br.com.colman.petals.navigation.Page.Usage
 import br.com.colman.petals.settings.SettingsView
 import br.com.colman.petals.statistics.StatisticsPage
 import br.com.colman.petals.withdrawal.SymptomsPage
+import compose.icons.TablerIcons
+import compose.icons.tablericons.Flask
 import org.koin.compose.koinInject
 
 enum class Page(
@@ -59,8 +62,9 @@ enum class Page(
 ) {
   Usage(R.string.usage, { ImageVector.vectorResource(ic_cannabis) }, { Usage() }),
   HitTimer(R.string.hit_timer, { Default.LockClock }, { ComposeHitTimer() }),
-  Symptoms(R.string.symptoms, { Default.MedicalServices }, { SymptomsPage() }),
-  Stats(R.string.stats, { Default.GraphicEq }, { StatisticsPage(koinInject(), koinInject()) })
+  Symptoms(R.string.status, { Default.MedicalServices }, { SymptomsPage() }),
+  DrugTest(R.string.drug_test, { TablerIcons.Flask }, { DrugTestPage() }),
+  Stats(R.string.stats, { Default.GraphicEq }, { StatisticsPage(koinInject(), koinInject()) }),
 }
 
 @Composable

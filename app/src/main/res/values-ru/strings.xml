@@ -69,7 +69,7 @@
     <string name="add_use_during_pause_alert">Вы запланировали этот период как паузу. Вы уверены, что хотите добавить использование сейчас?</string>
     <string name="quit_date_text">Последняя дата употребления</string>
     <string name="hours">Часы</string>
-    <string name="symptoms">Симптомы</string>
+    <string name="status">Симптомы</string>
     <string name="ten_seconds_source">Источник: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
     <string name="today">Сегодня</string>
     <string name="this_week">С понедельника</string>

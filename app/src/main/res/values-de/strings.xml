@@ -7,7 +7,7 @@
     <string name="quit_date_text">Datum des letzten Konsums</string>
     <string name="milliseconds">Millisekunden</string>
     <string name="usage">Konsum</string>
-    <string name="symptoms">Symptome</string>
+    <string name="status">Symptome</string>
     <string name="stats">Statistiken</string>
     <string name="hit_timer">Hit Timer</string>
     <string name="start">Start</string>
