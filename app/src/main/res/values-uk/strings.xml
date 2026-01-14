@@ -183,4 +183,18 @@
     <string name="no_previous_use_found">Попереднього використання не знайдено</string>
     <string name="amount_with_grams">Сума: %1$sg</string>
     <string name="last_used_details">Деталі останнього використання</string>
+    <string name="drug_test">Тест на ліки</string>
+    <string name="until_hair_test">до тесту на волосся (90 днів)</string>
+    <string name="hair_test_ready">Готовий до тесту на волосся</string>
+    <string name="until_urine_test">до аналізу сечі (28 днів)</string>
+    <string name="urine_test_ready">Готовий до аналізу сечі</string>
+    <string name="until_saliva_test">до аналізу слини (8 днів)</string>
+    <string name="saliva_test_ready">Готовий до аналізу слини</string>
+    <string name="until_blood_test">до аналізу крові (30 днів)</string>
+    <string name="blood_test_ready">Готовий до аналізу крові</string>
+    <string name="blood_test_source">Джерело: Bergamaschi MM, Karschner EL, Goodwin RS, Scheidweiler KB, Hirvonen J, Queiroz RH, Huestis MA. Вплив тривалого виділення канабіноїдів у крові хронічних щоденних курців канабісу на закони про керування транспортними засобами з наркотиками. Клін Хем. 2013;59 (3):519-526. doi:10.1373/clinchem.2012.195503. PMID: 23449702; PMCID: PMC3717350.</string>
+    <string name="saliva_test_source">Джерело: Андас ХТ, Крабсет ГМ, Енгер А, Маркуссен БН, Ханеборг АМ, Крістоферсен АС, Вінденес В, Ойестад ЕЛ. Час виявлення ТГК у ротовій рідині після частого куріння канабісу. Контроль за ліками. 2014 грудень;36 (6):808-14. doi: 10.1097/FTD.0000300092. PMID: 24819969.</string>
+    <string name="urine_test_source">Джерело: Goodwin RS, Darwin WD, Chiang CN, Shih M, Li S-H, Huestis MA. Уринарна елімінація 11-Nor-9-Carboxy-D9-Tetrahydrocannabinol у споживачів канабісу під час безперервного контролю. J Анальний токсикол. 2008;32 (8):562-569. doi:10.1093/jat/32.8.562.</string>
+    <string name="hair_test_source">Джерело: Тейлор М, Ліс Р., Хендерсон Г., Лінгфорд-Г\'юз А, Маклеод Дж., Салліван Дж., Хікман М. Порівняння канабіноїдів у волоссі з самостійним споживанням канабісу у важких, легких та некористувачів канабісу. Наркотик Алкоголь Рев. 2017;36 (2):220-226. doi:10.1111/dar.12412. Epub 2016 червень 14. PMID: 27296783; PMCID: PMC5396143.</string>
+    <string name="drug_test_intro">Наведені нижче терміни є приблизними, скільки часу може знадобитися, щоб тести на наркотики дали негативний результат. Результати можуть відрізнятися в кожному конкретному випадку.</string>
 </resources>
