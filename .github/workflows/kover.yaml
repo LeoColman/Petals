@@ -43,7 +43,7 @@ jobs:
       run: './gradlew koverHtmlReport koverXmlReport'
     - id: 'step-4'
       name: 'Upload Kover Reports'
-      uses: 'actions/upload-artifact@v4'
+      uses: 'actions/upload-artifact@v6'
       with:
         name: 'coverage-reports'
         path: 'app/build/reports/kover'
