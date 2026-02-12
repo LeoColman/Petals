@@ -86,7 +86,7 @@ jobs:
     - id: 'step-9'
       uses: 'ruby/setup-ruby@v1'
       with:
-        ruby-version: '3.2.3'
+        ruby-version: '3.4.8'
     - id: 'step-10'
       name: 'Publish to Playstore'
       working-directory: 'fastlane'
