@@ -169,4 +169,22 @@
     <string name="description">விவரம்</string>
     <string name="because_i_wanted">ஏனென்றால் நான் விரும்பினேன்</string>
     <string name="filter_data_by_description_containing">விளக்கத்தின் மூலம் தரவை வடிகட்டவும்…</string>
+    <string name="drug_test">மருந்து சோதனை</string>
+    <string name="add_a_copy_of_my_last_use">நான் கடைசியாகப் பயன்படுத்தியதன் நகலைச் சேர்க்கவும்</string>
+    <string name="no_previous_use_found">முந்தைய பயன்பாடு எதுவும் இல்லை</string>
+    <string name="amount_with_grams">தொகை: %1$sg</string>
+    <string name="last_used_details">கடைசி பயன்பாட்டு விவரங்கள்</string>
+    <string name="until_hair_test">முடி ஆய்வு வரை (90 நாட்கள்)</string>
+    <string name="hair_test_ready">முடி பரிசோதனைக்கு ஆயத்தம்</string>
+    <string name="until_urine_test">சிறுநீர் ஆய்வு வரை (28 நாட்கள்)</string>
+    <string name="urine_test_ready">சிறுநீர் பரிசோதனைக்கு ஆயத்தம்</string>
+    <string name="until_saliva_test">உமிழ்நீர் சோதனை வரை (8 நாட்கள்)</string>
+    <string name="saliva_test_ready">உமிழ்நீர் பரிசோதனைக்கு ஆயத்தம்</string>
+    <string name="until_blood_test">இரத்த ஆய்வு வரை (30 நாட்கள்)</string>
+    <string name="blood_test_ready">இரத்த பரிசோதனைக்கு ஆயத்தம்</string>
+    <string name="blood_test_source">ஆதாரம்: Bergamaschi MM, Karschner EL, Goodwin RS, Scheidweiler KB, Hirvonen J, Queiroz RH, Huestis MA. நாள்பட்ட நாள்தோறும் கஞ்சா புகைப்பிடிப்பவர்களின் இரத்தத்தில் நீடித்த கன்னாபினாய்டு வெளியேற்றத்தின் தாக்கம் போதைப்பொருள் ஓட்டும் சட்டங்களின் மீது. க்ளின் கெம். 2013;59(3):519-526. doi:10.1373/clinchem.2012.195503. PMID: 23449702; பிஎம்சிஐடி: பிஎம்சி3717350.</string>
+    <string name="saliva_test_source">ஆதாரம்: Andås HT, Krabseth HM, Enger A, Marcussen BN, Haneborg AM, Christophersen AS, Vindenes V, Øiestad EL. அடிக்கடி கஞ்சா புகைத்த பிறகு வாய்வழி திரவத்தில் THC கண்டறியும் நேரம். தேர் மருந்து கண்காணிப்பு. 2014 டிசம்பர்;36(6):808-14. doi: 10.1097/FTD.0000000000000092. PMID: 24819969.</string>
+    <string name="urine_test_source">ஆதாரம்: குட்வின் ஆர்எச், டார்வின் டபிள்யூடி, சியாங் சிஎன், சிஅ் எம், லி எச்-எச், உச்டிச் எம்ஏ. தொடர்ந்து கண்காணிக்கப்படும் மதுவிலக்கின் போது கஞ்சா பயன்படுத்துபவர்களில் 11-Nor-9-Carboxy-Δ9-Tetrahydrocannabinol சிறுநீர் வெளியேற்றம். சே அனல் டாக்சிகோல். 2008;32(8):562-569. doi:10.1093/jat/32.8.562.</string>
+    <string name="hair_test_source">ஆதாரம்: டெய்லர் எம், லீச் ஆர், என்டர்சன் சி, லிங்ஃபோர்ட்-இயூச் ஏ, மேக்லியோட் சே, சல்லிவன் சே, இக்மேன் எம். கனரக, இலகுவான மற்றும் கஞ்சா அல்லாத பயனர்களின் சுய-அறிக்கை கஞ்சா நுகர்வுடன் முடியில் உள்ள கன்னாபினாய்டுகளின் ஒப்பீடு. போதைப்பொருள் ஆல்கஆல் ரெவ். 2017;36(2):220-226. doi:10.1111/dar.12412. எபப் 2016 சூன் 14. PMID: 27296783; பிஎம்சிஐடி: பிஎம்சி5396143.</string>
+    <string name="drug_test_intro">கீழேயுள்ள காலக்கெடு, மருந்துப் பரிசோதனைகள் எதிர்மறையாகத் திரும்பும் வரை எவ்வளவு நேரம் ஆகலாம் என்பதற்கான மதிப்பீடுகள் ஆகும். தனிப்பட்ட முடிவுகள் மாறுபடலாம்.</string>
 </resources>
