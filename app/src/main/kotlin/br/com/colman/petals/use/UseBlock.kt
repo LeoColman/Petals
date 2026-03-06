@@ -115,9 +115,10 @@ private fun AverageBetweenSessionsBlock(
   isCensored: Boolean
 ) {
   val averageDuration = remember(uses, isIgnoringLongestDailyDelay) {
-    if (uses.size < 2) return@remember null
+    val recentUses = uses.filter { it.localDate.isAfter(now().minusDays(30)) || it.localDate == now().minusDays(30) }
+    if (recentUses.size < 2) return@remember null
 
-    val sortedUses = uses.sortedBy { it.date }
+    val sortedUses = recentUses.sortedBy { it.date }
     val delays = sortedUses.zipWithNext { a, b ->
       Duration.between(a.date, b.date)
     }
