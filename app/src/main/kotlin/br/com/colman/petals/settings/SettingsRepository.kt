@@ -53,6 +53,7 @@ class SettingsRepository(
   val isDarkModeEnabled: Flow<Boolean> = datastore.data.map { it[IsDarkModeOn] ?: true }
   val isHitTimerMillisecondsEnabled = datastore.data.map { it[IsHitTimerMillisecondsEnabled] ?: false }
   val isHourOfDayLineInStatsEnabled = datastore.data.map { it[IsHourOfDayLineInStatsEnabled] ?: false }
+  val isIgnoringLongestDailyDelay = datastore.data.map { it[IsIgnoringLongestDailyDelay] ?: false }
   val isDayExtended = datastore.data.map { it[IsDayExtended] ?: false }
   val appLanguages = AppLanguage.entries.map { it.languageName }
 
@@ -101,6 +102,10 @@ class SettingsRepository(
     datastore.edit { it[IsHourOfDayLineInStatsEnabled] = value }
   }
 
+  fun setIsIgnoringLongestDailyDelay(value: Boolean): Unit = runBlocking {
+    datastore.edit { it[IsIgnoringLongestDailyDelay] = value }
+  }
+
   companion object {
     val CurrencyIcon = stringPreferencesKey("currency_icon")
     val DateFormat = stringPreferencesKey("date_format")
@@ -112,5 +117,6 @@ class SettingsRepository(
     val IsHitTimerMillisecondsEnabled = booleanPreferencesKey("is_hit_timer_milliseconds_enabled")
     val IsDayExtended = booleanPreferencesKey("is_day_extended_enabled")
     val IsHourOfDayLineInStatsEnabled = booleanPreferencesKey("is_hour_of_day_line_in_stats_enabled")
+    val IsIgnoringLongestDailyDelay = booleanPreferencesKey("is_ignoring_longest_daily_delay")
   }
 }

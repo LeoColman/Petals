@@ -54,6 +54,7 @@ import br.com.colman.petals.R.string.amount_grams_short
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.repository.BlockType
 import br.com.colman.petals.use.repository.BlockType.AllTime
+import br.com.colman.petals.use.repository.BlockType.AverageBetweenSessions
 import br.com.colman.petals.use.repository.BlockType.ThisMonth
 import br.com.colman.petals.use.repository.BlockType.ThisWeek
 import br.com.colman.petals.use.repository.BlockType.ThisYear
@@ -61,6 +62,7 @@ import br.com.colman.petals.use.repository.BlockType.Today
 import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.Use
 import compose.icons.TablerIcons
+import compose.icons.tablericons.Clock
 import compose.icons.tablericons.Eye
 import compose.icons.tablericons.EyeOff
 import compose.icons.tablericons.Scale
@@ -69,6 +71,7 @@ import org.koin.compose.koinInject
 import java.math.RoundingMode.HALF_UP
 import java.text.NumberFormat
 import java.time.DayOfWeek.MONDAY
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDate.now
 import java.time.LocalTime
@@ -84,18 +87,91 @@ fun StatsBlocks(uses: List<Use>) {
   val isThisMonthCensored by censorshipRepository.isThisMonthCensored.collectAsState(true)
   val isThisYearCensored by censorshipRepository.isThisYearCensored.collectAsState(true)
   val isAllTimeCensored by censorshipRepository.isAllTimeCensored.collectAsState(true)
+  val isAverageBetweenSessionsCensored by censorshipRepository.isAverageBetweenSessionsCensored.collectAsState(true)
   val isDayExtended by settingsRepository.isDayExtended.collectAsState(false)
+  val isIgnoringLongestDailyDelay by settingsRepository.isIgnoringLongestDailyDelay.collectAsState(false)
 
-  Row(Modifier.horizontalScroll(rememberScrollState()).width(Max).testTag("StatsBlockMainRow")) {
-    TodayUseBlock(isDayExtended, uses, isTodayCensored)
+  Column(Modifier, spacedBy(8.dp)) {
+    Row(Modifier.horizontalScroll(rememberScrollState()).width(Max).testTag("StatsBlockMainRow")) {
+      TodayUseBlock(isDayExtended, uses, isTodayCensored)
 
-    UseBlock(Modifier.weight(1f), ThisWeek, uses.filter { it.localDate isSameWeekAs now() }, isThisWeekCensored)
+      UseBlock(Modifier.weight(1f), ThisWeek, uses.filter { it.localDate isSameWeekAs now() }, isThisWeekCensored)
 
-    UseBlock(Modifier.weight(1f), ThisMonth, uses.filter { it.localDate isSameMonthAs now() }, isThisMonthCensored)
+      UseBlock(Modifier.weight(1f), ThisMonth, uses.filter { it.localDate isSameMonthAs now() }, isThisMonthCensored)
 
-    UseBlock(Modifier.weight(1f), ThisYear, uses.filter { it.date.year == now().year }, isThisYearCensored)
+      UseBlock(Modifier.weight(1f), ThisYear, uses.filter { it.date.year == now().year }, isThisYearCensored)
 
-    UseBlock(Modifier.weight(1f), AllTime, uses, isAllTimeCensored)
+      UseBlock(Modifier.weight(1f), AllTime, uses, isAllTimeCensored)
+    }
+
+    AverageBetweenSessionsBlock(uses, isIgnoringLongestDailyDelay, isAverageBetweenSessionsCensored)
+  }
+}
+
+@Composable
+private fun AverageBetweenSessionsBlock(
+  uses: List<Use>,
+  isIgnoringLongestDailyDelay: Boolean,
+  isCensored: Boolean
+) {
+  val averageDuration = remember(uses, isIgnoringLongestDailyDelay) {
+    if (uses.size < 2) return@remember null
+
+    val sortedUses = uses.sortedBy { it.date }
+    val delays = sortedUses.zipWithNext { a, b ->
+      Duration.between(a.date, b.date)
+    }
+
+    val finalDelays = if (isIgnoringLongestDailyDelay) {
+      delays.groupBy { it.toDays() } // This is not exactly per day, but it's a way to group.
+      // Better: group by the date of the first use in the pair
+      sortedUses.zipWithNext { a, b -> a.date.toLocalDate() to Duration.between(a.date, b.date) }
+        .groupBy({ it.first }, { it.second })
+        .flatMap { (_, dayDelays) ->
+          if (dayDelays.size > 1) {
+            val longest = dayDelays.maxBy { it.toNanos() }
+            dayDelays.filter { it != longest }
+          } else {
+            dayDelays
+          }
+        }
+    } else {
+      delays
+    }
+
+    if (finalDelays.isEmpty()) return@remember null
+    val totalNanos = finalDelays.sumOf { it.toNanos() }
+    Duration.ofNanos(totalNanos / finalDelays.size)
+  }
+
+  val averageText = remember(averageDuration) {
+    averageDuration?.let {
+      val hours = it.toHours()
+      val minutes = it.toMinutesPart()
+      "${hours}h ${minutes}m"
+    } ?: "--"
+  }
+
+  val censorshipRepository = koinInject<CensorshipRepository>()
+
+  Card(
+    Modifier
+      .padding(8.dp)
+      .fillMaxWidth(),
+    elevation = 4.dp
+  ) {
+    Row(
+      Modifier.padding(16.dp),
+      verticalAlignment = CenterVertically,
+      horizontalArrangement = spacedBy(8.dp)
+    ) {
+      Icon(TablerIcons.Clock, null)
+      Text(stringResource(AverageBetweenSessions.resourceId), fontWeight = Bold, modifier = Modifier.weight(1f))
+      BlockText(averageText, isCensored)
+      IconButton({ censorshipRepository.setBlockCensure(AverageBetweenSessions, !isCensored) }) {
+        CensureIcon(isCensored)
+      }
+    }
   }
 }
 

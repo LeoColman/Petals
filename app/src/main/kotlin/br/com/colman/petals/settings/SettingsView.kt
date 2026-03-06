@@ -14,6 +14,7 @@ import br.com.colman.petals.settings.view.listitem.ClockListItem
 import br.com.colman.petals.settings.view.listitem.CurrencyListItem
 import br.com.colman.petals.settings.view.listitem.DateListItem
 import br.com.colman.petals.settings.view.listitem.ExtendDayListItem
+import br.com.colman.petals.settings.view.listitem.IgnoreLongestDailyDelayListItem
 import br.com.colman.petals.settings.view.listitem.HitTimerMillisecondsEnabledListItem
 import br.com.colman.petals.settings.view.listitem.LanguageListItem
 import br.com.colman.petals.settings.view.listitem.PinListItem
@@ -34,6 +35,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     settingsRepository.decimalPrecisionList[2]
   )
   val currentExtendDay by settingsRepository.isDayExtended.collectAsState(false)
+  val isIgnoringLongestDailyDelay by settingsRepository.isIgnoringLongestDailyDelay.collectAsState(false)
 
   val setAppLanguage = { language: String ->
     val languageCode = AppLanguage.getAppLanguageCode(language)
@@ -75,6 +77,10 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     ExtendDayListItem(
       currentExtendDay,
       settingsRepository::setDayExtended
+    )
+    IgnoreLongestDailyDelayListItem(
+      isIgnoringLongestDailyDelay,
+      settingsRepository::setIsIgnoringLongestDailyDelay
     )
     HourOfDayLineInStatsEnabledListItem(
       currentHourOfDayInLineStatsEnabled,
