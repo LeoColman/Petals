@@ -10,6 +10,9 @@ formatting:
     indentSize: 2
   NoWildcardImports:
     active: true
+complexity:
+  TooManyFunctions:
+    thresholdInClasses: 12
 style:
   MagicNumber:
     active: false

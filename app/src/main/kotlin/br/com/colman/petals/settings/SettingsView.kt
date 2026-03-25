@@ -14,8 +14,8 @@ import br.com.colman.petals.settings.view.listitem.ClockListItem
 import br.com.colman.petals.settings.view.listitem.CurrencyListItem
 import br.com.colman.petals.settings.view.listitem.DateListItem
 import br.com.colman.petals.settings.view.listitem.ExtendDayListItem
-import br.com.colman.petals.settings.view.listitem.IgnoreLongestDailyDelayListItem
 import br.com.colman.petals.settings.view.listitem.HitTimerMillisecondsEnabledListItem
+import br.com.colman.petals.settings.view.listitem.IgnoreLongestDailyDelayListItem
 import br.com.colman.petals.settings.view.listitem.LanguageListItem
 import br.com.colman.petals.settings.view.listitem.PinListItem
 import br.com.colman.petals.settings.view.listitem.PrecisionListItem
@@ -38,10 +38,8 @@ fun SettingsView(settingsRepository: SettingsRepository) {
   val isIgnoringLongestDailyDelay by settingsRepository.isIgnoringLongestDailyDelay.collectAsState(false)
 
   val setAppLanguage = { language: String ->
-    val languageCode = AppLanguage.getAppLanguageCode(language)
-    if (languageCode.isNotEmpty()) {
-      val appLocale = LocaleListCompat.forLanguageTags(languageCode)
-      AppCompatDelegate.setApplicationLocales(appLocale)
+    AppLanguage.getAppLanguageCode(language).let {
+      if (it.isNotEmpty()) AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(it))
     }
   }
 

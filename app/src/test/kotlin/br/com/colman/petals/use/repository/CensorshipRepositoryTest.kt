@@ -20,6 +20,7 @@ class CensorshipRepositoryTest : FunSpec({
         BlockType.ThisMonth -> target.isThisMonthCensored.first()
         BlockType.ThisYear -> target.isThisYearCensored.first()
         BlockType.AllTime -> target.isAllTimeCensored.first()
+        BlockType.AverageBetweenSessions -> target.isAverageBetweenSessionsCensored.first()
       }
       isCensored shouldBe false
     }
@@ -35,6 +36,7 @@ class CensorshipRepositoryTest : FunSpec({
           BlockType.ThisMonth -> target.isThisMonthCensored.first()
           BlockType.ThisYear -> target.isThisYearCensored.first()
           BlockType.AllTime -> target.isAllTimeCensored.first()
+          BlockType.AverageBetweenSessions -> target.isAverageBetweenSessionsCensored.first()
         }
         before shouldBe false
 
@@ -46,6 +48,7 @@ class CensorshipRepositoryTest : FunSpec({
           BlockType.ThisMonth -> target.isThisMonthCensored.first()
           BlockType.ThisYear -> target.isThisYearCensored.first()
           BlockType.AllTime -> target.isAllTimeCensored.first()
+          BlockType.AverageBetweenSessions -> target.isAverageBetweenSessionsCensored.first()
         }
         afterTrue shouldBe true
 
@@ -57,6 +60,7 @@ class CensorshipRepositoryTest : FunSpec({
           BlockType.ThisMonth -> target.isThisMonthCensored.first()
           BlockType.ThisYear -> target.isThisYearCensored.first()
           BlockType.AllTime -> target.isAllTimeCensored.first()
+          BlockType.AverageBetweenSessions -> target.isAverageBetweenSessionsCensored.first()
         }
         afterFalse shouldBe false
       }

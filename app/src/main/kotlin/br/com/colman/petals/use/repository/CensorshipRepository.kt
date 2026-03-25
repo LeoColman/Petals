@@ -36,5 +36,8 @@ enum class BlockType(@StringRes val resourceId: Int, val preferencesKey: Prefere
   ThisMonth(R.string.this_month, booleanPreferencesKey("IsThisMonthCensored")),
   ThisYear(R.string.this_year, booleanPreferencesKey("IsThisYearCensored")),
   AllTime(R.string.all_time, booleanPreferencesKey("IsAllTimeCensored")),
-  AverageBetweenSessions(R.string.average_time_between_sessions, booleanPreferencesKey("IsAverageBetweenSessionsCensored"))
+  AverageBetweenSessions(
+    R.string.average_time_between_sessions,
+    booleanPreferencesKey("IsAverageBetweenSessionsCensored")
+  )
 }
