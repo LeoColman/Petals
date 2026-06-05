@@ -49,20 +49,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
     PinListItem(settingsRepository::setPin)
     RepositoryListItem()
-    DateListItem(currentDateFormat, settingsRepository.dateFormatList, settingsRepository::setDateFormat)
-    TimeListItem(currentTimeFormat, settingsRepository.timeFormatList, settingsRepository::setTimeFormat)
-    ClockListItem(
-      is24HoursFormat,
-      settingsRepository.clockFormatList.map {
-        stringResource(it)
-      },
-      settingsRepository::setIs24HoursFormat
-    )
-    PrecisionListItem(
-      currentDecimalPrecision,
-      settingsRepository.decimalPrecisionList,
-      settingsRepository::setDecimalPrecision
-    )
+    FormatSettings(settingsRepository, currentDateFormat, currentTimeFormat, is24HoursFormat, currentDecimalPrecision)
     LanguageListItem(
       AppLanguage.getAppLanguageName(AppCompatDelegate.getApplicationLocales().toLanguageTags()),
       settingsRepository.appLanguages,
@@ -86,4 +73,28 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     )
     ShareApp()
   }
+}
+
+@Composable
+private fun FormatSettings(
+  settingsRepository: SettingsRepository,
+  currentDateFormat: String,
+  currentTimeFormat: String,
+  is24HoursFormat: Boolean,
+  currentDecimalPrecision: Int
+) {
+  DateListItem(currentDateFormat, settingsRepository.dateFormatList, settingsRepository::setDateFormat)
+  TimeListItem(currentTimeFormat, settingsRepository.timeFormatList, settingsRepository::setTimeFormat)
+  ClockListItem(
+    is24HoursFormat,
+    settingsRepository.clockFormatList.map {
+      stringResource(it)
+    },
+    settingsRepository::setIs24HoursFormat
+  )
+  PrecisionListItem(
+    currentDecimalPrecision,
+    settingsRepository.decimalPrecisionList,
+    settingsRepository::setDecimalPrecision
+  )
 }

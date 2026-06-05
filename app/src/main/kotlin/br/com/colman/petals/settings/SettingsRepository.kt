@@ -37,6 +37,7 @@ private val TimeFormats = listOf(
 
 private val ClockFormats = listOf(hours_12, hours_24)
 
+@Suppress("TooManyFunctions")
 class SettingsRepository(
   private val datastore: DataStore<Preferences>
 ) {
