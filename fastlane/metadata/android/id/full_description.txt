@@ -1,0 +1,11 @@
+Aplikasi sumber terbuka Petals bertujuan membantu penggunanya untuk berhenti menggunakan ganja, mengurangi pemakaian, atau sekadar mengetahui seberapa banyak yang mereka konsumsi.
+
+Fitur:
+
+- Lacak konsumsi
+- Batasi konsumsi berdasarkan waktu
+- Lacak penggunaan
+- Lihat statistik untuk memahami konsumsi Anda
+- Instruksi pengurangan dampak
+- Ekspor dan impor sebagai file CSV sederhana
+- Privasi ekstra dengan PIN pribadi
