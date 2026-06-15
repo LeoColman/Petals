@@ -8,7 +8,7 @@ kotest = "6.1.11"
 kotlin = "2.3.20"
 licensee = "1.14.1"
 vanpra-material-dialogs = "0.9.0"
-sqldelight = "2.2.1"
+sqldelight = "2.3.2"
 mockk = "1.14.6"
 review = "2.0.2"
 
