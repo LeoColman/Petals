@@ -5,12 +5,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import br.com.colman.petals.R.string.break_period
 import br.com.colman.petals.R.string.grams_distribution_per_hour_of_day
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.statistics.component.Period
 import br.com.colman.petals.statistics.graph.component.LineChart
+import br.com.colman.petals.statistics.graph.data.breakPeriodLimitLines
+import br.com.colman.petals.statistics.graph.data.createBreakPeriodBands
 import br.com.colman.petals.statistics.graph.data.createDistributionPerHourDataset
 import br.com.colman.petals.statistics.graph.formatter.TwelveHourFormatter
+import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.Use
 import com.github.mikephil.charting.components.LimitLine
 import org.koin.compose.koinInject
@@ -59,24 +63,35 @@ fun UsePerHourGraphPreview2() {
 @Composable
 fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
   val settingsRepository = koinInject<SettingsRepository>()
+  val pauseRepository = koinInject<PauseRepository>()
   val currentHourOfDayLineInStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(false)
+  val breakPeriodInStatsEnabled by settingsRepository.isBreakPeriodInStatsEnabled.collectAsState(true)
+  val pauses by pauseRepository.getAll().collectAsState(emptyList())
 
   val description = stringResource(grams_distribution_per_hour_of_day)
+  val breakLabel = stringResource(break_period)
   val gramsData = useGroups.map { (period, uses) ->
     val label = period.label()
     createDistributionPerHourDataset(period.days, uses, label)
   }
 
-  LineChart(gramsData, description) {
+  val yMax = gramsData.maxOfOrNull { it.yMax } ?: 0f
+  val showBreaks = breakPeriodInStatsEnabled && yMax > 0f
+  val breakBands = if (showBreaks) createBreakPeriodBands(pauses, yMax, breakLabel) else emptyList()
+  val datasets = breakBands + gramsData
+
+  LineChart(datasets, description) {
     axisMinimum = 0f
     axisMaximum = 23f
     labelCount = 24
     granularity = 1f
     valueFormatter = TwelveHourFormatter
+    removeAllLimitLines()
     if (currentHourOfDayLineInStatsEnabled) {
       addLimitLine(hourLimitLine)
-    } else {
-      removeAllLimitLines()
+    }
+    if (showBreaks) {
+      breakPeriodLimitLines(pauses).forEach { addLimitLine(it) }
     }
   }
 }
