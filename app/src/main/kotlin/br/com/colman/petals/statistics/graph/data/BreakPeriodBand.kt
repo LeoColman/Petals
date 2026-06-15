@@ -9,9 +9,8 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import java.time.LocalTime
 
-private val BreakColor = Color(0xFFFFC107) // Amber - warning
-private val BreakFillColor = BreakColor.copy(alpha = 0.25f).toArgb()
-private val BreakLineColor = BreakColor.toArgb()
+private val BreakColor = Color(0xFFFFC107).toArgb() // Amber - warning
+private const val BreakFillAlpha = 60
 
 private fun LocalTime.toHourAxis() = hour + minute / 60f
 
@@ -41,38 +40,39 @@ fun breakPeriodEdges(pauses: List<Pause>): List<Float> {
 }
 
 /**
- * Builds the translucent shaded band(s) representing each enabled [Pause] on the per-hour graph.
- * Each band is filled down to the axis baseline (0).
+ * Builds the translucent shaded band(s) representing each enabled [Pause] on the per-hour graph,
+ * each filled down to the axis baseline (0). Only the first band carries [label] so a single
+ * "break period" entry appears in the chart legend (avoiding overlapping per-line labels).
  */
-fun createBreakPeriodBands(pauses: List<Pause>, yMax: Float): List<LineDataSet> {
-  return breakPeriodRanges(pauses).map { (startX, endX) -> bandDataset(startX, endX, yMax) }
+fun createBreakPeriodBands(pauses: List<Pause>, yMax: Float, label: String): List<LineDataSet> {
+  return breakPeriodRanges(pauses).mapIndexed { index, (startX, endX) ->
+    bandDataset(startX, endX, yMax, if (index == 0) label else "")
+  }
 }
 
 /**
  * A thin vertical [LimitLine] at each enabled pause's start and end hour, marking the band edges.
- * Each line is tagged with [label] so it is clearly identifiable as a break-period boundary.
  */
-fun breakPeriodLimitLines(pauses: List<Pause>, label: String): List<LimitLine> {
+fun breakPeriodLimitLines(pauses: List<Pause>): List<LimitLine> {
   return breakPeriodEdges(pauses).map { x ->
-    LimitLine(x, label).apply {
+    LimitLine(x).apply {
       lineWidth = 1f
-      lineColor = BreakLineColor
-      textColor = BreakLineColor
+      lineColor = BreakColor
     }
   }
 }
 
-private fun bandDataset(startX: Float, endX: Float, yMax: Float): LineDataSet {
+private fun bandDataset(startX: Float, endX: Float, yMax: Float, label: String): LineDataSet {
   val entries = listOf(Entry(startX, yMax), Entry(endX, yMax))
-  return LineDataSet(entries, "").apply {
+  return LineDataSet(entries, label).apply {
     setDrawCircles(false)
     setDrawValues(false)
     setDrawFilled(true)
     lineWidth = 0f
-    color = Color.Transparent.toArgb()
-    fillColor = BreakFillColor
-    fillAlpha = 255
+    color = BreakColor
+    fillColor = BreakColor
+    fillAlpha = BreakFillAlpha
     isHighlightEnabled = false
-    form = LegendForm.NONE
+    form = if (label.isEmpty()) LegendForm.NONE else LegendForm.SQUARE
   }
 }

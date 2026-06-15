@@ -77,7 +77,7 @@ fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
 
   val yMax = gramsData.maxOfOrNull { it.yMax } ?: 0f
   val showBreaks = breakPeriodInStatsEnabled && yMax > 0f
-  val breakBands = if (showBreaks) createBreakPeriodBands(pauses, yMax) else emptyList()
+  val breakBands = if (showBreaks) createBreakPeriodBands(pauses, yMax, breakLabel) else emptyList()
   val datasets = breakBands + gramsData
 
   LineChart(datasets, description) {
@@ -91,7 +91,7 @@ fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
       addLimitLine(hourLimitLine)
     }
     if (showBreaks) {
-      breakPeriodLimitLines(pauses, breakLabel).forEach { addLimitLine(it) }
+      breakPeriodLimitLines(pauses).forEach { addLimitLine(it) }
     }
   }
 }
