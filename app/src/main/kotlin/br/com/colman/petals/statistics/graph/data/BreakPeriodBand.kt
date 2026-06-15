@@ -9,7 +9,9 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import java.time.LocalTime
 
-private val BreakFillColor = Color.Gray.copy(alpha = 0.2f).toArgb()
+private val BreakColor = Color(0xFFFFC107) // Amber - warning
+private val BreakFillColor = BreakColor.copy(alpha = 0.25f).toArgb()
+private val BreakLineColor = BreakColor.toArgb()
 
 private fun LocalTime.toHourAxis() = hour + minute / 60f
 
@@ -48,12 +50,14 @@ fun createBreakPeriodBands(pauses: List<Pause>, yMax: Float): List<LineDataSet> 
 
 /**
  * A thin vertical [LimitLine] at each enabled pause's start and end hour, marking the band edges.
+ * Each line is tagged with [label] so it is clearly identifiable as a break-period boundary.
  */
-fun breakPeriodLimitLines(pauses: List<Pause>): List<LimitLine> {
+fun breakPeriodLimitLines(pauses: List<Pause>, label: String): List<LimitLine> {
   return breakPeriodEdges(pauses).map { x ->
-    LimitLine(x).apply {
+    LimitLine(x, label).apply {
       lineWidth = 1f
-      lineColor = BreakFillColor
+      lineColor = BreakLineColor
+      textColor = BreakLineColor
     }
   }
 }

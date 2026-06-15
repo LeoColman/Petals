@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import br.com.colman.petals.R.string.break_period
 import br.com.colman.petals.R.string.grams_distribution_per_hour_of_day
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.statistics.component.Period
@@ -68,6 +69,7 @@ fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
   val pauses by pauseRepository.getAll().collectAsState(emptyList())
 
   val description = stringResource(grams_distribution_per_hour_of_day)
+  val breakLabel = stringResource(break_period)
   val gramsData = useGroups.map { (period, uses) ->
     val label = period.label()
     createDistributionPerHourDataset(period.days, uses, label)
@@ -89,7 +91,7 @@ fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
       addLimitLine(hourLimitLine)
     }
     if (showBreaks) {
-      breakPeriodLimitLines(pauses).forEach { addLimitLine(it) }
+      breakPeriodLimitLines(pauses, breakLabel).forEach { addLimitLine(it) }
     }
   }
 }
