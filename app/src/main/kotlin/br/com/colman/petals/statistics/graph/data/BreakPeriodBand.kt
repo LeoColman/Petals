@@ -51,7 +51,10 @@ fun createBreakPeriodBands(pauses: List<Pause>, yMax: Float): List<LineDataSet> 
  */
 fun breakPeriodLimitLines(pauses: List<Pause>): List<LimitLine> {
   return breakPeriodEdges(pauses).map { x ->
-    LimitLine(x).apply { lineWidth = 1f; lineColor = BreakFillColor }
+    LimitLine(x).apply {
+      lineWidth = 1f
+      lineColor = BreakFillColor
+    }
   }
 }
 
