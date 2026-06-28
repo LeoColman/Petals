@@ -1,6 +1,7 @@
 #!/usr/bin/env kotlin
 @file:Repository("https://repo1.maven.org/maven2/")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:3.7.0")
+@file:Repository("https://central.sonatype.com/repository/maven-snapshots/")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:4.0.0-SNAPSHOT")
 
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v3")
@@ -19,7 +20,7 @@ import io.github.typesafegithub.workflows.actions.softprops.ActionGhRelease
 import io.github.typesafegithub.workflows.domain.RunnerType.UbuntuLatest
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch
 import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch.Input
-import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch.Type.String
+import io.github.typesafegithub.workflows.domain.triggers.WorkflowDispatch.Input.Type.String
 import io.github.typesafegithub.workflows.dsl.expressions.Contexts
 import io.github.typesafegithub.workflows.dsl.expressions.expr
 import io.github.typesafegithub.workflows.dsl.workflow
@@ -36,7 +37,7 @@ workflow(
         "version_type" to Input(
           description = "Type of version bump (major, minor, patch)",
           required = true,
-          type = WorkflowDispatch.Type.Choice,
+          type = WorkflowDispatch.Input.Type.Choice,
           options = listOf("major", "minor", "patch")
         ),
         "changelog" to Input(
