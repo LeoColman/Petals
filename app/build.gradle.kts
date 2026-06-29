@@ -276,6 +276,25 @@ sqldelight {
   }
 }
 
+// SQLDelight 2.3.x registers generated sources with variant.sources.java for AGP < 9.0,
+// but KGP 2.3.x does not include java-registered sources in Kotlin compilation.
+// Manually wire each variant's generate task output into the KotlinCompile source set.
+afterEvaluate {
+  android.applicationVariants.all {
+    val variantName = name
+    val capitalizedName = variantName.replaceFirstChar { it.uppercase() }
+    val generateTaskName = "generate${capitalizedName}DatabaseInterface"
+    if (tasks.findByName(generateTaskName) == null) return@all
+    val sqldelightDir = layout.buildDirectory.dir("generated/sqldelight/code/Database/$variantName")
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>()
+      .matching { it.name == "compile${capitalizedName}Kotlin" }
+      .configureEach {
+        dependsOn(generateTaskName)
+        source(sqldelightDir)
+      }
+  }
+}
+
 licensee {
   allow("Apache-2.0")
   allow("BSD-3-Clause")
