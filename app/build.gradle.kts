@@ -283,7 +283,7 @@ afterEvaluate {
   android.applicationVariants.all {
     val variantName = name
     val capitalizedName = variantName.replaceFirstChar { it.uppercase() }
-    val sqldelightDir = layout.buildDirectory.dir("generated/sqldelight/code/$variantName").get().asFile
+    val sqldelightDir = layout.buildDirectory.dir("generated/sqldelight/code/Database/$variantName")
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>()
       .matching { it.name == "compile${capitalizedName}Kotlin" }
       .configureEach {
