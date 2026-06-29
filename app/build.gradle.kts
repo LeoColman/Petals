@@ -268,6 +268,7 @@ java {
 sqldelight {
   databases {
     create("Database") {
+      packageName.set("br.com.colman.petals")
       dialect(libs.sqldelight.sqlite.dialect)
       schemaOutputDirectory = file("src/main/sqldelight/databases")
       verifyMigrations = true
