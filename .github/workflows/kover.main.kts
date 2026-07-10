@@ -2,7 +2,7 @@
 @file:Repository("https://repo1.maven.org/maven2/")
 @file:Repository("https://central.sonatype.com/repository/maven-snapshots/")
 @file:CompilerOptions("-Xmulti-dollar-interpolation")
-@file:DependsOn("io.github.typesafegithub:github-workflows-kt:4.0.0-SNAPSHOT")
+@file:DependsOn("io.github.typesafegithub:github-workflows-kt:4.0.0")
 
 @file:Repository("https://bindings.krzeminski.it")
 @file:DependsOn("actions:checkout:v4")
