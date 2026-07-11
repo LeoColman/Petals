@@ -92,7 +92,7 @@ workflow(
 
     run(name = "Create Playstore Bundle", command = "./gradlew clean bundlePlaystoreRelease")
 
-    uses(action = SetupRuby(rubyVersion = "3.2.3"))
+    uses(action = SetupRuby(rubyVersion = "3.4.10"))
     run(
       name = "Publish to Playstore",
       workingDirectory = "fastlane",
