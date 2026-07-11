@@ -1,0 +1,1 @@
+Updated internal libraries and build tooling, including Android 16 (API 36) compatibility.
