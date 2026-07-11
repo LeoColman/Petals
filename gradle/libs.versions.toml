@@ -40,7 +40,7 @@ kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", ve
 kotlin-csv = "com.jsoizo:kotlin-csv:1.11.0"
 kotlin-date-range = "me.moallemi.tools:kotlin-date-range:1.0.0"
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
