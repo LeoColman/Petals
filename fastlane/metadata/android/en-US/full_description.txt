@@ -1,11 +1,50 @@
-The Open Source app Petals aims to help its users to either quit weed, reduce usage or simply know how much they're using.
+Petals is a free and open source cannabis tracker that helps you understand your habit — and change it at your own pace.
 
-Features
+Whether you want to quit weed, take a tolerance break, cut down gradually, or simply know how much you actually use, Petals gives you the numbers. No account, no sign-up, and your data never leaves your phone.
 
-- Track consumption
-- Time-gate your consumption
-- Track usage
-- See statistics to understand your consumption
-- Damage reduction instructions
-- Export and Import as simple CSV files
-- Extra privacy with a personal PIN
+TRACK YOUR USE
+
+- Log every session: amount in grams, cost per gram, date and time
+- Record the consumption method: smoked, vaporized, edible or other
+- See the time since your last use, down to the second
+- Track how much you spend on weed, today, this week and overall
+- Add a use in one tap from the home screen widget
+
+UNDERSTAND YOUR PATTERNS
+
+- Statistics and graphs of your cannabis usage over time
+- Usage by hour of day and by day of week, so you can see when the urge really hits
+- Filter your history and spot the trends you would never notice from memory
+- Watch the real cost of the habit add up
+
+CUT DOWN AT YOUR OWN PACE
+
+- Time-gate your sessions: set a minimum interval between uses and let the timer hold you to it
+- Register pause periods for a tolerance break or a full stop
+- No streak shaming, no pressure: the app shows you the data, you set the pace
+
+WITHDRAWAL AND DRUG TESTS
+
+- Track withdrawal symptoms over time: irritability, anger, restlessness, sleep difficulty, anxiety, decreased appetite and discomfort
+- Estimated THC concentration after your last use
+- Estimates of when urine, blood, saliva and hair tests may come back clean, with the sources cited
+
+PRIVACY BY DESIGN
+
+- All of your data stays on your device
+- No account, no cloud, no analytics
+- Lock the app behind a personal PIN
+- Export and import everything as plain CSV files — your data belongs to you
+
+HARM REDUCTION
+
+- Built-in harm reduction information, because using less safely beats using blindly
+
+FREE AND OPEN SOURCE
+
+Petals is licensed under the AGPL-3.0. The full source code is public, contributions are welcome, and the app is translated by the community.
+
+The F-Droid and GitHub builds contain no advertisements at all. The Play Store version contains ads; if you want the ad free experience, download it from F-Droid.
+
+Source code: https://github.com/LeoColman/Petals
+F-Droid: https://f-droid.org/packages/br.com.colman.petals/
