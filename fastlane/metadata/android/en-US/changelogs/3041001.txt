@@ -1,0 +1,1 @@
+Improved the store listing so people looking for a cannabis tracker can actually find the app, and fixed listing translations in Ukrainian and Tamil that described the wrong kind of weed.
