@@ -189,17 +189,19 @@ private fun AddUseDialog(
   val date = remember { mutableStateOf(LocalDate.now()) }
   val time = remember { mutableStateOf(LocalTime.now()) }
   val description = remember { mutableStateOf(previousUse?.description.orEmpty()) }
+  val consumptionMethod = remember { mutableStateOf(previousUse?.consumptionMethod) }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
     amount.value.toBigDecimalOrNull() ?: ZERO,
     costPerGram.value.toBigDecimalOrNull() ?: ZERO,
-    description = description.value
+    description = description.value,
+    consumptionMethod = consumptionMethod.value
   )
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description) },
+    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod) },
     confirmButton = { ConfirmNewUseButton(onAddUse, use, onDismiss) }
   )
 }

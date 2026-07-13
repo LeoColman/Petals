@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -13,6 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,23 +28,27 @@ import br.com.colman.petals.R.string
 import br.com.colman.petals.R.string.add_use
 import br.com.colman.petals.R.string.amount_grams_title
 import br.com.colman.petals.R.string.because_i_wanted
+import br.com.colman.petals.R.string.consumption_method
 import br.com.colman.petals.R.string.cost_per_gram_title
+import br.com.colman.petals.R.string.method_unspecified
 import br.com.colman.petals.components.ClickableTextField
 import br.com.colman.petals.components.dateDialogState
 import br.com.colman.petals.components.timeDialogState
 import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.use.repository.ConsumptionMethod
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Calendar
 import compose.icons.tablericons.Cash
 import compose.icons.tablericons.Clock
+import compose.icons.tablericons.Flame
 import compose.icons.tablericons.Notebook
 import compose.icons.tablericons.Scale
 import org.koin.compose.koinInject
 import java.time.LocalDate
 import java.time.LocalTime
 
-@Suppress("NAME_SHADOWING")
+@Suppress("NAME_SHADOWING", "LongParameterList")
 @Composable
 fun AddUseForm(
   amount: MutableState<String>,
@@ -48,6 +56,7 @@ fun AddUseForm(
   date: MutableState<LocalDate>,
   time: MutableState<LocalTime>,
   description: MutableState<String>,
+  consumptionMethod: MutableState<ConsumptionMethod?>,
 ) {
   val settingsRepository = koinInject<SettingsRepository>()
   val is24HoursFormat by settingsRepository.is24HoursFormat.collectAsState(false)
@@ -108,5 +117,43 @@ fun AddUseForm(
       label = { Text(stringResource(string.description)) },
       placeholder = { Text(stringResource(because_i_wanted)) }
     )
+
+    ConsumptionMethodField(consumptionMethod)
+  }
+}
+
+@Composable
+private fun ConsumptionMethodField(consumptionMethod: MutableState<ConsumptionMethod?>) {
+  var selected by consumptionMethod
+  var expanded by remember { mutableStateOf(false) }
+
+  val selectedLabel = selected?.let { stringResource(it.label) } ?: stringResource(method_unspecified)
+
+  Box(Modifier.fillMaxWidth()) {
+    ClickableTextField(
+      label = consumption_method,
+      leadingIcon = TablerIcons.Flame,
+      value = selectedLabel,
+      modifier = Modifier.fillMaxWidth()
+    ) {
+      expanded = true
+    }
+
+    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+      DropdownMenuItem(onClick = {
+        selected = null
+        expanded = false
+      }) {
+        Text(stringResource(method_unspecified))
+      }
+      ConsumptionMethod.entries.forEach { method ->
+        DropdownMenuItem(onClick = {
+          selected = method
+          expanded = false
+        }) {
+          Text(stringResource(method.label))
+        }
+      }
+    }
   }
 }

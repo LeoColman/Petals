@@ -1,0 +1,1 @@
+ALTER TABLE Use ADD COLUMN consumption_method TEXT NOT NULL DEFAULT '';

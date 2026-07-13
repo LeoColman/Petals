@@ -2,7 +2,9 @@ package br.com.colman.petals.use.io.input
 
 import br.com.colman.petals.use.UseArb
 import br.com.colman.petals.use.io.UseCsvArb
+import br.com.colman.petals.use.repository.ConsumptionMethod
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.result.shouldBeFailure
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeUUID
@@ -71,10 +73,37 @@ class UseCsvParserTest : FunSpec({
 
   test("Parsers the description field to empty if absent") {
     val use = UseArb.next().copy(description = "my description")
-    val useCsv = use.columns().dropLast(1).joinToString(",")
+    val useCsv = use.columns().dropLast(2).joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().description shouldBe ""
+  }
+
+  test("Parses the consumption method field if present") {
+    val use = UseArb.next().copy(consumptionMethod = ConsumptionMethod.VAPORIZED)
+    val useCsv = use.columns().joinToString(",")
+    val parsed = UseCsvParser.parse(useCsv)
+
+    parsed.getOrThrow().consumptionMethod shouldBe ConsumptionMethod.VAPORIZED
+  }
+
+  test("Parses the consumption method field to null if absent (legacy 5-column CSV)") {
+    val use = UseArb.next().copy(consumptionMethod = ConsumptionMethod.SMOKED)
+    val legacyCsv = use.columns().dropLast(1).joinToString(",")
+
+    legacyCsv.split(",") shouldHaveSize 5
+
+    val parsed = UseCsvParser.parse(legacyCsv)
+
+    parsed.getOrThrow().consumptionMethod shouldBe null
+  }
+
+  test("Parses the consumption method field to null if the key is unknown") {
+    val use = UseArb.next()
+    val csvWithUnknownMethod = use.columns().dropLast(1).plus("unknown-method").joinToString(",")
+    val parsed = UseCsvParser.parse(csvWithUnknownMethod)
+
+    parsed.getOrThrow().consumptionMethod shouldBe null
   }
 
   test("Parses successfully even if extra fields are present") {

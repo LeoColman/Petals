@@ -16,7 +16,7 @@ class UseCsvArbitraryTest : FunSpec({
   test("Generated CSV strings have the correct number of fields") {
     checkAll(UseCsvArb) { csvString ->
       val fields = csvString.split(",")
-      fields shouldHaveSize 5
+      fields shouldHaveSize 6
     }
   }
 

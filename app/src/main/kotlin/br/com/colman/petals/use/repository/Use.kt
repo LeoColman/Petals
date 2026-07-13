@@ -15,7 +15,9 @@ data class Use(
 
   val id: String = UUID.randomUUID().toString(),
 
-  val description: String = ""
+  val description: String = "",
+
+  val consumptionMethod: ConsumptionMethod? = null
 ) {
   @Transient
   val localDate: LocalDate = date.toLocalDate()
@@ -25,7 +27,8 @@ data class Use(
     amountGrams.toPlainString(),
     costPerGram.toPlainString(),
     id,
-    description
+    description,
+    consumptionMethod?.key.orEmpty()
   )
 
   override fun equals(other: Any?): Boolean {
@@ -38,6 +41,7 @@ data class Use(
     if (amountGrams != other.amountGrams) return false
     if (costPerGram != other.costPerGram) return false
     if (description != other.description) return false
+    if (consumptionMethod != other.consumptionMethod) return false
 
     return true
   }
@@ -47,6 +51,7 @@ data class Use(
     result = 31 * result + amountGrams.hashCode()
     result = 31 * result + costPerGram.hashCode()
     result = 31 * result + description.hashCode()
+    result = 31 * result + (consumptionMethod?.hashCode() ?: 0)
     return result
   }
 }
