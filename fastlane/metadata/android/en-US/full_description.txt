@@ -42,9 +42,4 @@ HARM REDUCTION
 
 FREE AND OPEN SOURCE
 
-Petals is licensed under the AGPL-3.0. The full source code is public, contributions are welcome, and the app is translated by the community.
-
-The F-Droid and GitHub builds contain no advertisements at all. The Play Store version contains ads; if you want the ad free experience, download it from F-Droid.
-
-Source code: https://github.com/LeoColman/Petals
-F-Droid: https://f-droid.org/packages/br.com.colman.petals/
+Petals is free and licensed under the AGPL-3.0. The full source code is public, contributions are welcome, and the app is translated by its own community of users.
