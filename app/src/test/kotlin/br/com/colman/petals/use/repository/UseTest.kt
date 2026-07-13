@@ -68,6 +68,20 @@ class UseTest : FunSpec({
 
       use1 shouldNotBeEqual use2
     }
+
+    test("different consumptionMethod should not be equal") {
+      val use1 = Use(consumptionMethod = ConsumptionMethod.SMOKED)
+      val use2 = use1.copy(consumptionMethod = ConsumptionMethod.EDIBLE)
+
+      use1 shouldNotBeEqual use2
+    }
+
+    test("null and non-null consumptionMethod should not be equal") {
+      val use1 = Use(consumptionMethod = null)
+      val use2 = use1.copy(consumptionMethod = ConsumptionMethod.OTHER)
+
+      use1 shouldNotBeEqual use2
+    }
   }
 
   context("Hashcode") {
@@ -120,6 +134,14 @@ class UseTest : FunSpec({
       use1 shouldNotBeEqual use2
       use1.hashCode() shouldNotBe use2.hashCode()
     }
+
+    test("different consumptionMethod => different hash code") {
+      val use1 = Use(consumptionMethod = ConsumptionMethod.SMOKED)
+      val use2 = Use(consumptionMethod = ConsumptionMethod.VAPORIZED)
+
+      use1 shouldNotBeEqual use2
+      use1.hashCode() shouldNotBe use2.hashCode()
+    }
   }
 
   test("columns() should return a list of stringified fields") {
@@ -129,17 +151,25 @@ class UseTest : FunSpec({
       amountGrams = BigDecimal("50.00"),
       costPerGram = BigDecimal("1.25"),
       id = "test-id",
-      description = "Test description"
+      description = "Test description",
+      consumptionMethod = ConsumptionMethod.SMOKED
     )
 
     val columns = use.columns()
 
-    columns.size shouldBe 5
+    columns.size shouldBe 6
     columns[0] shouldBe date.toString()
     columns[1] shouldBe "50.00"
     columns[2] shouldBe "1.25"
     columns[3] shouldBe "test-id"
     columns[4] shouldBe "Test description"
+    columns[5] shouldBe "smoked"
+  }
+
+  test("columns() should render an empty consumption method as blank") {
+    val use = Use(consumptionMethod = null)
+
+    use.columns()[5] shouldBe ""
   }
 
   context("Total cost") {

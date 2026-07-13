@@ -1,5 +1,6 @@
 package br.com.colman.petals.use.io.input
 
+import br.com.colman.petals.use.repository.ConsumptionMethod
 import br.com.colman.petals.use.repository.Use
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.time.LocalDateTime
@@ -17,8 +18,9 @@ object UseCsvParser {
     val cost = values[2].toBigDecimal()
     val id = parseOrGenerateUUID(values.getOrNull(3))
     val description = values.getOrElse(4) { "" }
+    val consumptionMethod = ConsumptionMethod.fromKey(values.getOrElse(5) { "" })
 
-    Use(dateTime, amount, cost, id, description)
+    Use(dateTime, amount, cost, id, description, consumptionMethod)
   }
 
   private fun parseDateTime(date: String) = LocalDateTime.parse(date, ISO_LOCAL_DATE_TIME)

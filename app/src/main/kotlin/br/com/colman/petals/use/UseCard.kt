@@ -50,6 +50,7 @@ import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Cash
+import compose.icons.tablericons.Flame
 import compose.icons.tablericons.Notebook
 import compose.icons.tablericons.ReportMoney
 import compose.icons.tablericons.Scale
@@ -137,6 +138,13 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
             Text(use.description)
           }
         }
+
+        use.consumptionMethod?.let { method ->
+          Row(Modifier, spacedBy(8.dp), CenterVertically) {
+            Icon(TablerIcons.Flame, null)
+            Text(stringResource(method.label))
+          }
+        }
       }
 
       Column(
@@ -213,18 +221,20 @@ private fun EditUseDialog(
   val date = remember { mutableStateOf(use.localDate) }
   val time = remember { mutableStateOf(use.date.toLocalTime()) }
   val description = remember { mutableStateOf(use.description) }
+  val consumptionMethod = remember { mutableStateOf(use.consumptionMethod) }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
     amount.value.toBigDecimalOrNull() ?: BigDecimal.ZERO,
     costPerGram.value.toBigDecimalOrNull() ?: BigDecimal.ZERO,
     use.id,
-    description.value
+    description.value,
+    consumptionMethod.value
   )
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description) },
+    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod) },
     confirmButton = { ConfirmEdit(onEditUse, use, onDismiss) }
   )
 }

@@ -1,5 +1,6 @@
 package br.com.colman.petals.use
 
+import br.com.colman.petals.use.repository.ConsumptionMethod
 import br.com.colman.petals.use.repository.Use
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAtMost
@@ -14,9 +15,12 @@ import io.kotest.property.arbitrary.arbitrary
 import io.kotest.property.arbitrary.az
 import io.kotest.property.arbitrary.bigDecimal
 import io.kotest.property.arbitrary.localDateTime
+import io.kotest.property.arbitrary.of
 import io.kotest.property.arbitrary.string
 import io.kotest.property.arbitrary.take
 import io.kotest.property.checkAll
+
+val ConsumptionMethodArb = Arb.of(ConsumptionMethod.entries + null)
 
 val UseArb = arbitrary {
   val bigDecimals = Arb.bigDecimal((-100.0).toBigDecimal(), 100.0.toBigDecimal())
@@ -24,7 +28,8 @@ val UseArb = arbitrary {
     Arb.localDateTime().bind(),
     bigDecimals.bind(),
     bigDecimals.bind(),
-    description = Arb.string(codepoints = Codepoint.az()).bind()
+    description = Arb.string(codepoints = Codepoint.az()).bind(),
+    consumptionMethod = ConsumptionMethodArb.bind()
   )
 }
 
