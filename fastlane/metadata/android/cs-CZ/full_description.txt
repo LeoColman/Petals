@@ -1,0 +1,11 @@
+Open source aplikace Petals pomáhá uživatelům buď přestat s trávou, omezit její užívání, nebo prostě zjistit, kolik jí užívají.
+
+Funkce
+
+- Sledování konzumace
+- Časové omezení konzumace
+- Sledování užívání
+- Statistiky pro pochopení vaší konzumace
+- Instrukce ke snížení škodlivosti
+- Export a import jako jednoduché CSV soubory
+- Extra soukromí díky osobnímu PINu
