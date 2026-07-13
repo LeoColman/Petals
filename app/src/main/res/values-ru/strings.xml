@@ -179,4 +179,11 @@
     <string name="enforcement">Исполнение</string>
     <string name="current_nervousness_anxiety">Текущая нервозность/тревожность: %s</string>
     <string name="nervousness_anxiety">Нервозность / беспокойство</string>
+    <string name="consumption_method">Способ употребления</string>
+    <string name="consumption_method_label">способ_употребления</string>
+    <string name="method_smoked">Выкурено</string>
+    <string name="method_vaporized">Испарено</string>
+    <string name="method_edible">Съедобное</string>
+    <string name="method_other">Другое</string>
+    <string name="method_unspecified">Не указано</string>
 </resources>

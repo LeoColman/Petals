@@ -167,4 +167,11 @@
     <string name="enable_or_disable_hour_of_day_line_in_stats">Activar o desactivar la línea de la hora del día en los gráficos</string>
     <string name="hour_of_day_line_in_stats_enabled">Conmutar hora del día</string>
     <string name="moving_average_grams_distribution">Promedio de gramos por día</string>
+    <string name="consumption_method">Método de consumo</string>
+    <string name="consumption_method_label">método_de_consumo</string>
+    <string name="method_smoked">Fumado</string>
+    <string name="method_vaporized">Vaporizado</string>
+    <string name="method_edible">Comestible</string>
+    <string name="method_other">Otro</string>
+    <string name="method_unspecified">No especificado</string>
 </resources>

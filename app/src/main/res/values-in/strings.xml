@@ -187,4 +187,11 @@
     <string name="average_time_between_sessions">Rata-rata antar sesi</string>
     <string name="ignore_longest_daily_delay">Abaikan jeda harian terpanjang</string>
     <string name="ignore_longest_daily_delay_description">Berguna untuk mengabaikan waktu tidur saat menghitung rata-rata waktu antar sesi</string>
+    <string name="consumption_method">Metode konsumsi</string>
+    <string name="consumption_method_label">metode_konsumsi</string>
+    <string name="method_smoked">Dihisap</string>
+    <string name="method_vaporized">Diuapkan</string>
+    <string name="method_edible">Dapat dimakan</string>
+    <string name="method_other">Lainnya</string>
+    <string name="method_unspecified">Tidak ditentukan</string>
 </resources>

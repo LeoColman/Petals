@@ -198,4 +198,11 @@
         <item quantity="many">Posledních %s dne</item>
         <item quantity="other">Posledních %s dní</item>
     </plurals>
+    <string name="consumption_method">Způsob užití</string>
+    <string name="consumption_method_label">způsob_užití</string>
+    <string name="method_smoked">Kouřeno</string>
+    <string name="method_vaporized">Odpařeno</string>
+    <string name="method_edible">Jedlé</string>
+    <string name="method_other">Jiné</string>
+    <string name="method_unspecified">Neurčeno</string>
 </resources>
