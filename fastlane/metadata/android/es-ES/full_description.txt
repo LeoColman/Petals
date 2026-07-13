@@ -1,11 +1,45 @@
-La aplicación de código abierto Petals pretende ayudar a sus usuarios a dejar la hierba, reducir su consumo o simplemente saber cuánto consumen.
+Petals es un rastreador de cannabis gratuito y de código abierto que te ayuda a entender tu consumo — y a cambiarlo a tu propio ritmo.
 
-Características
+Ya sea que quieras dejar la hierba, tomarte una pausa de tolerancia, reducir tu consumo poco a poco, o simplemente saber cuánto cannabis consumes en realidad, Petals te da los números. Sin cuenta, sin registro, y tus datos nunca salen de tu teléfono.
 
-- Seguimiento del consumo
-- Controla el tiempo de consumo
-- Seguimiento del consumo
-- Consulta estadísticas para entender tu consumo
-- Instrucciones de reducción de daños
-- Exportación e importación como simples archivos CSV
-- Más privacidad con un PIN personal
+REGISTRA TU CONSUMO
+
+- Anota cada sesión: cantidad en gramos, precio por gramo, fecha y hora
+- Registra el método de consumo: fumado, vaporizado, comestible u otro
+- Consulta el tiempo desde tu último consumo, al segundo
+- Controla cuánto gastas en cannabis hoy, esta semana y en total
+- Añade un consumo con un toque desde el widget de la pantalla de inicio
+
+ENTIENDE TUS PATRONES
+
+- Estadísticas y gráficos de tu consumo de cannabis a lo largo del tiempo
+- Consumo por hora del día y día de la semana, para ver cuándo aparecen realmente las ganas
+- Filtra tu historial y descubre tendencias que nunca notarías de memoria
+- Observa cómo se acumula el coste real del hábito
+
+REDUCE A TU PROPIO RITMO
+
+- Pon límites de tiempo a tus sesiones: fija un intervalo mínimo entre consumos y deja que el temporizador te lo recuerde
+- Registra periodos de pausa para una tolerancia break o una parada total
+- Sin presión ni culpa por romper una racha: la app te muestra los datos, tú marcas el ritmo
+
+SÍNDROME DE ABSTINENCIA Y PRUEBAS DE DROGAS
+
+- Registra los síntomas de abstinencia a lo largo del tiempo: irritabilidad, enfado, inquietud, dificultad para dormir, ansiedad, pérdida de apetito y malestar
+- Concentración estimada de THC tras tu último consumo
+- Estimaciones de cuándo los test de orina, sangre, saliva y pelo podrían dar negativo, con las fuentes citadas
+
+PRIVACIDAD POR DISEÑO
+
+- Todos tus datos permanecen en tu dispositivo
+- Sin cuenta, sin nube, sin análisis de terceros
+- Bloquea la app con un PIN personal
+- Exporta e importa todo como archivos CSV sencillos — tus datos son tuyos
+
+REDUCCIÓN DE DAÑOS
+
+- Información integrada de reducción de daños, porque consumir con menos riesgo es mejor que consumir a ciegas
+
+GRATIS Y DE CÓDIGO ABIERTO
+
+Petals es gratuito y está licenciado bajo la AGPL-3.0. El código fuente completo es público, las contribuciones son bienvenidas y la app está traducida por su propia comunidad de usuarios.

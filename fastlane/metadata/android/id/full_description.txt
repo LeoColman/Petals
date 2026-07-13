@@ -1,11 +1,45 @@
-Aplikasi sumber terbuka Petals bertujuan membantu penggunanya untuk berhenti menggunakan ganja, mengurangi pemakaian, atau sekadar mengetahui seberapa banyak yang mereka konsumsi.
+Petals adalah pelacak ganja gratis dan open source yang membantu Anda memahami kebiasaan konsumsi — dan mengubahnya sesuai kecepatan Anda sendiri.
 
-Fitur:
+Baik Anda ingin berhenti dari ganja, menjalani tolerance break, mengurangi pemakaian secara bertahap, atau sekadar tahu seberapa banyak yang sebenarnya Anda konsumsi, Petals memberi Anda datanya. Tanpa akun, tanpa pendaftaran, dan data Anda tidak pernah keluar dari ponsel.
 
-- Lacak konsumsi
-- Batasi konsumsi berdasarkan waktu
-- Lacak penggunaan
-- Lihat statistik untuk memahami konsumsi Anda
-- Instruksi pengurangan dampak
-- Ekspor dan impor sebagai file CSV sederhana
-- Privasi ekstra dengan PIN pribadi
+LACAK KONSUMSI ANDA
+
+- Catat setiap sesi: jumlah dalam gram, harga per gram, tanggal dan waktu
+- Catat metode konsumsi: dihisap, divape, edible, atau lainnya
+- Lihat waktu sejak pemakaian terakhir, sampai hitungan detik
+- Lacak berapa banyak uang yang Anda habiskan untuk ganja, hari ini, minggu ini, dan total
+- Tambahkan catatan pemakaian dalam satu ketukan dari widget layar utama
+
+PAHAMI POLA PEMAKAIAN ANDA
+
+- Statistik dan grafik konsumsi ganja Anda dari waktu ke waktu
+- Pemakaian berdasarkan jam dan hari dalam seminggu, agar tahu kapan keinginan itu paling kuat
+- Filter riwayat Anda dan temukan tren yang tidak akan pernah Anda sadari hanya dari ingatan
+- Lihat biaya sebenarnya dari kebiasaan ini yang terus bertambah
+
+KURANGI SESUAI KECEPATAN ANDA
+
+- Batasi waktu antar sesi: tetapkan interval minimum antar pemakaian dan biarkan timer menjaga Anda tetap disiplin
+- Catat periode jeda untuk tolerance break atau berhenti total
+- Tanpa tekanan streak, tanpa paksaan: aplikasi hanya menunjukkan data, Anda yang menentukan kecepatan
+
+GEJALA PUTUS ZAT DAN TES NARKOBA
+
+- Lacak gejala putus zat dari waktu ke waktu: mudah marah, gelisah, sulit tidur, cemas, nafsu makan menurun, dan rasa tidak nyaman
+- Perkiraan konsentrasi THC sejak pemakaian terakhir Anda
+- Perkiraan kapan tes urine, darah, saliva, dan rambut bisa kembali bersih, lengkap dengan sumber rujukannya
+
+PRIVASI SEJAK AWAL DIRANCANG
+
+- Semua data Anda tetap tersimpan di perangkat Anda
+- Tanpa akun, tanpa cloud, tanpa analitik
+- Kunci aplikasi dengan PIN pribadi
+- Ekspor dan impor semuanya sebagai file CSV biasa — data Anda tetap milik Anda
+
+PENGURANGAN DAMPAK BURUK
+
+- Informasi bawaan tentang pengurangan dampak buruk, karena memakai dengan lebih aman lebih baik daripada memakai tanpa mengetahui risikonya
+
+GRATIS DAN OPEN SOURCE
+
+Petals gratis dan berlisensi AGPL-3.0. Kode sumber lengkapnya bersifat publik, kontribusi selalu diterima, dan aplikasi ini diterjemahkan oleh komunitas penggunanya sendiri.

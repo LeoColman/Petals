@@ -1,10 +1,45 @@
-L'application à code source ouvert Petals vise à aider ses utilisateurs à arrêter de fumer, à réduire leur consommation ou simplement à savoir combien ils consomment.
+Petals est un suivi cannabis gratuit et open source qui vous aide à comprendre votre consommation — et à la faire évoluer à votre rythme.
 
-Caractéristiques
+Que vous vouliez arrêter l'herbe, faire une pause de tolérance, réduire progressivement votre consommation, ou simplement savoir combien vous consommez réellement, Petals vous donne les chiffres. Pas de compte, pas d'inscription, et vos données ne quittent jamais votre téléphone.
 
-- Suivi de la consommation
-- Suivi de la consommation
-- Voir les statistiques pour comprendre votre consommation
-- Instructions de réduction des dommages
-- Exportation et importation sous forme de simples fichiers CSV
-- Code PIN pour une meilleure vie privée
+SUIVEZ VOTRE CONSOMMATION
+
+- Enregistrez chaque session : quantité en grammes, prix au gramme, date et heure
+- Notez le mode de consommation : fumé, vaporisé, comestible ou autre
+- Consultez le temps écoulé depuis votre dernière consommation, à la seconde près
+- Suivez ce que vous dépensez en cannabis aujourd'hui, cette semaine et au total
+- Ajoutez une consommation en un geste depuis le widget de l'écran d'accueil
+
+COMPRENEZ VOS HABITUDES
+
+- Statistiques et graphiques de votre consommation de cannabis dans le temps
+- Consommation par heure de la journée et jour de la semaine, pour repérer quand l'envie frappe vraiment
+- Filtrez votre historique et repérez des tendances invisibles à l'œil nu
+- Observez le coût réel de l'habitude s'accumuler
+
+RÉDUISEZ À VOTRE RYTHME
+
+- Verrouillez vos sessions dans le temps : fixez un intervalle minimum entre deux consommations et laissez le minuteur vous tenir à cet objectif
+- Enregistrez des périodes de pause pour une pause de tolérance ou un arrêt complet
+- Aucune pression, aucune culpabilisation en cas de série interrompue : l'appli vous montre les données, vous fixez le rythme
+
+SEVRAGE ET TESTS DE DÉPISTAGE
+
+- Suivez les symptômes de sevrage dans le temps : irritabilité, colère, agitation, troubles du sommeil, anxiété, perte d'appétit et inconfort
+- Concentration de THC estimée après votre dernière consommation
+- Estimations du moment où les tests urinaires, sanguins, salivaires et capillaires pourraient devenir négatifs, sources citées
+
+VIE PRIVÉE PAR CONCEPTION
+
+- Toutes vos données restent sur votre appareil
+- Pas de compte, pas de cloud, pas de traçage
+- Verrouillez l'appli avec un code PIN personnel
+- Exportez et importez tout sous forme de simples fichiers CSV — vos données vous appartiennent
+
+RÉDUCTION DES RISQUES
+
+- Informations de réduction des risques intégrées, parce que consommer moins dangereusement vaut mieux que consommer à l'aveugle
+
+GRATUIT ET OPEN SOURCE
+
+Petals est gratuit et sous licence AGPL-3.0. Le code source complet est public, les contributions sont les bienvenues, et l'appli est traduite par sa propre communauté d'utilisateurs.
