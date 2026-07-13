@@ -1,0 +1,1 @@
+New: track the consumption method of each use (smoked, vaporized, edible or other), including CSV export/import support. Added Czech translation. Translated the new feature into all 11 supported languages.
