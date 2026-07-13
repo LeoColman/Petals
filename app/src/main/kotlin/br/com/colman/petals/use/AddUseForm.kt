@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ExposedDropdownMenuBox
+import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -122,6 +124,7 @@ fun AddUseForm(
   }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ConsumptionMethodField(consumptionMethod: MutableState<ConsumptionMethod?>) {
   var selected by consumptionMethod
@@ -129,17 +132,18 @@ private fun ConsumptionMethodField(consumptionMethod: MutableState<ConsumptionMe
 
   val selectedLabel = selected?.let { stringResource(it.label) } ?: stringResource(method_unspecified)
 
-  Box(Modifier.fillMaxWidth()) {
-    ClickableTextField(
-      label = consumption_method,
-      leadingIcon = TablerIcons.Flame,
+  ExposedDropdownMenuBox(expanded, { expanded = it }, Modifier.fillMaxWidth()) {
+    OutlinedTextField(
       value = selectedLabel,
+      onValueChange = {},
+      readOnly = true,
+      leadingIcon = { Icon(TablerIcons.Flame, null) },
+      trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
+      label = { Text(stringResource(consumption_method)) },
       modifier = Modifier.fillMaxWidth()
-    ) {
-      expanded = true
-    }
+    )
 
-    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+    ExposedDropdownMenu(expanded, { expanded = false }) {
       DropdownMenuItem(onClick = {
         selected = null
         expanded = false
