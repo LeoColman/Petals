@@ -6,7 +6,9 @@ import androidx.work.WorkerParameters
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-private const val maxAttempts = 3
+// runAttemptCount is 0 on the first run, so this is the number of RETRIES after that
+// first attempt: retry while 0..1, give up on the third run. Three attempts in total.
+private const val maxRetries = 2
 
 /**
  * Thin CoroutineWorker: WorkManager's default WorkerFactory reflects the
@@ -26,7 +28,7 @@ class AutoExportWorker(
     return when (autoExporter.export()) {
       AutoExportResult.Success -> Result.success()
       AutoExportResult.PermissionLost -> Result.failure()
-      AutoExportResult.Transient -> if (runAttemptCount < maxAttempts) Result.retry() else Result.failure()
+      AutoExportResult.Transient -> if (runAttemptCount < maxRetries) Result.retry() else Result.failure()
     }
   }
 }

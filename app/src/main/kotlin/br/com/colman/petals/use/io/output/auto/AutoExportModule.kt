@@ -10,5 +10,5 @@ val AutoExportModule = module {
   single { AutoExportDocumentWriter(get()) }
   singleOf(::AutoExportScheduler)
   single { AutoExporter(get(), get(), get()) }
-  single { AutoExportEnabler(get(), get(), get()) }
+  single { AutoExportEnabler(get<Context>(), get(), get()) }
 }

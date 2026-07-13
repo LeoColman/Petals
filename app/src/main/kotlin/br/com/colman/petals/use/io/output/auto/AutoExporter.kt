@@ -4,6 +4,8 @@ import android.net.Uri
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.io.output.UseCsvSerializer
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -22,7 +24,15 @@ class AutoExporter(
   private val uriParser: (String) -> Uri = Uri::parse,
 ) {
 
-  suspend fun export(): AutoExportResult {
+  /**
+   * Two exports must never run at once. Both would resolve the target document before
+   * either had created it, both would call createFile(), and the provider would dedupe
+   * the loser into "PetalsExport (1).csv" — leaving a stray duplicate forever. This is
+   * a Koin single, so one lock covers every caller in the process.
+   */
+  private val exportLock = Mutex()
+
+  suspend fun export(): AutoExportResult = exportLock.withLock {
     val treeUriString = settingsRepository.autoExportTreeUri.first() ?: return AutoExportResult.Success
 
     return try {

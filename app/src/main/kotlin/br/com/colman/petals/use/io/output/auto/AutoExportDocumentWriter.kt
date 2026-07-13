@@ -32,8 +32,15 @@ private const val tmpBaseName = "PetalsExport-tmp"
  * DocumentsProvider. [write] verifies the result and, if truncation was
  * ignored (or the provider throws [UnsupportedOperationException] outright),
  * falls back to writing a `.tmp` sibling, deleting the stale file, then
- * renaming — in that order, so a crash mid-recreate leaves yesterday's file
- * intact rather than a hole.
+ * renaming.
+ *
+ * That order is deliberate but it is NOT crash-atomic: a crash between the
+ * delete and the rename leaves only the tmp file, and no PetalsExport.csv at
+ * all until the next run recreates it. What the order does buy is that the
+ * export is never left truncated or half-written in place — the stale file is
+ * only removed once the replacement is durably on disk. Losing the file for a
+ * day is acceptable because it is derived data: the SQLDelight database is the
+ * source of truth and the next run rebuilds it from scratch.
  */
 class AutoExportDocumentWriter(
   private val contentResolver: ContentResolver,
@@ -119,7 +126,13 @@ class AutoExportDocumentWriter(
     val tmpDocument = resolveTmpDocument(treeUri)
 
     writeBytes(tmpDocument.uri, bytes)
-    staleDocument.delete()
+
+    // Fail here rather than at the rename: if the provider refuses to delete, the
+    // rename below collides with a name that still exists, and the error the user
+    // is shown would point at the rename instead of the actual cause.
+    if (!staleDocument.delete()) {
+      throw IOException("Could not delete stale ${staleDocument.uri} to replace it with $fileName")
+    }
 
     return renameTmpToFinal(tmpDocument.uri)
   }
@@ -127,9 +140,20 @@ class AutoExportDocumentWriter(
   private fun resolveTmpDocument(treeUri: Uri): DocumentFile {
     val tree = documentFileFromTreeUri(treeUri) ?: throw FileNotFoundException("Tree not found: $treeUri")
 
-    tree.findExisting(tmpFileName, tmpBaseName)?.delete()
+    deleteLeftoverTmp(tree)
+
     return tree.createFile(mimeType, tmpBaseName)
       ?: throw IOException("Could not create $tmpFileName in $treeUri")
+  }
+
+  /**
+   * A tmp file left behind by an earlier crash. If it cannot be removed, [DocumentFile.createFile]
+   * either returns null or silently makes a duplicate, depending on the provider — so fail loudly
+   * here instead of guessing which of those happened later.
+   */
+  private fun deleteLeftoverTmp(tree: DocumentFile) {
+    val leftoverTmp = tree.findExisting(tmpFileName, tmpBaseName) ?: return
+    if (!leftoverTmp.delete()) throw IOException("Could not delete leftover ${leftoverTmp.uri}")
   }
 
   private fun renameTmpToFinal(tmpUri: Uri): Uri {

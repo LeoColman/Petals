@@ -169,6 +169,7 @@ class AutoExportDocumentWriterTest : FunSpec({
       val staleDocument = mockk<DocumentFile>(relaxed = true) {
         every { uri } returns staleUri
         every { length() } returns 999L // longer than what we're about to write: truncate ignored
+        every { delete() } returns true
       }
       val tmpUri = mockk<Uri>()
       val tmpDocument = mockk<DocumentFile>(relaxed = true) { every { uri } returns tmpUri }
@@ -197,6 +198,64 @@ class AutoExportDocumentWriterTest : FunSpec({
     } finally {
       unmockkStatic(DocumentsContract::class)
     }
+  }
+
+  // Without this, the rename below collides with a name that still exists and the user
+  // is shown an error about the rename rather than the delete that actually failed.
+  test("throws IOException when the provider refuses to delete the stale file") {
+    mockkStatic(DocumentsContract::class)
+    try {
+      val tree = treeUri()
+      val contentResolver = mockk<ContentResolver> {
+        every { persistedUriPermissions } returns listOf(grantedPermission(tree))
+      }
+
+      val staleUri = mockk<Uri>()
+      val staleDocument = mockk<DocumentFile>(relaxed = true) {
+        every { uri } returns staleUri
+        every { length() } returns 999L
+        every { delete() } returns false
+      }
+      val tmpDocument = mockk<DocumentFile>(relaxed = true) { every { uri } returns mockk() }
+
+      val treeDocument = mockk<DocumentFile> {
+        every { findFile(fileName) } returns staleDocument
+        every { findFile(tmpFileName) } returns null
+        every { findFile(tmpBaseName) } returns null
+        every { createFile("text/csv", tmpBaseName) } returns tmpDocument
+      }
+      every { contentResolver.openOutputStream(any(), "wt") } returns ByteArrayOutputStream()
+
+      val target = AutoExportDocumentWriter(contentResolver, { treeDocument }, { null })
+
+      shouldThrow<IOException> { target.write(tree, null, "content") }
+    } finally {
+      unmockkStatic(DocumentsContract::class)
+    }
+  }
+
+  test("throws IOException when a leftover tmp file cannot be deleted") {
+    val tree = treeUri()
+    val contentResolver = mockk<ContentResolver> {
+      every { persistedUriPermissions } returns listOf(grantedPermission(tree))
+    }
+
+    val staleUri = mockk<Uri>()
+    val staleDocument = mockk<DocumentFile>(relaxed = true) {
+      every { uri } returns staleUri
+      every { length() } returns 999L
+    }
+    val leftoverTmp = mockk<DocumentFile>(relaxed = true) { every { delete() } returns false }
+
+    val treeDocument = mockk<DocumentFile> {
+      every { findFile(fileName) } returns staleDocument
+      every { findFile(tmpFileName) } returns leftoverTmp
+    }
+    every { contentResolver.openOutputStream(staleUri, "wt") } returns ByteArrayOutputStream()
+
+    val target = AutoExportDocumentWriter(contentResolver, { treeDocument }, { null })
+
+    shouldThrow<IOException> { target.write(tree, null, "content") }
   }
 
   test("does not recreate when length() reports the provider sentinel values 0 or -1") {

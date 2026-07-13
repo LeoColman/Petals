@@ -24,6 +24,12 @@ class AutoExportScheduler(
       // setRequiredNetworkType(...) would throw SecurityException at runtime
       // on fdroid only, past every CI check. Do not add a network constraint.
       .setConstraints(Constraints.NONE)
+      // WorkManager runs a periodic request's FIRST iteration immediately. Without this
+      // delay it races the exportNow() one-shot that enable() fires alongside it: both
+      // workers start within milliseconds, neither sees a file yet, both call
+      // createFile(), and the provider dedupes the loser into "PetalsExport (1).csv".
+      // The immediate export is exportNow()'s job; the periodic one starts a day later.
+      .setInitialDelay(1, DAYS)
       .build()
 
     workManager.enqueueUniquePeriodicWork(periodicWorkName, KEEP, request)

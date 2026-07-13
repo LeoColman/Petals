@@ -30,6 +30,21 @@ class AutoExportSchedulerTest : FunSpec({
     requestSlot.captured.workSpec.intervalDuration shouldBe DAYS.toMillis(1)
   }
 
+  // Regression: WorkManager runs a periodic request's first iteration immediately. With no
+  // initial delay it races the exportNow() one-shot that enable() fires alongside it, and the
+  // provider dedupes the loser into a stray "PetalsExport (1).csv".
+  test("schedule() delays the first periodic run by a day, so it cannot race exportNow()") {
+    val workManager = mockk<WorkManager>()
+    val requestSlot = slot<PeriodicWorkRequest>()
+    every {
+      workManager.enqueueUniquePeriodicWork("petals-auto-export-daily", KEEP, capture(requestSlot))
+    } returns mockk()
+
+    AutoExportScheduler(workManager).schedule()
+
+    requestSlot.captured.workSpec.initialDelay shouldBe DAYS.toMillis(1)
+  }
+
   test("exportNow() enqueues a one-time request replacing any pending one") {
     val workManager = mockk<WorkManager>()
     every {

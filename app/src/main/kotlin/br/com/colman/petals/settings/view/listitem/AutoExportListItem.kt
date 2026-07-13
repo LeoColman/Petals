@@ -4,10 +4,9 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.documentfile.provider.DocumentFile
 import br.com.colman.petals.R.string.auto_export
 import br.com.colman.petals.R.string.auto_export_chosen_folder
 import br.com.colman.petals.R.string.auto_export_description
@@ -19,6 +18,7 @@ import br.com.colman.petals.R.string.auto_export_secondary
 import br.com.colman.petals.settings.view.dialog.SwitchListItem
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Folder
+import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -30,16 +30,15 @@ import java.util.Locale
 fun AutoExportListItem(
   isEnabled: Boolean,
   status: AutoExportStatus,
-  onFolderPicked: (Uri, String) -> Unit = { _, _ -> },
-  onDisable: () -> Unit = {},
+  onFolderPicked: suspend (Uri) -> Unit = {},
+  onDisable: suspend () -> Unit = {},
 ) {
-  val context = LocalContext.current
+  // Both callbacks read DataStore and query the document provider, which is disk IO.
+  // Launching them keeps that off the main thread; the enabler hops to IO itself.
+  val scope = rememberCoroutineScope()
 
   val launcher = rememberLauncherForActivityResult(OpenDocumentTree()) { treeUri ->
-    if (treeUri != null) {
-      val name = DocumentFile.fromTreeUri(context, treeUri)?.name ?: treeUri.toString()
-      onFolderPicked(treeUri, name)
-    }
+    if (treeUri != null) scope.launch { onFolderPicked(treeUri) }
   }
 
   SwitchListItem(
@@ -50,7 +49,7 @@ fun AutoExportListItem(
     // if the user backs out of the picker, nothing is persisted, the flow
     // never emits, and the switch snaps back off on its own.
     initialState = isEnabled,
-    onChangeState = { checked -> if (checked) launcher.launch(null) else onDisable() }
+    onChangeState = { checked -> if (checked) launcher.launch(null) else scope.launch { onDisable() } }
   )
 }
 
