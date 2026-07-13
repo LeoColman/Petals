@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.core.os.LocaleListCompat
+import br.com.colman.petals.settings.view.listitem.AutoExportListItem
+import br.com.colman.petals.settings.view.listitem.AutoExportStatus
 import br.com.colman.petals.settings.view.listitem.ClockListItem
 import br.com.colman.petals.settings.view.listitem.CurrencyListItem
 import br.com.colman.petals.settings.view.listitem.DateListItem
@@ -24,9 +26,11 @@ import br.com.colman.petals.settings.view.listitem.ShareApp
 import br.com.colman.petals.settings.view.listitem.TimeListItem
 import br.com.colman.petals.statistics.view.listitem.BreakPeriodInStatsEnabledListItem
 import br.com.colman.petals.statistics.view.listitem.HourOfDayLineInStatsEnabledListItem
+import br.com.colman.petals.use.io.output.auto.AutoExportEnabler
+import org.koin.compose.koinInject
 
 @Composable
-fun SettingsView(settingsRepository: SettingsRepository) {
+fun SettingsView(settingsRepository: SettingsRepository, autoExportEnabler: AutoExportEnabler = koinInject()) {
   val currentCurrency by settingsRepository.currencyIcon.collectAsState("$")
   val currentDateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
@@ -77,8 +81,24 @@ fun SettingsView(settingsRepository: SettingsRepository) {
       currentBreakPeriodInStatsEnabled,
       settingsRepository::setIsBreakPeriodInStatsEnabled
     )
+    AutoExportSection(settingsRepository, autoExportEnabler)
     ShareApp()
   }
+}
+
+@Composable
+private fun AutoExportSection(settingsRepository: SettingsRepository, autoExportEnabler: AutoExportEnabler) {
+  val isAutoExportEnabled by settingsRepository.isAutoExportEnabled.collectAsState(false)
+  val autoExportFolderName by settingsRepository.autoExportFolderName.collectAsState(null)
+  val autoExportLastSuccessAt by settingsRepository.autoExportLastSuccessAt.collectAsState(null)
+  val autoExportLastError by settingsRepository.autoExportLastError.collectAsState(null)
+
+  AutoExportListItem(
+    isAutoExportEnabled,
+    AutoExportStatus(autoExportFolderName, autoExportLastSuccessAt, autoExportLastError),
+    autoExportEnabler::enable,
+    autoExportEnabler::disable
+  )
 }
 
 @Composable

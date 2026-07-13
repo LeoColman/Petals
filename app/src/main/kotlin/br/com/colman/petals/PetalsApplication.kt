@@ -20,6 +20,13 @@ package br.com.colman.petals
 
 import android.app.Application
 import br.com.colman.petals.BuildConfig.DEBUG
+import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.use.io.output.auto.AutoExportScheduler
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
@@ -33,6 +40,7 @@ class PetalsApplication : Application() {
     super.onCreate()
     startKoin()
     startTimber()
+    rescheduleAutoExportIfEnabled()
   }
 
   private fun startKoin() {
@@ -45,6 +53,21 @@ class PetalsApplication : Application() {
   private fun startTimber() {
     if (DEBUG) {
       Timber.plant(Timber.DebugTree())
+    }
+  }
+
+  /**
+   * Belt-and-braces for the force-stop case: WorkManager's own reboot
+   * rescheduling only fires on BOOT_COMPLETED, not on a plain force-stop.
+   * KEEP makes schedule() idempotent, and this runs off the main thread
+   * since DataStore reads are disk IO.
+   */
+  private fun rescheduleAutoExportIfEnabled(dispatcher: CoroutineDispatcher = IO) {
+    CoroutineScope(dispatcher).launch {
+      val settingsRepository = koin.get<SettingsRepository>()
+      if (settingsRepository.isAutoExportEnabled.first()) {
+        koin.get<AutoExportScheduler>().schedule()
+      }
     }
   }
 }
