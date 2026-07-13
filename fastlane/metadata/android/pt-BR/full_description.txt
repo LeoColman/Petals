@@ -1,11 +1,45 @@
-O aplicativo Open Source Petals busca ajudar seus usuários a parar, reduzir ou controlar a quantidade de cannabis que estão usando.
+Petals é um rastreador de maconha gratuito e open source que te ajuda a entender seu consumo — e mudá-lo no seu próprio ritmo.
 
-Funcionalidades:
+Seja para parar de fumar maconha, fazer uma pausa de tolerância, reduzir o uso aos poucos, ou só saber quanto você realmente consome, o Petals te dá os números. Sem conta, sem cadastro, e seus dados nunca saem do seu celular.
 
-- Rastreio do consumo
-- Controle de horário do uso
-- Rastreio de usos
-- Estatísticas para entender melhor seu consumo
-- Instruções para redução de danos
-- Exportar e importar com arquivos CSV simples
-- Privacidade extra com um PIN pessoal
+REGISTRE SEU CONSUMO
+
+- Registre cada uso: quantidade em gramas, preço por grama, data e hora
+- Registre o método de consumo: fumado, vaporizado, comestível ou outro
+- Veja o tempo desde seu último uso, até o segundo
+- Acompanhe quanto você gasta com maconha, hoje, na semana e no total
+- Adicione um uso com um toque pelo widget da tela inicial
+
+ENTENDA SEUS PADRÕES
+
+- Estatísticas e gráficos do seu consumo de cannabis ao longo do tempo
+- Uso por hora do dia e dia da semana, para você ver quando a vontade realmente bate
+- Filtre seu histórico e identifique tendências que você nunca notaria de memória
+- Veja o custo real do hábito se acumulando
+
+REDUZA NO SEU RITMO
+
+- Defina um intervalo mínimo entre os usos e deixe o timer te ajudar a cumprir
+- Registre períodos de pausa para uma tolerance break ou parada total
+- Sem culpa por quebrar sequência, sem pressão: o app te mostra os dados, você define o ritmo
+
+ABSTINÊNCIA E TESTES DE DROGA
+
+- Acompanhe sintomas de abstinência ao longo do tempo: irritabilidade, raiva, inquietação, dificuldade para dormir, ansiedade, perda de apetite e mal-estar
+- Estimativa da concentração de THC desde seu último uso
+- Estimativas de quando exames de urina, sangue, saliva e cabelo podem dar negativo, com as fontes citadas
+
+PRIVACIDADE POR DESIGN
+
+- Todos os seus dados ficam no seu aparelho
+- Sem conta, sem nuvem, sem análise de dados
+- Bloqueie o app com um PIN pessoal
+- Exporte e importe tudo como arquivos CSV simples — seus dados são seus
+
+REDUÇÃO DE DANOS
+
+- Informações integradas sobre redução de danos, porque usar com mais segurança é melhor do que usar às cegas
+
+GRATUITO E OPEN SOURCE
+
+O Petals é gratuito e licenciado sob a AGPL-3.0. O código-fonte completo é público, contribuições são bem-vindas, e o app é traduzido pela própria comunidade de usuários.

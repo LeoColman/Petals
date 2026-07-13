@@ -1,11 +1,45 @@
-Açık kaynaklı Petals uygulaması, kullanıcılarının ot kullanımını bırakmalarına, kullanımlarını azaltmalarına veya yalnızca ne kadar kullandıklarını bilmelerine yardımcı olmayı amaçlamaktadır.
+Petals, esrar (ot) kullanımınızı anlamanıza yardımcı olan ücretsiz ve açık kaynaklı bir takip uygulamasıdır — değişimi kendi hızınızda yapın.
 
-Özellikler
+İster esrarı bırakmak, ister tolerans molası vermek, ister yavaş yavaş azaltmak, ister sadece ne kadar kullandığınızı bilmek isteyin, Petals size net rakamlar sunar. Hesap yok, kayıt yok; verileriniz telefonunuzdan asla çıkmaz.
 
-- Tüketimi takip edin
-- Tüketiminizi zaman sınırlaması ile yönetin
-- Kullanımı takip edin
-- Tüketiminizi anlamak için istatistikleri görün
-- Zarar azaltma talimatları
-- Basit CSV dosyaları olarak dışa ve içe aktarın
-- Kişisel PIN ile ilave gizlilik
+KULLANIMINIZI TAKİP EDİN
+
+- Her kullanımı kaydedin: gram cinsinden miktar, gram başı fiyat, tarih ve saat
+- Tüketim şeklini kaydedin: içme, vaporizer, yenilebilir ürün veya diğer
+- Son kullanımınızdan bu yana geçen süreyi saniyesine kadar görün
+- Esrara bugün, bu hafta ve toplamda ne kadar harcadığınızı takip edin
+- Ana ekran widget'ından tek dokunuşla kullanım ekleyin
+
+ALIŞKANLIKLARINIZI ANLAYIN
+
+- Zaman içindeki esrar kullanımınızın istatistikleri ve grafikleri
+- Günün saatine ve haftanın gününe göre kullanım, isteğin ne zaman en yoğun olduğunu görün
+- Geçmişinizi filtreleyin ve hafızanızdan asla fark edemeyeceğiniz eğilimleri yakalayın
+- Alışkanlığın gerçek maliyetinin nasıl arttığını izleyin
+
+KENDİ HIZINIZDA AZALTIN
+
+- Kullanımlarınız arasına minimum bir süre koyun ve zamanlayıcı sizi buna bağlı tutsun
+- Tolerans molası veya tamamen bırakma için ara dönemleri kaydedin
+- Utandırma yok, baskı yok: uygulama size verileri gösterir, hızı siz belirlersiniz
+
+YOKSUNLUK VE UYUŞTURUCU TESTLERİ
+
+- Yoksunluk belirtilerini zaman içinde takip edin: sinirlilik, öfke, huzursuzluk, uyku güçlüğü, kaygı, iştah azalması ve rahatsızlık
+- Son kullanımınızdan sonra tahmini THC yoğunluğu
+- İdrar, kan, tükürük ve saç testlerinin ne zaman temiz çıkabileceğine dair kaynaklı tahminler
+
+TASARIMDAN GELEN GİZLİLİK
+
+- Tüm verileriniz cihazınızda kalır
+- Hesap yok, bulut yok, analitik yok
+- Uygulamayı kişisel bir PIN ile kilitleyin
+- Her şeyi basit CSV dosyaları olarak dışa ve içe aktarın — verileriniz size aittir
+
+ZARAR AZALTMA
+
+- Uygulama içinde zarar azaltma bilgileri, çünkü güvenli şekilde daha az kullanmak körü körüne kullanmaktan iyidir
+
+ÜCRETSİZ VE AÇIK KAYNAK
+
+Petals ücretsizdir ve AGPL-3.0 lisansı altındadır. Kaynak kodunun tamamı herkese açıktır, katkılar memnuniyetle karşılanır ve uygulama kendi kullanıcı topluluğu tarafından çevrilmektedir.

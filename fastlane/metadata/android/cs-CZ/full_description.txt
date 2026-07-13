@@ -1,11 +1,45 @@
-Open source aplikace Petals pomáhá uživatelům buď přestat s trávou, omezit její užívání, nebo prostě zjistit, kolik jí užívají.
+Petals je svobodná aplikace s otevřeným zdrojovým kódem, která funguje jako sledovač trávy a konopí — pomáhá vám pochopit vaše užívání a změnit ho vlastním tempem.
 
-Funkce
+Ať už chcete přestat s trávou, dát si tolerační pauzu, postupně omezit dávky, nebo jen zjistit, kolik toho doopravdy vykouříte, Petals vám dá čísla. Bez účtu, bez registrace a vaše data nikdy neopustí telefon.
 
-- Sledování konzumace
-- Časové omezení konzumace
-- Sledování užívání
-- Statistiky pro pochopení vaší konzumace
-- Instrukce ke snížení škodlivosti
-- Export a import jako jednoduché CSV soubory
-- Extra soukromí díky osobnímu PINu
+SLEDUJTE SVÉ UŽÍVÁNÍ
+
+- Zaznamenejte každou session: množství v gramech, cenu za gram, datum a čas
+- Zapište způsob konzumace: kouření, vaporizace, jedlé produkty nebo jiné
+- Sledujte čas od posledního užití, přesně na sekundu
+- Sledujte, kolik utrácíte za trávu dnes, tento týden i celkově
+- Přidejte záznam jedním klepnutím z widgetu na ploše
+
+POCHOPTE SVÉ VZORCE
+
+- Statistiky a grafy vaší spotřeby konopí v čase
+- Užívání podle hodiny dne a dne v týdnu, abyste viděli, kdy chuť skutečně přichází
+- Filtrujte historii a odhalte trendy, které byste si z paměti nikdy nevšimli
+- Sledujte, jak roste skutečná cena tohoto zlozvyku
+
+OMEZUJTE VLASTNÍM TEMPEM
+
+- Časové omezení session: nastavte minimální interval mezi užitími a nechte časovač, ať vás drží v mezích
+- Zaznamenejte období pauzy pro tolerační přestávku nebo úplné zastavení
+- Žádné zahanbování za přerušenou sérii, žádný tlak: aplikace vám ukáže data, tempo si určujete vy
+
+ABSTINENČNÍ PŘÍZNAKY A TESTY NA DROGY
+
+- Sledujte abstinenční příznaky v čase: podrážděnost, vztek, neklid, potíže se spánkem, úzkost, sníženou chuť k jídlu a nepohodu
+- Odhadovaná koncentrace THC po posledním užití
+- Odhady, kdy mohou testy z moči, krve, slin a vlasů vyjít čisté, s uvedenými zdroji
+
+SOUKROMÍ JAKO PRIORITA
+
+- Všechna vaše data zůstávají ve vašem zařízení
+- Žádný účet, žádný cloud, žádná analytika
+- Uzamkněte aplikaci osobním PINem
+- Exportujte a importujte vše jako obyčejné CSV soubory — vaše data patří vám
+
+SNIŽOVÁNÍ RIZIK
+
+- Vestavěné informace o snižování rizik, protože bezpečnější užívání je lepší než užívání naslepo
+
+SVOBODNÝ SOFTWARE S OTEVŘENÝM KÓDEM
+
+Petals je zdarma a licencovaný pod AGPL-3.0. Celý zdrojový kód je veřejný, příspěvky jsou vítány a aplikaci překládá komunita uživatelů.

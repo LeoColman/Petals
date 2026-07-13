@@ -1,1 +1,1 @@
-Tome controle do seu consumo de maconha
+Rastreador de maconha: parar, reduzir ou entender seu consumo. Código aberto.
