@@ -215,4 +215,11 @@
     <string name="average_time_between_sessions">Média entre sessões</string>
     <string name="ignore_longest_daily_delay">Ignorar maior atraso diário</string>
     <string name="ignore_longest_daily_delay_description">Útil para ignorar o tempo de sono ao calcular o tempo médio entre as sessões</string>
+    <string name="consumption_method">Método de consumo</string>
+    <string name="consumption_method_label">método_de_consumo</string>
+    <string name="method_smoked">Fumado</string>
+    <string name="method_vaporized">Vaporizado</string>
+    <string name="method_edible">Comestível</string>
+    <string name="method_other">Outro</string>
+    <string name="method_unspecified">Não especificado</string>
 </resources>

@@ -197,4 +197,11 @@
     <string name="urine_test_source">Джерело: Goodwin RS, Darwin WD, Chiang CN, Shih M, Li S-H, Huestis MA. Уринарна елімінація 11-Nor-9-Carboxy-D9-Tetrahydrocannabinol у споживачів канабісу під час безперервного контролю. J Анальний токсикол. 2008;32 (8):562-569. doi:10.1093/jat/32.8.562.</string>
     <string name="hair_test_source">Джерело: Тейлор М, Ліс Р., Хендерсон Г., Лінгфорд-Г\'юз А, Маклеод Дж., Салліван Дж., Хікман М. Порівняння канабіноїдів у волоссі з самостійним споживанням канабісу у важких, легких та некористувачів канабісу. Наркотик Алкоголь Рев. 2017;36 (2):220-226. doi:10.1111/dar.12412. Epub 2016 червень 14. PMID: 27296783; PMCID: PMC5396143.</string>
     <string name="drug_test_intro">Наведені нижче терміни є приблизними, скільки часу може знадобитися, щоб тести на наркотики дали негативний результат. Результати можуть відрізнятися в кожному конкретному випадку.</string>
+    <string name="consumption_method">Спосіб вживання</string>
+    <string name="consumption_method_label">спосіб_вживання</string>
+    <string name="method_smoked">Викурено</string>
+    <string name="method_vaporized">Випарувано</string>
+    <string name="method_edible">Їстівне</string>
+    <string name="method_other">Інше</string>
+    <string name="method_unspecified">Не вказано</string>
 </resources>

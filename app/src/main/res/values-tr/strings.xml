@@ -175,4 +175,11 @@
     <string name="no_previous_use_found">Önceki kullanım bulunamadı</string>
     <string name="amount_with_grams">Miktar: %1$sg</string>
     <string name="last_used_details">Son Kullanım Ayrıntıları</string>
+    <string name="consumption_method">Kullanım yöntemi</string>
+    <string name="consumption_method_label">kullanım_yöntemi</string>
+    <string name="method_smoked">İçildi</string>
+    <string name="method_vaporized">Buharlaştırıldı</string>
+    <string name="method_edible">Yenilebilir</string>
+    <string name="method_other">Diğer</string>
+    <string name="method_unspecified">Belirtilmemiş</string>
 </resources>

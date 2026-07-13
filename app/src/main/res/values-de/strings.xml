@@ -194,4 +194,11 @@
     <string name="average_time_between_sessions">Durchschnittliche Zeit zwischen Konsumeinträgen</string>
     <string name="ignore_longest_daily_delay_description">Es kann nützlich sein die Schlafenszeit bei der Berechnung der durchschnittlichen Zeit zwischen Konsumeinträgen aussen vor zu lassen.</string>
     <string name="ignore_longest_daily_delay">Ignoriere längste Konsumlücke des Tages</string>
+    <string name="consumption_method">Konsummethode</string>
+    <string name="consumption_method_label">konsum_methode</string>
+    <string name="method_smoked">Geraucht</string>
+    <string name="method_vaporized">Verdampft</string>
+    <string name="method_edible">Essbar</string>
+    <string name="method_other">Andere</string>
+    <string name="method_unspecified">Nicht angegeben</string>
 </resources>

@@ -164,4 +164,11 @@
     <string name="remove_ads">Mettre à niveau pour une expérience sans publicité</string>
     <string name="grams_distribution_over_days_since_first_use">Distribution en grammes par jour depuis la première utilisation</string>
     <string name="remove_ads_title">Enlever les pubs</string>
+    <string name="consumption_method">Méthode de consommation</string>
+    <string name="consumption_method_label">méthode_de_consommation</string>
+    <string name="method_smoked">Fumé</string>
+    <string name="method_vaporized">Vaporisé</string>
+    <string name="method_edible">Comestible</string>
+    <string name="method_other">Autre</string>
+    <string name="method_unspecified">Non spécifié</string>
 </resources>
