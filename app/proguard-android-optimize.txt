@@ -3,6 +3,18 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
+
+# Room builds its generated *_Impl reflectively, so the no-arg constructor has no
+# caller R8 can see. room-runtime 2.2.5 (pulled in transitively: Glance -> WorkManager
+# -> Room) ships the old consumer rule "-keep class * extends androidx.room.RoomDatabase",
+# which keeps the class but NOT its members, so R8 dropped WorkDatabase_Impl.<init>().
+# Room then failed to instantiate it, androidx.startup.InitializationProvider blew up, and
+# every release build crashed on launch before reaching any of our code. Debug builds are
+# not minified, which is why this only ever showed up in the wild.
+# Newer Room ships this exact rule itself; keep it here until the dependency catches up.
+-keep class * extends androidx.room.RoomDatabase {
+    <init>();
+}
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
