@@ -73,7 +73,7 @@
     <string name="auto_export_never_exported">Not exported yet</string>
     <string name="auto_export_last_export">Last export: %s</string>
     <string name="auto_export_last_failed">Last export failed. It will be retried.</string>
-    <string name="auto_export_folder_unavailable">Folder unavailable. Tap to choose it again.</string>
+    <string name="auto_export_folder_unavailable">Folder unavailable. Toggle off and on to choose it again.</string>
     <string name="end_date">End Date</string>
     <string name="start_date">Start Date</string>
     <string name="change_period">Change period</string>
