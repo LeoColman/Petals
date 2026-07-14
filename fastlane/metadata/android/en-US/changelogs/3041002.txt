@@ -1,0 +1,1 @@
+Fixed a crash that stopped the app from opening at all on recent versions. Sorry about that — updating gets you back in, and your data is untouched.
