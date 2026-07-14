@@ -225,6 +225,10 @@ dependencies {
   // Glance
   implementation(libs.bundles.glance)
 
+  // WorkManager (auto-export) + SAF DocumentFile helper
+  implementation(libs.androidx.work)
+  implementation(libs.androidx.documentfile)
+
   // Fuel
   androidTestImplementation(libs.fuel) {
     because("Specifically to make Screenshots and upload them to a localhost server")

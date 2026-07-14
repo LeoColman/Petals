@@ -1,6 +1,11 @@
 package br.com.colman.petals.settings
 
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import br.com.colman.petals.settings.SettingsRepository.Companion.AutoExportDocumentUri
+import br.com.colman.petals.settings.SettingsRepository.Companion.AutoExportFolderName
+import br.com.colman.petals.settings.SettingsRepository.Companion.AutoExportLastError
+import br.com.colman.petals.settings.SettingsRepository.Companion.AutoExportLastSuccessAt
+import br.com.colman.petals.settings.SettingsRepository.Companion.AutoExportTreeUri
 import br.com.colman.petals.settings.SettingsRepository.Companion.CurrencyIcon
 import br.com.colman.petals.settings.SettingsRepository.Companion.DateFormat
 import br.com.colman.petals.settings.SettingsRepository.Companion.DecimalPrecision
@@ -203,5 +208,65 @@ class SettingsRepositoryTest : FunSpec({
   test("Persists extended day setting to storage") {
     target.setDayExtended(true)
     datastore.data.first()[IsDayExtended] shouldBe true
+  }
+
+  test("Auto export tree uri defaults to null") {
+    target.autoExportTreeUri.first() shouldBe null
+  }
+
+  test("isAutoExportEnabled is false by default") {
+    target.isAutoExportEnabled.first() shouldBe false
+  }
+
+  test("Setting auto export tree uri enables auto export") {
+    target.setAutoExportTreeUri("content://tree")
+    target.autoExportTreeUri.first() shouldBe "content://tree"
+    target.isAutoExportEnabled.first() shouldBe true
+  }
+
+  test("Persists auto export tree uri to storage") {
+    target.setAutoExportTreeUri("content://tree")
+    datastore.data.first()[AutoExportTreeUri] shouldBe "content://tree"
+  }
+
+  test("Setting auto export document uri persists it") {
+    target.setAutoExportDocumentUri("content://tree/doc")
+    target.autoExportDocumentUri.first() shouldBe "content://tree/doc"
+    datastore.data.first()[AutoExportDocumentUri] shouldBe "content://tree/doc"
+  }
+
+  test("Setting auto export folder name persists it") {
+    target.setAutoExportFolderName("My Folder")
+    target.autoExportFolderName.first() shouldBe "My Folder"
+    datastore.data.first()[AutoExportFolderName] shouldBe "My Folder"
+  }
+
+  test("Setting auto export last success timestamp persists it") {
+    target.setAutoExportLastSuccessAt(123L)
+    target.autoExportLastSuccessAt.first() shouldBe 123L
+    datastore.data.first()[AutoExportLastSuccessAt] shouldBe 123L
+  }
+
+  test("Setting auto export last error persists it") {
+    target.setAutoExportLastError("io")
+    target.autoExportLastError.first() shouldBe "io"
+    datastore.data.first()[AutoExportLastError] shouldBe "io"
+  }
+
+  test("Clearing auto export removes all related keys") {
+    target.setAutoExportTreeUri("content://tree")
+    target.setAutoExportDocumentUri("content://tree/doc")
+    target.setAutoExportFolderName("My Folder")
+    target.setAutoExportLastSuccessAt(123L)
+    target.setAutoExportLastError("io")
+
+    target.clearAutoExport()
+
+    target.autoExportTreeUri.first() shouldBe null
+    target.autoExportDocumentUri.first() shouldBe null
+    target.autoExportFolderName.first() shouldBe null
+    target.autoExportLastSuccessAt.first() shouldBe null
+    target.autoExportLastError.first() shouldBe null
+    target.isAutoExportEnabled.first() shouldBe false
   }
 })

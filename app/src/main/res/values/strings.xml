@@ -66,6 +66,14 @@
     <!-- Java uses `import` as a reserved keyword. Can't be used -->
     <string name="export_export">Export</string>
     <!-- We should match import_import, so it's cute. -->
+    <string name="auto_export">Automatic daily export</string>
+    <string name="auto_export_description">Automatically back up your uses to a folder you choose, once a day. Works with cloud-synced folders too.</string>
+    <string name="auto_export_secondary">%1$s — %2$s</string>
+    <string name="auto_export_chosen_folder">Folder: %s</string>
+    <string name="auto_export_never_exported">Not exported yet</string>
+    <string name="auto_export_last_export">Last export: %s</string>
+    <string name="auto_export_last_failed">Last export failed. It will be retried.</string>
+    <string name="auto_export_folder_unavailable">Folder unavailable. Toggle off and on to choose it again.</string>
     <string name="end_date">End Date</string>
     <string name="start_date">Start Date</string>
     <string name="change_period">Change period</string>
