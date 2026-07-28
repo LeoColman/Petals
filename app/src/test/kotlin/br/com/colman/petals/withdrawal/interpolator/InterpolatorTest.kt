@@ -19,6 +19,18 @@ class InterpolatorTest : FunSpec({
     target.value(100.0) shouldBe 20.0
   }
 
+  test("Should respect minPossibleX") {
+    val data = mapOf(
+      seconds(10) to 20.0,
+      seconds(20) to 40.0
+    )
+    val target = Interpolator(data)
+
+    target.value(10.0) shouldBe 20.0
+    target.value(0.0) shouldBe 20.0
+    target.value(-100.0) shouldBe 20.0
+  }
+
   test("should implement UnivariateFunction") {
     val data = mapOf(
       seconds(0) to 0.0,

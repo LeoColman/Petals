@@ -56,6 +56,7 @@ class SettingsRepository(
   val isHourOfDayLineInStatsEnabled = datastore.data.map { it[IsHourOfDayLineInStatsEnabled] ?: false }
   val isBreakPeriodInStatsEnabled = datastore.data.map { it[IsBreakPeriodInStatsEnabled] ?: true }
   val isIgnoringLongestDailyDelay = datastore.data.map { it[IsIgnoringLongestDailyDelay] ?: false }
+  val isToleranceModelEnabled = datastore.data.map { it[IsToleranceModelEnabled] ?: true }
   val isDayExtended = datastore.data.map { it[IsDayExtended] ?: false }
   val appLanguages = AppLanguage.entries.map { it.languageName }
 
@@ -112,6 +113,10 @@ class SettingsRepository(
     datastore.edit { it[IsIgnoringLongestDailyDelay] = value }
   }
 
+  fun setIsToleranceModelEnabled(value: Boolean): Unit = runBlocking {
+    datastore.edit { it[IsToleranceModelEnabled] = value }
+  }
+
   companion object {
     val CurrencyIcon = stringPreferencesKey("currency_icon")
     val DateFormat = stringPreferencesKey("date_format")
@@ -125,5 +130,6 @@ class SettingsRepository(
     val IsHourOfDayLineInStatsEnabled = booleanPreferencesKey("is_hour_of_day_line_in_stats_enabled")
     val IsBreakPeriodInStatsEnabled = booleanPreferencesKey("is_break_period_in_stats_enabled")
     val IsIgnoringLongestDailyDelay = booleanPreferencesKey("is_ignoring_longest_daily_delay")
+    val IsToleranceModelEnabled = booleanPreferencesKey("is_tolerance_model_enabled")
   }
 }

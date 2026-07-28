@@ -109,6 +109,40 @@ class UseRepositoryTest : FunSpec({
     target.getLastUseDate().first() shouldBe null
   }
 
+  test("Since returns the window, oldest first") {
+    val old = use.copy(date = use.date.minusDays(10), id = "old")
+    val middle = use.copy(date = use.date.minusDays(5), id = "middle")
+    val recent = use.copy(date = use.date.minusDays(1), id = "recent")
+    target.upsertAll(listOf(recent, old, middle))
+
+    target.since(use.date.minusDays(7)).first() shouldBe listOf(middle, recent)
+  }
+
+  test("Since includes a use sitting exactly on the cutoff") {
+    val boundary = use.copy(date = use.date.minusDays(5), id = "boundary")
+    target.upsert(boundary)
+
+    target.since(boundary.date).first() shouldBe listOf(boundary)
+  }
+
+  test("Since should disconsider uses in the future") {
+    val useInTheFuture = use.copy(date = use.date.plusHours(3), id = "2")
+    target.upsert(use)
+    target.upsert(useInTheFuture)
+
+    target.since(use.date.minusDays(1)).first() shouldBe listOf(use)
+  }
+
+  test("Since performance") {
+    UseArb.take(10_000).map(Use::toEntity).forEach(database.useQueries::upsert)
+
+    measureTimeMillis {
+      target.since(use.date.minusDays(90)).first()
+    } shouldBeLessThan measureTimeMillis {
+      target.all().first().filter { it.date >= use.date.minusDays(90) }
+    }
+  }
+
   test("Last use performance") {
     UseArb.take(10_000).map(Use::toEntity).forEach(database.useQueries::upsert)
 

@@ -15,9 +15,12 @@ class Interpolator(
     data.values.toDoubleArray()
   )
 
+  private val minPossibleX = data.keys.min().seconds
   private val maxPossibleX = data.keys.max().seconds
 
   override fun interpolate(xs: DoubleArray?, ys: DoubleArray?): UnivariateFunction = dataInterpolator
 
-  override fun value(x: Double): Double = dataInterpolator.value(x.coerceAtMost(maxPossibleX.toDouble()))
+  /** Clamped at both ends: the spline throws outside its knots, and the THC curve starts at day 0. */
+  override fun value(x: Double): Double =
+    dataInterpolator.value(x.coerceIn(minPossibleX.toDouble(), maxPossibleX.toDouble()))
 }

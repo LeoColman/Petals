@@ -29,7 +29,11 @@
     <string name="status">Status</string>
     <string name="stats">Stats</string>
     <string name="drug_test">Drug Test</string>
-    <string name="symptoms_introduction">A study from Budney et al. from the University of Vermont established how withdrawal symptoms affect and decay on cannabis users. Below you\'ll see an estimate of your current situation based on your last use date.</string>
+    <string name="symptoms_introduction">A study from Budney et al. from the University of Vermont established how withdrawal symptoms affect and decay on cannabis users. Below you\'ll see an estimate of your current situation. Because tolerance builds up over time, this estimate is based on how much you\'ve been using recently compared to your regular habit, not only on your last use date.</string>
+    <string name="effective_abstinence_explained">Your body is where a regular user would be %1$s after quitting. Your last use was %2$s ago.</string>
+    <string name="effective_abstinence_sessions_mode">Estimated from how often you log, because most of your entries don\'t record an amount.</string>
+    <string name="effective_abstinence_unavailable">Not enough history yet, so this shows the time since your last use.</string>
+    <string name="effective_abstinence_disabled">Tolerance adjustment is off, so this shows the time since your last use.</string>
     <string name="hit_timer">Hit Timer</string>
     <string name="start">Start</string>
     <string name="reset">Reset</string>
@@ -137,6 +141,8 @@
     <string name="enable_or_disable_hour_of_day_line_in_stats">Enable or disable hour of day line on the graphs</string>
     <string name="break_period_in_stats_enabled">Toggle Break Periods</string>
     <string name="enable_or_disable_break_period_in_stats">Enable or disable break periods on the hourly graph</string>
+    <string name="tolerance_model_enabled">Account for tolerance in withdrawal</string>
+    <string name="enable_or_disable_tolerance_model">Estimate withdrawal from your recent intake compared to your regular habit, instead of only your last use date</string>
     <string name="wait_until_3am_to_show_a_new_day">Wait until 3:00 AM to show a new day. Useful if you typically go to sleep after midnight.</string>
     <string name="custom">Custom</string>
     <string name="general_knowledge">General Knowledge</string>
