@@ -158,6 +158,8 @@ class SettingsRepository(
       it.remove(AutoExportLastSuccessAt)
       it.remove(AutoExportLastError)
     }
+  }
+
   fun setIsToleranceModelEnabled(value: Boolean): Unit = runBlocking {
     datastore.edit { it[IsToleranceModelEnabled] = value }
   }

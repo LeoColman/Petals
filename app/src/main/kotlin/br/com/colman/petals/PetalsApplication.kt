@@ -23,15 +23,16 @@ import br.com.colman.petals.BuildConfig.DEBUG
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.io.output.auto.AutoExportScheduler
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
 import timber.log.Timber
-import java.io.IOException
 
 lateinit var koin: Koin
   private set
@@ -68,16 +69,17 @@ class PetalsApplication : Application() {
     // exception here would reach the default handler and take the process down AT APP
     // START. Failing to re-schedule a background export must never do that — the next
     // launch (or WorkManager's own reboot rescheduling) gets another go.
-    CoroutineScope(dispatcher).launch {
-      try {
-        val settingsRepository = koin.get<SettingsRepository>()
-        if (settingsRepository.isAutoExportEnabled.first()) {
-          koin.get<AutoExportScheduler>().schedule()
-        }
-      } catch (e: IOException) {
-        Timber.w(e, "Could not read auto-export settings to reschedule")
-      } catch (e: IllegalStateException) {
-        Timber.w(e, "Could not reschedule auto-export")
+    // The handler, not a list of catch clauses, is what makes that true. Koin lookups and
+    // DataStore reads can fail in ways this code has no business enumerating, and any one
+    // of them missing from the list would be a crash on launch.
+    val doNotCrashOnLaunch = CoroutineExceptionHandler { _, throwable ->
+      Timber.w(throwable, "Could not reschedule auto-export")
+    }
+
+    CoroutineScope(dispatcher + SupervisorJob() + doNotCrashOnLaunch).launch {
+      val settingsRepository = koin.get<SettingsRepository>()
+      if (settingsRepository.isAutoExportEnabled.first()) {
+        koin.get<AutoExportScheduler>().schedule()
       }
     }
   }

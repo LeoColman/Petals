@@ -27,8 +27,8 @@ import br.com.colman.petals.settings.view.listitem.TimeListItem
 import br.com.colman.petals.statistics.view.listitem.BreakPeriodInStatsEnabledListItem
 import br.com.colman.petals.statistics.view.listitem.HourOfDayLineInStatsEnabledListItem
 import br.com.colman.petals.use.io.output.auto.AutoExportEnabler
-import org.koin.compose.koinInject
 import br.com.colman.petals.withdrawal.view.listitem.ToleranceModelEnabledListItem
+import org.koin.compose.koinInject
 
 @Composable
 fun SettingsView(settingsRepository: SettingsRepository, autoExportEnabler: AutoExportEnabler = koinInject()) {
