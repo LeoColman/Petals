@@ -5,6 +5,7 @@ import io.kotest.datatest.withData
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldBeMonotonicallyDecreasing
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
+import io.kotest.matchers.longs.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.longs.shouldBeLessThanOrEqual
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.delay
@@ -106,5 +107,88 @@ class HitTimerTest : FunSpec({
     delay(duration)
     target.millisLeft.first() shouldBe 0
     target.millisLeft.take(3).toList().forAll { it shouldBe 0 }
+  }
+
+  context("Elapsed hold") {
+    test("Is zero before the timer is started") {
+      target.millisElapsed.take(3).toList().forAll { it shouldBe 0 }
+    }
+
+    test("Keeps counting past the target, which the countdown cannot show") {
+      target.start()
+      delay(duration * 3)
+
+      val elapsed = target.millisElapsed.first()
+      elapsed shouldBeGreaterThanOrEqual (duration * 3)
+      target.millisLeft.first() shouldBe 0
+    }
+
+    test("Grows while the countdown is still running") {
+      target.start()
+      val first = target.millisElapsed.first()
+      delay(30L)
+      val second = target.millisElapsed.first()
+
+      second shouldBeGreaterThanOrEqual first
+    }
+
+    test("Goes back to zero on reset") {
+      target.start()
+      delay(duration * 2)
+      target.reset()
+
+      target.millisElapsed.first() shouldBe 0
+    }
+  }
+
+  context("Pause") {
+    test("Freezes the reading instead of losing it, which reset would") {
+      target.start()
+      delay(duration * 2)
+      target.pause()
+
+      val frozen = target.millisElapsed.first()
+      frozen shouldBeGreaterThanOrEqual (duration * 2)
+
+      delay(duration * 2)
+      target.millisElapsed.take(3).toList().forAll { it shouldBe frozen }
+    }
+
+    test("Resume carries on from the frozen reading") {
+      target.start()
+      delay(duration)
+      target.pause()
+      val frozen = target.millisElapsed.first()
+
+      target.resume()
+      delay(duration)
+
+      target.millisElapsed.first() shouldBeGreaterThanOrEqual (frozen + duration / 2)
+    }
+
+    test("Start after a pause counts from scratch") {
+      target.start()
+      delay(duration * 2)
+      target.pause()
+      target.start()
+
+      target.millisElapsed.first() shouldBeLessThanOrEqual duration
+    }
+
+    test("Reset clears a paused reading") {
+      target.start()
+      delay(duration)
+      target.pause()
+      target.reset()
+
+      target.millisElapsed.first() shouldBe 0
+    }
+
+    test("Pausing before starting leaves it at zero") {
+      target.pause()
+
+      target.millisElapsed.first() shouldBe 0
+      target.millisLeft.first() shouldBe duration
+    }
   }
 })
