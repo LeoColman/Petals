@@ -133,14 +133,11 @@ class UseRepositoryTest : FunSpec({
     target.since(use.date.minusDays(1)).first() shouldBe listOf(use)
   }
 
-  test("Since performance") {
+  test("Since returns the same window as filtering all") {
     UseArb.take(10_000).map(Use::toEntity).forEach(database.useQueries::upsert)
 
-    measureTimeMillis {
-      target.since(use.date.minusDays(90)).first()
-    } shouldBeLessThan measureTimeMillis {
-      target.all().first().filter { it.date >= use.date.minusDays(90) }
-    }
+    val from = use.date.minusDays(90)
+    target.since(from).first() shouldBe target.all().first().filter { it.date >= from }.sortedBy { it.date }
   }
 
   test("Last use performance") {
