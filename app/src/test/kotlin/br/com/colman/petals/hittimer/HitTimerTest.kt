@@ -140,4 +140,55 @@ class HitTimerTest : FunSpec({
       target.millisElapsed.first() shouldBe 0
     }
   }
+
+  context("Pause") {
+    test("Freezes the reading instead of losing it, which reset would") {
+      target.start()
+      delay(duration * 2)
+      target.pause()
+
+      val frozen = target.millisElapsed.first()
+      frozen shouldBeGreaterThanOrEqual (duration * 2)
+
+      delay(duration * 2)
+      target.millisElapsed.take(3).toList().forAll { it shouldBe frozen }
+    }
+
+    test("Resume carries on from the frozen reading") {
+      target.start()
+      delay(duration)
+      target.pause()
+      val frozen = target.millisElapsed.first()
+
+      target.resume()
+      delay(duration)
+
+      target.millisElapsed.first() shouldBeGreaterThanOrEqual (frozen + duration / 2)
+    }
+
+    test("Start after a pause counts from scratch") {
+      target.start()
+      delay(duration * 2)
+      target.pause()
+      target.start()
+
+      target.millisElapsed.first() shouldBeLessThanOrEqual duration
+    }
+
+    test("Reset clears a paused reading") {
+      target.start()
+      delay(duration)
+      target.pause()
+      target.reset()
+
+      target.millisElapsed.first() shouldBe 0
+    }
+
+    test("Pausing before starting leaves it at zero") {
+      target.pause()
+
+      target.millisElapsed.first() shouldBe 0
+      target.millisLeft.first() shouldBe duration
+    }
+  }
 })

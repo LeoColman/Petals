@@ -59,7 +59,9 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.getSystemService
 import br.com.colman.petals.R.color.smokeColor
 import br.com.colman.petals.R.string.holding_past_peak
+import br.com.colman.petals.R.string.pause
 import br.com.colman.petals.R.string.reset
+import br.com.colman.petals.R.string.resume
 import br.com.colman.petals.R.string.start
 import br.com.colman.petals.R.string.vibrate_on_timer_end
 import br.com.colman.petals.settings.SettingsRepository
@@ -71,6 +73,8 @@ import java.util.Locale
 @Composable
 fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
   val hitTimer = rememberSaveable { HitTimer() }
+  // While paused the elapsed value stops changing, so nothing recomposes: the label needs its own state.
+  var isPaused by rememberSaveable { mutableStateOf(false) }
 
   val ctx = LocalContext.current
   val millisElapsed by hitTimer.millisElapsed.collectAsState(0L)
@@ -102,13 +106,7 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
     HoldOvertime(millisElapsed, hitTimer.durationMillis)
 
     Column(Modifier.width(180.dp), spacedBy(8.dp)) {
-      Button(onClick = { hitTimer.start() }, Modifier.fillMaxWidth()) {
-        Text(stringResource(start), fontSize = 24.sp)
-      }
-
-      Button(onClick = { hitTimer.reset() }, Modifier.fillMaxWidth()) {
-        Text(stringResource(reset), fontSize = 24.sp)
-      }
+      TimerButtons(hitTimer, millisElapsed, isPaused) { isPaused = it }
 
       Row(Modifier.fillMaxWidth(), Start, CenterVertically) {
         Checkbox(shouldVibrate, { repository.setShouldVibrate(it) })
@@ -116,6 +114,50 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
       }
     }
     WhyTenSeconds(millisElapsed / 1000.0)
+  }
+}
+
+/**
+ * Pause is what makes an unbounded elapsed counter usable: it freezes the reading so you can look at
+ * it, where [HitTimer.reset] would wipe the very number you wanted. Disabled until there is something
+ * to freeze.
+ */
+@Composable
+private fun TimerButtons(
+  hitTimer: HitTimer,
+  millisElapsed: Long,
+  isPaused: Boolean,
+  onPausedChange: (Boolean) -> Unit
+) {
+  Button(
+    onClick = {
+      hitTimer.start()
+      onPausedChange(false)
+    },
+    Modifier.fillMaxWidth()
+  ) {
+    Text(stringResource(start), fontSize = 24.sp)
+  }
+
+  Button(
+    onClick = {
+      if (isPaused) hitTimer.resume() else hitTimer.pause()
+      onPausedChange(!isPaused)
+    },
+    Modifier.fillMaxWidth(),
+    enabled = millisElapsed > 0
+  ) {
+    Text(stringResource(if (isPaused) resume else pause), fontSize = 24.sp)
+  }
+
+  Button(
+    onClick = {
+      hitTimer.reset()
+      onPausedChange(false)
+    },
+    Modifier.fillMaxWidth()
+  ) {
+    Text(stringResource(reset), fontSize = 24.sp)
   }
 }
 

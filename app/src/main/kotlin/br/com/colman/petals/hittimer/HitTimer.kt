@@ -18,6 +18,10 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
   @IgnoredOnParcel
   private var startDate: LocalDateTime? = null
 
+  /** Time banked by previous runs, so pausing can freeze a reading without discarding it. */
+  @IgnoredOnParcel
+  private var accumulatedMillis: Long = 0
+
   /**
    * How long the current hit has been held. Unlike [millisLeft] this keeps counting past
    * [durationMillis], because the point of the ten second target is that going over it costs you,
@@ -35,16 +39,28 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
   val millisLeft = millisElapsed.map { (durationMillis - it).coerceAtLeast(0) }
 
   fun start() {
+    accumulatedMillis = 0
     startDate = now()
   }
 
+  /** Freezes the reading where it is. Without this the elapsed hold would climb until [reset] wiped it. */
+  fun pause() {
+    accumulatedMillis = calculateMillisElapsed()
+    startDate = null
+  }
+
+  fun resume() {
+    if (startDate == null) startDate = now()
+  }
+
   fun reset() {
+    accumulatedMillis = 0
     startDate = null
   }
 
   private fun calculateMillisElapsed(): Long {
-    val start = startDate ?: return 0
-    return start.until(now(), MILLIS).coerceAtLeast(0)
+    val start = startDate ?: return accumulatedMillis
+    return accumulatedMillis + start.until(now(), MILLIS).coerceAtLeast(0)
   }
 
   companion object {
