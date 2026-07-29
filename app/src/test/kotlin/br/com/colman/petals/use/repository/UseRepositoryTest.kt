@@ -134,10 +134,15 @@ class UseRepositoryTest : FunSpec({
   }
 
   test("Since returns the same window as filtering all") {
-    UseArb.take(10_000).map(Use::toEntity).forEach(database.useQueries::upsert)
+    val history = (1..200).map { use.copy(date = use.date.minusDays(it.toLong()), id = "$it") }
+    val future = use.copy(date = use.date.plusDays(3), id = "future")
+    target.upsertAll(history + future)
 
     val from = use.date.minusDays(90)
-    target.since(from).first() shouldBe target.all().first().filter { it.date >= from }.sortedBy { it.date }
+    // The same two bounds selectSince applies: at or after the cutoff, and not in the future.
+    val expected = (history + future).filter { it.date >= from && it.date <= use.date }.sortedBy { it.date }
+
+    target.since(from).first() shouldBe expected
   }
 
   test("Last use performance") {

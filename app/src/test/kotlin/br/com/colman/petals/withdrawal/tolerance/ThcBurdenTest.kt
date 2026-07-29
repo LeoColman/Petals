@@ -13,14 +13,14 @@ import kotlin.math.ln
 
 private val Now: LocalDateTime = LocalDateTime.of(2026, 1, 1, 12, 0)
 
-private fun Duration.inDays() = seconds.toDouble() / 86_400.0
+private fun Duration.inDays() = seconds.toDouble() / SecondsPerDay
 
 /** [days] of [perDay] doses of [each] grams, ending [endingDaysAgo] days before [Now]. */
 private fun history(days: Int, perDay: Int, each: Double, endingDaysAgo: Double = 0.0): List<Dose> {
   val total = days * perDay
   return (0 until total).map { index ->
     val daysAgo = endingDaysAgo + (total - 1 - index).toDouble() / perDay
-    Dose(Now.minusSeconds((daysAgo * 86_400).toLong()), each)
+    Dose(Now.minusSeconds((daysAgo * SecondsPerDay).toLong()), each)
   }
 }
 

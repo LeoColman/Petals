@@ -53,9 +53,9 @@ import br.com.colman.petals.withdrawal.tolerance.EstimateMode.Disabled
 import br.com.colman.petals.withdrawal.tolerance.EstimateMode.Grams
 import br.com.colman.petals.withdrawal.tolerance.EstimateMode.LastUseOnly
 import br.com.colman.petals.withdrawal.tolerance.EstimateMode.Sessions
+import br.com.colman.petals.withdrawal.tolerance.SecondsPerDay
 import br.com.colman.petals.withdrawal.tolerance.ToleranceLookbackDays
 import br.com.colman.petals.withdrawal.tolerance.estimateAbstinence
-import br.com.colman.petals.withdrawal.view.SecondsPerDay
 import br.com.colman.petals.withdrawal.view.WithdrawalChart
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject

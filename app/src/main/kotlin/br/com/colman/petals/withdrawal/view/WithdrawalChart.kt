@@ -7,13 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import br.com.colman.petals.withdrawal.interpolator.Interpolator
+import br.com.colman.petals.withdrawal.tolerance.SecondsPerDay
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.jjoe64.graphview.series.PointsGraphSeries
 import java.time.Duration
-
-const val SecondsPerDay = 86400
 
 @Composable
 @Suppress("LongParameterList")

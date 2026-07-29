@@ -38,7 +38,8 @@ const val ToleranceReleasePerDay = 0.033
  */
 const val MaxEffectiveAbstinenceDays = 30.0
 
-private const val SecondsPerDay = 86_400.0
+/** Single source of truth for the day/second conversion used by the model, the charts and their tests. */
+const val SecondsPerDay = 86_400
 
 /** A single logged intake: [amount] is grams in grams mode, or 1.0 per session in sessions mode. */
 data class Dose(val at: LocalDateTime, val amount: Double)
@@ -114,6 +115,12 @@ private fun burdenAtEachDose(ordered: List<Dose>, lambda: Double): DoubleArray {
   return burdens
 }
 
-private fun daysBetween(from: LocalDateTime, to: LocalDateTime) = SECONDS.between(from, to) / SecondsPerDay
+private fun daysBetween(from: LocalDateTime, to: LocalDateTime) =
+  SECONDS.between(from, to).toDouble() / SecondsPerDay
 
+/**
+ * Rounded to the nearest **second**, not to the nearest day: sub-day resolution is the whole point here.
+ * A user who cut down yesterday reads a fraction of a day, and the charts interpolate continuously, so
+ * [Duration.ofDays] would collapse exactly the detail this feature exists to show.
+ */
 private fun Double.daysAsDuration() = Duration.ofSeconds((this * SecondsPerDay).roundToLong())

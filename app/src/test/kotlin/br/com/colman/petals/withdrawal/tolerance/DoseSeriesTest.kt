@@ -7,6 +7,7 @@ import br.com.colman.petals.withdrawal.tolerance.EstimateMode.Grams
 import br.com.colman.petals.withdrawal.tolerance.EstimateMode.LastUseOnly
 import br.com.colman.petals.withdrawal.tolerance.EstimateMode.Sessions
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.doubles.plusOrMinus
 import io.kotest.matchers.doubles.shouldBeGreaterThan
 import io.kotest.matchers.doubles.shouldBeLessThanOrEqual
@@ -21,10 +22,10 @@ import java.time.LocalDateTime
 
 private val Now: LocalDateTime = LocalDateTime.of(2026, 1, 1, 12, 0)
 
-private fun Duration.inDays() = seconds.toDouble() / 86_400.0
+private fun Duration.inDays() = seconds.toDouble() / SecondsPerDay
 
 private fun use(daysAgo: Double, grams: Double) =
-  Use(Now.minusSeconds((daysAgo * 86_400).toLong()), BigDecimal(grams.toString()))
+  Use(Now.minusSeconds((daysAgo * SecondsPerDay).toLong()), BigDecimal(grams.toString()))
 
 private fun uses(days: Int, perDay: Int, grams: Double, endingDaysAgo: Double = 0.0): List<Use> {
   val total = days * perDay
@@ -88,11 +89,13 @@ class DoseSeriesTest : FunSpec({
     result.effective.inDays() shouldBeGreaterThan 4.0
   }
 
-  test("Absurd amounts are capped so a single typo cannot pin the reading") {
-    val typo = uses(days = 30, perDay = 1, grams = 2.0, endingDaysAgo = 3.0) + listOf(use(31.0, 280.0))
-    val capped = uses(days = 30, perDay = 1, grams = 2.0, endingDaysAgo = 3.0) + listOf(use(31.0, 100.0))
+  test("Large amounts are taken at face value rather than capped") {
+    val history = uses(days = 30, perDay = 1, grams = 2.0, endingDaysAgo = 3.0)
+    val hugePeak = history + listOf(use(31.0, 280.0))
+    val smallerPeak = history + listOf(use(31.0, 100.0))
 
-    estimate(typo)!!.effective shouldBe estimate(capped)!!.effective
+    // A bigger past peak puts today's intake further below it, so the reading has to be longer.
+    estimate(hugePeak)!!.effective shouldBeGreaterThan estimate(smallerPeak)!!.effective
   }
 
   test("Negative amounts do not count as doses") {

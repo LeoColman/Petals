@@ -17,9 +17,6 @@ const val MinDosesForModel = 3
 /** Fraction of the window's uses that must carry an amount before amounts are trusted as doses. */
 const val GramsCoverageThreshold = 0.80
 
-/** Amounts above this are treated as a typo (280 for 2.8) and capped, so one row cannot pin the reading. */
-const val MaxPlausibleDoseGrams = 100.0
-
 /**
  * Turns the raw use history into the number the withdrawal curves are read at.
  *
@@ -27,8 +24,8 @@ const val MaxPlausibleDoseGrams = 100.0
  * - **Grams** when the window has enough uses and most of them record an amount.
  * - **Sessions** when amounts are mostly missing. Burden is proportional to how often the user logs, so
  *   eight sessions a day dropping to one still reads as ln(8)/lambda, exactly as eight grams to one would.
- * - **LastUseOnly** otherwise, or when the model is switched off: literal time since the last use, which
- *   is what the app did before tolerance was modelled.
+ * - **LastUseOnly** otherwise, and **Disabled** when the user switched the adjustment off: both read the
+ *   literal time since the last use, which is what the app did before tolerance was modelled.
  *
  * Returns null when there is no use at all to anchor on.
  */
@@ -38,7 +35,7 @@ fun estimateAbstinence(
   now: LocalDateTime,
   modelEnabled: Boolean
 ): AbstinenceEstimate? {
-  val actual = lastUseDate?.let { elapsedSince(it, now) } ?: return null
+  val actual = lastUseDate?.elapsedUntil(now) ?: return null
 
   val modelled = if (modelEnabled) modelledAbstinence(uses, now) else null
   val fallback = if (modelEnabled) LastUseOnly else Disabled
@@ -64,13 +61,15 @@ private fun modelledAbstinence(uses: List<Use>, now: LocalDateTime): Pair<Durati
 }
 
 /**
- * The logged amount as a usable dose, or 0.0 when it is missing, negative or not a finite number.
- * An empty amount field is stored as zero rather than rejected, so this is a common shape, not an edge.
+ * The logged amount as a usable dose, taken at face value, or 0.0 when it is missing, negative or not a
+ * finite number. An empty amount field is stored as zero rather than rejected, so that is a common shape
+ * here, not an edge case.
  */
 private fun Use.sanitizedAmount(): Double {
   val grams = amountGrams.toDouble()
-  return if (grams.isFinite() && grams > 0.0) grams.coerceAtMost(MaxPlausibleDoseGrams) else 0.0
+  return if (grams.isFinite() && grams > 0.0) grams else 0.0
 }
 
-private fun elapsedSince(date: LocalDateTime, now: LocalDateTime) =
-  if (date.isAfter(now)) Duration.ZERO else Duration.between(date, now)
+/** Time from this instant until [now], or zero if this is in the future. */
+private fun LocalDateTime.elapsedUntil(now: LocalDateTime): Duration =
+  if (isAfter(now)) Duration.ZERO else Duration.between(this, now)
