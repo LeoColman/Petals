@@ -107,9 +107,16 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
         Text(stringResource(vibrate_on_timer_end))
       }
     }
-    WhyTenSeconds()
+    WhyTenSeconds(holdSecondsOf(millisLeft, hitTimer.durationMillis))
   }
 }
+
+/**
+ * How long the current hit has been held, in seconds: the timer counts down, the curves are drawn
+ * against time held, so the marker needs the elapsed side of it.
+ */
+fun holdSecondsOf(millisLeft: Long, durationMillis: Long): Double =
+  ((durationMillis - millisLeft).coerceAtLeast(0) / 1000.0)
 
 @Composable
 private fun TimerText(millisLeft: Long) {

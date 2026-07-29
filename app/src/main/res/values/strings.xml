@@ -42,6 +42,7 @@
     <string name="why_ten_seconds">Why 10 seconds?</string>
     <string name="subjectve_high">Subjective \"High\"</string>
     <string name="breathhold_duration_seconds">Breathhold Duration (seconds)</string>
+    <string name="current_hold">Your hold</string>
     <string name="_175thc" formatted="false">1.75% THC</string>
     <string name="_355thc" formatted="false">3.55% THC</string>
     <string name="add_use">Add Use</string>
