@@ -146,7 +146,9 @@ private fun AbstinenceExplanation(estimate: AbstinenceEstimate?) {
 @Composable
 private fun Duration.asDays(): String {
   val days = seconds.toDouble() / SecondsPerDay
-  return pluralStringResource(amount_days, days.roundToInt(), "%.1f".format(days))
+  val rounded = (days * 10).roundToInt() / 10.0
+  val quantity = if (rounded == 1.0) 1 else 2
+  return pluralStringResource(amount_days, quantity, "%.1f".format(rounded))
 }
 
 @Composable
