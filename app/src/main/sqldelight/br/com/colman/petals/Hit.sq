@@ -1,0 +1,16 @@
+CREATE TABLE Hit(
+  id TEXT PRIMARY KEY,
+  date TEXT NOT NULL,
+  duration_millis INTEGER NOT NULL
+);
+
+upsert:
+INSERT INTO Hit(id, date, duration_millis) VALUES ?
+ON CONFLICT (id) DO UPDATE SET date = excluded.date,
+ duration_millis = excluded.duration_millis;
+
+selectAll:
+SELECT * FROM Hit WHERE datetime(date) <= datetime('now', 'localtime') ORDER BY date ASC;
+
+deleteAll:
+DELETE FROM Hit;

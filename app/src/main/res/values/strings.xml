@@ -39,6 +39,13 @@
     <string name="reset">Reset</string>
     <string name="pause">Pause</string>
     <string name="resume">Resume</string>
+    <string name="average_hold">Your average hold</string>
+    <string name="average_hold_explanation">Recorded whenever you pause or reset the timer. The study puts the peak at 10 seconds, so an average well above that is smoke you are taking in for no extra effect.</string>
+    <string name="seconds_short">%1$s s</string>
+    <plurals name="amount_hits">
+        <item quantity="one">%s hit</item>
+        <item quantity="other">%s hits</item>
+    </plurals>
     <string name="ten_seconds_introduction">Holding for more than 10 seconds will not increase your high, but will increase bad things that weed cause to you.</string>
     <string name="ten_seconds_source">Source: Azorlosa JL, Greenwald MK, Stitzer ML. Marijuana smoking: effects of varying puff volume and breathhold duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.</string>
     <string name="why_ten_seconds">Why 10 seconds?</string>

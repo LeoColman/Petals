@@ -191,4 +191,23 @@ class HitTimerTest : FunSpec({
       target.millisLeft.first() shouldBe duration
     }
   }
+
+  context("Run id") {
+    test("Survives a pause and resume, so one hit is recorded once") {
+      target.start()
+      val id = target.runId
+      target.pause()
+      target.resume()
+
+      target.runId shouldBe id
+    }
+
+    test("Changes on start, so the next hit is recorded separately") {
+      target.start()
+      val first = target.runId
+      target.start()
+
+      (target.runId == first) shouldBe false
+    }
+  }
 })

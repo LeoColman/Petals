@@ -11,6 +11,7 @@ import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 import java.time.temporal.ChronoUnit.MILLIS
 import java.util.Locale
+import java.util.UUID
 
 @Parcelize
 class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
@@ -21,6 +22,17 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
   /** Time banked by previous runs, so pausing can freeze a reading without discarding it. */
   @IgnoredOnParcel
   private var accumulatedMillis: Long = 0
+
+  /**
+   * Identifies the current hit. Stable across pause and resume so that recording it repeatedly updates
+   * one row rather than logging the same hit several times; a new one is minted by [start].
+   */
+  @IgnoredOnParcel
+  var runId: String = UUID.randomUUID().toString()
+    private set
+
+  /** The reading as it stands, for callers that need it at the instant of a button press. */
+  fun elapsedMillis(): Long = calculateMillisElapsed()
 
   /**
    * How long the current hit has been held. Unlike [millisLeft] this keeps counting past
@@ -39,6 +51,7 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
   val millisLeft = millisElapsed.map { (durationMillis - it).coerceAtLeast(0) }
 
   fun start() {
+    runId = UUID.randomUUID().toString()
     accumulatedMillis = 0
     startDate = now()
   }

@@ -64,14 +64,20 @@ import br.com.colman.petals.R.string.reset
 import br.com.colman.petals.R.string.resume
 import br.com.colman.petals.R.string.start
 import br.com.colman.petals.R.string.vibrate_on_timer_end
+import br.com.colman.petals.hittimer.repository.HitRepository
+import br.com.colman.petals.hittimer.repository.record
 import br.com.colman.petals.settings.SettingsRepository
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
+import java.time.LocalDateTime
 import java.util.Locale
 
 @Preview
 @Composable
-fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
+fun ComposeHitTimer(
+  repository: HitTimerRepository = koinInject(),
+  hitRepository: HitRepository = koinInject()
+) {
   val hitTimer = rememberSaveable { HitTimer() }
   // While paused the elapsed value stops changing, so nothing recomposes: the label needs its own state.
   var isPaused by rememberSaveable { mutableStateOf(false) }
@@ -79,6 +85,10 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
   val ctx = LocalContext.current
   val millisElapsed by hitTimer.millisElapsed.collectAsState(0L)
   val shouldVibrate by repository.shouldVibrate.collectAsState(false)
+
+  val hits by hitRepository.all().collectAsState(emptyList())
+  val averages = remember(hits) { holdAverages(hits, LocalDateTime.now()) }
+  val recordHit = { hitRepository.record(hitTimer) }
 
   val millisLeft = (hitTimer.durationMillis - millisElapsed).coerceAtLeast(0)
   val alpha = millisLeft.toFloat() / hitTimer.durationMillis
@@ -106,7 +116,7 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
     HoldOvertime(millisElapsed, hitTimer.durationMillis)
 
     Column(Modifier.width(180.dp), spacedBy(8.dp)) {
-      TimerButtons(hitTimer, millisElapsed, isPaused) { isPaused = it }
+      TimerButtons(hitTimer, millisElapsed, isPaused, recordHit) { isPaused = it }
 
       Row(Modifier.fillMaxWidth(), Start, CenterVertically) {
         Checkbox(shouldVibrate, { repository.setShouldVibrate(it) })
@@ -114,6 +124,7 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
       }
     }
     WhyTenSeconds(millisElapsed / 1000.0)
+    HoldAveragesCard(averages)
   }
 }
 
@@ -123,14 +134,18 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
  * to freeze.
  */
 @Composable
+@Suppress("LongParameterList")
 private fun TimerButtons(
   hitTimer: HitTimer,
   millisElapsed: Long,
   isPaused: Boolean,
+  onRecord: () -> Unit,
   onPausedChange: (Boolean) -> Unit
 ) {
+  // Every exit from a run records it, and the run's id keeps that from writing more than one row.
   Button(
     onClick = {
+      onRecord()
       hitTimer.start()
       onPausedChange(false)
     },
@@ -141,7 +156,12 @@ private fun TimerButtons(
 
   Button(
     onClick = {
-      if (isPaused) hitTimer.resume() else hitTimer.pause()
+      if (isPaused) {
+        hitTimer.resume()
+      } else {
+        hitTimer.pause()
+        onRecord()
+      }
       onPausedChange(!isPaused)
     },
     Modifier.fillMaxWidth(),
@@ -152,6 +172,7 @@ private fun TimerButtons(
 
   Button(
     onClick = {
+      onRecord()
       hitTimer.reset()
       onPausedChange(false)
     },

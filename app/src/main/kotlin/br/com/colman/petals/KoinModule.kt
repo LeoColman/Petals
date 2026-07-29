@@ -23,6 +23,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import br.com.colman.petals.hittimer.HitTimerRepository
+import br.com.colman.petals.hittimer.repository.HitRepository
 import br.com.colman.petals.review.ReviewAppRequester
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.io.UseIOModules
@@ -56,6 +57,7 @@ val KoinModule = module {
   single { object : ReviewAppRequester {} } bind ReviewAppRequester::class
   single { UseRepository(get<Database>().useQueries) }
   single { PauseRepository(get<Database>().pauseQueries) }
+  single { HitRepository(get<Database>().hitQueries) }
   single { HitTimerRepository(get<Context>().hitTimerPreferencesDataStore) }
   single { SettingsRepository(get<Context>().settingsDatastore) }
   single { CensorshipRepository(get<Context>().blockDataStore) }
