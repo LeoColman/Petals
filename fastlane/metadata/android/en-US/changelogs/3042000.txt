@@ -1,0 +1,1 @@
+Withdrawal estimates now account for how much you've been using, not only your last use date. If you cut down instead of quitting outright, the charts finally show that instead of resetting to day zero. You can switch it off in Settings.
