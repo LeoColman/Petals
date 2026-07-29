@@ -125,7 +125,7 @@ class UseRepositoryTest : FunSpec({
     target.since(boundary.date).first() shouldBe listOf(boundary)
   }
 
-  test("Since should disconsider uses in the future") {
+  test("Since should disregard uses in the future") {
     val useInTheFuture = use.copy(date = use.date.plusHours(3), id = "2")
     target.upsert(use)
     target.upsert(useInTheFuture)
