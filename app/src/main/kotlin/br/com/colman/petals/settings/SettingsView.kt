@@ -24,6 +24,7 @@ import br.com.colman.petals.settings.view.listitem.ShareApp
 import br.com.colman.petals.settings.view.listitem.TimeListItem
 import br.com.colman.petals.statistics.view.listitem.BreakPeriodInStatsEnabledListItem
 import br.com.colman.petals.statistics.view.listitem.HourOfDayLineInStatsEnabledListItem
+import br.com.colman.petals.withdrawal.view.listitem.ToleranceModelEnabledListItem
 
 @Composable
 fun SettingsView(settingsRepository: SettingsRepository) {
@@ -46,6 +47,7 @@ fun SettingsView(settingsRepository: SettingsRepository) {
 
   val currentHourOfDayInLineStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(true)
   val currentBreakPeriodInStatsEnabled by settingsRepository.isBreakPeriodInStatsEnabled.collectAsState(true)
+  val currentToleranceModelEnabled by settingsRepository.isToleranceModelEnabled.collectAsState(true)
 
   Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
@@ -76,6 +78,10 @@ fun SettingsView(settingsRepository: SettingsRepository) {
     BreakPeriodInStatsEnabledListItem(
       currentBreakPeriodInStatsEnabled,
       settingsRepository::setIsBreakPeriodInStatsEnabled
+    )
+    ToleranceModelEnabledListItem(
+      currentToleranceModelEnabled,
+      settingsRepository::setIsToleranceModelEnabled
     )
     ShareApp()
   }
