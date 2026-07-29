@@ -57,6 +57,7 @@ class SettingsRepository(
   val isHourOfDayLineInStatsEnabled = datastore.data.map { it[IsHourOfDayLineInStatsEnabled] ?: false }
   val isBreakPeriodInStatsEnabled = datastore.data.map { it[IsBreakPeriodInStatsEnabled] ?: true }
   val isIgnoringLongestDailyDelay = datastore.data.map { it[IsIgnoringLongestDailyDelay] ?: false }
+  val isToleranceModelEnabled = datastore.data.map { it[IsToleranceModelEnabled] ?: true }
   val isDayExtended = datastore.data.map { it[IsDayExtended] ?: false }
   val appLanguages = AppLanguage.entries.map { it.languageName }
   val autoExportTreeUri = datastore.data.map { it[AutoExportTreeUri] }
@@ -157,6 +158,8 @@ class SettingsRepository(
       it.remove(AutoExportLastSuccessAt)
       it.remove(AutoExportLastError)
     }
+  fun setIsToleranceModelEnabled(value: Boolean): Unit = runBlocking {
+    datastore.edit { it[IsToleranceModelEnabled] = value }
   }
 
   companion object {
@@ -177,5 +180,6 @@ class SettingsRepository(
     val AutoExportFolderName = stringPreferencesKey("auto_export_folder_name")
     val AutoExportLastSuccessAt = longPreferencesKey("auto_export_last_success_at")
     val AutoExportLastError = stringPreferencesKey("auto_export_last_error")
+    val IsToleranceModelEnabled = booleanPreferencesKey("is_tolerance_model_enabled")
   }
 }

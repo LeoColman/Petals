@@ -14,6 +14,7 @@ import br.com.colman.petals.settings.SettingsRepository.Companion.IsDarkModeOn
 import br.com.colman.petals.settings.SettingsRepository.Companion.IsDayExtended
 import br.com.colman.petals.settings.SettingsRepository.Companion.IsHitTimerMillisecondsEnabled
 import br.com.colman.petals.settings.SettingsRepository.Companion.IsHourOfDayLineInStatsEnabled
+import br.com.colman.petals.settings.SettingsRepository.Companion.IsToleranceModelEnabled
 import br.com.colman.petals.settings.SettingsRepository.Companion.Pin
 import br.com.colman.petals.settings.SettingsRepository.Companion.TimeFormat
 import io.kotest.assertions.throwables.shouldNotThrowAny
@@ -165,6 +166,20 @@ class SettingsRepositoryTest : FunSpec({
   test("Persists hour of day line setting") {
     target.setIsHourOfDayLineInStatsEnabled(true)
     datastore.data.first()[IsHourOfDayLineInStatsEnabled] shouldBe true
+  }
+
+  test("Defaults tolerance model to true") {
+    target.isToleranceModelEnabled.first() shouldBe true
+  }
+
+  test("Changes tolerance model to false") {
+    target.setIsToleranceModelEnabled(false)
+    target.isToleranceModelEnabled.first() shouldBe false
+  }
+
+  test("Persists tolerance model setting") {
+    target.setIsToleranceModelEnabled(false)
+    datastore.data.first()[IsToleranceModelEnabled] shouldBe false
   }
 
   test("Pin defaults to null") {

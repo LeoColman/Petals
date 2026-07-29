@@ -21,6 +21,11 @@ SELECT * FROM Use WHERE datetime(date) <= datetime('now', 'localtime') ORDER BY 
 selectAll:
 SELECT * FROM Use;
 
+selectSince:
+SELECT * FROM Use
+WHERE datetime(date) >= datetime(:from) AND datetime(date) <= datetime('now', 'localtime')
+ORDER BY date ASC;
+
 delete:
 DELETE FROM Use WHERE id IS (?);
 

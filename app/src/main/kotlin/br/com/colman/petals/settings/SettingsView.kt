@@ -28,6 +28,7 @@ import br.com.colman.petals.statistics.view.listitem.BreakPeriodInStatsEnabledLi
 import br.com.colman.petals.statistics.view.listitem.HourOfDayLineInStatsEnabledListItem
 import br.com.colman.petals.use.io.output.auto.AutoExportEnabler
 import org.koin.compose.koinInject
+import br.com.colman.petals.withdrawal.view.listitem.ToleranceModelEnabledListItem
 
 @Composable
 fun SettingsView(settingsRepository: SettingsRepository, autoExportEnabler: AutoExportEnabler = koinInject()) {
@@ -50,6 +51,7 @@ fun SettingsView(settingsRepository: SettingsRepository, autoExportEnabler: Auto
 
   val currentHourOfDayInLineStatsEnabled by settingsRepository.isHourOfDayLineInStatsEnabled.collectAsState(true)
   val currentBreakPeriodInStatsEnabled by settingsRepository.isBreakPeriodInStatsEnabled.collectAsState(true)
+  val currentToleranceModelEnabled by settingsRepository.isToleranceModelEnabled.collectAsState(true)
 
   Column(Modifier.verticalScroll(rememberScrollState())) {
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
@@ -82,6 +84,10 @@ fun SettingsView(settingsRepository: SettingsRepository, autoExportEnabler: Auto
       settingsRepository::setIsBreakPeriodInStatsEnabled
     )
     AutoExportSection(settingsRepository, autoExportEnabler)
+    ToleranceModelEnabledListItem(
+      currentToleranceModelEnabled,
+      settingsRepository::setIsToleranceModelEnabled
+    )
     ShareApp()
   }
 }

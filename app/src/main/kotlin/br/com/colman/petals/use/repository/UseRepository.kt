@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
+import java.time.LocalDateTime
 import java.time.LocalDateTime.parse
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 import br.com.colman.petals.Use as UseEntity
@@ -39,6 +40,14 @@ class UseRepository(
   fun all(dispatchers: CoroutineDispatcher = IO): Flow<List<Use>> = useQueries.selectAll().asFlow().mapToList(
     dispatchers
   ).map { it.map(UseEntity::toUse) }
+
+  /**
+   * Uses from [from] up to now, oldest first. Future-dated rows are excluded, matching [getLastUse].
+   * Callers that only need a recent window should prefer this over [all], which materialises every row.
+   */
+  fun since(from: LocalDateTime, dispatcher: CoroutineDispatcher = IO): Flow<List<Use>> =
+    useQueries.selectSince(from.format(ISO_LOCAL_DATE_TIME)).asFlow().mapToList(dispatcher)
+      .map { it.map(UseEntity::toUse) }
 
   fun delete(use: Use) {
     Timber.d("Deleting use: $use")
