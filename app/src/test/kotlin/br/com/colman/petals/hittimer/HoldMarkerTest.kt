@@ -53,9 +53,9 @@ class HoldMarkerTest : FunSpec({
     holdPointOn(shuffled, 5.0, 25.0) shouldBe holdPointOn(weak, 5.0, 25.0)
   }
 
-  test("Hold seconds are the elapsed side of the countdown") {
-    holdSecondsOf(millisLeft = 10_000, durationMillis = 10_000) shouldBe 0.0
-    holdSecondsOf(millisLeft = 7_500, durationMillis = 10_000) shouldBe 2.5
-    holdSecondsOf(millisLeft = 0, durationMillis = 10_000) shouldBe 10.0
+  test("Overtime walks the marker down the far side of the peak") {
+    val peak = holdPointOn(weak, 10.0, 25.0).second
+
+    listOf(12.0, 15.0, 18.0).map { holdPointOn(weak, it, 25.0).second }.forEach { (it < peak) shouldBe true }
   }
 })

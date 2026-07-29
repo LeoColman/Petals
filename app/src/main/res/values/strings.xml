@@ -43,6 +43,7 @@
     <string name="subjectve_high">Subjective \"High\"</string>
     <string name="breathhold_duration_seconds">Breathhold Duration (seconds)</string>
     <string name="current_hold">Your hold</string>
+    <string name="holding_past_peak">Holding for %1$s s, past the peak</string>
     <string name="_175thc" formatted="false">1.75% THC</string>
     <string name="_355thc" formatted="false">3.55% THC</string>
     <string name="add_use">Add Use</string>

@@ -58,12 +58,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.getSystemService
 import br.com.colman.petals.R.color.smokeColor
+import br.com.colman.petals.R.string.holding_past_peak
 import br.com.colman.petals.R.string.reset
 import br.com.colman.petals.R.string.start
 import br.com.colman.petals.R.string.vibrate_on_timer_end
 import br.com.colman.petals.settings.SettingsRepository
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
+import java.util.Locale
 
 @Preview
 @Composable
@@ -71,14 +73,18 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
   val hitTimer = rememberSaveable { HitTimer() }
 
   val ctx = LocalContext.current
-  val millisLeft by hitTimer.millisLeft.collectAsState(hitTimer.durationMillis)
+  val millisElapsed by hitTimer.millisElapsed.collectAsState(0L)
   val shouldVibrate by repository.shouldVibrate.collectAsState(false)
 
+  val millisLeft = (hitTimer.durationMillis - millisElapsed).coerceAtLeast(0)
   val alpha = millisLeft.toFloat() / hitTimer.durationMillis
   val backgroundColor = colorResource(smokeColor).copy(1 - alpha)
 
-  if (millisLeft == 0L && shouldVibrate) {
-    ctx.vibrate()
+  // Keyed on the crossing rather than checked inline: the elapsed counter keeps ticking past the
+  // target, so an inline check would recompose and buzz every hundred milliseconds, forever.
+  val hasReachedTarget = millisLeft == 0L
+  LaunchedEffect(hasReachedTarget, shouldVibrate) {
+    if (hasReachedTarget && shouldVibrate) ctx.vibrate()
   }
 
   Column(
@@ -92,6 +98,8 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
     Box(Modifier.padding(top = 60.dp)) {
       TimerText(millisLeft)
     }
+
+    HoldOvertime(millisElapsed, hitTimer.durationMillis)
 
     Column(Modifier.width(180.dp), spacedBy(8.dp)) {
       Button(onClick = { hitTimer.start() }, Modifier.fillMaxWidth()) {
@@ -107,16 +115,24 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
         Text(stringResource(vibrate_on_timer_end))
       }
     }
-    WhyTenSeconds(holdSecondsOf(millisLeft, hitTimer.durationMillis))
+    WhyTenSeconds(millisElapsed / 1000.0)
   }
 }
 
 /**
- * How long the current hit has been held, in seconds: the timer counts down, the curves are drawn
- * against time held, so the marker needs the elapsed side of it.
+ * Only appears once the target is passed. Until then the countdown already tells you the hold; after
+ * it, this is the only place the real hold time exists, and seeing it is the whole point.
  */
-fun holdSecondsOf(millisLeft: Long, durationMillis: Long): Double =
-  ((durationMillis - millisLeft).coerceAtLeast(0) / 1000.0)
+@Composable
+private fun HoldOvertime(millisElapsed: Long, durationMillis: Long) {
+  if (millisElapsed <= durationMillis) return
+
+  Text(
+    stringResource(holding_past_peak, "%.1f".format(Locale.US, millisElapsed / 1000.0)),
+    fontSize = 20.sp,
+    color = MaterialTheme.colors.error
+  )
+}
 
 @Composable
 private fun TimerText(millisLeft: Long) {

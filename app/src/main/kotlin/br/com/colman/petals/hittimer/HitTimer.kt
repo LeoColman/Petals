@@ -3,6 +3,7 @@ package br.com.colman.petals.hittimer
 import android.os.Parcelable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import org.apache.commons.lang3.time.DurationFormatUtils
@@ -17,13 +18,21 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
   @IgnoredOnParcel
   private var startDate: LocalDateTime? = null
 
+  /**
+   * How long the current hit has been held. Unlike [millisLeft] this keeps counting past
+   * [durationMillis], because the point of the ten second target is that going over it costs you,
+   * and you cannot see that you went over if the timer stops at the target.
+   */
   @IgnoredOnParcel
-  val millisLeft = flow {
+  val millisElapsed = flow {
     while (true) {
-      emit(calculateMillisLeft())
+      emit(calculateMillisElapsed())
       delay(100)
     }
   }
+
+  @IgnoredOnParcel
+  val millisLeft = millisElapsed.map { (durationMillis - it).coerceAtLeast(0) }
 
   fun start() {
     startDate = now()
@@ -33,10 +42,9 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
     startDate = null
   }
 
-  private fun calculateMillisLeft(): Long {
-    if (startDate == null) return durationMillis
-    val elapsed = startDate?.until(now(), MILLIS) ?: 0
-    return (durationMillis - elapsed).coerceAtLeast(0)
+  private fun calculateMillisElapsed(): Long {
+    val start = startDate ?: return 0
+    return start.until(now(), MILLIS).coerceAtLeast(0)
   }
 
   companion object {
