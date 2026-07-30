@@ -4,9 +4,8 @@
 
 name: 'Mutation Testing'
 on:
-  push:
-    branches:
-    - 'main'
+  schedule:
+  - cron: '0 5 * * 1'
   workflow_dispatch: {}
 concurrency:
   group: 'gh-pages-badges'
@@ -51,6 +50,7 @@ jobs:
       with:
         name: 'mutation-report'
         path: 'app/build/reports/pitest'
+      if: 'always()'
     - id: 'step-5'
       name: 'Calculate Test Strength'
       run: |-
@@ -82,7 +82,7 @@ jobs:
           fi
         )
         URL="https://img.shields.io/badge/Test%20Strength-$TEST_STRENGTH%25-$COLOR"
-        curl -sS "$URL" -o badge/mutation-badge.svg
+        curl -sS "$URL" -o badge/test-strength-badge.svg
     - id: 'step-8'
       name: 'Deploy Badge to GitHub Pages'
       uses: 'peaceiris/actions-gh-pages@v4'

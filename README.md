@@ -14,7 +14,7 @@
 [![GitHub All Releases](https://img.shields.io/github/downloads/LeoColman/Petals/total?label=Downloads%20All%20Time%20(GitHub))](https://github.com/LeoColman/Petals/releases)
 [![GitHub Release Downloads](https://img.shields.io/github/downloads/LeoColman/Petals/latest/total?label=Downloads%20Latest%20Release%20(GitHub))](https://github.com/LeoColman/Petals/releases/latest)
 [![Coverage](https://leocolman.github.io/Petals/coverage-badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/kover.yaml)
-[![Test Strength](https://leocolman.github.io/Petals/mutation-badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/mutation-testing.yaml)
+[![Test Strength](https://leocolman.github.io/Petals/test-strength-badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/mutation-testing.yaml)
 ![Maintenance](https://img.shields.io/maintenance/yes/2026)
 [![Alternatives](https://img.shields.io/badge/Alternative.to-6-blue)](https://alternativeto.net/software/petals-app/)
 
@@ -90,14 +90,14 @@ as follows:
 
 ## Quality
 
-Two numbers are tracked on every push to `main`, and both badges above link to the workflow that
-produces them.
+Both badges above link to the workflow that produces them. Coverage is measured on every push to
+`main`; mutation testing runs weekly, or on demand from the Actions tab.
 
 ### Coverage
 
 [Kover](https://github.com/Kotlin/kotlinx-kover) measures line coverage of the JVM unit tests.
-Composables, generated SQLDelight code and `BuildConfig` are excluded, since none of them are
-exercised by unit tests.
+Composables, generated SQLDelight code, `BuildConfig` and library code Kotlin inlined into our
+classes are excluded, since none of them are exercised by unit tests or ours to test.
 
 - `./gradlew koverHtmlReport` writes a browsable report to `app/build/reports/kover/html`
 - `./gradlew printLineCoverage` prints the single number the badge is built from
@@ -121,7 +121,11 @@ that gap is what the Coverage badge next to it already measures. A low mutation 
 test strength means untested code; a low test strength means the tests that exist do not assert
 enough.
 
-The full run takes several minutes, so it is not part of the pull request checks.
+A full run takes around 13 minutes, so it is scheduled weekly rather than run per merge, and is
+never part of the pull request checks.
+
+Specs must be named `*Test`: PIT is pointed at that glob, and a spec named anything else would be
+skipped without failing anything. `verifySpecNaming` enforces it as part of the `pitest` task.
 
 ## Git Secrets
 

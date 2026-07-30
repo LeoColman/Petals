@@ -396,17 +396,53 @@ val mutationExcludedClasses = listOf(
   "*DatabaseImpl*",
   "*Queries*",
   "*BuildConfig*",
-  // Kotlin inlines library code into our classes, and PIT happily mutates it. Every mutant in
-  // these synthetic classes comes from kotlinx or Koin sources, never from ours.
+  // Kotlin inlines library code into our classes, and PIT happily mutates it. Verified against the
+  // report: of the 513 mutants in these synthetic classes, none came from a file under src/main —
+  // they were all Emitters.kt, SafeCollector.common.kt, Koin or the stdlib. That is a measurement,
+  // not a guarantee: an `inline fun` of our own taking a lambda would land here too.
   "*\$inlined\$*",
 )
+
+/**
+ * PIT's `--targetTests` glob matches `*Test`, so a spec class named anything else is never handed
+ * to the engine. Its mutants are then reported as NO_COVERAGE, which drags the mutation score down
+ * but leaves test strength — the number on the badge — completely unmoved. The badge cannot show
+ * this mistake, so fail loudly instead.
+ */
+val verifySpecNaming = tasks.register("verifySpecNaming") {
+  group = "verification"
+  description = "Fails if a Kotest spec is named so that mutation testing would silently skip it"
+
+  val testSources = fileTree("src/test/kotlin") { include("**/*.kt") }
+  inputs.files(testSources).withPropertyName("testSources")
+
+  doLast {
+    val specDeclaration = Regex(
+      """^class\s+(\w+)\s*:\s*(FunSpec|StringSpec|ShouldSpec|DescribeSpec|BehaviorSpec|FreeSpec""" +
+        """|WordSpec|ExpectSpec|FeatureSpec|AnnotationSpec)\b""",
+      RegexOption.MULTILINE
+    )
+
+    val misnamed = testSources.files.flatMap { source ->
+      specDeclaration.findAll(source.readText())
+        .map { it.groupValues[1] }
+        .filterNot { it.endsWith("Test") }
+    }
+
+    if (misnamed.isNotEmpty()) {
+      throw GradleException(
+        "Kotest specs must be named *Test or PIT silently skips them: ${misnamed.joinToString()}"
+      )
+    }
+  }
+}
 
 tasks.register<JavaExec>("pitest") {
   group = "verification"
   description = "Runs PIT mutation testing against the $mutationVariant variant"
 
   val unitTest = tasks.named<Test>("test${mutationVariantCapitalized}UnitTest")
-  dependsOn(unitTest)
+  dependsOn(unitTest, verifySpecNaming)
 
   val mutableCodePaths = files(
     layout.buildDirectory.dir("tmp/kotlin-classes/$mutationVariant"),
@@ -416,6 +452,22 @@ tasks.register<JavaExec>("pitest") {
   val classpathFile = layout.buildDirectory.file("tmp/pitest/classpath.txt")
   val sourceDirs = files("src/main/kotlin", "src/main/java")
 
+  // Everything PIT needs on the classpath of the code under test, in one lazy collection so that
+  // nothing has to reach back into the test task while the build is running.
+  val codeUnderTest = files(
+    mutableCodePaths,
+    unitTest.map { it.testClassesDirs },
+    unitTest.map { it.classpath },
+  )
+
+  // Declaring inputs and outputs is what lets Gradle skip this task on the follow-up
+  // `printTestStrength` and `printMutationScore` invocations. Without them PIT is never
+  // up-to-date, so it reruns on every invocation: three full runs per CI job, each producing a
+  // different report, and PIT's console output leaking into `$(./gradlew -q ...)`.
+  inputs.files(codeUnderTest).withPropertyName("codeUnderTest")
+  inputs.files(sourceDirs).withPropertyName("sourceDirs")
+  outputs.dir(reportDir).withPropertyName("report")
+
   mainClass.set("org.pitest.mutationtest.commandline.MutationCoverageReport")
 
   // PIT hands its own launch classpath down to the minions, and the Kotest PIT plugin drags in
@@ -424,40 +476,39 @@ tasks.register<JavaExec>("pitest") {
   classpath(unitTest.map { it.classpath })
   classpath(pitest)
 
-  // PIT reads the classpath from a file because the flattened Android test classpath is far
-  // longer than a command line can hold.
+  args(
+    "--classPathFile=${classpathFile.get().asFile.absolutePath}",
+    "--mutableCodePaths=${mutableCodePaths.joinToString(",") { it.absolutePath }}",
+    "--sourceDirs=${sourceDirs.joinToString(",") { it.absolutePath }}",
+    "--reportDir=${reportDir.get().asFile.absolutePath}",
+    "--targetClasses=br.com.colman.petals.*",
+    // Specs only. A wider glob makes PIT offer every Android class to the Kotest engine as a
+    // candidate test, and instantiating those outside a device hangs the run. `verifySpecNaming`
+    // guards the convention this relies on.
+    "--targetTests=br.com.colman.petals.*Test",
+    "--excludedClasses=${mutationExcludedClasses.joinToString(",")}",
+    "--features=+fann(annotation[Composable])",
+    "--testPlugin=Kotest",
+    // Property based specs are slow enough that PIT's 4s default kills healthy minions.
+    "--timeoutConst=10000",
+    "--jvmArgs=-Dkotest.framework.config.fqn=br.com.colman.petals.KotestConfig",
+    "--outputFormats=HTML,XML",
+    "--timestampedReports=false",
+    "--failWhenNoMutations=false",
+  )
+
   doFirst {
-    val entries = mutableCodePaths + unitTest.get().testClassesDirs + unitTest.get().classpath
+    // PIT reads the classpath from a file because the flattened Android test classpath is far
+    // longer than a command line can hold.
     classpathFile.get().asFile.apply {
       parentFile.mkdirs()
-      writeText(entries.filter { it.exists() }.joinToString("\n") { it.absolutePath })
+      writeText(codeUnderTest.filter { it.exists() }.joinToString("\n") { it.absolutePath })
     }
-  }
 
-  argumentProviders.add(
-    CommandLineArgumentProvider {
-      listOf(
-        "--classPathFile=${classpathFile.get().asFile.absolutePath}",
-        "--mutableCodePaths=${mutableCodePaths.joinToString(",") { it.absolutePath }}",
-        "--sourceDirs=${sourceDirs.joinToString(",") { it.absolutePath }}",
-        "--reportDir=${reportDir.get().asFile.absolutePath}",
-        "--targetClasses=br.com.colman.petals.*",
-        // Specs only. A wider glob makes PIT offer every Android class to the Kotest engine as a
-        // candidate test, and instantiating those outside a device hangs the run.
-        "--targetTests=br.com.colman.petals.*Test",
-        "--excludedClasses=${mutationExcludedClasses.joinToString(",")}",
-        "--features=+fann(annotation[Composable])",
-        "--testPlugin=Kotest",
-        // Property based specs are slow enough that PIT's 4s default kills healthy minions.
-        "--timeoutConst=10000",
-        "--jvmArgs=-Dkotest.framework.config.fqn=br.com.colman.petals.KotestConfig",
-        "--outputFormats=HTML,XML",
-        "--timestampedReports=false",
-        "--failWhenNoMutations=false",
-        "--threads=${Runtime.getRuntime().availableProcessors()}",
-      )
-    }
-  )
+    // Added here rather than above so the core count of whichever machine runs the build stays out
+    // of the task's input fingerprint.
+    args("--threads=${Runtime.getRuntime().availableProcessors()}")
+  }
 }
 
 /**
