@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import br.com.colman.petals.R.string.hours_12
 import br.com.colman.petals.R.string.hours_24
@@ -59,6 +60,12 @@ class SettingsRepository(
   val isToleranceModelEnabled = datastore.data.map { it[IsToleranceModelEnabled] ?: true }
   val isDayExtended = datastore.data.map { it[IsDayExtended] ?: false }
   val appLanguages = AppLanguage.entries.map { it.languageName }
+  val autoExportTreeUri = datastore.data.map { it[AutoExportTreeUri] }
+  val autoExportDocumentUri = datastore.data.map { it[AutoExportDocumentUri] }
+  val autoExportFolderName = datastore.data.map { it[AutoExportFolderName] }
+  val autoExportLastSuccessAt = datastore.data.map { it[AutoExportLastSuccessAt] }
+  val autoExportLastError = datastore.data.map { it[AutoExportLastError] }
+  val isAutoExportEnabled = autoExportTreeUri.map { it != null }
 
   fun setCurrencyIcon(value: String): Unit = runBlocking {
     datastore.edit { it[CurrencyIcon] = value }
@@ -113,6 +120,46 @@ class SettingsRepository(
     datastore.edit { it[IsIgnoringLongestDailyDelay] = value }
   }
 
+  fun setAutoExportTreeUri(value: String?): Unit = runBlocking {
+    datastore.edit {
+      if (value == null) it.remove(AutoExportTreeUri) else it[AutoExportTreeUri] = value
+    }
+  }
+
+  fun setAutoExportDocumentUri(value: String?): Unit = runBlocking {
+    datastore.edit {
+      if (value == null) it.remove(AutoExportDocumentUri) else it[AutoExportDocumentUri] = value
+    }
+  }
+
+  fun setAutoExportFolderName(value: String?): Unit = runBlocking {
+    datastore.edit {
+      if (value == null) it.remove(AutoExportFolderName) else it[AutoExportFolderName] = value
+    }
+  }
+
+  fun setAutoExportLastSuccessAt(value: Long?): Unit = runBlocking {
+    datastore.edit {
+      if (value == null) it.remove(AutoExportLastSuccessAt) else it[AutoExportLastSuccessAt] = value
+    }
+  }
+
+  fun setAutoExportLastError(value: String?): Unit = runBlocking {
+    datastore.edit {
+      if (value == null) it.remove(AutoExportLastError) else it[AutoExportLastError] = value
+    }
+  }
+
+  fun clearAutoExport(): Unit = runBlocking {
+    datastore.edit {
+      it.remove(AutoExportTreeUri)
+      it.remove(AutoExportDocumentUri)
+      it.remove(AutoExportFolderName)
+      it.remove(AutoExportLastSuccessAt)
+      it.remove(AutoExportLastError)
+    }
+  }
+
   fun setIsToleranceModelEnabled(value: Boolean): Unit = runBlocking {
     datastore.edit { it[IsToleranceModelEnabled] = value }
   }
@@ -130,6 +177,11 @@ class SettingsRepository(
     val IsHourOfDayLineInStatsEnabled = booleanPreferencesKey("is_hour_of_day_line_in_stats_enabled")
     val IsBreakPeriodInStatsEnabled = booleanPreferencesKey("is_break_period_in_stats_enabled")
     val IsIgnoringLongestDailyDelay = booleanPreferencesKey("is_ignoring_longest_daily_delay")
+    val AutoExportTreeUri = stringPreferencesKey("auto_export_tree_uri")
+    val AutoExportDocumentUri = stringPreferencesKey("auto_export_document_uri")
+    val AutoExportFolderName = stringPreferencesKey("auto_export_folder_name")
+    val AutoExportLastSuccessAt = longPreferencesKey("auto_export_last_success_at")
+    val AutoExportLastError = stringPreferencesKey("auto_export_last_error")
     val IsToleranceModelEnabled = booleanPreferencesKey("is_tolerance_model_enabled")
   }
 }

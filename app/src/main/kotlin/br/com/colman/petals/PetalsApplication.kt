@@ -20,6 +20,15 @@ package br.com.colman.petals
 
 import android.app.Application
 import br.com.colman.petals.BuildConfig.DEBUG
+import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.use.io.output.auto.AutoExportScheduler
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.Koin
 import org.koin.core.context.startKoin
@@ -33,6 +42,7 @@ class PetalsApplication : Application() {
     super.onCreate()
     startKoin()
     startTimber()
+    rescheduleAutoExportIfEnabled()
   }
 
   private fun startKoin() {
@@ -45,6 +55,32 @@ class PetalsApplication : Application() {
   private fun startTimber() {
     if (DEBUG) {
       Timber.plant(Timber.DebugTree())
+    }
+  }
+
+  /**
+   * Belt-and-braces for the force-stop case: WorkManager's own reboot
+   * rescheduling only fires on BOOT_COMPLETED, not on a plain force-stop.
+   * KEEP makes schedule() idempotent, and this runs off the main thread
+   * since DataStore reads are disk IO.
+   */
+  private fun rescheduleAutoExportIfEnabled(dispatcher: CoroutineDispatcher = IO) {
+    // This is a root coroutine: nothing is above it to catch anything it throws, so an
+    // exception here would reach the default handler and take the process down AT APP
+    // START. Failing to re-schedule a background export must never do that — the next
+    // launch (or WorkManager's own reboot rescheduling) gets another go.
+    // The handler, not a list of catch clauses, is what makes that true. Koin lookups and
+    // DataStore reads can fail in ways this code has no business enumerating, and any one
+    // of them missing from the list would be a crash on launch.
+    val doNotCrashOnLaunch = CoroutineExceptionHandler { _, throwable ->
+      Timber.w(throwable, "Could not reschedule auto-export")
+    }
+
+    CoroutineScope(dispatcher + SupervisorJob() + doNotCrashOnLaunch).launch {
+      val settingsRepository = koin.get<SettingsRepository>()
+      if (settingsRepository.isAutoExportEnabled.first()) {
+        koin.get<AutoExportScheduler>().schedule()
+      }
     }
   }
 }

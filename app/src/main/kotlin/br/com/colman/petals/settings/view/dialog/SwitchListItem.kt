@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SwitchListItem(
   icon: ImageVector,
-  @StringRes textId: Int,
-  @StringRes descriptionId: Int,
+  text: String,
+  description: String,
   initialState: Boolean,
   onChangeState: (Boolean) -> Unit,
 ) {
@@ -30,10 +30,27 @@ fun SwitchListItem(
     ListItem(
       modifier = Modifier.fillMaxWidth().weight(0.7f),
       icon = { Icon(icon, null, Modifier.size(42.dp)) },
-      secondaryText = { Text(stringResource(descriptionId)) }
+      secondaryText = { Text(description) }
     ) {
-      Text(stringResource(textId))
+      Text(text)
     }
     Switch(initialState, onChangeState, modifier = Modifier.align(CenterVertically).padding(end = 8.dp))
   }
+}
+
+@Composable
+fun SwitchListItem(
+  icon: ImageVector,
+  @StringRes textId: Int,
+  @StringRes descriptionId: Int,
+  initialState: Boolean,
+  onChangeState: (Boolean) -> Unit,
+) {
+  SwitchListItem(
+    icon = icon,
+    text = stringResource(textId),
+    description = stringResource(descriptionId),
+    initialState = initialState,
+    onChangeState = onChangeState,
+  )
 }
