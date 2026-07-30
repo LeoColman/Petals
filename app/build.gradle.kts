@@ -151,7 +151,7 @@ android {
  * Classpath used to launch PIT. Kept apart from the app's own configurations so that the mutation
  * engine never leaks into the shipped artifact.
  */
-val pitest: Configuration by configurations.creating {
+val pitest = configurations.create("pitest") {
   isCanBeConsumed = false
   isCanBeResolved = true
 }
@@ -411,6 +411,10 @@ val mutationExcludedClasses = listOf(
  * to the engine. Its mutants are then reported as NO_COVERAGE, which drags the mutation score down
  * but leaves test strength — the number on the badge — completely unmoved. The badge cannot show
  * this mistake, so fail loudly instead.
+ *
+ * This reads source rather than bytecode, so it only recognises specs that name one of Kotest's
+ * own styles as their supertype. A spec extending a project-specific base class would still slip
+ * through; there is no such base class today.
  */
 val verifySpecNaming = tasks.register("verifySpecNaming") {
   group = "verification"
@@ -420,9 +424,10 @@ val verifySpecNaming = tasks.register("verifySpecNaming") {
   inputs.files(testSources).withPropertyName("testSources")
 
   doLast {
+    // `(?:\w+\s+)*` so that `internal class`, `private class` and friends are caught too.
     val specDeclaration = Regex(
-      """^class\s+(\w+)\s*:\s*(FunSpec|StringSpec|ShouldSpec|DescribeSpec|BehaviorSpec|FreeSpec""" +
-        """|WordSpec|ExpectSpec|FeatureSpec|AnnotationSpec)\b""",
+      """^(?:\w+\s+)*class\s+(\w+)\s*:\s*(FunSpec|StringSpec|ShouldSpec|DescribeSpec|BehaviorSpec""" +
+        """|FreeSpec|WordSpec|ExpectSpec|FeatureSpec|AnnotationSpec)\b""",
       RegexOption.MULTILINE
     )
 
@@ -519,12 +524,15 @@ tasks.register<JavaExec>("pitest") {
  */
 fun readMutationTotals(): Triple<Int, Int, Int> {
   val report = file("${layout.buildDirectory.get()}/reports/pitest/mutations.xml")
-  // PIT runs with --failWhenNoMutations=false, so a run that mutates nothing is a success that
-  // writes no report. Report zeroes rather than failing the badge step with a stack trace.
-  if (!report.exists()) return Triple(0, 0, 0)
+  // Missing or empty means PIT produced nothing, not that every mutant survived. Publishing 0%
+  // for that would be indistinguishable from a genuinely terrible suite, so refuse to guess.
+  if (!report.exists()) {
+    throw GradleException("PIT wrote no report at $report. Run `./gradlew pitest` first.")
+  }
 
   val mutations = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(report)
     .getElementsByTagName("mutation")
+  if (mutations.length == 0) throw GradleException("PIT generated no mutants; $report is empty.")
 
   var detected = 0
   var withoutCoverage = 0
