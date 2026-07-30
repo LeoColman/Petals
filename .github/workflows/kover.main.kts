@@ -74,7 +74,9 @@ workflow(
           fi
         )
         URL="https://img.shields.io/badge/Coverage-$COVERAGE%25-$COLOR"
-        curl -sS "$URL" -o badge/coverage-badge.svg
+        # -f so an outage at shields.io fails the job instead of publishing its error page as
+        # the badge, which plain -sS would do while still exiting 0.
+        curl -fsS --retry 3 --retry-all-errors "$URL" -o badge/coverage-badge.svg
       """.trimIndent()
     )
 

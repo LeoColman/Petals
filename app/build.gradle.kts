@@ -16,6 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import java.util.Locale
 import java.util.Properties
 import javax.xml.parsers.DocumentBuilderFactory
 import org.gradle.api.JavaVersion.VERSION_17
@@ -373,7 +374,9 @@ tasks.register("printLineCoverage") {
       childNode = childNode.nextSibling
     }
 
-    println("%.1f".format(coveragePercent))
+    // Locale.US because the workflow feeds this straight into `printf "%.0f"`, which rejects the
+    // comma separator a machine set to, say, pt_BR would otherwise produce.
+    println("%.1f".format(Locale.US, coveragePercent))
   }
 }
 
@@ -516,6 +519,10 @@ tasks.register<JavaExec>("pitest") {
  */
 fun readMutationTotals(): Triple<Int, Int, Int> {
   val report = file("${layout.buildDirectory.get()}/reports/pitest/mutations.xml")
+  // PIT runs with --failWhenNoMutations=false, so a run that mutates nothing is a success that
+  // writes no report. Report zeroes rather than failing the badge step with a stack trace.
+  if (!report.exists()) return Triple(0, 0, 0)
+
   val mutations = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(report)
     .getElementsByTagName("mutation")
 
@@ -542,7 +549,7 @@ tasks.register("printTestStrength") {
   dependsOn("pitest")
   doLast {
     val (detected, covered, _) = readMutationTotals()
-    println("%.1f".format(if (covered == 0) 0.0 else (detected * 100.0) / covered))
+    println("%.1f".format(Locale.US, if (covered == 0) 0.0 else (detected * 100.0) / covered))
   }
 }
 
@@ -555,6 +562,6 @@ tasks.register("printMutationScore") {
   dependsOn("pitest")
   doLast {
     val (detected, _, total) = readMutationTotals()
-    println("%.1f".format(if (total == 0) 0.0 else (detected * 100.0) / total))
+    println("%.1f".format(Locale.US, if (total == 0) 0.0 else (detected * 100.0) / total))
   }
 }
