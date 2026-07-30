@@ -43,12 +43,15 @@ workflow(
       action = UploadArtifact(name = "mutation-report", path = listOf("app/build/reports/pitest"))
     )
     run(
-      name = "Calculate Mutation Score",
+      name = "Calculate Test Strength",
       command = $$"""
+                STRENGTH=$(./gradlew -q printTestStrength)
                 SCORE=$(./gradlew -q printMutationScore)
-                echo "Raw Mutation Score: $SCORE"
-                SCORE=$(printf "%.0f" "$SCORE")  # Round to integer
-                echo "Rounded Mutation Score: $SCORE"
+                echo "Raw Test Strength: $STRENGTH, Raw Mutation Score: $SCORE"
+                STRENGTH=$(printf "%.0f" "$STRENGTH")  # Round to integer
+                SCORE=$(printf "%.0f" "$SCORE")
+                echo "Rounded Test Strength: $STRENGTH, Rounded Mutation Score: $SCORE"
+                echo "TEST_STRENGTH=$STRENGTH" >> $GITHUB_ENV
                 echo "MUTATION_SCORE=$SCORE" >> $GITHUB_ENV
             """.trimIndent()
     )
@@ -57,24 +60,25 @@ workflow(
       name = "Update GitHub Summary",
       command = $$"""
         echo "## Mutation Testing Report" >> $GITHUB_STEP_SUMMARY
-        echo "**Mutation Score:** $MUTATION_SCORE%" >> $GITHUB_STEP_SUMMARY
+        echo "**Test Strength:** $TEST_STRENGTH% (of the mutants a test ran, how many it caught)" >> $GITHUB_STEP_SUMMARY
+        echo "**Mutation Score:** $MUTATION_SCORE% (of every mutant, including code no test reaches)" >> $GITHUB_STEP_SUMMARY
       """.trimIndent()
     )
 
     run(
-      name = "Generate Mutation Badge",
+      name = "Generate Test Strength Badge",
       command = $$"""
         mkdir -p badge
         COLOR=$(
-          if [ "$MUTATION_SCORE" -ge 80 ]; then
+          if [ "$TEST_STRENGTH" -ge 80 ]; then
             echo "brightgreen"
-          elif [ "$MUTATION_SCORE" -ge 60 ]; then
+          elif [ "$TEST_STRENGTH" -ge 60 ]; then
             echo "yellow"
           else
             echo "red"
           fi
         )
-        URL="https://img.shields.io/badge/Mutation%20Score-$MUTATION_SCORE%25-$COLOR"
+        URL="https://img.shields.io/badge/Test%20Strength-$TEST_STRENGTH%25-$COLOR"
         curl -sS "$URL" -o badge/mutation-badge.svg
       """.trimIndent()
     )

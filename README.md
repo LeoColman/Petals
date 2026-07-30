@@ -14,7 +14,7 @@
 [![GitHub All Releases](https://img.shields.io/github/downloads/LeoColman/Petals/total?label=Downloads%20All%20Time%20(GitHub))](https://github.com/LeoColman/Petals/releases)
 [![GitHub Release Downloads](https://img.shields.io/github/downloads/LeoColman/Petals/latest/total?label=Downloads%20Latest%20Release%20(GitHub))](https://github.com/LeoColman/Petals/releases/latest)
 [![Coverage](https://leocolman.github.io/Petals/coverage-badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/kover.yaml)
-[![Mutation Score](https://leocolman.github.io/Petals/mutation-badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/mutation-testing.yaml)
+[![Test Strength](https://leocolman.github.io/Petals/mutation-badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/mutation-testing.yaml)
 ![Maintenance](https://img.shields.io/maintenance/yes/2026)
 [![Alternatives](https://img.shields.io/badge/Alternative.to-6-blue)](https://alternativeto.net/software/petals-app/)
 
@@ -112,7 +112,14 @@ PIT runs the Kotest engine directly through `kotest-extensions-pitest` and is sc
 `fdroidDebug` variant, with the same exclusions Kover uses.
 
 - `./gradlew pitest` writes a report to `app/build/reports/pitest/index.html`
-- `./gradlew printMutationScore` prints the single number the badge is built from
+- `./gradlew printTestStrength` prints the single number the badge is built from
+- `./gradlew printMutationScore` prints the same thing counting untested code too
+
+The badge reports **test strength**, not the raw mutation score: of the mutants a test actually
+executed, how many did it catch. Mutants in code no test reaches are left out on purpose, because
+that gap is what the Coverage badge next to it already measures. A low mutation score beside a high
+test strength means untested code; a low test strength means the tests that exist do not assert
+enough.
 
 The full run takes several minutes, so it is not part of the pull request checks.
 

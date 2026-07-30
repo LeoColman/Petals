@@ -258,7 +258,9 @@ kover {
         annotatedBy("androidx.compose.runtime.Composable")
         classes("*ComposableSingletons*")
         classes("*DatabaseImpl*")
+        classes("*Queries*")
         classes("*BuildConfig*")
+        classes("*\$inlined\$*")
       }
     }
   }
@@ -392,7 +394,11 @@ val mutationVariantCapitalized = mutationVariant.replaceFirstChar { it.uppercase
 val mutationExcludedClasses = listOf(
   "*ComposableSingletons*",
   "*DatabaseImpl*",
+  "*Queries*",
   "*BuildConfig*",
+  // Kotlin inlines library code into our classes, and PIT happily mutates it. Every mutant in
+  // these synthetic classes comes from kotlinx or Koin sources, never from ours.
+  "*\$inlined\$*",
 )
 
 tasks.register<JavaExec>("pitest") {
@@ -455,25 +461,49 @@ tasks.register<JavaExec>("pitest") {
 }
 
 /**
- * Parse the PIT report for badge creation
+ * Number of mutants PIT detected, how many a test actually executed, and how many exist at all.
+ */
+fun readMutationTotals(): Triple<Int, Int, Int> {
+  val report = file("${layout.buildDirectory.get()}/reports/pitest/mutations.xml")
+  val mutations = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(report)
+    .getElementsByTagName("mutation")
+
+  var detected = 0
+  var withoutCoverage = 0
+  for (index in 0 until mutations.length) {
+    val attributes = mutations.item(index).attributes
+    if (attributes.getNamedItem("detected").textContent == "true") detected++
+    if (attributes.getNamedItem("status").textContent == "NO_COVERAGE") withoutCoverage++
+  }
+
+  return Triple(detected, mutations.length - withoutCoverage, mutations.length)
+}
+
+/**
+ * Share of mutants a test both executed and noticed. Unlike the raw mutation score this ignores
+ * code no test reaches, which Kover already reports, so it answers the one question coverage
+ * cannot: when a test does run this line, would it complain if the line were wrong?
+ *
+ * This is the same number PIT prints as "Test strength" in its console summary.
+ */
+tasks.register("printTestStrength") {
+  group = "verification"
+  dependsOn("pitest")
+  doLast {
+    val (detected, covered, _) = readMutationTotals()
+    println("%.1f".format(if (covered == 0) 0.0 else (detected * 100.0) / covered))
+  }
+}
+
+/**
+ * Share of all mutants that were detected. Reported alongside the badge for context: a low score
+ * next to a high test strength means untested code, not weak assertions.
  */
 tasks.register("printMutationScore") {
   group = "verification"
   dependsOn("pitest")
   doLast {
-    val report = file("${layout.buildDirectory.get()}/reports/pitest/mutations.xml")
-
-    val doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(report)
-    val mutations = doc.getElementsByTagName("mutation")
-
-    var total = 0
-    var detected = 0
-    for (index in 0 until mutations.length) {
-      total++
-      if (mutations.item(index).attributes.getNamedItem("detected").textContent == "true") detected++
-    }
-
-    val score = if (total == 0) 0.0 else (detected * 100.0) / total
-    println("%.1f".format(score))
+    val (detected, _, total) = readMutationTotals()
+    println("%.1f".format(if (total == 0) 0.0 else (detected * 100.0) / total))
   }
 }
