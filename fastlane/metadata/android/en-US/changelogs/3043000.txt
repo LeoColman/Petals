@@ -1,0 +1,1 @@
+New: automatic daily export. Pick a folder once, a cloud-synced one works too, and Petals backs up your uses there every day. The Hit Timer now marks your current hold on the charts, keeps counting past 10 seconds, and has a pause button so you can read how long you actually held.
