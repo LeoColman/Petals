@@ -16,6 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import java.util.Locale
 import java.util.Properties
 import javax.xml.parsers.DocumentBuilderFactory
 import org.gradle.api.JavaVersion.VERSION_17
@@ -146,7 +147,21 @@ android {
 
 }
 
+/**
+ * Classpath used to launch PIT. Kept apart from the app's own configurations so that the mutation
+ * engine never leaks into the shipped artifact.
+ */
+val pitest = configurations.create("pitest") {
+  isCanBeConsumed = false
+  isCanBeResolved = true
+}
+
 dependencies {
+  // PIT (mutation testing). Kotest ships its own PIT test plugin, so PIT drives the
+  // Kotest engine directly instead of going through the JUnit Platform.
+  pitest(libs.pitest.command.line)
+  pitest(libs.kotest.pitest)
+
   // Kotlin
   testRuntimeOnly(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
@@ -244,7 +259,9 @@ kover {
         annotatedBy("androidx.compose.runtime.Composable")
         classes("*ComposableSingletons*")
         classes("*DatabaseImpl*")
+        classes("*Queries*")
         classes("*BuildConfig*")
+        classes("*\$inlined\$*")
       }
     }
   }
@@ -357,6 +374,202 @@ tasks.register("printLineCoverage") {
       childNode = childNode.nextSibling
     }
 
-    println("%.1f".format(coveragePercent))
+    // Locale.US because the workflow feeds this straight into `printf "%.0f"`, which rejects the
+    // comma separator a machine set to, say, pt_BR would otherwise produce.
+    println("%.1f".format(Locale.US, coveragePercent))
+  }
+}
+
+/**
+ * Mutation testing.
+ *
+ * PIT has no maintained Android Gradle plugin (the community one is pinned to AGP 7), so PIT is
+ * invoked straight from its command line entrypoint. Everything it needs is derived from the
+ * `fdroidDebug` unit test task, which is the flavour with no proprietary dependencies.
+ */
+val mutationVariant = "fdroidDebug"
+val mutationVariantCapitalized = mutationVariant.replaceFirstChar { it.uppercase() }
+
+/**
+ * Same exclusions as the `kover` block above, so both numbers describe the same code. Composables
+ * are dropped through PIT's `fann` feature, which filters anything carrying the given annotation.
+ */
+val mutationExcludedClasses = listOf(
+  "*ComposableSingletons*",
+  "*DatabaseImpl*",
+  "*Queries*",
+  "*BuildConfig*",
+  // Kotlin inlines library code into our classes, and PIT happily mutates it. Verified against the
+  // report: of the 513 mutants in these synthetic classes, none came from a file under src/main —
+  // they were all Emitters.kt, SafeCollector.common.kt, Koin or the stdlib. That is a measurement,
+  // not a guarantee: an `inline fun` of our own taking a lambda would land here too.
+  "*\$inlined\$*",
+)
+
+/**
+ * PIT's `--targetTests` glob matches `*Test`, so a spec class named anything else is never handed
+ * to the engine. Its mutants are then reported as NO_COVERAGE, which drags the mutation score down
+ * but leaves test strength — the number on the badge — completely unmoved. The badge cannot show
+ * this mistake, so fail loudly instead.
+ *
+ * This reads source rather than bytecode, so it only recognises specs that name one of Kotest's
+ * own styles as their supertype. A spec extending a project-specific base class would still slip
+ * through; there is no such base class today.
+ */
+val verifySpecNaming = tasks.register("verifySpecNaming") {
+  group = "verification"
+  description = "Fails if a Kotest spec is named so that mutation testing would silently skip it"
+
+  val testSources = fileTree("src/test/kotlin") { include("**/*.kt") }
+  inputs.files(testSources).withPropertyName("testSources")
+
+  doLast {
+    // `(?:\w+\s+)*` so that `internal class`, `private class` and friends are caught too.
+    val specDeclaration = Regex(
+      """^(?:\w+\s+)*class\s+(\w+)\s*:\s*(FunSpec|StringSpec|ShouldSpec|DescribeSpec|BehaviorSpec""" +
+        """|FreeSpec|WordSpec|ExpectSpec|FeatureSpec|AnnotationSpec)\b""",
+      RegexOption.MULTILINE
+    )
+
+    val misnamed = testSources.files.flatMap { source ->
+      specDeclaration.findAll(source.readText())
+        .map { it.groupValues[1] }
+        .filterNot { it.endsWith("Test") }
+    }
+
+    if (misnamed.isNotEmpty()) {
+      throw GradleException(
+        "Kotest specs must be named *Test or PIT silently skips them: ${misnamed.joinToString()}"
+      )
+    }
+  }
+}
+
+tasks.register<JavaExec>("pitest") {
+  group = "verification"
+  description = "Runs PIT mutation testing against the $mutationVariant variant"
+
+  val unitTest = tasks.named<Test>("test${mutationVariantCapitalized}UnitTest")
+  dependsOn(unitTest, verifySpecNaming)
+
+  val mutableCodePaths = files(
+    layout.buildDirectory.dir("tmp/kotlin-classes/$mutationVariant"),
+    layout.buildDirectory.dir("intermediates/javac/$mutationVariant/classes"),
+  )
+  val reportDir = layout.buildDirectory.dir("reports/pitest")
+  val classpathFile = layout.buildDirectory.file("tmp/pitest/classpath.txt")
+  val sourceDirs = files("src/main/kotlin", "src/main/java")
+
+  // Everything PIT needs on the classpath of the code under test, in one lazy collection so that
+  // nothing has to reach back into the test task while the build is running.
+  val codeUnderTest = files(
+    mutableCodePaths,
+    unitTest.map { it.testClassesDirs },
+    unitTest.map { it.classpath },
+  )
+
+  // Declaring inputs and outputs is what lets Gradle skip this task on the follow-up
+  // `printTestStrength` and `printMutationScore` invocations. Without them PIT is never
+  // up-to-date, so it reruns on every invocation: three full runs per CI job, each producing a
+  // different report, and PIT's console output leaking into `$(./gradlew -q ...)`.
+  inputs.files(codeUnderTest).withPropertyName("codeUnderTest")
+  inputs.files(sourceDirs).withPropertyName("sourceDirs")
+  outputs.dir(reportDir).withPropertyName("report")
+
+  mainClass.set("org.pitest.mutationtest.commandline.MutationCoverageReport")
+
+  // PIT hands its own launch classpath down to the minions, and the Kotest PIT plugin drags in
+  // older Byte Buddy / coroutines than the app tests are compiled against. Putting the unit test
+  // runtime first means the minions load exactly the jars `testFdroidDebugUnitTest` loads.
+  classpath(unitTest.map { it.classpath })
+  classpath(pitest)
+
+  args(
+    "--classPathFile=${classpathFile.get().asFile.absolutePath}",
+    "--mutableCodePaths=${mutableCodePaths.joinToString(",") { it.absolutePath }}",
+    "--sourceDirs=${sourceDirs.joinToString(",") { it.absolutePath }}",
+    "--reportDir=${reportDir.get().asFile.absolutePath}",
+    "--targetClasses=br.com.colman.petals.*",
+    // Specs only. A wider glob makes PIT offer every Android class to the Kotest engine as a
+    // candidate test, and instantiating those outside a device hangs the run. `verifySpecNaming`
+    // guards the convention this relies on.
+    "--targetTests=br.com.colman.petals.*Test",
+    "--excludedClasses=${mutationExcludedClasses.joinToString(",")}",
+    "--features=+fann(annotation[Composable])",
+    "--testPlugin=Kotest",
+    // Property based specs are slow enough that PIT's 4s default kills healthy minions.
+    "--timeoutConst=10000",
+    "--jvmArgs=-Dkotest.framework.config.fqn=br.com.colman.petals.KotestConfig",
+    "--outputFormats=HTML,XML",
+    "--timestampedReports=false",
+    "--failWhenNoMutations=false",
+  )
+
+  doFirst {
+    // PIT reads the classpath from a file because the flattened Android test classpath is far
+    // longer than a command line can hold.
+    classpathFile.get().asFile.apply {
+      parentFile.mkdirs()
+      writeText(codeUnderTest.filter { it.exists() }.joinToString("\n") { it.absolutePath })
+    }
+
+    // Added here rather than above so the core count of whichever machine runs the build stays out
+    // of the task's input fingerprint.
+    args("--threads=${Runtime.getRuntime().availableProcessors()}")
+  }
+}
+
+/**
+ * Number of mutants PIT detected, how many a test actually executed, and how many exist at all.
+ */
+fun readMutationTotals(): Triple<Int, Int, Int> {
+  val report = file("${layout.buildDirectory.get()}/reports/pitest/mutations.xml")
+  // Missing or empty means PIT produced nothing, not that every mutant survived. Publishing 0%
+  // for that would be indistinguishable from a genuinely terrible suite, so refuse to guess.
+  if (!report.exists()) {
+    throw GradleException("PIT wrote no report at $report. Run `./gradlew pitest` first.")
+  }
+
+  val mutations = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(report)
+    .getElementsByTagName("mutation")
+  if (mutations.length == 0) throw GradleException("PIT generated no mutants; $report is empty.")
+
+  var detected = 0
+  var withoutCoverage = 0
+  for (index in 0 until mutations.length) {
+    val attributes = mutations.item(index).attributes
+    if (attributes.getNamedItem("detected").textContent == "true") detected++
+    if (attributes.getNamedItem("status").textContent == "NO_COVERAGE") withoutCoverage++
+  }
+
+  return Triple(detected, mutations.length - withoutCoverage, mutations.length)
+}
+
+/**
+ * Share of mutants a test both executed and noticed. Unlike the raw mutation score this ignores
+ * code no test reaches, which Kover already reports, so it answers the one question coverage
+ * cannot: when a test does run this line, would it complain if the line were wrong?
+ *
+ * This is the same number PIT prints as "Test strength" in its console summary.
+ */
+tasks.register("printTestStrength") {
+  group = "verification"
+  dependsOn("pitest")
+  doLast {
+    val (detected, covered, _) = readMutationTotals()
+    println("%.1f".format(Locale.US, if (covered == 0) 0.0 else (detected * 100.0) / covered))
+  }
+}
+
+/**
+ * Share of all mutants that were detected. Reported alongside the badge for context: a low score
+ * next to a high test strength means untested code, not weak assertions.
+ */
+tasks.register("printMutationScore") {
+  group = "verification"
+  dependsOn("pitest")
+  doLast {
+    val (detected, _, total) = readMutationTotals()
+    println("%.1f".format(Locale.US, if (total == 0) 0.0 else (detected * 100.0) / total))
   }
 }
