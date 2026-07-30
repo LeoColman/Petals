@@ -59,6 +59,14 @@ class DoseSeriesTest : FunSpec({
     result.effective.inDays() shouldBe (4.0 plusOrMinus 1e-4)
   }
 
+  test("Exactly the minimum number of uses is enough to run the model") {
+    // The pair with the test above pins the boundary from both sides. One short of the minimum
+    // falls back; the minimum itself must model, or the threshold has quietly moved by one.
+    val result = estimate(List(MinDosesForModel) { use(daysAgo = it + 1.0, grams = 3.0) })!!
+
+    result.mode shouldBe Grams
+  }
+
   test("An ounce a day cut to an eighth reads as mid withdrawal while the last use was minutes ago") {
     val history = uses(days = 90, perDay = 1, grams = 28.0, endingDaysAgo = 14.0) + uses(14, 1, 3.5)
 
