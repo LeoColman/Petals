@@ -29,6 +29,25 @@ class PauseTest : FunSpec({
       pause shouldNotBeActiveAt NOON.minusSeconds(1)
     }
 
+    test("The start and end instants are themselves inside the pause") {
+      // The two tests above only check one second outside each edge, which leaves the edges
+      // themselves free to become exclusive without anything noticing.
+      val pause = Pause(startTime = NOON, endTime = MAX)
+
+      pause shouldBeActiveAt NOON
+      pause shouldBeActiveAt MAX
+    }
+
+    test("A pause that starts and ends together covers only that instant") {
+      // Equal endpoints are the point where "passes through midnight" flips. Read as passing
+      // through midnight, this pause would cover the whole day except this one instant.
+      val pause = Pause(startTime = NOON, endTime = NOON)
+
+      pause shouldBeActiveAt NOON
+      pause shouldNotBeActiveAt NOON.plusSeconds(1)
+      pause shouldNotBeActiveAt NOON.minusSeconds(1)
+    }
+
     test("Pause disabled") {
       val pause = Pause(startTime = MIN, endTime = MAX, isEnabled = false)
       pause shouldNotBeActiveAt NOON
