@@ -146,7 +146,21 @@ android {
 
 }
 
+/**
+ * Classpath used to launch PIT. Kept apart from the app's own configurations so that the mutation
+ * engine never leaks into the shipped artifact.
+ */
+val pitest: Configuration by configurations.creating {
+  isCanBeConsumed = false
+  isCanBeResolved = true
+}
+
 dependencies {
+  // PIT (mutation testing). Kotest ships its own PIT test plugin, so PIT drives the
+  // Kotest engine directly instead of going through the JUnit Platform.
+  pitest(libs.pitest.command.line)
+  pitest(libs.kotest.pitest)
+
   // Kotlin
   testRuntimeOnly(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
@@ -358,5 +372,108 @@ tasks.register("printLineCoverage") {
     }
 
     println("%.1f".format(coveragePercent))
+  }
+}
+
+/**
+ * Mutation testing.
+ *
+ * PIT has no maintained Android Gradle plugin (the community one is pinned to AGP 7), so PIT is
+ * invoked straight from its command line entrypoint. Everything it needs is derived from the
+ * `fdroidDebug` unit test task, which is the flavour with no proprietary dependencies.
+ */
+val mutationVariant = "fdroidDebug"
+val mutationVariantCapitalized = mutationVariant.replaceFirstChar { it.uppercase() }
+
+/**
+ * Same exclusions as the `kover` block above, so both numbers describe the same code. Composables
+ * are dropped through PIT's `fann` feature, which filters anything carrying the given annotation.
+ */
+val mutationExcludedClasses = listOf(
+  "*ComposableSingletons*",
+  "*DatabaseImpl*",
+  "*BuildConfig*",
+)
+
+tasks.register<JavaExec>("pitest") {
+  group = "verification"
+  description = "Runs PIT mutation testing against the $mutationVariant variant"
+
+  val unitTest = tasks.named<Test>("test${mutationVariantCapitalized}UnitTest")
+  dependsOn(unitTest)
+
+  val mutableCodePaths = files(
+    layout.buildDirectory.dir("tmp/kotlin-classes/$mutationVariant"),
+    layout.buildDirectory.dir("intermediates/javac/$mutationVariant/classes"),
+  )
+  val reportDir = layout.buildDirectory.dir("reports/pitest")
+  val classpathFile = layout.buildDirectory.file("tmp/pitest/classpath.txt")
+  val sourceDirs = files("src/main/kotlin", "src/main/java")
+
+  mainClass.set("org.pitest.mutationtest.commandline.MutationCoverageReport")
+
+  // PIT hands its own launch classpath down to the minions, and the Kotest PIT plugin drags in
+  // older Byte Buddy / coroutines than the app tests are compiled against. Putting the unit test
+  // runtime first means the minions load exactly the jars `testFdroidDebugUnitTest` loads.
+  classpath(unitTest.map { it.classpath })
+  classpath(pitest)
+
+  // PIT reads the classpath from a file because the flattened Android test classpath is far
+  // longer than a command line can hold.
+  doFirst {
+    val entries = mutableCodePaths + unitTest.get().testClassesDirs + unitTest.get().classpath
+    classpathFile.get().asFile.apply {
+      parentFile.mkdirs()
+      writeText(entries.filter { it.exists() }.joinToString("\n") { it.absolutePath })
+    }
+  }
+
+  argumentProviders.add(
+    CommandLineArgumentProvider {
+      listOf(
+        "--classPathFile=${classpathFile.get().asFile.absolutePath}",
+        "--mutableCodePaths=${mutableCodePaths.joinToString(",") { it.absolutePath }}",
+        "--sourceDirs=${sourceDirs.joinToString(",") { it.absolutePath }}",
+        "--reportDir=${reportDir.get().asFile.absolutePath}",
+        "--targetClasses=br.com.colman.petals.*",
+        // Specs only. A wider glob makes PIT offer every Android class to the Kotest engine as a
+        // candidate test, and instantiating those outside a device hangs the run.
+        "--targetTests=br.com.colman.petals.*Test",
+        "--excludedClasses=${mutationExcludedClasses.joinToString(",")}",
+        "--features=+fann(annotation[Composable])",
+        "--testPlugin=Kotest",
+        // Property based specs are slow enough that PIT's 4s default kills healthy minions.
+        "--timeoutConst=10000",
+        "--jvmArgs=-Dkotest.framework.config.fqn=br.com.colman.petals.KotestConfig",
+        "--outputFormats=HTML,XML",
+        "--timestampedReports=false",
+        "--failWhenNoMutations=false",
+        "--threads=${Runtime.getRuntime().availableProcessors()}",
+      )
+    }
+  )
+}
+
+/**
+ * Parse the PIT report for badge creation
+ */
+tasks.register("printMutationScore") {
+  group = "verification"
+  dependsOn("pitest")
+  doLast {
+    val report = file("${layout.buildDirectory.get()}/reports/pitest/mutations.xml")
+
+    val doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(report)
+    val mutations = doc.getElementsByTagName("mutation")
+
+    var total = 0
+    var detected = 0
+    for (index in 0 until mutations.length) {
+      total++
+      if (mutations.item(index).attributes.getNamedItem("detected").textContent == "true") detected++
+    }
+
+    val score = if (total == 0) 0.0 else (detected * 100.0) / total
+    println("%.1f".format(score))
   }
 }

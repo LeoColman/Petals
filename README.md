@@ -13,7 +13,8 @@
 [![IzzyOnDroid Release](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/br.com.colman.petals)](https://apt.izzysoft.de/fdroid/index/apk/br.com.colman.petals)
 [![GitHub All Releases](https://img.shields.io/github/downloads/LeoColman/Petals/total?label=Downloads%20All%20Time%20(GitHub))](https://github.com/LeoColman/Petals/releases)
 [![GitHub Release Downloads](https://img.shields.io/github/downloads/LeoColman/Petals/latest/total?label=Downloads%20Latest%20Release%20(GitHub))](https://github.com/LeoColman/Petals/releases/latest)
-![Coverage](https://leocolman.github.io/Petals/coverage-badge.svg)
+[![Coverage](https://leocolman.github.io/Petals/coverage-badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/kover.yaml)
+[![Mutation Score](https://leocolman.github.io/Petals/mutation-badge.svg)](https://github.com/LeoColman/Petals/actions/workflows/mutation-testing.yaml)
 ![Maintenance](https://img.shields.io/maintenance/yes/2026)
 [![Alternatives](https://img.shields.io/badge/Alternative.to-6-blue)](https://alternativeto.net/software/petals-app/)
 
@@ -86,6 +87,34 @@ as follows:
 - F-Droid: `./gradlew assembleFdroidRelease`
 - PlayStore: `./gradlew assemblePlaystoreRelease`
 - GitHub: `./gradlew assembleGithubRelease`
+
+## Quality
+
+Two numbers are tracked on every push to `main`, and both badges above link to the workflow that
+produces them.
+
+### Coverage
+
+[Kover](https://github.com/Kotlin/kotlinx-kover) measures line coverage of the JVM unit tests.
+Composables, generated SQLDelight code and `BuildConfig` are excluded, since none of them are
+exercised by unit tests.
+
+- `./gradlew koverHtmlReport` writes a browsable report to `app/build/reports/kover/html`
+- `./gradlew printLineCoverage` prints the single number the badge is built from
+
+### Mutation Testing
+
+Coverage says a line ran; it does not say a test would notice if the line were wrong.
+[PIT](https://pitest.org) answers that by changing the compiled bytecode and checking whether the
+suite fails. A surviving mutant is a line no assertion cares about.
+
+PIT runs the Kotest engine directly through `kotest-extensions-pitest` and is scoped to the
+`fdroidDebug` variant, with the same exclusions Kover uses.
+
+- `./gradlew pitest` writes a report to `app/build/reports/pitest/index.html`
+- `./gradlew printMutationScore` prints the single number the badge is built from
+
+The full run takes several minutes, so it is not part of the pull request checks.
 
 ## Git Secrets
 
