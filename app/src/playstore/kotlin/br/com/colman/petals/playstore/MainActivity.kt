@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,6 +19,8 @@ import br.com.colman.petals.navigation.NavHostContainer
 import br.com.colman.petals.playstore.settings.AdsSettingsRepository
 import br.com.colman.petals.playstore.settings.view.AdFreeButton
 import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.theme.darkColors
+import br.com.colman.petals.theme.lightColors
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
         )
       )
       val navController = rememberNavController()
-      MaterialTheme(if (isDarkModeEnabled()) darkColors() else lightColors()) {
+      MaterialTheme(if (isDarkModeEnabled()) darkColors else lightColors) {
         Surface {
           Scaffold(
             topBar = {
