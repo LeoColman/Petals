@@ -51,13 +51,11 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.getSystemService
-import br.com.colman.petals.R.color.smokeColor
 import br.com.colman.petals.R.string.holding_past_peak
 import br.com.colman.petals.R.string.pause
 import br.com.colman.petals.R.string.reset
@@ -65,6 +63,7 @@ import br.com.colman.petals.R.string.resume
 import br.com.colman.petals.R.string.start
 import br.com.colman.petals.R.string.vibrate_on_timer_end
 import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.theme.smoke
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import java.util.Locale
@@ -82,7 +81,7 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
 
   val millisLeft = (hitTimer.durationMillis - millisElapsed).coerceAtLeast(0)
   val alpha = millisLeft.toFloat() / hitTimer.durationMillis
-  val backgroundColor = colorResource(smokeColor).copy(1 - alpha)
+  val backgroundColor = MaterialTheme.colors.smoke.copy(1 - alpha)
 
   // Keyed on the crossing rather than checked inline: the elapsed counter keeps ticking past the
   // target, so an inline check would recompose and buzz every hundred milliseconds, forever.
