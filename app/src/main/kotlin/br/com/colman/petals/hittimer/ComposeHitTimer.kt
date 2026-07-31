@@ -34,6 +34,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
@@ -52,6 +53,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -107,8 +109,15 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
     Column(Modifier.width(180.dp), spacedBy(8.dp)) {
       TimerButtons(hitTimer, millisElapsed, isPaused) { isPaused = it }
 
-      Row(Modifier.fillMaxWidth(), Start, CenterVertically) {
-        Checkbox(shouldVibrate, { repository.setShouldVibrate(it) })
+      // Row rather than the Checkbox owns the toggle, so the label is announced with the state.
+      Row(
+        Modifier
+          .fillMaxWidth()
+          .toggleable(shouldVibrate, role = Role.Checkbox) { repository.setShouldVibrate(it) },
+        Start,
+        CenterVertically
+      ) {
+        Checkbox(shouldVibrate, null)
         Text(stringResource(vibrate_on_timer_end))
       }
     }
