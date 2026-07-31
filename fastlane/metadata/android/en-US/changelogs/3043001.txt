@@ -1,0 +1,1 @@
+The app's colours are easier on the eyes. The bright green on dark backgrounds has been toned down, the pink accents are no longer washed out, and text that was hard to read has been fixed, including the hit timer countdown that was nearly invisible in light mode.

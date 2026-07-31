@@ -49,8 +49,8 @@ android {
     applicationId = "br.com.colman.petals"
     minSdk = 26
     targetSdk = 36
-    versionCode = 3043000
-    versionName = "3.43.0"
+    versionCode = 3043001
+    versionName = "3.43.1"
 
     testApplicationId = "$applicationId.test"
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
