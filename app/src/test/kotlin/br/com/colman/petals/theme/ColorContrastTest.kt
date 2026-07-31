@@ -55,8 +55,8 @@ class ColorContrastTest : FunSpec({
   withData(
     nameFn = { "${it.name} is at least ${it.minimum}:1" },
     ts = cases
-  ) { (_, foreground, background, minimum) ->
-    contrastRatio(foreground, background) shouldBeGreaterThanOrEqualTo minimum
+  ) { case ->
+    contrastRatio(case.foreground, case.background) shouldBeGreaterThanOrEqualTo case.minimum
   }
 
   test("light primaryVariant is darker than primary, as Material 2 expects") {
