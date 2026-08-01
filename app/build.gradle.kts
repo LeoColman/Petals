@@ -133,6 +133,25 @@ android {
       isIncludeAndroidResources = true
       all { it.useJUnitPlatform() }
     }
+
+    // Declaring the device here rather than provisioning one in the workflow means CI and a laptop
+    // run the same command against the same image, and a green run is reproducible off CI.
+    // aosp-atd is the automated-test image: no Play services and no UI shell, which is what makes it
+    // quick enough to boot on a shared runner.
+    managedDevices {
+      localDevices {
+        create("pixel6Api34") {
+          device = "Pixel 6"
+          apiLevel = 34
+          systemImageSource = "aosp-atd"
+          // AGP 10 flips the default to arm64-v8a, which this image cannot translate, and AGP 9.2.1
+          // asks in a build warning for exactly this line. Note it has no effect yet: setting
+          // "arm64-v8a" here still runs all tests green and still prints the "does not specify a
+          // testedAbi" warning, so 9.2.1 is not reading it. Kept for the upgrade, not for today.
+          testedAbi = "x86_64"
+        }
+      }
+    }
   }
 
   packaging {
