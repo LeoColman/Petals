@@ -24,10 +24,13 @@ class UseIOModuleTest : FunSpec({
   test("should import and export data maintaining integrity") {
     val inputFile = File(ApplicationProvider.getApplicationContext<Context>().filesDir, "test_input.csv")
 
+    // Every column the exporter writes, in its order. The fixture used to stop at `id`, from before
+    // description and consumption method existed, so the round trip compared four columns against
+    // six and could never match.
     inputFile.writeText(
       """
-        date,amount,cost_per_gram,id
-        2024-03-21T19:01:47.163,0.08,22.2,80204597-00eb-4412-b7ee-223388806fe2
+        date,amount,cost_per_gram,id,description,consumption_method
+        2024-03-21T19:01:47.163,0.08,22.2,80204597-00eb-4412-b7ee-223388806fe2,,
       """.trimIndent()
     )
 

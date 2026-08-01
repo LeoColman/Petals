@@ -41,6 +41,11 @@ val locales = listOf(
   "uk" to ""
 )
 
+/**
+ * Not a test of behaviour: this regenerates the store listing screenshots and uploads them to a
+ * server running on the developer's machine, so it cannot pass anywhere else.
+ */
+@DevTooling
 class ScreenshotTakerTest : FunSpec({
 
   var usesImported = false
