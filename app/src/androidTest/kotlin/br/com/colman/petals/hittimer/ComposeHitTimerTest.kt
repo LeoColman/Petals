@@ -42,7 +42,7 @@ class ComposeHitTimerTest : FunSpec({
 
       onNodeWithText("10:000").assertExists()
       onNodeWithText("Start").performClick()
-      waitUntilExactlyOneExists(hasText("09:0", true), 5000)
+      waitUntilExactlyOneExists(hasText("09:0", true), TimeoutMillis)
       onNodeWithText("10:000").assertDoesNotExist()
     }
   }
@@ -55,11 +55,11 @@ class ComposeHitTimerTest : FunSpec({
       }
 
       onNodeWithText("Start").performClick()
-      waitUntilExactlyOneExists(hasText("09:0", true), 5000)
+      waitUntilExactlyOneExists(hasText("09:0", true), TimeoutMillis)
       onNodeWithText("Reset").performClick()
       // Reset does not repaint the countdown on its own: millisElapsed only re-emits after its
       // delay(100), so asserting straight away races the flow.
-      waitUntilExactlyOneExists(hasText("10:000"), 5000)
+      waitUntilExactlyOneExists(hasText("10:000"), TimeoutMillis)
     }
   }
 
@@ -71,7 +71,7 @@ class ComposeHitTimerTest : FunSpec({
       }
 
       onNodeWithText("Start").performClick()
-      waitUntilExactlyOneExists(hasText("00:000"), 11000)
+      waitUntilExactlyOneExists(hasText("00:000"), TimeoutMillis + 10_000)
       onNodeWithText("00:000").assertExists()
     }
   }
@@ -111,7 +111,14 @@ class ComposeHitTimerTest : FunSpec({
       }
 
       onNodeWithText("Start").performClick()
-      waitUntilExactlyOneExists(hasText("0.0"), 11000)
+      waitUntilExactlyOneExists(hasText("0.0"), TimeoutMillis + 10_000)
     }
   }
 })
+
+/**
+ * The countdown ticks once a second, so any of these waits is generous on a developer machine. It is
+ * the shared CI emulator that needs the headroom: at five seconds this spec failed roughly one run in
+ * three once it ran alongside the rest of the suite. The budget still fails a genuinely stuck timer.
+ */
+private const val TimeoutMillis = 20_000L
