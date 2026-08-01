@@ -9,12 +9,33 @@ import androidx.compose.ui.test.runAndroidComposeUiTest
 import androidx.compose.ui.test.waitUntilExactlyOneExists
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.MainActivity
+import br.com.colman.petals.koin
+import br.com.colman.petals.settings.SettingsRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
+/**
+ * The countdown format is a user setting, and these tests were written against the millisecond one
+ * while [SettingsRepository.isHitTimerMillisecondsEnabled] defaults to off. That left them asserting
+ * "10:000" against a screen reading "10", so every one of them failed on a device. Each test now
+ * pins the format it needs rather than inheriting whatever the device happens to hold.
+ */
 @OptIn(ExperimentalTestApi::class)
 class ComposeHitTimerTest : FunSpec({
 
+  val settingsRepository = koin.get<SettingsRepository>()
+
+  // Writing the preference is not enough: the store hands the new value to collectAsState on its own
+  // schedule, so composing straight after the write can still read the previous format and the
+  // assertion races it. Block until the flow reports the value we asked for.
+  fun useMillisecondFormat(enabled: Boolean) {
+    settingsRepository.setIsHitTimerMillisecondsEnabled(enabled)
+    runBlocking { settingsRepository.isHitTimerMillisecondsEnabled.first { it == enabled } }
+  }
+
   test("Start Timer Test") {
     runAndroidComposeUiTest<MainActivity> {
+      useMillisecondFormat(true)
       activity!!.setContent {
         ComposeHitTimer()
       }
@@ -28,6 +49,7 @@ class ComposeHitTimerTest : FunSpec({
 
   test("Reset Timer Test") {
     runAndroidComposeUiTest<MainActivity> {
+      useMillisecondFormat(true)
       activity!!.setContent {
         ComposeHitTimer()
       }
@@ -35,12 +57,15 @@ class ComposeHitTimerTest : FunSpec({
       onNodeWithText("Start").performClick()
       waitUntilExactlyOneExists(hasText("09:0", true), 5000)
       onNodeWithText("Reset").performClick()
-      onNodeWithText("10:000").assertExists()
+      // Reset does not repaint the countdown on its own: millisElapsed only re-emits after its
+      // delay(100), so asserting straight away races the flow.
+      waitUntilExactlyOneExists(hasText("10:000"), 5000)
     }
   }
 
   test("Timer Completes Test") {
     runAndroidComposeUiTest<MainActivity> {
+      useMillisecondFormat(true)
       activity!!.setContent {
         ComposeHitTimer()
       }
@@ -53,6 +78,7 @@ class ComposeHitTimerTest : FunSpec({
 
   test("UI Element Visibility Test") {
     runAndroidComposeUiTest<MainActivity> {
+      useMillisecondFormat(true)
       activity!!.setContent {
         ComposeHitTimer()
       }
@@ -61,6 +87,31 @@ class ComposeHitTimerTest : FunSpec({
       onNodeWithText("Start").assertExists()
       onNodeWithText("Reset").assertExists()
       onNodeWithText("Vibrate on timer end").assertExists()
+    }
+  }
+
+  // The format users actually get by default, and the one nothing covered until now.
+  test("countdown uses whole seconds when milliseconds are off") {
+    runAndroidComposeUiTest<MainActivity> {
+      useMillisecondFormat(false)
+      activity!!.setContent {
+        ComposeHitTimer()
+      }
+
+      onNodeWithText("10").assertExists()
+      onNodeWithText("10:000").assertDoesNotExist()
+    }
+  }
+
+  test("countdown drops to one decimal under a second") {
+    runAndroidComposeUiTest<MainActivity> {
+      useMillisecondFormat(false)
+      activity!!.setContent {
+        ComposeHitTimer()
+      }
+
+      onNodeWithText("Start").performClick()
+      waitUntilExactlyOneExists(hasText("0.0"), 11000)
     }
   }
 })
