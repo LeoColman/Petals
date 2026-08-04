@@ -1,0 +1,1 @@
+The home screen widget can be added again. It was failing to load when you tried to place it, showing a Can't load widget message instead of your last use.
