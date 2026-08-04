@@ -6,4 +6,5 @@
     android:updatePeriodMillis="1800000"
     android:minWidth="250dp"
     android:minHeight="110dp"
+    android:initialLayout="@layout/glance_default_loading_layout"
     />
