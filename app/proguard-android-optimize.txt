@@ -15,6 +15,16 @@
 -keep class * extends androidx.room.RoomDatabase {
     <init>();
 }
+# Glance builds an ActionCallback reflectively when a widget button is tapped, so its no-arg
+# constructor has no caller R8 can see. glance-appwidget 1.1.1 ships
+# "-keep public class * extends androidx.glance.appwidget.action.ActionCallback", which keeps the
+# class but NOT its members, exactly like the Room rule above. R8 dropped
+# AddUseActionCallback.<init>(), so tapping "Add a copy of my last use" threw
+# NoSuchMethodException and silently did nothing. Only release builds are minified, which is why
+# the button worked in every debug test and failed for everyone who installed the app.
+-keep class * implements androidx.glance.appwidget.action.ActionCallback {
+    <init>();
+}
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
