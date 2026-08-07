@@ -1,0 +1,1 @@
+The period buttons on the statistics page are properly spaced again, instead of being squeezed together. The vibrate checkbox on the hit timer was cramped the same way.
