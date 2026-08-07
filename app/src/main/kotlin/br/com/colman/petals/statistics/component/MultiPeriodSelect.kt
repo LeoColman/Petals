@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
+import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -65,7 +66,10 @@ fun DaysCheckbox(selected: Boolean, setSelected: (Boolean) -> Unit, period: Peri
     Arrangement.Start,
     Alignment.CenterVertically
   ) {
-    Checkbox(selected, null)
+    // Material sizes a control to the 48dp touch target only while it handles its own changes.
+    // Handing the toggle to the row drops that, and with it the breathing room around the box, so
+    // ask for the size back explicitly.
+    Checkbox(selected, null, Modifier.minimumInteractiveComponentSize())
     Text(period.label(), fontSize = 10.sp)
   }
 }

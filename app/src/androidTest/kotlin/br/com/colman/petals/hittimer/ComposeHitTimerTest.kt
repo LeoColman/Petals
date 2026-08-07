@@ -2,11 +2,14 @@ package br.com.colman.petals.hittimer
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isToggleable
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runAndroidComposeUiTest
 import androidx.compose.ui.test.waitUntilExactlyOneExists
+import androidx.compose.ui.unit.dp
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.MainActivity
 import br.com.colman.petals.koin
@@ -87,6 +90,19 @@ class ComposeHitTimerTest : FunSpec({
       onNodeWithText("Start").assertExists()
       onNodeWithText("Reset").assertExists()
       onNodeWithText("Vibrate on timer end").assertExists()
+    }
+  }
+
+  // Handing the toggle to the row costs the checkbox the sizing Material only applies while a
+  // control handles its own changes, which collapses the space around the box.
+  test("the vibrate row keeps a full touch target") {
+    runAndroidComposeUiTest<MainActivity> {
+      useMillisecondFormat(false)
+      activity!!.setContent {
+        ComposeHitTimer()
+      }
+
+      onNode(hasText("Vibrate on timer end") and isToggleable()).assertHeightIsAtLeast(48.dp)
     }
   }
 

@@ -40,6 +40,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -117,7 +118,7 @@ fun ComposeHitTimer(repository: HitTimerRepository = koinInject()) {
         Start,
         CenterVertically
       ) {
-        Checkbox(shouldVibrate, null)
+        Checkbox(shouldVibrate, null, Modifier.minimumInteractiveComponentSize())
         Text(stringResource(vibrate_on_timer_end))
       }
     }
