@@ -1,0 +1,1 @@
+The button on the home screen widget works now. Adding a copy of your last use from the widget silently did nothing before.
