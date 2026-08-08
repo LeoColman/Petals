@@ -43,7 +43,9 @@ repositories {
 
 android {
   namespace = "br.com.colman.petals"
-  compileSdk = 36
+  // Grafima 1.1.0 declares minCompileSdk=37, so compiling against 36 fails AAR metadata
+  // validation. targetSdk stays at 36: this only changes what we compile against.
+  compileSdk = 37
 
   defaultConfig {
     applicationId = "br.com.colman.petals"
@@ -85,7 +87,8 @@ android {
 
     create("playstore") {
       dimension = "distribution"
-      minSdk = 23
+      // Raised from 23 to match Grafima, which is minSdk 24. Drops Android 6.0 on the Play Store.
+      minSdk = 24
       signingConfig = signingConfigs.findByName("self-sign")
     }
 
@@ -200,6 +203,10 @@ dependencies {
 
   // Graph Views
   implementation(libs.bundles.graph.view)
+
+  // Grafima: Compose-native charts. Spiking it on the withdrawal charts; the Stats charts and the
+  // hit timer still run on MPAndroidChart and GraphView.
+  implementation(libs.grafima)
 
   // Apache commons
   implementation(libs.bundles.apache.commons)

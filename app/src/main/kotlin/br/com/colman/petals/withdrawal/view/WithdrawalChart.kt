@@ -1,19 +1,30 @@
 package br.com.colman.petals.withdrawal.view
 
 import android.content.Context
-import androidx.compose.material.Colors
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import br.com.colman.petals.withdrawal.interpolator.Interpolator
 import br.com.colman.petals.withdrawal.tolerance.SecondsPerDay
-import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
-import com.jjoe64.graphview.series.PointsGraphSeries
+import io.grafima.charts.line.LineAxisConfig
+import io.grafima.charts.line.LineChart
+import io.grafima.charts.line.LineChartStyle
+import io.grafima.charts.line.LineCrosshairConfig
+import io.grafima.charts.line.LineDataPoint
+import io.grafima.charts.line.LineDataSet
+import io.grafima.charts.line.LineSeries
 import java.time.Duration
 
+/**
+ * The eight symptom curves are only comparable because every one of them is drawn on the same pinned
+ * scale, so the axis bounds here are the point of the chart rather than a detail. `xMin` is -1
+ * because one dataset carries a pre-abstinence baseline at day -1.
+ */
 @Composable
 @Suppress("LongParameterList")
 fun WithdrawalChart(
@@ -26,25 +37,65 @@ fun WithdrawalChart(
   maxY: Double,
 ) {
   val colors = MaterialTheme.colors
+  val context = LocalContext.current
   val scaledData = data.scaled(maxY)
-
   val interpolator = Interpolator(scaledData)
 
-  AndroidView({
-    createGraph(it, verticalAxisTitle, horizontalAxisTitle, effectiveAbstinence, colors, scaledData, maxX, maxY)
-  }, update = {
-    val currentValue = effectiveAbstinence?.let { abstinence -> chartPointFor(interpolator, abstinence, maxX).second }
-    it.title = graphTitle(it.context, currentValue)
-    it.removeAllSeries()
-    it.addSeries(scaledData.toLineGraphSeries().apply { color = colors.secondary.toArgb() })
+  val currentValue = effectiveAbstinence?.let { chartPointFor(interpolator, it, maxX).second }
 
-    if (effectiveAbstinence != null) {
-      it.addSeries(
-        currentPointSeries(interpolator, effectiveAbstinence, maxX).apply { color = colors.primary.toArgb() }
-      )
-    }
-    it.invalidate()
-  })
+  val curve = LineSeries(
+    id = "curve",
+    label = verticalAxisTitle,
+    points = scaledData.map { (duration, value) ->
+      LineDataPoint(duration.toDays().toFloat(), value.toFloat(), duration.toDays().toString())
+    },
+    color = colors.secondary
+  )
+
+  // "You are here" is a one-point series rather than an annotation, which is what the GraphView
+  // version did too. Dots are on for the whole chart, so the marker reads as a point on the curve.
+  val marker = effectiveAbstinence?.let {
+    val (x, y) = chartPointFor(interpolator, it, maxX)
+    LineSeries(
+      id = "marker",
+      label = "",
+      points = listOf(LineDataPoint(x.toFloat(), y.toFloat(), "")),
+      color = colors.primary
+    )
+  }
+
+  Column(Modifier.fillMaxWidth()) {
+    Text(
+      context.graphTitle(currentValue),
+      Modifier.fillMaxWidth(),
+      color = colors.onSurface,
+      textAlign = TextAlign.Center,
+      style = MaterialTheme.typography.subtitle2
+    )
+
+    LineChart(
+      dataSet = LineDataSet(
+        series = listOfNotNull(curve, marker),
+        contentDescription = context.graphTitle(currentValue)
+      ),
+      modifier = Modifier.fillMaxWidth().weight(1f),
+      style = LineChartStyle(showDots = true),
+      axisConfig = LineAxisConfig(
+        gridColor = colors.primary,
+        axisColor = colors.primary,
+        labelColor = colors.primary,
+        yMin = 0f,
+        yMax = maxY.toFloat(),
+        xMin = -1f,
+        xMax = maxX.toFloat(),
+        xAxisTitle = horizontalAxisTitle,
+        yAxisTitle = verticalAxisTitle
+      ),
+      // The marker already says where you are; a crosshair on top of a reference curve invites
+      // reading a precision that the study data does not carry.
+      crosshairConfig = LineCrosshairConfig(enabled = false)
+    )
+  }
 }
 
 /**
@@ -67,63 +118,4 @@ fun Map<Duration, Double>.scaled(maxY: Double): Map<Duration, Double> {
 fun chartPointFor(interpolator: Interpolator, abstinence: Duration, maxX: Double): Pair<Double, Double> {
   val days = (abstinence.seconds.toDouble() / SecondsPerDay).coerceIn(0.0, maxX)
   return days to interpolator.value(days * SecondsPerDay)
-}
-
-@Suppress("LongParameterList")
-private fun createGraph(
-  context: Context,
-  verticalAxisTitle: String,
-  horizontalAxisTitle: String,
-  effectiveAbstinence: Duration?,
-  colors: Colors,
-  data: Map<Duration, Double>,
-  maxX: Double,
-  maxY: Double
-) = GraphView(context).apply {
-  val interpolator = Interpolator(data)
-
-  addSeries(data.toLineGraphSeries())
-  if (effectiveAbstinence != null) addSeries(currentPointSeries(interpolator, effectiveAbstinence, maxX))
-
-  viewport.apply {
-    isXAxisBoundsManual = true
-    setMinX(-1.0)
-    setMaxX(maxX)
-
-    isYAxisBoundsManual = true
-    setMinY(0.0)
-    setMaxY(maxY)
-  }
-
-  gridLabelRenderer.apply {
-    titleColor = colors.onSurface.toArgb()
-    verticalAxisTitleColor = colors.onSurface.toArgb()
-    horizontalAxisTitleColor = colors.onSurface.toArgb()
-    horizontalLabelsColor = colors.primary.toArgb()
-    verticalLabelsColor = colors.primary.toArgb()
-    gridColor = colors.primary.toArgb()
-
-    this.verticalAxisTitle = verticalAxisTitle
-    this.horizontalAxisTitle = horizontalAxisTitle
-  }
-}
-
-private fun Map<Duration, Double>.toLineGraphSeries(): LineGraphSeries<DataPoint> {
-  val dataPoints = this.map { (key, value) -> DataPoint(key.toDays().toDouble(), value) }
-  return LineGraphSeries(dataPoints.toTypedArray()).apply {
-    isDrawDataPoints = true
-    dataPointsRadius = 8f
-  }
-}
-
-private fun currentPointSeries(
-  interpolator: Interpolator,
-  abstinence: Duration,
-  maxX: Double
-): PointsGraphSeries<DataPoint> {
-  val (x, y) = chartPointFor(interpolator, abstinence, maxX)
-  return PointsGraphSeries(arrayOf(DataPoint(x, y))).apply {
-    size = 15f
-    shape = PointsGraphSeries.Shape.POINT
-  }
 }
