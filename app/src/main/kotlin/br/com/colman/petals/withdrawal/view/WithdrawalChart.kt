@@ -15,6 +15,7 @@ import io.grafima.charts.line.LineAxisConfig
 import io.grafima.charts.line.LineChart
 import io.grafima.charts.line.LineChartStyle
 import io.grafima.charts.line.LineCrosshairConfig
+import io.grafima.charts.line.LineCurveType
 import io.grafima.charts.line.LineDataPoint
 import io.grafima.charts.line.LineDataSet
 import io.grafima.charts.line.LineSeries
@@ -79,7 +80,9 @@ fun WithdrawalChart(
         contentDescription = context.graphTitle(currentValue)
       ),
       modifier = Modifier.fillMaxWidth().weight(1f),
-      style = LineChartStyle(showDots = true),
+      // Linear, not the default cubic. The marker's y comes from a linear Interpolator, so a
+      // smoothed curve bows away from the chord and leaves the dot floating off its own line.
+      style = LineChartStyle(showDots = true, curveType = LineCurveType.Linear),
       axisConfig = LineAxisConfig(
         gridColor = colors.primary,
         axisColor = colors.primary,
