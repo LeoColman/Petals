@@ -43,9 +43,7 @@ repositories {
 
 android {
   namespace = "br.com.colman.petals"
-  // Grafima 1.1.0 declares minCompileSdk=37, so compiling against 36 fails AAR metadata
-  // validation. targetSdk stays at 36: this only changes what we compile against.
-  compileSdk = 37
+  compileSdk = 36
 
   defaultConfig {
     applicationId = "br.com.colman.petals"
@@ -87,8 +85,7 @@ android {
 
     create("playstore") {
       dimension = "distribution"
-      // Raised from 23 to match Grafima, which is minSdk 24. Drops Android 6.0 on the Play Store.
-      minSdk = 24
+      minSdk = 23
       signingConfig = signingConfigs.findByName("self-sign")
     }
 
