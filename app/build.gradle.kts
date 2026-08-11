@@ -198,11 +198,10 @@ dependencies {
   // Datastore
   implementation(libs.bundles.datastore)
 
-  // Graph Views
-  implementation(libs.bundles.graph.view)
+  // MPAndroidChart: still draws the three Stats charts.
+  implementation(libs.mp.android.chart)
 
-  // Grafima: Compose-native charts. Spiking it on the withdrawal charts; the Stats charts and the
-  // hit timer still run on MPAndroidChart and GraphView.
+  // Grafima: Compose-native charts. Draws the withdrawal charts and the hit timer.
   implementation(libs.grafima)
 
   // Apache commons
@@ -344,11 +343,6 @@ licensee {
 
   allowUrl("https://github.com/jsoizo/kotlin-csv/blob/master/LICENSE") {
     because("Apache-2.0 but self-hosted")
-  }
-
-  allowUrl("https://github.com/jjoe64/GraphView/blob/master/license.txtl") {
-    because("Typo of `license.txt`, which is Apache-2.0")
-    because("https://github.com/jjoe64/GraphView/blob/master/license.txt")
   }
 
   allowUrl("https://github.com/devsrsouza/compose-icons/blob/master/LICENSE") {

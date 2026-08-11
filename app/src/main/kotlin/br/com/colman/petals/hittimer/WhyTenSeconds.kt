@@ -1,10 +1,12 @@
 package br.com.colman.petals.hittimer
 
+import androidx.compose.animation.core.snap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,14 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat
 import br.com.colman.petals.R.color.darkGreen
 import br.com.colman.petals.R.color.lightGreen
 import br.com.colman.petals.R.string._175thc
@@ -35,10 +34,16 @@ import br.com.colman.petals.R.string.subjectve_high
 import br.com.colman.petals.R.string.ten_seconds_introduction
 import br.com.colman.petals.R.string.ten_seconds_source
 import br.com.colman.petals.R.string.why_ten_seconds
-import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
-import com.jjoe64.graphview.series.PointsGraphSeries
+import io.grafima.charts.line.LineAnimationConfig
+import io.grafima.charts.line.LineAxisConfig
+import io.grafima.charts.line.LineChart
+import io.grafima.charts.line.LineChartStyle
+import io.grafima.charts.line.LineCrosshairConfig
+import io.grafima.charts.line.LineCurveType
+import io.grafima.charts.line.LineDataPoint
+import io.grafima.charts.line.LineDataSet
+import io.grafima.charts.line.LineSeries
+import kotlin.math.roundToInt
 
 /** [holdSeconds] is how long the current hit has been held, marked on both curves as it runs. */
 @Preview
@@ -60,51 +65,80 @@ fun WhyTenSeconds(holdSeconds: Double = 0.0) {
 }
 
 private const val ChartMaxX = 25.0
+private const val ChartMaxY = 60.0
 
 @Composable
 fun SubjectiveHigh(holdSeconds: Double = 0.0) {
-  val primaryColor = MaterialTheme.colors.primary.toArgb()
+  val colors = MaterialTheme.colors
+  val weak = getSubjectiveHighWeakSeries()
+  val strong = getSubjectiveHighStrongSeries()
 
-  AndroidView({ context ->
-    GraphView(context).apply {
-      // The curves are added here, not in update: GridLabelRenderer sizes the axis labels on the first
-      // layout pass, and a GraphView that starts empty lays the horizontal title over the tick numbers.
-      addCurve(getSubjectiveHighWeakSeries(), ContextCompat.getColor(context, lightGreen), context.getString(_175thc))
-      addCurve(getSubjectiveHighStrongSeries(), ContextCompat.getColor(context, darkGreen), context.getString(_355thc))
+  val verticalAxisTitle = stringResource(subjectve_high)
+  val horizontalAxisTitle = stringResource(breathhold_duration_seconds)
 
-      viewport.apply {
-        isYAxisBoundsManual = true
-        setMaxY(60.0)
-        setMinY(0.0)
-        isXAxisBoundsManual = true
-        setMaxX(ChartMaxX)
-        setMinX(0.0)
-      }
+  val curves = listOf(
+    curve("weak", stringResource(_175thc), weak, colorResource(lightGreen)),
+    curve("strong", stringResource(_355thc), strong, colorResource(darkGreen))
+  )
 
-      // Drawn in Compose instead: GraphView's legend paints a colour swatch for every series,
-      // including the untitled hold markers, and its box sits on top of the curves.
-      legendRenderer.isVisible = false
+  // Both markers in the accent colour, so "where you are" reads as one thing against the two curves.
+  // A one-point series rather than an annotation, matching the withdrawal charts. Dot size is a
+  // property of the chart rather than of a series here, so colour is what separates them.
+  val markers = listOf(weak, strong).mapIndexed { index, points ->
+    val (x, y) = holdPointOn(points, holdSeconds, ChartMaxX)
+    LineSeries("marker-$index", "", listOf(LineDataPoint(x.toFloat(), y.toFloat(), "")), colors.primary)
+  }
 
-      gridLabelRenderer.apply {
-        verticalLabelsColor = primaryColor
-        horizontalLabelsColor = primaryColor
-        horizontalAxisTitleColor = primaryColor
-        verticalAxisTitleColor = primaryColor
-
-        verticalAxisTitle = context.resources.getString(subjectve_high)
-        horizontalAxisTitle = context.getString(breathhold_duration_seconds)
-      }
-    }
-  }, update = { graph ->
-    // Only the markers move, so only the markers are replaced. The curves stay as laid out.
-    graph.series.filterIsInstance<PointsGraphSeries<DataPoint>>().forEach(graph::removeSeries)
-
-    // Both markers in the accent colour, so "where you are" reads as one thing against the two curves.
-    graph.addHoldMarker(getSubjectiveHighWeakSeries(), holdSeconds, primaryColor)
-    graph.addHoldMarker(getSubjectiveHighStrongSeries(), holdSeconds, primaryColor)
-  })
+  LineChart(
+    dataSet = LineDataSet(series = curves + markers, contentDescription = verticalAxisTitle),
+    modifier = Modifier.fillMaxSize(),
+    // Linear, not the default cubic: holdPointOn interpolates linearly between the study's three
+    // measurements, so a smoothed curve would leave the marker floating beside its own line.
+    style = LineChartStyle(showDots = true, curveType = LineCurveType.Linear),
+    axisConfig = LineAxisConfig(
+      gridColor = colors.primary,
+      // Off by default here, on in the GraphView this replaces. Worth keeping: the whole point of the
+      // chart is where ten seconds falls, and that is much easier to read against a vertical rule.
+      showVerticalGrid = true,
+      axisColor = colors.primary,
+      labelColor = colors.primary,
+      yMin = 0f,
+      yMax = ChartMaxY.toFloat(),
+      xMin = 0f,
+      xMax = ChartMaxX.toFloat(),
+      xAxisTitle = horizontalAxisTitle,
+      yAxisTitle = verticalAxisTitle
+    ),
+    // The marker already says where you are, and the curve is three measured points; a crosshair
+    // invites reading a precision the study does not carry.
+    crosshairConfig = LineCrosshairConfig(enabled = false),
+    // Snapped, which is this library's way of saying "no animation". Two reasons, and either alone
+    // would be enough: the marker tracks a running timer, so a morph would always be drawing where
+    // the hold was rather than where it is; and an animation that never settles keeps Compose busy,
+    // which stalls the timer's own recomposition under test.
+    animationConfig = LineAnimationConfig(
+      entrySpec = snap(),
+      morphSpec = snap(),
+      staggerMs = 0,
+      startDelayMs = 0,
+      seriesStaggerMs = 0
+    )
+  )
 }
 
+private fun curve(id: String, label: String, points: List<SubjectiveHighPoint>, color: Color) = LineSeries(
+  id = id,
+  label = label,
+  // The point's own label is what ends up under the x axis, not the axis formatter, so these are
+  // whole seconds. Left as `toString()` they read "10.0", and the study measured at 0, 10 and 20.
+  points = points.map { LineDataPoint(it.seconds.toFloat(), it.high.toFloat(), "${it.seconds.roundToInt()}") },
+  color = color
+)
+
+/**
+ * Drawn in Compose rather than by the chart, because the two hold markers are untitled series and a
+ * generated legend would either name them or leave them out, and "current hold" is worth naming.
+ */
 @Composable
 private fun SubjectiveHighLegend() {
   Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(16.dp)) {
@@ -122,42 +156,23 @@ private fun LegendEntry(swatch: Color, label: String) {
   }
 }
 
-private fun GraphView.addCurve(points: List<DataPoint>, seriesColor: Int, seriesTitle: String) {
-  addSeries(
-    LineGraphSeries(points.toTypedArray()).apply {
-      color = seriesColor
-      isDrawDataPoints = true
-      title = seriesTitle
-    }
-  )
-}
-
-/** Deliberately left untitled so it does not add a third entry to the legend. */
-private fun GraphView.addHoldMarker(points: List<DataPoint>, holdSeconds: Double, markerColor: Int) {
-  val (x, y) = holdPointOn(points, holdSeconds, ChartMaxX)
-  addSeries(
-    PointsGraphSeries(arrayOf(DataPoint(x, y))).apply {
-      color = markerColor
-      size = 15f
-      shape = PointsGraphSeries.Shape.POINT
-    }
-  )
-}
+/** One measurement from the study: a breathhold of [seconds] against the subjective high reported. */
+data class SubjectiveHighPoint(val seconds: Double, val high: Double)
 
 /**
  * Where a hold of [holdSeconds] sits on [points]: x clamped into the chart, y linearly interpolated
  * between the study's measurements. Pure - no Android, no Compose - so it is unit-testable.
  */
-fun holdPointOn(points: List<DataPoint>, holdSeconds: Double, maxX: Double): Pair<Double, Double> {
-  val sorted = points.sortedBy { it.x }
-  val x = holdSeconds.coerceIn(sorted.first().x, minOf(maxX, sorted.last().x))
+fun holdPointOn(points: List<SubjectiveHighPoint>, holdSeconds: Double, maxX: Double): Pair<Double, Double> {
+  val sorted = points.sortedBy { it.seconds }
+  val x = holdSeconds.coerceIn(sorted.first().seconds, minOf(maxX, sorted.last().seconds))
 
-  val upperIndex = sorted.indexOfFirst { it.x >= x }.coerceAtLeast(1)
+  val upperIndex = sorted.indexOfFirst { it.seconds >= x }.coerceAtLeast(1)
   val lower = sorted[upperIndex - 1]
   val upper = sorted[upperIndex]
 
-  val span = upper.x - lower.x
-  val y = if (span == 0.0) upper.y else lower.y + (upper.y - lower.y) * (x - lower.x) / span
+  val span = upper.seconds - lower.seconds
+  val y = if (span == 0.0) upper.high else lower.high + (upper.high - lower.high) * (x - lower.seconds) / span
   return x to y
 }
 
@@ -166,9 +181,9 @@ fun holdPointOn(points: List<DataPoint>, holdSeconds: Double, maxX: Double): Pai
  * duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.
  */
 fun getSubjectiveHighWeakSeries() = listOf(
-  DataPoint(0.0, 30.0),
-  DataPoint(10.0, 40.0),
-  DataPoint(20.0, 35.0)
+  SubjectiveHighPoint(0.0, 30.0),
+  SubjectiveHighPoint(10.0, 40.0),
+  SubjectiveHighPoint(20.0, 35.0)
 )
 
 /**
@@ -176,7 +191,7 @@ fun getSubjectiveHighWeakSeries() = listOf(
  * duration. J Pharmacol Exp Ther. 1995. Feb;272(2):560–9. PMID: 7853169.
  */
 fun getSubjectiveHighStrongSeries() = listOf(
-  DataPoint(0.0, 37.0),
-  DataPoint(10.0, 47.0),
-  DataPoint(20.0, 43.0)
+  SubjectiveHighPoint(0.0, 37.0),
+  SubjectiveHighPoint(10.0, 47.0),
+  SubjectiveHighPoint(20.0, 43.0)
 )
