@@ -201,6 +201,10 @@ dependencies {
   // Graph Views
   implementation(libs.bundles.graph.view)
 
+  // Grafima: Compose-native charts. Spiking it on the withdrawal charts; the Stats charts and the
+  // hit timer still run on MPAndroidChart and GraphView.
+  implementation(libs.grafima)
+
   // Apache commons
   implementation(libs.bundles.apache.commons)
 
