@@ -6,6 +6,7 @@ import br.com.colman.petals.BuildConfig
 import br.com.colman.petals.playstore.settings.AdsSettingsRepository
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.BillingClient.ProductType
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
@@ -16,6 +17,7 @@ import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchasesParams
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +40,8 @@ class InAppPurchase(val context: Context, private val dispatcher: CoroutineDispa
       override fun onBillingServiceDisconnected() = Unit
 
       override fun onBillingSetupFinished(billingResult: BillingResult) {
+        if (billingResult.responseCode != BillingResponseCode.OK) return
+
         myBilled.queryProductDetailsAsync(
           QueryProductDetailsParams.newBuilder().setProductList(
             listOf(
@@ -48,8 +52,27 @@ class InAppPurchase(val context: Context, private val dispatcher: CoroutineDispa
         ) { _, productDetails ->
           lstProductDetails = productDetails.productDetailsList
         }
+
+        restorePurchases()
       }
     })
+  }
+
+  /**
+   * Play, not the device, owns the answer to whether the ads were bought away. The local flag is
+   * wiped by a reinstall or is simply missing on a new device, so ask Play on every start and put
+   * the flag back where it belongs.
+   */
+  private fun restorePurchases() {
+    myBilled.queryPurchasesAsync(
+      QueryPurchasesParams.newBuilder().setProductType(ProductType.INAPP).build()
+    ) { billingResult, purchases ->
+      if (billingResult.responseCode != BillingResponseCode.OK) return@queryPurchasesAsync
+
+      val adFreePurchases = purchases.filter { it.isAdFree }
+      adFreePurchases.forEach(::acknowledge)
+      settingsRepository.setAdFree(adFreePurchases.isNotEmpty())
+    }
   }
 
   fun purchase(activity: Activity) {
@@ -71,23 +94,33 @@ class InAppPurchase(val context: Context, private val dispatcher: CoroutineDispa
   }
 
   override fun onPurchasesUpdated(p0: BillingResult, purchase: MutableList<Purchase>?) {
-    if (purchase.isNullOrEmpty()) {
-      settingsRepository.setAdFree(false)
+    // Someone who already owns it lands here when they tap buy again, and so does anyone who backs
+    // out of the Play dialog. Neither says anything about the entitlement, so ask Play instead of
+    // reading the empty list as "not bought".
+    if (p0.responseCode != BillingResponseCode.OK || purchase.isNullOrEmpty()) {
+      restorePurchases()
+      return
     }
-    purchase?.forEach {
-      if (!it.isAcknowledged) {
-        CoroutineScope(dispatcher).launch {
-          myBilled.acknowledgePurchase(
-            AcknowledgePurchaseParams.newBuilder().setPurchaseToken(
-              it.purchaseToken
-            ).build()
-          ) {
-          }
-        }
-      }
-      if (it.products[0] == productId && it.purchaseState == Purchase.PurchaseState.PURCHASED) {
-        settingsRepository.setAdFree(true)
+
+    purchase.filter { it.isAdFree }.forEach {
+      acknowledge(it)
+      settingsRepository.setAdFree(true)
+    }
+  }
+
+  private fun acknowledge(purchase: Purchase) {
+    if (purchase.isAcknowledged) return
+
+    CoroutineScope(dispatcher).launch {
+      myBilled.acknowledgePurchase(
+        AcknowledgePurchaseParams.newBuilder().setPurchaseToken(
+          purchase.purchaseToken
+        ).build()
+      ) {
       }
     }
   }
+
+  private val Purchase.isAdFree
+    get() = productId in products && purchaseState == Purchase.PurchaseState.PURCHASED
 }
