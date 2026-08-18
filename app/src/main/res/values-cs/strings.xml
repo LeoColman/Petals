@@ -90,6 +90,11 @@
     <string name="share_app">Sdílet aplikaci s přáteli</string>
     <string name="remove_ads_title">Odstranit reklamy</string>
     <string name="remove_ads">Přejít na verzi bez reklam</string>
+    <string name="remove_ads_forever">Odstranit reklamy navždy</string>
+    <string name="watch_ad">Přehrát video</string>
+    <string name="watch_ad_description">Přehrajte si krátké video a reklamy zůstanou skryté 24 hodin. Všechny funkce jsou zdarma tak jako tak, tohle jen vymění video za trochu klidu.</string>
+    <string name="ad_free_time_remaining">Reklamy jsou skryté ještě %1$dh %2$dm</string>
+    <string name="ad_not_available_yet">Právě teď není připravené žádné video. Zkuste to za chvíli.</string>
     <string name="share_app_title">Sdílet aplikaci</string>
     <string name="share_app_message">Ahoj, aplikace Petals mi pomáhá\nStáhni si ji na Google Play:\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals\nnebo na F-Droid\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="delete_use_title">Smazat užití</string>

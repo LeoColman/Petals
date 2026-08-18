@@ -147,6 +147,11 @@
     <string name="what_clock_format_should_be_used">Welches Uhr-Format soll genutzt werden?</string>
     <string name="remove_ads_title">Werbung entfernen</string>
     <string name="remove_ads">Upgrade zu Werbefreier Version</string>
+    <string name="remove_ads_forever">Werbung für immer entfernen</string>
+    <string name="watch_ad">Video ansehen</string>
+    <string name="watch_ad_description">Sieh dir ein kurzes Video an und die Werbung bleibt 24 Stunden ausgeblendet. Alle Funktionen sind ohnehin kostenlos, das tauscht nur ein Video gegen etwas Ruhe.</string>
+    <string name="ad_free_time_remaining">Werbung ist noch %1$dh %2$dm ausgeblendet</string>
+    <string name="ad_not_available_yet">Gerade ist kein Video bereit. Versuche es gleich noch einmal.</string>
     <string name="extend_day_a_few_hours">Erweiter Tag einige Stunden nach Mitternacht</string>
     <string name="extend_day">Erweiterten Tag aktivieren</string>
     <string name="wait_until_3am_to_show_a_new_day">Neuer Tag beginnt um 03:00 Uhr Nachts. Sinnvoll, wenn Sie üblicherweise nach Mitternacht schlafen gehen.</string>

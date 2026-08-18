@@ -74,6 +74,6 @@ class MainActivity : ComponentActivity(), CoroutineScope by CoroutineScope(Dispa
 
   @Composable
   fun isAdFree(): Boolean {
-    return adsSettingsRepository.isAdsFree.collectAsState(false).value
+    return adsSettingsRepository.isCurrentlyAdFree.collectAsState(false).value
   }
 }

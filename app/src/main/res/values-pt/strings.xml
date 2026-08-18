@@ -180,6 +180,11 @@
     <string name="hours_24">24 horas</string>
     <string name="remove_ads_title">Remover Anúncios</string>
     <string name="remove_ads">Ativar uma experiência sem anúncios</string>
+    <string name="remove_ads_forever">Remover anúncios para sempre</string>
+    <string name="watch_ad">Assistir a um vídeo</string>
+    <string name="watch_ad_description">Assista a um vídeo curto e os anúncios ficam escondidos por 24 horas. Todos os recursos continuam gratuitos de qualquer forma, isso só troca um vídeo por um pouco de silêncio.</string>
+    <string name="ad_free_time_remaining">Anúncios escondidos por mais %1$dh %2$dm</string>
+    <string name="ad_not_available_yet">Nenhum vídeo disponível agora. Tente de novo em instantes.</string>
     <string name="grams_distribution_over_days_since_first_use">Gramas por Dia</string>
     <string name="hour_of_day_line_in_stats_enabled">Ativar/Desativar Linha da Hora do Dia</string>
     <string name="what_language_should_be_used">Que idioma deve ser exibido</string>

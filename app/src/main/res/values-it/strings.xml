@@ -154,6 +154,11 @@
     <string name="what_clock_format_should_be_used">Quale formato di orologio dovrebbe essere utilizzato</string>
     <string name="remove_ads_title">Rimuovi annunci</string>
     <string name="remove_ads">Passa a un\'esperienza senza pubblicità</string>
+    <string name="remove_ads_forever">Rimuovi la pubblicità per sempre</string>
+    <string name="watch_ad">Guarda un video</string>
+    <string name="watch_ad_description">Guarda un breve video e la pubblicità resta nascosta per 24 ore. Tutte le funzioni sono gratuite in ogni caso, questo scambia solo un video con un po\' di tranquillità.</string>
+    <string name="ad_free_time_remaining">La pubblicità resta nascosta per altre %1$dh %2$dm</string>
+    <string name="ad_not_available_yet">Nessun video disponibile in questo momento. Riprova tra poco.</string>
     <string name="pause_dialog_description">Durante questo periodo di tempo, l\'app ti ricorderà la tua pausa</string>
     <string name="edit_pause">Modifica pausa</string>
     <string name="delete_pause">Elimina pausa</string>

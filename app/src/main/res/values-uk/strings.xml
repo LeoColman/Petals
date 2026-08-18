@@ -169,6 +169,11 @@
     <string name="what_clock_format_should_be_used">Який формат годинника слід використовувати</string>
     <string name="remove_ads_title">Видалити рекламу</string>
     <string name="remove_ads">Оновіть без реклами</string>
+    <string name="remove_ads_forever">Прибрати рекламу назавжди</string>
+    <string name="watch_ad">Переглянути відео</string>
+    <string name="watch_ad_description">Перегляньте коротке відео, і реклама буде прихована 24 години. Усі функції безкоштовні в будь-якому разі, це лише міняє відео на трохи тиші.</string>
+    <string name="ad_free_time_remaining">Реклама прихована ще %1$dгод %2$dхв</string>
+    <string name="ad_not_available_yet">Зараз немає готового відео. Спробуйте за мить.</string>
     <string name="moving_average_grams_distribution">Середні грами на день</string>
     <string name="description">Опис</string>
     <string name="description_label">опис</string>

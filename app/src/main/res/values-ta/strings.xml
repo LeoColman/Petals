@@ -98,6 +98,11 @@
     <string name="share_app">உங்கள் நண்பர்களுடன் பயன்பாட்டைப் பகிரவும்</string>
     <string name="remove_ads_title">விளம்பரங்களை அகற்று</string>
     <string name="remove_ads">விளம்பரமில்லாத அனுபவத்திற்கு மேம்படுத்தவும்</string>
+    <string name="remove_ads_forever">விளம்பரங்களை நிரந்தரமாக அகற்று</string>
+    <string name="watch_ad">ஒரு வீடியோவைப் பாருங்கள்</string>
+    <string name="watch_ad_description">ஒரு குறுகிய வீடியோவைப் பாருங்கள், விளம்பரங்கள் 24 மணி நேரம் மறைந்திருக்கும். எல்லா அம்சங்களும் எப்படியும் இலவசம், இது ஒரு வீடியோவை சிறிது அமைதிக்காக மாற்றுகிறது.</string>
+    <string name="ad_free_time_remaining">விளம்பரங்கள் இன்னும் %1$d மணி %2$d நிமிடம் மறைந்திருக்கும்</string>
+    <string name="ad_not_available_yet">இப்போது வீடியோ எதுவும் தயாராக இல்லை. சிறிது நேரத்தில் மீண்டும் முயற்சிக்கவும்.</string>
     <string name="share_app_title">பயன்பாட்டைப் பகிரவும்</string>
     <string name="share_app_message">ஏய், இதழ்கள் பயன்பாடு எனக்கு உதவுகிறது\n கூகிள் பிளேயில் அதைப் பெறுங்கள்:\n https://play.google.com/store/apps/details?id=br.com.colman.petals\n அல்லது அதை எஃப்-டிராய்டில் பெறுங்கள்\n https://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="delete_use_title">பயன்பாட்டை நீக்கு</string>
