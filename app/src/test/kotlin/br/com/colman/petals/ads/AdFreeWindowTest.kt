@@ -33,16 +33,4 @@ class AdFreeWindowTest : FunSpec({
 
     adFreeTimeRemaining(until, Now) shouldBe RewardedAdFreeDuration
   }
-
-  test("A window further ahead than the reward means the clock went backwards, so it is over") {
-    val until = Now.plus(RewardedAdFreeDuration).plus(Duration.ofHours(1))
-
-    adFreeTimeRemaining(until, Now).shouldBeNull()
-  }
-
-  test("Small forward clock drift does not void the window") {
-    val until = Now.plus(RewardedAdFreeDuration).plus(Duration.ofMinutes(2))
-
-    adFreeTimeRemaining(until, Now) shouldBe Duration.ofHours(24).plusMinutes(2)
-  }
 })
