@@ -169,6 +169,11 @@
     <string name="select_time">Выбрать время</string>
     <string name="remove_ads_title">Убрать рекламу</string>
     <string name="remove_ads">Перейти на безрекламный режим</string>
+    <string name="remove_ads_forever">Убрать рекламу навсегда</string>
+    <string name="watch_ad">Посмотреть видео</string>
+    <string name="watch_ad_description">Посмотрите короткое видео, и реклама будет скрыта 24 часа. Все функции бесплатны в любом случае, это лишь меняет видео на немного тишины.</string>
+    <string name="ad_free_time_remaining">Реклама скрыта ещё %1$dч %2$dмин</string>
+    <string name="ad_not_available_yet">Сейчас нет готового видео. Попробуйте через минуту.</string>
     <string name="decimal_precision">Десятичная точность</string>
     <string name="what_decimal_precision_should_be_used">Какая точность десятичных дробей должна отображаться на странице \"Использование“</string>
     <string name="extend_day">Переключатель Продленный день</string>

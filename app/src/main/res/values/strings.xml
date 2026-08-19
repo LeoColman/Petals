@@ -133,6 +133,11 @@
     <string name="share_app">Share app with your friends</string>
     <string name="remove_ads_title">Remove Ads</string>
     <string name="remove_ads">Upgrade to an ad-free experience</string>
+    <string name="remove_ads_forever">Remove ads forever</string>
+    <string name="watch_ad">Watch a video</string>
+    <string name="watch_ad_description">Watch a short video and the ads stay hidden for 24 hours. Every feature is free either way, this only trades a video for some quiet.</string>
+    <string name="ad_free_time_remaining">Ads are hidden for another %1$dh %2$dm</string>
+    <string name="ad_not_available_yet">No video ready right now. Try again in a moment.</string>
     <string name="share_app_title">Share App</string>
     <string name="share_app_message">Hey, the Petals app helps me\nGet it on Google Play:\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals\nor Get it on F-Droid\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="delete_use_title">Delete Use</string>

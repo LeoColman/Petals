@@ -98,6 +98,11 @@
     <string name="share_app">Uygulamayı arkadaşlarınızla paylaşın</string>
     <string name="remove_ads_title">Reklamları Kaldır</string>
     <string name="remove_ads">Reklamsız bir deneyime yükselt</string>
+    <string name="remove_ads_forever">Reklamları sonsuza dek kaldır</string>
+    <string name="watch_ad">Bir video izle</string>
+    <string name="watch_ad_description">Kısa bir video izle, reklamlar 24 saat gizli kalsın. Tüm özellikler zaten ücretsiz, bu yalnızca bir videoyu biraz sessizlikle takas eder.</string>
+    <string name="ad_free_time_remaining">Reklamlar %1$ds %2$ddk daha gizli</string>
+    <string name="ad_not_available_yet">Şu anda hazır video yok. Birazdan tekrar dene.</string>
     <string name="share_app_title">Uygulamayı Paylaş</string>
     <string name="share_app_message">Hey, Petals uygulaması bana yardımcı oluyor\nGoogle Play\'den indir:\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals\nveya F-Droid\'den indir\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="delete_use_title">Kullanımı Sil</string>

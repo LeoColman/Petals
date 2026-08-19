@@ -96,6 +96,11 @@
     <string name="share_app">Bagikan aplikasi ini kepada teman-teman Anda</string>
     <string name="remove_ads_title">Hapus Iklan</string>
     <string name="remove_ads">Upgrade ke pengalaman tanpa iklan</string>
+    <string name="remove_ads_forever">Hapus iklan selamanya</string>
+    <string name="watch_ad">Tonton video</string>
+    <string name="watch_ad_description">Tonton video singkat dan iklan tetap tersembunyi selama 24 jam. Semua fitur tetap gratis, ini hanya menukar sebuah video dengan sedikit ketenangan.</string>
+    <string name="ad_free_time_remaining">Iklan tersembunyi %1$dj %2$dm lagi</string>
+    <string name="ad_not_available_yet">Belum ada video yang siap saat ini. Coba lagi sebentar.</string>
     <string name="share_app_title">Bagikan Aplikasi</string>
     <string name="share_app_message">Hai, aplikasi Petals membantu saya\nDapatkan di Google Play:\nhttps://play.google.com/store/apps/details?id=br.com.colman.petals\natau dapatkan di F-Droid\nhttps://f-droid.org/packages/br.com.colman.petals/</string>
     <string name="delete_use_title">Hapus penggunaan</string>
