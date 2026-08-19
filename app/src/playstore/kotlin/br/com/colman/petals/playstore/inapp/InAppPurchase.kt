@@ -93,11 +93,11 @@ class InAppPurchase(val context: Context, private val dispatcher: CoroutineDispa
     }
   }
 
-  override fun onPurchasesUpdated(p0: BillingResult, purchase: MutableList<Purchase>?) {
+  override fun onPurchasesUpdated(billingResult: BillingResult, purchase: MutableList<Purchase>?) {
     // Someone who already owns it lands here when they tap buy again, and so does anyone who backs
     // out of the Play dialog. Neither says anything about the entitlement, so ask Play instead of
     // reading the empty list as "not bought".
-    if (p0.responseCode != BillingResponseCode.OK || purchase.isNullOrEmpty()) {
+    if (billingResult.responseCode != BillingResponseCode.OK || purchase.isNullOrEmpty()) {
       restorePurchases()
       return
     }

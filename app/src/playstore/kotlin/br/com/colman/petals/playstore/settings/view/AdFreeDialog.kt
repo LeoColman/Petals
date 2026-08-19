@@ -15,7 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.colman.petals.R.string
+import br.com.colman.petals.R.string.ad_free_time_remaining
+import br.com.colman.petals.R.string.cancel
+import br.com.colman.petals.R.string.remove_ads_forever
+import br.com.colman.petals.R.string.remove_ads_title
+import br.com.colman.petals.R.string.watch_ad
+import br.com.colman.petals.R.string.watch_ad_description
 import java.time.Duration
 
 @Preview
@@ -29,15 +34,15 @@ fun AdFreeDialog(
   AlertDialog(
     onDismissRequest = onDismiss,
     title = {
-      Text(stringResource(string.remove_ads_title), style = MaterialTheme.typography.h5)
+      Text(stringResource(remove_ads_title), style = MaterialTheme.typography.h5)
     },
     text = {
       Column {
-        Text(stringResource(string.watch_ad_description))
+        Text(stringResource(watch_ad_description))
         if (timeRemaining != null) {
           Spacer(Modifier.height(8.dp))
           Text(
-            stringResource(string.ad_free_time_remaining, timeRemaining.toHours(), timeRemaining.toMinutes() % 60),
+            stringResource(ad_free_time_remaining, timeRemaining.toHours(), timeRemaining.toMinutes() % 60),
             style = MaterialTheme.typography.subtitle1
           )
         }
@@ -48,7 +53,7 @@ fun AdFreeDialog(
       }
     },
     confirmButton = {
-      TextButton(onDismiss) { Text(stringResource(string.cancel)) }
+      TextButton(onDismiss) { Text(stringResource(cancel)) }
     }
   )
 }
@@ -62,7 +67,7 @@ private fun WatchAdButton(onWatchAd: () -> Unit, onDismiss: () -> Unit) {
     },
     modifier = Modifier.fillMaxWidth()
   ) {
-    Text(stringResource(string.watch_ad))
+    Text(stringResource(watch_ad))
   }
 }
 
@@ -75,6 +80,6 @@ private fun RemoveAdsForeverButton(onPurchase: () -> Unit, onDismiss: () -> Unit
     },
     modifier = Modifier.fillMaxWidth()
   ) {
-    Text(stringResource(string.remove_ads_forever))
+    Text(stringResource(remove_ads_forever))
   }
 }
