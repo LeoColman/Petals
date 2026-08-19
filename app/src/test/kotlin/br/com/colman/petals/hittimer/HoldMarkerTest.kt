@@ -1,6 +1,5 @@
 package br.com.colman.petals.hittimer
 
-import com.jjoe64.graphview.series.DataPoint
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.doubles.plusOrMinus
 import io.kotest.matchers.shouldBe
@@ -48,7 +47,11 @@ class HoldMarkerTest : FunSpec({
   }
 
   test("Unordered points are handled") {
-    val shuffled = listOf(DataPoint(20.0, 35.0), DataPoint(0.0, 30.0), DataPoint(10.0, 40.0))
+    val shuffled = listOf(
+      SubjectiveHighPoint(20.0, 35.0),
+      SubjectiveHighPoint(0.0, 30.0),
+      SubjectiveHighPoint(10.0, 40.0)
+    )
 
     holdPointOn(shuffled, 5.0, 25.0) shouldBe holdPointOn(weak, 5.0, 25.0)
   }
