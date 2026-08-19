@@ -31,7 +31,7 @@ compose-ui-test = { module = "androidx.compose.ui:ui-test", version.ref = "compo
 datastore-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-grafima = "io.grafima:grafima:1.1.1"
+grafima = "io.grafima:grafima:1.2.0"
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }

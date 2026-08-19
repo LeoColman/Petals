@@ -67,6 +67,9 @@ fun WhyTenSeconds(holdSeconds: Double = 0.0) {
 private const val ChartMaxX = 25.0
 private const val ChartMaxY = 60.0
 
+/** Twice the chart's own dots, which is roughly where the GraphView marker sat against its curves. */
+private val MarkerDotRadius = 6.dp
+
 @Composable
 fun SubjectiveHigh(holdSeconds: Double = 0.0) {
   val colors = MaterialTheme.colors
@@ -82,11 +85,17 @@ fun SubjectiveHigh(holdSeconds: Double = 0.0) {
   )
 
   // Both markers in the accent colour, so "where you are" reads as one thing against the two curves.
-  // A one-point series rather than an annotation, matching the withdrawal charts. Dot size is a
-  // property of the chart rather than of a series here, so colour is what separates them.
+  // A one-point series rather than an annotation, matching the withdrawal charts. Sized past the
+  // curve dots as well as coloured apart: the marker is the thing you look for while holding.
   val markers = listOf(weak, strong).mapIndexed { index, points ->
     val (x, y) = holdPointOn(points, holdSeconds, ChartMaxX)
-    LineSeries("marker-$index", "", listOf(LineDataPoint(x.toFloat(), y.toFloat(), "")), colors.primary)
+    LineSeries(
+      id = "marker-$index",
+      label = "",
+      points = listOf(LineDataPoint(x.toFloat(), y.toFloat(), "")),
+      color = colors.primary,
+      dotRadius = MarkerDotRadius
+    )
   }
 
   LineChart(
