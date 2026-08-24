@@ -13,10 +13,7 @@ import br.com.colman.petals.statistics.component.Period
 import br.com.colman.petals.statistics.graph.component.PeriodLineChart
 import br.com.colman.petals.statistics.graph.data.createDistributionPerDayOfWeekSeries
 import br.com.colman.petals.statistics.graph.formatter.DayOfWeekFormatter
-import br.com.colman.petals.statistics.graph.formatter.GramsLabel
-import br.com.colman.petals.statistics.graph.formatter.gramsAxisFormatter
 import br.com.colman.petals.use.repository.Use
-import io.grafima.charts.line.LineValueLabelConfig
 import io.grafima.charts.line.ReferenceLine
 import io.grafima.charts.line.ReferenceLineAxis
 import org.koin.compose.koinInject
@@ -123,10 +120,8 @@ fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
     createDistributionPerDayOfWeekSeries(weekPeriod.days, weekUses, label)
   }
 
-  val yMax = gramsData.flatMap { it.points }.maxOfOrNull { it.y } ?: 0f
-
-  // Today's weekday, read per composition rather than once per process, so the rule still points at
-  // today after the app has been left open overnight.
+  // Today's weekday, read here rather than in a top-level val evaluated once per process. Same caveat
+  // as the hour rule: nothing recomposes at midnight, so an idle screen keeps yesterday's line.
   val referenceLines = if (currentHourOfDayLineInStatsEnabled) {
     listOf(
       ReferenceLine(
@@ -141,20 +136,13 @@ fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
   }
 
   PeriodLineChart(
+    title = description,
     series = gramsData,
-    contentDescription = description,
     xMin = 1f,
     xMax = 7f,
     maxXLabels = 7,
     xLabelFormatter = DayOfWeekFormatter,
-    yLabelFormatter = gramsAxisFormatter(yMax),
     referenceLines = referenceLines,
-    // Each period's own colour, rather than one colour for every label as before: with four periods
-    // overlapping, a number told you what but not whose.
-    valueLabels = LineValueLabelConfig(
-      enabled = true,
-      formatter = { _, point -> GramsLabel(point.y) },
-      useSeriesColor = true
-    )
+    showValueLabels = true
   )
 }

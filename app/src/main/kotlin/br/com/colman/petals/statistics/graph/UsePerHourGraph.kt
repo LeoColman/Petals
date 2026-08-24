@@ -16,7 +16,6 @@ import br.com.colman.petals.statistics.graph.data.breakPeriodReferenceLines
 import br.com.colman.petals.statistics.graph.data.createBreakPeriodBands
 import br.com.colman.petals.statistics.graph.data.createDistributionPerHourSeries
 import br.com.colman.petals.statistics.graph.formatter.TwelveHourFormatter
-import br.com.colman.petals.statistics.graph.formatter.gramsAxisFormatter
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.Use
 import io.grafima.charts.line.LineCurveType
@@ -85,8 +84,9 @@ fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
   val showBreaks = breakPeriodInStatsEnabled && yMax > 0f
   val breakBands = if (showBreaks) createBreakPeriodBands(pauses, yMax, breakLabel) else emptyList()
 
-  // Read on every composition rather than once per process: the hour rule is "now", and the old
-  // top-level version kept pointing at whatever hour the app happened to start in.
+  // Read here rather than in a top-level val, which the old version evaluated once per process and
+  // then kept for the app's lifetime. This is not a clock either: nothing recomposes at the top of
+  // the hour, so a screen left open across the boundary keeps the hour it was drawn with.
   val referenceLines = buildList {
     if (currentHourOfDayLineInStatsEnabled) {
       add(
@@ -104,13 +104,12 @@ fun UsePerHourGraph(useGroups: Map<Period, List<Use>>) {
   PeriodLineChart(
     // Readings first: the chart takes its x labels from the first series, and a break band only has
     // a point at each of its own edges. The bands are translucent, so drawing them last is fine.
+    title = description,
     series = gramsData + breakBands,
-    contentDescription = description,
     xMin = 0f,
     xMax = 23f,
     maxXLabels = 24,
     xLabelFormatter = TwelveHourFormatter,
-    yLabelFormatter = gramsAxisFormatter(yMax),
     referenceLines = referenceLines,
     // The old chart used HORIZONTAL_BEZIER here. Hours are a cycle, and the smoothing says so.
     curveType = LineCurveType.MonotoneCubic

@@ -32,4 +32,23 @@ class GramsAxisFormatterTest : FunSpec({
   test("An empty chart still formats rather than dividing by its own range") {
     gramsAxisFormatter(0f)(0f) shouldBe "0.00"
   }
+
+  test("Exactly one gram takes one decimal, not two") {
+    gramsAxisFormatter(1f)(1f) shouldBe "1.0"
+  }
+
+  test("Exactly ten grams drops decimals, rather than keeping one") {
+    gramsAxisFormatter(10f)(10f) shouldBe "10"
+  }
+
+  test("An axis of a few thousandths keeps enough decimals to tell its ticks apart") {
+    val format = gramsAxisFormatter(0.004f)
+
+    format(0.001f) shouldBe "0.0010"
+    format(0.004f) shouldBe "0.0040"
+  }
+
+  test("Precision stops growing once the labels would be unreadable anyway") {
+    gramsAxisFormatter(0.0000001f)(0.0000001f) shouldBe "0.0000"
+  }
 })
