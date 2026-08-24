@@ -1,16 +1,16 @@
 package br.com.colman.petals.statistics.graph.data
 
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.unit.dp
 import br.com.colman.petals.use.pause.repository.Pause
-import com.github.mikephil.charting.components.Legend.LegendForm
-import com.github.mikephil.charting.components.LimitLine
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineDataSet
+import io.grafima.charts.line.LineDataPoint
+import io.grafima.charts.line.LineSeries
+import io.grafima.charts.line.ReferenceLine
+import io.grafima.charts.line.ReferenceLineAxis
 import java.time.LocalTime
 
-private val BreakColor = Color(0xFFFFC107).toArgb() // Amber - warning
-private const val BreakFillAlpha = 60
+private val BreakColor = Color(0xFFFFC107) // Amber - warning
+private val BreakFillColor = BreakColor.copy(alpha = 0.24f)
 
 private fun LocalTime.toHourAxis() = hour + minute / 60f
 
@@ -32,47 +32,38 @@ fun breakPeriodRanges(pauses: List<Pause>): List<Pair<Float, Float>> {
 }
 
 /**
- * The x positions (hour-of-day axis units) of every enabled pause's start and end, for limit lines.
- * Pure geometry — unit-testable.
+ * The x positions (hour-of-day axis units) of every enabled pause's start and end, for the lines
+ * marking the band edges. Pure geometry — unit-testable.
  */
 fun breakPeriodEdges(pauses: List<Pause>): List<Float> {
   return pauses.filter { it.isEnabled }.flatMap { listOf(it.startTime.toHourAxis(), it.endTime.toHourAxis()) }
 }
 
 /**
- * Builds the translucent shaded band(s) representing each enabled [Pause] on the per-hour graph,
- * each filled down to the axis baseline (0). Only the first band carries [label] so a single
- * "break period" entry appears in the chart legend (avoiding overlapping per-line labels).
+ * The translucent band(s) standing over each enabled [Pause] on the per-hour graph, each filled from
+ * [yMax] down to the axis. Only the first band carries [label], so the legend gets one "break period"
+ * entry rather than one per band.
  */
-fun createBreakPeriodBands(pauses: List<Pause>, yMax: Float, label: String): List<LineDataSet> {
+fun createBreakPeriodBands(pauses: List<Pause>, yMax: Float, label: String): List<LineSeries> {
   return breakPeriodRanges(pauses).mapIndexed { index, (startX, endX) ->
-    bandDataset(startX, endX, yMax, if (index == 0) label else "")
+    LineSeries(
+      id = "break-$index",
+      label = if (index == 0) label else "",
+      points = listOf(LineDataPoint(startX, yMax), LineDataPoint(endX, yMax)),
+      color = BreakColor,
+      // Two identical colours rather than fillAlpha: the generated fill fades out towards the axis,
+      // and a band that fades reads as data trailing off instead of as a block of time.
+      fillGradientColors = listOf(BreakFillColor, BreakFillColor),
+      strokeWidth = 0.dp,
+      // The band is a region, not a reading. Dots on its two corners would invite reading them.
+      dotRadius = 0.dp
+    )
   }
 }
 
-/**
- * A thin vertical [LimitLine] at each enabled pause's start and end hour, marking the band edges.
- */
-fun breakPeriodLimitLines(pauses: List<Pause>): List<LimitLine> {
+/** A thin vertical rule at each enabled pause's start and end hour, marking the band edges. */
+fun breakPeriodReferenceLines(pauses: List<Pause>): List<ReferenceLine> {
   return breakPeriodEdges(pauses).map { x ->
-    LimitLine(x).apply {
-      lineWidth = 1f
-      lineColor = BreakColor
-    }
-  }
-}
-
-private fun bandDataset(startX: Float, endX: Float, yMax: Float, label: String): LineDataSet {
-  val entries = listOf(Entry(startX, yMax), Entry(endX, yMax))
-  return LineDataSet(entries, label).apply {
-    setDrawCircles(false)
-    setDrawValues(false)
-    setDrawFilled(true)
-    lineWidth = 0f
-    color = BreakColor
-    fillColor = BreakColor
-    fillAlpha = BreakFillAlpha
-    isHighlightEnabled = false
-    form = if (label.isEmpty()) LegendForm.NONE else LegendForm.SQUARE
+    ReferenceLine(value = x, axis = ReferenceLineAxis.X, color = BreakColor)
   }
 }
