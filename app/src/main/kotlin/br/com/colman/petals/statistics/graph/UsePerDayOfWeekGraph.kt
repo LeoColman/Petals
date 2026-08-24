@@ -6,14 +6,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R.string
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.statistics.component.Period
-import br.com.colman.petals.statistics.graph.component.LineChart
-import br.com.colman.petals.statistics.graph.data.createDistributionPerDayOfWeekDataset
+import br.com.colman.petals.statistics.graph.component.PeriodLineChart
+import br.com.colman.petals.statistics.graph.data.createDistributionPerDayOfWeekSeries
 import br.com.colman.petals.statistics.graph.formatter.DayOfWeekFormatter
+import br.com.colman.petals.statistics.graph.formatter.GramsLabel
+import br.com.colman.petals.statistics.graph.formatter.gramsAxisFormatter
 import br.com.colman.petals.use.repository.Use
-import com.github.mikephil.charting.components.LimitLine
+import io.grafima.charts.line.LineValueLabelConfig
+import io.grafima.charts.line.ReferenceLine
+import io.grafima.charts.line.ReferenceLineAxis
 import org.koin.compose.koinInject
 import java.time.LocalDate
 import kotlin.random.Random
@@ -115,21 +120,41 @@ fun UsePerDayOfWeekGraph(useGroups: Map<Period, List<Use>>) {
     }
 
     val label = weekPeriod.label()
-    createDistributionPerDayOfWeekDataset(weekPeriod.days, weekUses, label, colors)
+    createDistributionPerDayOfWeekSeries(weekPeriod.days, weekUses, label)
   }
 
-  LineChart(gramsData, description) {
-    axisMinimum = 1f
-    axisMaximum = 7f
-    labelCount = 7
-    granularity = 1f
-    valueFormatter = DayOfWeekFormatter
-    if (currentHourOfDayLineInStatsEnabled) {
-      addLimitLine(limitLine)
-    } else {
-      removeAllLimitLines()
-    }
+  val yMax = gramsData.flatMap { it.points }.maxOfOrNull { it.y } ?: 0f
+
+  // Today's weekday, read per composition rather than once per process, so the rule still points at
+  // today after the app has been left open overnight.
+  val referenceLines = if (currentHourOfDayLineInStatsEnabled) {
+    listOf(
+      ReferenceLine(
+        value = LocalDate.now().dayOfWeek.value.toFloat(),
+        axis = ReferenceLineAxis.X,
+        color = colors.primary,
+        strokeWidth = 2.dp
+      )
+    )
+  } else {
+    emptyList()
   }
+
+  PeriodLineChart(
+    series = gramsData,
+    contentDescription = description,
+    xMin = 1f,
+    xMax = 7f,
+    maxXLabels = 7,
+    xLabelFormatter = DayOfWeekFormatter,
+    yLabelFormatter = gramsAxisFormatter(yMax),
+    referenceLines = referenceLines,
+    // Each period's own colour, rather than one colour for every label as before: with four periods
+    // overlapping, a number told you what but not whose.
+    valueLabels = LineValueLabelConfig(
+      enabled = true,
+      formatter = { _, point -> GramsLabel(point.y) },
+      useSeriesColor = true
+    )
+  )
 }
-
-private val limitLine = LimitLine(LocalDate.now().dayOfWeek.value.toFloat()).apply { lineWidth = 2f }
