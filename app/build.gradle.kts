@@ -154,6 +154,16 @@ android {
     }
   }
 
+  // Google's dependency metadata blob is encrypted with a Google-held key and re-encrypted on
+  // every build, so two builds of the same commit never produce the same APK bytes. That defeats
+  // the reproducible-build verification IzzyOnDroid and F-Droid run against our release APK, and
+  // nobody outside Google can read the blob to check what it contains. The bundle keeps it, since
+  // Play Console's SDK insights read it and no one verifies the AAB.
+  dependenciesInfo {
+    includeInApk = false
+    includeInBundle = true
+  }
+
   packaging {
     resources.excludes.add("META-INF/**")
     resources.excludes.add("win32-x86-64/attach_hotspot_windows.dll")
