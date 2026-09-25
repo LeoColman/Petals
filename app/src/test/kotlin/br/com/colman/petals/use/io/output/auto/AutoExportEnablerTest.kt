@@ -67,6 +67,18 @@ class AutoExportEnablerTest : FunSpec({
     runBlocking { settingsRepository.autoExportFolderName.first() } shouldBe "My Folder"
   }
 
+  test("enable() clears the error left by a previous folder") {
+    val settingsRepository = newSettingsRepository()
+    settingsRepository.setAutoExportLastError("permission")
+
+    val newUri = mockk<Uri>()
+    every { newUri.toString() } returns "content://new-tree"
+
+    enabler(mockk(relaxed = true), settingsRepository, mockk(relaxed = true), mockk()).enable(newUri)
+
+    runBlocking { settingsRepository.autoExportLastError.first() } shouldBe null
+  }
+
   test("enable() falls back to the Uri when the provider does not report a folder name") {
     val settingsRepository = newSettingsRepository()
 
