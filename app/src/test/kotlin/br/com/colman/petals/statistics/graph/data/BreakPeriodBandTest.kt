@@ -24,6 +24,12 @@ class BreakPeriodBandTest : FunSpec({
     breakPeriodRanges(listOf(pause)) shouldBe listOf(22f to 23f, 0f to 6f)
   }
 
+  test("pause starting and ending at the same time does not wrap around midnight") {
+    val pause = Pause(LocalTime.of(9, 0), LocalTime.of(9, 0))
+
+    breakPeriodRanges(listOf(pause)) shouldBe listOf(9f to 9f)
+  }
+
   test("disabled pauses are excluded from ranges and edges") {
     val pause = Pause(LocalTime.of(9, 0), LocalTime.of(12, 0), isEnabled = false)
 

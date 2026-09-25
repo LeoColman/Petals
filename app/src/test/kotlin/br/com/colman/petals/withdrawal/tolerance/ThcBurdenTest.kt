@@ -107,6 +107,12 @@ class ThcBurdenTest : FunSpec({
     days shouldBe (MaxEffectiveAbstinenceDays plusOrMinus 1e-6)
   }
 
+  test("An empty dose logged after the last real one does not move the tolerance reference") {
+    val doses = listOf(Dose(Now.minusDays(10), 1.0), Dose(Now.minusDays(1), 0.0))
+
+    daysQuit(doses) shouldBe (10.0 plusOrMinus 1e-4)
+  }
+
   test("No usable dose means no estimate") {
     effectiveAbstinence(emptyList(), Now).shouldBeNull()
     effectiveAbstinence(listOf(Dose(Now.minusDays(1), 0.0)), Now).shouldBeNull()
