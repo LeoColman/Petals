@@ -96,7 +96,8 @@ class HitTimerTest : FunSpec({
       500L to "0.5",
       499L to "0.5",
       1L to "0.0",
-      0L to "0.0"
+      0L to "0.0",
+      -1L to "0.0"
     ) { (millis, string) ->
       HitTimer.formatDurationShort(millis) shouldBe string
     }

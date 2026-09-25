@@ -67,8 +67,7 @@ class HitTimer(val durationMillis: Long = 10_000L) : Parcelable {
     fun formatDuration(millis: Long): String = DurationFormatUtils.formatDuration(millis, "ss:SSS")
     fun formatDurationShort(millis: Long): String = when {
       millis >= 1_000 -> (millis / 1_000).toString()
-      millis > 0 -> "%.1f".format(Locale.US, millis / 1_000.0)
-      else -> "0.0"
+      else -> "%.1f".format(Locale.US, millis.coerceAtLeast(0) / 1_000.0)
     }
   }
 }
