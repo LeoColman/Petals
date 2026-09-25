@@ -1,0 +1,1 @@
+The all-time chart shows your first day again, and every day sits under its correct date. Before, it hid the first day and labelled each day one day early.
