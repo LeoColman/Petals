@@ -15,7 +15,7 @@ fun AllTimeGraph(uses: List<Use>, dateFormat: String) {
   val gramsDataList = listOf(gramsData)
 
   LineChart(gramsDataList.flatten(), description, 5f) {
-    axisMinimum = 1f
+    axisMinimum = 0f
     labelCount = 5
     granularity = 1f
     valueFormatter = DaysSinceFirstUseFormatter(uses, dateFormat).formatDate

@@ -11,9 +11,9 @@ class DaysSinceFirstUseFormatter(uses: List<Use>, dateFormat: String) {
   val formatDate = object : IAxisValueFormatter {
     override fun getFormattedValue(value: Float, axis: AxisBase?): String {
       val formatter = DateTimeFormatter.ofPattern(dateFormat)
-      val dayBeforeFirstUse = uses.minBy { it.date }.localDate.toEpochDay() - 1
+      val firstUseDay = uses.minBy { it.date }.localDate.toEpochDay()
 
-      val epochDay = (value + dayBeforeFirstUse).toLong()
+      val epochDay = (value + firstUseDay).toLong()
       val localDate = LocalDate.ofEpochDay(epochDay)
 
       return formatter.format(localDate)

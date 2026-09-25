@@ -17,10 +17,10 @@ class DaysSinceFirstUseFormatterTest : FunSpec({
 
   context("getFormattedValue returns correctly formatted days since first use (yyyy-MM-dd)") {
     withData(
-      Pair(0f, "2021-02-06"),
-      Pair(1f, "2021-02-07"),
-      Pair(2f, "2021-02-08"),
-      Pair(3f, "2021-02-09")
+      Pair(0f, "2021-02-07"),
+      Pair(1f, "2021-02-08"),
+      Pair(2f, "2021-02-09"),
+      Pair(3f, "2021-02-10")
     ) { (value, expectedDay) ->
       val actual = DaysSinceFirstUseFormatter(uses, "yyyy-MM-dd").formatDate.getFormattedValue(value, null)
       actual shouldBe expectedDay
