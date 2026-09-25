@@ -8,7 +8,7 @@
 @file:DependsOn("actions:setup-java:v5")
 @file:DependsOn("actions:cache:v4")
 @file:DependsOn("actions:upload-artifact:v4")
-@file:DependsOn("gradle:actions__setup-gradle:v4")
+@file:DependsOn("gradle:actions__setup-gradle:v6")
 
 import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout
