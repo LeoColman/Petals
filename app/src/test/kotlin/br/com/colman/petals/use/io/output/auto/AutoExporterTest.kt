@@ -6,13 +6,19 @@ import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.io.output.UseCsvSerializer
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
+import io.kotest.matchers.longs.shouldBeInRange
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
+import java.io.FileNotFoundException
 import java.io.IOException
+import java.time.Instant
+import kotlin.time.Duration.Companion.seconds
 
 class AutoExporterTest : FunSpec({
 
@@ -30,6 +36,17 @@ class AutoExporterTest : FunSpec({
     runBlocking { target.export() } shouldBe AutoExportResult.Success
   }
 
+  test("releases the lock when no tree Uri is configured, so the next export is not blocked") {
+    val target = AutoExporter(newSettingsRepository(), mockk(), mockk(), uriParser)
+
+    runBlocking {
+      withTimeout(5.seconds) {
+        target.export() shouldBe AutoExportResult.Success
+        target.export() shouldBe AutoExportResult.Success
+      }
+    }
+  }
+
   test("records the document Uri and success timestamp, and clears the error, on success") {
     val settingsRepository = newSettingsRepository()
     settingsRepository.setAutoExportTreeUri("content://tree")
@@ -45,8 +62,12 @@ class AutoExporterTest : FunSpec({
 
     val target = AutoExporter(settingsRepository, serializer, writer, uriParser)
 
+    val before = Instant.now().toEpochMilli()
     runBlocking { target.export() } shouldBe AutoExportResult.Success
+    val after = Instant.now().toEpochMilli()
+
     runBlocking { settingsRepository.autoExportDocumentUri.first() } shouldBe "content://tree/PetalsExport.csv"
+    runBlocking { settingsRepository.autoExportLastSuccessAt.first() }.shouldNotBeNull() shouldBeInRange before..after
     runBlocking { settingsRepository.autoExportLastError.first() } shouldBe null
   }
 
@@ -58,6 +79,22 @@ class AutoExporterTest : FunSpec({
     val writer = mockk<AutoExportDocumentWriter>()
     coEvery { serializer.computeUseCsv() } returns "csv"
     every { writer.write(any(), any(), any()) } throws SecurityException("gone")
+
+    val target = AutoExporter(settingsRepository, serializer, writer, uriParser)
+
+    runBlocking { target.export() } shouldBe AutoExportResult.PermissionLost
+    runBlocking { settingsRepository.autoExportLastError.first() } shouldBe "permission"
+  }
+
+  // FileNotFoundException is an IOException, so this also pins the order of the catch blocks.
+  test("maps FileNotFoundException to PermissionLost, not Transient, since the folder is gone") {
+    val settingsRepository = newSettingsRepository()
+    settingsRepository.setAutoExportTreeUri("content://tree")
+
+    val serializer = mockk<UseCsvSerializer>()
+    val writer = mockk<AutoExportDocumentWriter>()
+    coEvery { serializer.computeUseCsv() } returns "csv"
+    every { writer.write(any(), any(), any()) } throws FileNotFoundException("deleted")
 
     val target = AutoExporter(settingsRepository, serializer, writer, uriParser)
 

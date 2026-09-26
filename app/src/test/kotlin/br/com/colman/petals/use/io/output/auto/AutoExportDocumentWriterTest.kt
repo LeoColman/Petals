@@ -15,6 +15,7 @@ import io.mockk.unmockkStatic
 import io.mockk.verifyOrder
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.nio.charset.StandardCharsets.UTF_8
 
 private const val fileName = "PetalsExport.csv"
 private const val tmpFileName = "PetalsExport-tmp.csv"
@@ -37,6 +38,13 @@ class AutoExportDocumentWriterTest : FunSpec({
     shouldThrow<SecurityException> { target.write(treeUri(), null, "content") }
   }
 
+  test("a file tree needs no persisted grant") {
+    val fileTree = mockk<Uri> { every { scheme } returns "file" }
+    val contentResolver = mockk<ContentResolver> { every { persistedUriPermissions } returns emptyList() }
+
+    AutoExportDocumentWriter(contentResolver, { mockk() }, { mockk() }).hasWritePermission(fileTree) shouldBe true
+  }
+
   test("uses the cached document Uri when it still exists and is writable") {
     val tree = treeUri()
     val contentResolver = mockk<ContentResolver> {
@@ -54,6 +62,32 @@ class AutoExportDocumentWriterTest : FunSpec({
     val target = AutoExportDocumentWriter(contentResolver, { mockk() }, { cachedDocument })
 
     target.write(tree, cachedUri, "content") shouldBe cachedUri
+  }
+
+  test("writes the content as UTF-8 and closes the stream") {
+    val tree = treeUri()
+    val contentResolver = mockk<ContentResolver> {
+      every { persistedUriPermissions } returns listOf(grantedPermission(tree))
+    }
+    val documentUri = mockk<Uri>()
+    val document = mockk<DocumentFile> {
+      every { uri } returns documentUri
+      every { length() } returns 0L
+    }
+    val treeDocument = mockk<DocumentFile> { every { findFile(fileName) } returns document }
+
+    var closed = false
+    val stream = object : ByteArrayOutputStream() {
+      override fun close() {
+        closed = true
+      }
+    }
+    every { contentResolver.openOutputStream(documentUri, "wt") } returns stream
+
+    AutoExportDocumentWriter(contentResolver, { treeDocument }, { null }).write(tree, null, "Ação,1.5")
+
+    stream.toString(UTF_8.name()) shouldBe "Ação,1.5"
+    closed shouldBe true
   }
 
   test("falls back to findFile then createFile when the cached Uri is not usable") {
