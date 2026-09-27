@@ -176,8 +176,8 @@ private fun AverageBetweenSessionsBlock(
   }
 }
 
-private infix fun LocalDate.isSameWeekAs(other: LocalDate) = with(MONDAY) == other.with(MONDAY)
-private infix fun LocalDate.isSameMonthAs(other: LocalDate) = withDayOfMonth(1) == other.withDayOfMonth(1)
+internal infix fun LocalDate.isSameWeekAs(other: LocalDate) = with(MONDAY) == other.with(MONDAY)
+internal infix fun LocalDate.isSameMonthAs(other: LocalDate) = withDayOfMonth(1) == other.withDayOfMonth(1)
 
 @Composable
 private fun RowScope.TodayUseBlock(isDayExtended: Boolean, uses: List<Use>, isTodayCensored: Boolean) {

@@ -147,7 +147,7 @@ enum class TimeUnit(@StringRes val unitName: Int, val max: Long, val millis: Lon
   Year(years, 60L, Month.max * Month.millis),
 }
 
-private fun LocalDateTime.is420() = toLocalTime().truncatedToMinute() == LocalTime.of(16, 20)
+internal fun LocalDateTime.is420() = toLocalTime().truncatedToMinute() == LocalTime.of(16, 20)
 
 @Composable
 fun SetDarkModeIcon(isDarkModeOn: Boolean?) {
