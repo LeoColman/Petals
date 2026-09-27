@@ -12,6 +12,7 @@ import br.com.colman.petals.use.repository.Use
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import java.math.BigDecimal
+import java.time.LocalDate
 import java.time.LocalDate.now
 
 @Composable
@@ -54,13 +55,13 @@ fun createAllTimeAverageDataSet(entryList: List<Entry>, label: String): LineData
   }
 }
 
-private fun calculateAllTimeGramsDistribution(uses: List<Use>): List<Entry> {
+internal fun calculateAllTimeGramsDistribution(uses: List<Use>, today: LocalDate = now()): List<Entry> {
   if (uses.isEmpty()) return emptyList()
 
   val usesByDay = uses.groupBy { it.localDate.toEpochDay() }
 
   val firstUseDay = usesByDay.keys.min()
-  val lastUseDay = now().toEpochDay()
+  val lastUseDay = today.toEpochDay()
 
   return (firstUseDay..lastUseDay).map { day ->
     val totalGrams = usesByDay[day]?.sumOf { it.amountGrams } ?: BigDecimal.ZERO
@@ -68,7 +69,7 @@ private fun calculateAllTimeGramsDistribution(uses: List<Use>): List<Entry> {
   }
 }
 
-private fun calculateMovingAverage(entries: List<Entry>): List<Entry> {
+internal fun calculateMovingAverage(entries: List<Entry>): List<Entry> {
   if (entries.isEmpty()) return emptyList()
 
   val result = mutableListOf<Entry>()
