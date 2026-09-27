@@ -26,4 +26,10 @@ class DaysSinceFirstUseFormatterTest : FunSpec({
       actual shouldBe expectedDay
     }
   }
+
+  test("counts from the earliest use even when uses are not in date order") {
+    val newestFirst = uses.reversed()
+
+    DaysSinceFirstUseFormatter(newestFirst, "yyyy-MM-dd").formatDate.getFormattedValue(0f, null) shouldBe "2021-02-07"
+  }
 })
