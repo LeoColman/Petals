@@ -178,16 +178,16 @@ private fun DrugTestSection(
   }
 }
 
-private fun computeDaysSince(lastUseDate: LocalDate?): Int? {
+internal fun computeDaysSince(lastUseDate: LocalDate?, today: LocalDate = LocalDate.now()): Int? {
   return lastUseDate?.let { last ->
-    val todayEpoch = LocalDate.now().toEpochDay()
+    val todayEpoch = today.toEpochDay()
     val lastEpoch = last.toEpochDay()
     val since = (todayEpoch - lastEpoch).toInt()
     since.coerceAtLeast(0)
   }
 }
 
-private fun computeDaysRemaining(daysSince: Int?, limitDays: Int): Int? {
+internal fun computeDaysRemaining(daysSince: Int?, limitDays: Int): Int? {
   return daysSince?.let { (limitDays - it).coerceAtLeast(0) }
 }
 
