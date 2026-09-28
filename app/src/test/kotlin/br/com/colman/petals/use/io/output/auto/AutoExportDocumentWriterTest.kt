@@ -14,6 +14,7 @@ import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import io.mockk.verifyOrder
 import java.io.ByteArrayOutputStream
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.charset.StandardCharsets.UTF_8
 
@@ -310,6 +311,95 @@ class AutoExportDocumentWriterTest : FunSpec({
       val target = AutoExportDocumentWriter(contentResolver, { treeDocument }, { null })
 
       target.write(tree, null, "content") shouldBe documentUri
+    }
+  }
+
+  // AutoExporter turns FileNotFoundException into "permission lost". A NullPointerException
+  // from a missing folder would escape its catch blocks and crash the export instead.
+  test("throws FileNotFoundException when the export folder no longer exists") {
+    val tree = treeUri()
+    val contentResolver = mockk<ContentResolver> {
+      every { persistedUriPermissions } returns listOf(grantedPermission(tree))
+    }
+
+    val target = AutoExportDocumentWriter(contentResolver, { null }, { null })
+
+    shouldThrow<FileNotFoundException> { target.write(tree, null, "content") }
+  }
+
+  test("throws FileNotFoundException when the folder disappears before the tmp file is created") {
+    val tree = treeUri()
+    val contentResolver = mockk<ContentResolver> {
+      every { persistedUriPermissions } returns listOf(grantedPermission(tree))
+    }
+
+    val cachedUri = mockk<Uri>()
+    val cachedDocument = mockk<DocumentFile>(relaxed = true) {
+      every { exists() } returns true
+      every { canWrite() } returns true
+      every { uri } returns cachedUri
+      every { length() } returns 999L // truncate ignored, so the writer has to recreate through the tree
+    }
+    every { contentResolver.openOutputStream(cachedUri, "wt") } returns ByteArrayOutputStream()
+
+    val target = AutoExportDocumentWriter(contentResolver, { null }, { cachedDocument })
+
+    shouldThrow<FileNotFoundException> { target.write(tree, cachedUri, "content") }
+  }
+
+  test("throws IOException when the tmp file cannot be created") {
+    val tree = treeUri()
+    val contentResolver = mockk<ContentResolver> {
+      every { persistedUriPermissions } returns listOf(grantedPermission(tree))
+    }
+
+    val staleUri = mockk<Uri>()
+    val staleDocument = mockk<DocumentFile>(relaxed = true) {
+      every { uri } returns staleUri
+      every { length() } returns 999L
+    }
+    val treeDocument = mockk<DocumentFile> {
+      every { findFile(fileName) } returns staleDocument
+      every { findFile(tmpFileName) } returns null
+      every { findFile(tmpBaseName) } returns null
+      every { createFile("text/csv", tmpBaseName) } returns null
+    }
+    every { contentResolver.openOutputStream(staleUri, "wt") } returns ByteArrayOutputStream()
+
+    val target = AutoExportDocumentWriter(contentResolver, { treeDocument }, { null })
+
+    shouldThrow<IOException> { target.write(tree, null, "content") }
+  }
+
+  test("throws IOException when the provider returns no Uri for the renamed file") {
+    mockkStatic(DocumentsContract::class)
+    try {
+      val tree = treeUri()
+      val contentResolver = mockk<ContentResolver> {
+        every { persistedUriPermissions } returns listOf(grantedPermission(tree))
+      }
+
+      val staleDocument = mockk<DocumentFile>(relaxed = true) {
+        every { uri } returns mockk()
+        every { length() } returns 999L
+        every { delete() } returns true
+      }
+      val tmpUri = mockk<Uri>()
+      val tmpDocument = mockk<DocumentFile>(relaxed = true) { every { uri } returns tmpUri }
+      val treeDocument = mockk<DocumentFile> {
+        every { findFile(fileName) } returns staleDocument
+        every { findFile(tmpFileName) } returns null
+        every { findFile(tmpBaseName) } returns null
+        every { createFile("text/csv", tmpBaseName) } returns tmpDocument
+      }
+      every { contentResolver.openOutputStream(any(), "wt") } returns ByteArrayOutputStream()
+      every { DocumentsContract.renameDocument(contentResolver, tmpUri, fileName) } returns null
+
+      val target = AutoExportDocumentWriter(contentResolver, { treeDocument }, { null })
+
+      shouldThrow<IOException> { target.write(tree, null, "content") }
+    } finally {
+      unmockkStatic(DocumentsContract::class)
     }
   }
 })

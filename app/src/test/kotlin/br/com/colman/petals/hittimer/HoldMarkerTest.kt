@@ -61,4 +61,14 @@ class HoldMarkerTest : FunSpec({
 
     listOf(12.0, 15.0, 18.0).map { holdPointOn(weak, it, 25.0).second }.forEach { (it < peak) shouldBe true }
   }
+
+  test("Two measurements at the same second give a point instead of dividing by zero") {
+    val sameStart = listOf(
+      SubjectiveHighPoint(0.0, 30.0),
+      SubjectiveHighPoint(0.0, 32.0),
+      SubjectiveHighPoint(10.0, 40.0)
+    )
+
+    holdPointOn(sameStart, 0.0, 25.0) shouldBe (0.0 to 32.0)
+  }
 })
