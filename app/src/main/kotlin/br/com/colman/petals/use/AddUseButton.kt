@@ -70,10 +70,10 @@ fun AddUseButton(
         context.updateWidget(it)
       }
 
-      if (totalUseCount > 0 && totalUseCount % 42 == 0) {
-        openSupportDialog = true
-      } else if ((totalUseCount > 0 && totalUseCount % 100 == 0)) {
-        activity?.let { activity -> reviewAppRequester.requestReview(activity) }
+      when (useMilestone(totalUseCount)) {
+        UseMilestone.SupportDeveloper -> openSupportDialog = true
+        UseMilestone.RequestReview -> activity?.let { activity -> reviewAppRequester.requestReview(activity) }
+        null -> Unit
       }
     }) { openAddUseDialog = false }
   }
@@ -97,6 +97,19 @@ fun AddUseButton(
   } else {
     PauseUseButton { openConfirmAddUseDialog = true }
   }
+}
+
+internal enum class UseMilestone { SupportDeveloper, RequestReview }
+
+/**
+ * What to show after a use is added, given how many uses were logged before it.
+ * Every 42nd asks for support; every 100th asks for a review, unless it is also a 42nd.
+ */
+internal fun useMilestone(totalUseCount: Int): UseMilestone? = when {
+  totalUseCount <= 0 -> null
+  totalUseCount % 42 == 0 -> UseMilestone.SupportDeveloper
+  totalUseCount % 100 == 0 -> UseMilestone.RequestReview
+  else -> null
 }
 
 @Preview
