@@ -1,0 +1,7 @@
+#Licence file for arcmutate mutation testing https://www.arcmutate.com
+#Mon Sep 28 09:14:30 BST 2026
+expires=28/09/2028
+keyVersion=1
+packages=br.com.colman.petals.*
+signature=FjhyP8prEslDJdvWs8WrK+lMW1T2wkgs3uHP24G3bsXFRHOCzZKvU5HvoQO1wRvy98coPDNY0oiatNRWjVw2ZWzjJX5pq6tud+5B+v/d2qkLGeGzUI9uY/rhveYTrqu7+UzVt2VVjxn4hmmgZ3SRy1lWfhTkhx4VNkixGX7xaFg\=
+type=OSSS
