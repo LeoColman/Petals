@@ -11,7 +11,7 @@ licensee = "1.14.1"
 vanpra-material-dialogs = "0.9.0"
 sqldelight = "2.3.2"
 mockk = "1.14.11"
-pitest = "1.19.1"
+pitest = "1.30.0"
 review = "2.0.2"
 work = "2.10.1"
 
@@ -19,6 +19,7 @@ work = "2.10.1"
 android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.1.5"
 apache-commons-lang = "org.apache.commons:commons-lang3:3.20.0"
 apache-commons-math = "org.apache.commons:commons-math3:3.6.1"
+arcmutate-kotlin = "com.arcmutate:pitest-kotlin-plugin:1.5.1"
 compose-activity = "androidx.activity:activity-compose:1.10.1"
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 compose-material-dialogs-core = { module = "io.github.vanpra.compose-material-dialogs:core", version.ref = "vanpra-material-dialogs" }

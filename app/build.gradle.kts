@@ -190,6 +190,9 @@ dependencies {
   // Kotest engine directly instead of going through the JUnit Platform.
   pitest(libs.pitest.command.line)
   pitest(libs.kotest.pitest)
+  // Filters mutants in bytecode kotlinc generates (coroutines, null checks, inlined code). Needs
+  // arcmutate-licence.txt at the repository root.
+  pitest(libs.arcmutate.kotlin)
 
   // Kotlin
   testRuntimeOnly(libs.kotlin.reflect)
@@ -523,6 +526,8 @@ tasks.register<JavaExec>("pitest") {
     "--targetTests=br.com.colman.petals.*Test",
     "--excludedClasses=${mutationExcludedClasses.joinToString(",")}",
     "--features=+fann(annotation[Composable])",
+    // PIT's own logging frameworks, plus Timber. Passing the option replaces PIT's list.
+    "--avoidCallsTo=java.util.logging,org.apache.log4j,org.apache.logging.log4j,org.slf4j,org.apache.commons.logging,org.jboss.logging,timber.log",
     "--testPlugin=Kotest",
     // Property based specs are slow enough that PIT's 4s default kills healthy minions.
     "--timeoutConst=10000",
