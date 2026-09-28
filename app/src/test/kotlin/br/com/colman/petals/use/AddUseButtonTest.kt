@@ -20,6 +20,7 @@ class AddUseButtonTest : FunSpec({
       100 to RequestReview,
       101 to null,
       200 to RequestReview,
+      // 2100 is the first count that is both a 42nd and a 100th, so it pins which milestone wins.
       2100 to SupportDeveloper,
     ) { (count, milestone) ->
       useMilestone(count) shouldBe milestone
