@@ -242,4 +242,5 @@
     <string name="average_time_between_sessions">Average between sessions</string>
     <string name="ignore_longest_daily_delay">Ignore longest daily delay</string>
     <string name="ignore_longest_daily_delay_description">Useful to ignore sleeping time when calculating average time between sessions</string>
+    <string name="duplicate_use">Duplicate use</string>
 </resources>

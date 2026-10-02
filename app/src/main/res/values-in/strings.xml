@@ -199,4 +199,5 @@
     <string name="method_edible">Dapat dimakan</string>
     <string name="method_other">Lainnya</string>
     <string name="method_unspecified">Tidak ditentukan</string>
+    <string name="duplicate_use">Duplikat penggunaan</string>
 </resources>

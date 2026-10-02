@@ -49,6 +49,8 @@ import br.com.colman.petals.R.string.filter_data_by_description_containing
 import br.com.colman.petals.R.string.with_a_friend
 import br.com.colman.petals.review.ReviewAppRequester
 import br.com.colman.petals.use.AddUseButton
+import br.com.colman.petals.use.AddUseFlow
+import br.com.colman.petals.use.AddUseRequest
 import br.com.colman.petals.use.LastUseDateTimer
 import br.com.colman.petals.use.PauseCards
 import br.com.colman.petals.use.StatsBlocks
@@ -99,6 +101,7 @@ fun Usage(
 
   val pauses by pauseRepository.getAll().collectAsState(listOf())
   val isAnyPauseActive by remember { derivedStateOf { pauses.any { it.isActive(currentTime) } } }
+  var addUseRequest by remember { mutableStateOf<AddUseRequest?>(null) }
 
   Column(
     Modifier
@@ -110,9 +113,11 @@ fun Usage(
     lastUseDate?.let { LastUseDateTimer(it) }
 
     Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {
-      AddUseButton(reviewAppRequester, useRepository, isAnyPauseActive)
+      AddUseButton(isAnyPauseActive) { addUseRequest = AddUseRequest(lastUse.value) }
       PauseButton(pauseRepository)
     }
+
+    AddUseFlow(addUseRequest, isAnyPauseActive, reviewAppRequester, useRepository) { addUseRequest = null }
 
     PauseCards(pauseRepository)
 
@@ -129,15 +134,12 @@ fun Usage(
     StatsBlocks(uses)
     UsageFilter(descriptionContains) { descriptionContains = it }
     val scope = rememberCoroutineScope()
-    UseCards(uses, {
-      scope.launch {
-        updateUse(useRepository, it, context)
-      }
-    }, {
-      scope.launch {
-        fetchCountAndUpdateWidget(useRepository, context, it)
-      }
-    })
+    UseCards(
+      uses,
+      onEditUse = { scope.launch { updateUse(useRepository, it, context) } },
+      onDeleteUse = { scope.launch { fetchCountAndUpdateWidget(useRepository, context, it) } },
+      onDuplicateUse = { addUseRequest = AddUseRequest(it) }
+    )
   }
 }
 

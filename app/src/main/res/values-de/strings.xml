@@ -206,4 +206,5 @@
     <string name="method_edible">Essbar</string>
     <string name="method_other">Andere</string>
     <string name="method_unspecified">Nicht angegeben</string>
+    <string name="duplicate_use">Konsum duplizieren</string>
 </resources>

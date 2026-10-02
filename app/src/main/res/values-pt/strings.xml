@@ -227,4 +227,5 @@
     <string name="method_edible">Comestível</string>
     <string name="method_other">Outro</string>
     <string name="method_unspecified">Não especificado</string>
+    <string name="duplicate_use">Duplicar Uso</string>
 </resources>

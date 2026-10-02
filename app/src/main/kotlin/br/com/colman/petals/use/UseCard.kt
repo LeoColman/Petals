@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Card
@@ -40,6 +41,7 @@ import br.com.colman.petals.R.string.cost_per_gram
 import br.com.colman.petals.R.string.date_at_time
 import br.com.colman.petals.R.string.delete_use_title
 import br.com.colman.petals.R.string.deleted_successfully
+import br.com.colman.petals.R.string.duplicate_use
 import br.com.colman.petals.R.string.no
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.see_more
@@ -50,6 +52,7 @@ import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Cash
+import compose.icons.tablericons.Copy
 import compose.icons.tablericons.Flame
 import compose.icons.tablericons.Notebook
 import compose.icons.tablericons.ReportMoney
@@ -69,12 +72,13 @@ fun UseCards(
   uses: List<Use> = List(5) { Use() },
   onEditUse: (Use) -> Unit = {},
   onDeleteUse: (Use) -> Unit = {},
+  onDuplicateUse: (Use) -> Unit = {},
 ) {
   var usesToShow by remember { mutableIntStateOf(5) }
 
   Column(Modifier.fillMaxWidth(), spacedBy(8.dp)) {
     uses.sortedByDescending { it.date }.take(usesToShow).forEach {
-      UseCard(it, onEditUse, onDeleteUse)
+      UseCard(it, onEditUse, onDeleteUse, onDuplicateUse)
     }
 
     Button({ usesToShow += 5 }, Modifier.align(CenterHorizontally)) {
@@ -86,7 +90,12 @@ fun UseCards(
 @Suppress("LongMethod")
 @Preview
 @Composable
-fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use) -> Unit = {}) {
+fun UseCard(
+  use: Use = Use(),
+  onEditUse: (Use) -> Unit = { },
+  onDeleteUse: (Use) -> Unit = {},
+  onDuplicateUse: (Use) -> Unit = {},
+) {
   val (date, amountGrams, costPerGram) = use
   val settingsRepository = koinInject<SettingsRepository>()
   val dateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
@@ -135,7 +144,9 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
         if (use.description.isNotBlank()) {
           Row(Modifier, spacedBy(8.dp), CenterVertically) {
             Icon(TablerIcons.Notebook, null)
-            Text(use.description)
+            SelectionContainer {
+              Text(use.description)
+            }
           }
         }
 
@@ -155,6 +166,8 @@ fun UseCard(use: Use = Use(), onEditUse: (Use) -> Unit = { }, onDeleteUse: (Use)
         Alignment.End
       ) {
         EditDialogButton(use, onEditUse)
+
+        Icon(TablerIcons.Copy, stringResource(duplicate_use), Modifier.clickable { onDuplicateUse(use) })
 
         DeleteUseButton(use, onDeleteUse)
       }
