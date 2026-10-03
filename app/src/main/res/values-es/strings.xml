@@ -179,4 +179,5 @@
     <string name="method_edible">Comestible</string>
     <string name="method_other">Otro</string>
     <string name="method_unspecified">No especificado</string>
+    <string name="duplicate_use">Duplicar consumo</string>
 </resources>

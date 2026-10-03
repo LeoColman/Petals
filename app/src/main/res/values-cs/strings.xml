@@ -210,4 +210,5 @@
     <string name="method_edible">Jedlé</string>
     <string name="method_other">Jiné</string>
     <string name="method_unspecified">Neurčeno</string>
+    <string name="duplicate_use">Duplikovat užití</string>
 </resources>

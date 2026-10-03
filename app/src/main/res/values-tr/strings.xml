@@ -187,4 +187,5 @@
     <string name="method_edible">Yenilebilir</string>
     <string name="method_other">Diğer</string>
     <string name="method_unspecified">Belirtilmemiş</string>
+    <string name="duplicate_use">Kullanımı Çoğalt</string>
 </resources>

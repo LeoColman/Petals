@@ -199,4 +199,5 @@
     <string name="method_edible">உண்ணக்கூடியது</string>
     <string name="method_other">மற்றவை</string>
     <string name="method_unspecified">குறிப்பிடப்படவில்லை</string>
+    <string name="duplicate_use">பயன்பாட்டை நகலெடு</string>
 </resources>

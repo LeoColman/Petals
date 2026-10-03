@@ -191,4 +191,5 @@
     <string name="method_edible">Съедобное</string>
     <string name="method_other">Другое</string>
     <string name="method_unspecified">Не указано</string>
+    <string name="duplicate_use">Дублировать употребление</string>
 </resources>
