@@ -36,12 +36,23 @@ class UseImporter(
       }
     }.mapNotNull { it.getOrNull() }
 
-    val strains = StrainResolver(strainRepository.allNow())
-    val uses = rows.map { (use, strain) -> modifyUse(use.copy(strainId = strain?.let(strains::resolve)?.id)) }
-
     transacter.transaction {
+      val strains = StrainResolver(strainRepository.allNow())
+      val currentStrainIds = useRepository.strainIds()
+      val uses = rows.map { row -> modifyUse(row.use.copy(strainId = row.strainId(strains, currentStrainIds))) }
+
       strainRepository.upsertAll(strains.created)
       useRepository.upsertAll(uses)
     }
+  }
+
+  /**
+   * A line from before strains says nothing about the strain, so the use keeps the one it already has rather than
+   * an old backup wiping it. A line with empty strain columns does say the use had none, like every other column.
+   */
+  private fun UseCsvRow.strainId(strains: StrainResolver, currentStrainIds: Map<String, String>): String? = when {
+    strain != null -> strains.resolve(strain).id
+    hasStrainColumns -> null
+    else -> currentStrainIds[use.id]
   }
 }

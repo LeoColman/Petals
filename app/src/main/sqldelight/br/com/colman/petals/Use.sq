@@ -8,6 +8,8 @@ CREATE TABLE Use(
     strain_id TEXT
 );
 
+CREATE INDEX use_strain_id ON Use(strain_id);
+
 upsert:
 INSERT INTO Use(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id) VALUES ?
 ON CONFLICT (id) DO UPDATE SET date = excluded.date,
@@ -33,3 +35,6 @@ DELETE FROM Use WHERE id IS (?);
 
 countAll:
 SELECT COUNT(*) FROM Use;
+
+selectStrainIds:
+SELECT id, strain_id FROM Use WHERE strain_id IS NOT NULL;

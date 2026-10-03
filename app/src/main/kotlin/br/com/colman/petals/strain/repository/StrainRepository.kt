@@ -7,18 +7,22 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.text.Collator
 import br.com.colman.petals.Strain as StrainEntity
 
 class StrainRepository(
   private val strainQueries: StrainQueries
 ) {
 
-  /** Every strain, archived ones included, ordered by name ignoring case. */
+  /**
+   * Every strain, archived ones included, in the order of the user's language. SQLite's NOCASE only folds ASCII,
+   * so Cyrillic or accented names would sort capitals apart from lowercase; a Collator sorts them as people read.
+   */
   fun all(dispatcher: CoroutineDispatcher = IO): Flow<List<Strain>> =
-    strainQueries.selectAll().asFlow().mapToList(dispatcher).map { it.map(StrainEntity::toStrain) }
+    strainQueries.selectAll().asFlow().mapToList(dispatcher).map { it.toSortedStrains() }
 
   /** The same as [all], read once. For callers that are not collecting, like an import. */
-  fun allNow(): List<Strain> = strainQueries.selectAll().executeAsList().map(StrainEntity::toStrain)
+  fun allNow(): List<Strain> = strainQueries.selectAll().executeAsList().toSortedStrains()
 
   fun upsert(strain: Strain) {
     strainQueries.upsert(strain.toEntity())
@@ -33,14 +37,19 @@ class StrainRepository(
   fun countUses(strain: Strain): Long = strainQueries.countUses(strain.id).executeAsOne()
 
   /**
-   * Deletes [strain] only while no use refers to it, and says whether it did. A strain that has been used is
-   * archived instead, so past uses keep their name and potency.
+   * Deletes [strain] only while no use refers to it, and says whether it did. Callers offer archiving for a strain
+   * that has been used, so past uses keep their name and potency; this only refuses, it never archives.
    */
   fun delete(strain: Strain): Boolean = strainQueries.transactionWithResult {
     val isUnused = countUses(strain) == 0L
     if (isUnused) strainQueries.delete(strain.id)
     isUnused
   }
+}
+
+private fun List<StrainEntity>.toSortedStrains(): List<Strain> {
+  val collator = Collator.getInstance()
+  return map(StrainEntity::toStrain).sortedWith(compareBy(collator) { it.name })
 }
 
 fun Strain.toEntity(): StrainEntity = StrainEntity(

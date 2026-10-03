@@ -40,6 +40,27 @@ class StrainResolverTest : FunSpec({
     target.created.shouldBeEmpty()
   }
 
+  test("Matches a name however its accents were encoded") {
+    val composed = Strain("Café Kush", id = "composed")
+    val target = StrainResolver(listOf(composed))
+
+    target.resolve(Strain("Café Kush", id = "decomposed")) shouldBeSameInstanceAs composed
+  }
+
+  test("Prefers an active strain to an archived one with the same name") {
+    val archived = Strain(flm.name, isArchived = true, id = "old-batch")
+    val active = Strain(flm.name, id = "new-batch")
+
+    StrainResolver(listOf(active, archived)).resolve(flm.copy(id = "elsewhere")) shouldBeSameInstanceAs active
+    StrainResolver(listOf(archived, active)).resolve(flm.copy(id = "elsewhere")) shouldBeSameInstanceAs active
+  }
+
+  test("Falls back to an archived strain when it is the only one with that name") {
+    val archived = Strain(flm.name, isArchived = true, id = "old-batch")
+
+    StrainResolver(listOf(archived)).resolve(flm) shouldBeSameInstanceAs archived
+  }
+
   test("Creates a strain the catalog does not have, as the line described it") {
     val target = StrainResolver(listOf(bedrocan))
 
@@ -47,14 +68,23 @@ class StrainResolverTest : FunSpec({
     target.created shouldContainExactly listOf(flm)
   }
 
-  test("Creates a strain once, however many lines name it") {
+  test("Creates a strain once, however many lines name it by its id") {
     val target = StrainResolver(emptyList())
 
     target.resolve(flm)
-    target.resolve(flm) shouldBeSameInstanceAs flm
-    target.resolve(flm.copy(id = "from-another-install")) shouldBeSameInstanceAs flm
+    target.resolve(flm.copy()) shouldBeSameInstanceAs flm
 
     target.created shouldContainExactly listOf(flm)
+  }
+
+  test("Keeps apart strains it created that share a name but not an id") {
+    val oldBatch = Strain(flm.name, isArchived = true, id = "old-batch")
+    val newBatch = Strain(flm.name, id = "new-batch")
+    val target = StrainResolver(emptyList())
+
+    target.resolve(oldBatch) shouldBeSameInstanceAs oldBatch
+    target.resolve(newBatch) shouldBeSameInstanceAs newBatch
+    target.created shouldContainExactly listOf(oldBatch, newBatch)
   }
 
   test("Lists the strains it created in the order it created them") {

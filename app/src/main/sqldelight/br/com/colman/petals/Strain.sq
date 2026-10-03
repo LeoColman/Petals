@@ -16,7 +16,7 @@ ON CONFLICT (id) DO UPDATE SET name = excluded.name,
  is_archived = excluded.is_archived;
 
 selectAll:
-SELECT * FROM Strain ORDER BY name COLLATE NOCASE;
+SELECT * FROM Strain;
 
 delete:
 DELETE FROM Strain WHERE id IS (?);

@@ -13,6 +13,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
 import java.math.BigDecimal
+import java.util.Locale
 
 class StrainRepositoryTest : FunSpec({
 
@@ -57,6 +58,26 @@ class StrainRepositoryTest : FunSpec({
     target.upsertAll(names.map { Strain(it) })
 
     target.all().first().map { it.name } shouldBe listOf("420 Evo FLM", "Aurora", "bedrocan", "Cannatrek")
+  }
+
+  test("Orders accented names where people expect them, not after z") {
+    target.upsertAll(listOf("Zkittlez", "\u00c9clair", "apple").map { Strain(it) })
+
+    target.all().first().map { it.name } shouldBe listOf("apple", "\u00c9clair", "Zkittlez")
+  }
+
+  // The JVM's collator only knows Cyrillic under a Cyrillic locale, while Android's, backed by ICU, sorts every
+  // script under any locale. Pinning the locale keeps this a test of the ordering, not of the machine running it.
+  test("Orders Cyrillic names ignoring case, as a Russian reader expects") {
+    val default = Locale.getDefault()
+    Locale.setDefault(Locale.forLanguageTag("ru"))
+    try {
+      target.upsertAll(listOf("Яблоко", "арбуз", "Ёлка").map { Strain(it) })
+
+      target.all().first().map { it.name } shouldBe listOf("арбуз", "Ёлка", "Яблоко")
+    } finally {
+      Locale.setDefault(default)
+    }
   }
 
   test("allNow reads the same strains as all") {

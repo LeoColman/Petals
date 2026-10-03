@@ -8,3 +8,5 @@ CREATE TABLE Strain(
 );
 
 ALTER TABLE Use ADD COLUMN strain_id TEXT;
+
+CREATE INDEX use_strain_id ON Use(strain_id);

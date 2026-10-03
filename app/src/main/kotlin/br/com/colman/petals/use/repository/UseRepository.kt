@@ -49,6 +49,10 @@ class UseRepository(
     useQueries.selectSince(from.format(ISO_LOCAL_DATE_TIME)).asFlow().mapToList(dispatcher)
       .map { it.map(UseEntity::toUse) }
 
+  /** The strain of every use that has one, by use id, read once. */
+  fun strainIds(): Map<String, String> =
+    useQueries.selectStrainIds().executeAsList().associate { it.id to it.strain_id!! }
+
   fun delete(use: Use) {
     Timber.d("Deleting use: $use")
     useQueries.delete(use.id)

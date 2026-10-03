@@ -8,6 +8,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.result.shouldBeFailure
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldBeUUID
 import io.kotest.property.arbitrary.filter
 import io.kotest.property.arbitrary.next
@@ -196,10 +197,20 @@ class UseCsvParserTest : FunSpec({
   context("strain columns") {
     val strain = Strain("420 Evo FLM", BigDecimal("27.5"), BigDecimal("1"))
 
-    test("A line from before strains, without strain columns, has no strain") {
+    test("A line from before strains, without strain columns, has no strain and says so") {
       val use = UseArb.next()
+      val row = UseCsvParser.parse(use.columns().joinToString(",")).getOrThrow()
 
-      UseCsvParser.parse(use.columns().joinToString(",")).getOrThrow().strain shouldBe null
+      row.strain shouldBe null
+      row.hasStrainColumns shouldBe false
+    }
+
+    test("A line with empty strain columns has no strain but does have the columns") {
+      val use = UseArb.next()
+      val row = UseCsvParser.parse((use.columns() + List(4) { "" }).joinToString(",")).getOrThrow()
+
+      row.strain shouldBe null
+      row.hasStrainColumns shouldBe true
     }
 
     test("Reads the strain the line names") {
@@ -224,11 +235,14 @@ class UseCsvParserTest : FunSpec({
       UseCsvParser.parse(line).getOrThrow().strain shouldBe null
     }
 
-    test("A strain with a blank id gets a new one") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf("", strain.name, "", "")).joinToString(",")
+    test("A strain without an id gets one derived from its name") {
+      fun idOf(name: String) =
+        UseCsvParser.parse((UseArb.next().columns() + listOf("", name, "", "")).joinToString(",")).getOrThrow()
+          .strain!!.id
 
-      UseCsvParser.parse(line).getOrThrow().strain!!.id.shouldBeUUID()
+      idOf(strain.name).shouldBeUUID()
+      idOf(strain.name) shouldBe idOf(" ${strain.name.lowercase()} ")
+      idOf(strain.name) shouldNotBe idOf("Bedrocan")
     }
 
     test("Trims the strain name") {
@@ -245,6 +259,38 @@ class UseCsvParserTest : FunSpec({
 
       parsed.thcPercent shouldBe null
       parsed.cbdPercent shouldBe BigDecimal("1")
+    }
+
+    test("Trims spaces around potencies, as a spreadsheet may add them") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf(strain.id, strain.name, " 27.5", "1 ")).joinToString(",")
+
+      UseCsvParser.parse(line).getOrThrow().strain shouldBe strain
+    }
+
+    test("Drops a potency outside 0 to 100") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf(strain.id, strain.name, "-5", "250")).joinToString(",")
+      val parsed = UseCsvParser.parse(line).getOrThrow().strain!!
+
+      parsed.thcPercent shouldBe null
+      parsed.cbdPercent shouldBe null
+    }
+
+    test("Keeps the bounds 0 and 100") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf(strain.id, strain.name, "100", "0")).joinToString(",")
+      val parsed = UseCsvParser.parse(line).getOrThrow().strain!!
+
+      parsed.thcPercent shouldBe BigDecimal("100")
+      parsed.cbdPercent shouldBe BigDecimal("0")
+    }
+
+    test("Drops a potency with a huge exponent instead of failing later on it") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf(strain.id, strain.name, "1E+999999999", "1")).joinToString(",")
+
+      UseCsvParser.parse(line).getOrThrow().strain!!.thcPercent shouldBe null
     }
 
     test("Missing potency columns read as no potency") {

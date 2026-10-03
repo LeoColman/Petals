@@ -23,13 +23,14 @@ import io.kotest.property.arbitrary.take
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import java.math.BigDecimal
 import kotlin.random.Random
 
 class UseImporterTest : FunSpec({
-  val useRepository = mockk<UseRepository>(relaxed = true)
+  val useRepository = mockk<UseRepository>(relaxed = true) { every { strainIds() } returns emptyMap() }
   val strainRepository = mockk<StrainRepository>(relaxed = true) { every { allNow() } returns emptyList() }
   val target = UseImporter(useRepository, strainRepository, inMemoryDatabase())
 
@@ -178,12 +179,77 @@ class UseImporterTest : FunSpec({
       }
     }
 
-    test("Saves no strain when a line fails") {
+    test("Makes one strain of id-less lines that name the same strain") {
+      with(Catalog()) {
+        val idLess = List(
+          3
+        ) { (UseArb.take(1).single().columns() + listOf("", "Bedrocan", "22", "1")).joinToString(",") }
+
+        importer.import(idLess).shouldBeSuccess()
+
+        strains.allNow().single().name shouldBe "Bedrocan"
+        uses.all().first().map { it.strainId }.toSet() shouldBe setOf(strains.allNow().single().id)
+      }
+    }
+
+    test("Restoring onto an empty catalog keeps apart strains that share a name") {
+      with(Catalog()) {
+        val oldBatch = Strain(flm.name, BigDecimal("22"), isArchived = true)
+        val newBatch = Strain(flm.name, BigDecimal("27"))
+
+        importer.import(listOf(line(oldBatch), line(newBatch))).shouldBeSuccess()
+
+        strains.allNow().map { it.id }.toSet() shouldBe setOf(oldBatch.id, newBatch.id)
+      }
+    }
+
+    context("An existing use") {
+      val existing = UseArb.take(1).single().copy(strainId = flm.id)
+      fun legacyLine() = existing.columns().joinToString(",")
+      fun emptyStrainLine() = (existing.columns() + List(4) { "" }).joinToString(",")
+
+      test("keeps its strain when the line comes from before strains") {
+        with(Catalog()) {
+          strains.upsert(flm)
+          uses.upsert(existing)
+
+          importer.import(listOf(legacyLine())).shouldBeSuccess()
+
+          uses.all().first().single().strainId shouldBe flm.id
+        }
+      }
+
+      test("loses its strain when the line says it had none") {
+        with(Catalog()) {
+          strains.upsert(flm)
+          uses.upsert(existing)
+
+          importer.import(listOf(emptyStrainLine())).shouldBeSuccess()
+
+          uses.all().first().single().strainId shouldBe null
+        }
+      }
+    }
+
+    test("Saves nothing when a line can't be parsed") {
       with(Catalog()) {
         importer.import(listOf(line(flm), line(flm), "not,a,use")).shouldBeFailure()
 
         strains.allNow() shouldHaveSize 0
+        uses.all().first() shouldHaveSize 0
       }
+    }
+
+    test("Rolls back the strains it created when saving the uses fails") {
+      val database = inMemoryDatabase()
+      val strains = StrainRepository(database.strainQueries)
+      val failingUses = spyk(UseRepository(database.useQueries)) {
+        every { upsertAll(any()) } throws IllegalStateException("disk full")
+      }
+
+      UseImporter(failingUses, strains, database).import(listOf(line(flm))).shouldBeFailure()
+
+      strains.allNow() shouldHaveSize 0
     }
   }
 })

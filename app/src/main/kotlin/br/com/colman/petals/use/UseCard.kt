@@ -242,7 +242,8 @@ private fun EditUseDialog(
     costPerGram.value.toBigDecimalOrNull() ?: BigDecimal.ZERO,
     use.id,
     description.value,
-    consumptionMethod.value
+    consumptionMethod.value,
+    use.strainId
   )
 
   AlertDialog(

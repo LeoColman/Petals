@@ -77,6 +77,14 @@ class UseRepositoryTest : FunSpec({
     target.all().first().single().strainId shouldBe "420-evo-flm"
   }
 
+  test("strainIds maps each use with a strain to it, and leaves out uses without one") {
+    target.upsertAll(
+      listOf(use.copy(id = "a", strainId = "flm"), use.copy(id = "b"), use.copy(id = "c", strainId = "bed"))
+    )
+
+    target.strainIds() shouldBe mapOf("a" to "flm", "c" to "bed")
+  }
+
   test("Upsert can clear a use's strain") {
     target.upsert(use.copy(strainId = "420-evo-flm"))
     target.upsert(use.copy(strainId = null))

@@ -37,6 +37,16 @@ class StrainTest : FunSpec({
     }
   }
 
+  context("nameKey") {
+    test("Is the trimmed, composed, lowercase name") {
+      Strain("  Cafe\u0301 KUSH ").nameKey shouldBe "caf\u00e9 kush"
+    }
+
+    test("Is the same for the instance and the companion") {
+      Strain(" FLM ").nameKey shouldBe Strain.nameKey("flm")
+    }
+  }
+
   context("hasName()") {
     val strain = Strain("420 Evo FLM")
 
@@ -54,6 +64,10 @@ class StrainTest : FunSpec({
 
     test("Ignores case beyond ASCII") {
       Strain("Ärger Kush").hasName("ärger kush").shouldBeTrue()
+    }
+
+    test("Ignores how an accent was encoded") {
+      Strain("Caf\u00e9 Kush").hasName("Cafe\u0301 Kush").shouldBeTrue()
     }
 
     test("Does not match a different name") {

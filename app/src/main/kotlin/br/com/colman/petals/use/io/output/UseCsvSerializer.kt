@@ -84,13 +84,17 @@ class UseCsvSerializer(
   /**
    * Every use, each followed by its strain's columns. A use without a strain, or whose strain is gone, gets empty
    * strain columns, which reads back as no strain.
+   *
+   * Uses are read before strains: an import landing between the two reads only adds strains, which the uses already
+   * read can't refer to, while the other order would miss the strains of uses that import added.
    */
   suspend fun computeUseCsv(): String {
+    val uses = useRepository.all().first()
     val strains = strainRepository.all().first().associateBy { it.id }
-    val uses = useRepository.all().first().map { use ->
+    val lines = uses.map { use ->
       use.columns() + (use.strainId?.let(strains::get)?.columns() ?: NoStrainColumns)
     }
-    val content = listOf(useCsvHeaders.toList()) + uses
+    val content = listOf(useCsvHeaders.toList()) + lines
 
     return serialize(content)
   }
