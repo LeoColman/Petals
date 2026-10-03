@@ -14,15 +14,16 @@ class BoundedDecimalTest : FunSpec({
       "+2" to BigDecimal("2"),
       "1e-3" to BigDecimal("0.001"),
       "2.7E1" to BigDecimal("27"),
-      "1E+32" to BigDecimal("1E+32"),
-      "1E-32" to BigDecimal("1E-32"),
+      "1E-300" to BigDecimal("1E-300"),
+      "1E+1000" to BigDecimal("1E+1000"),
+      "1E-1000" to BigDecimal("1E-1000"),
     ) { (text, expected) ->
       text.toBoundedDecimalOrNull() shouldBe expected
     }
   }
 
   context("Refuses exponents so far out that toPlainString would run out of memory") {
-    withData("1E+33", "1E-33", "1E+999999999", "1E-999999999", "0E-999999999") { text ->
+    withData("1E+1001", "1E-1001", "1E+999999999", "1E-999999999", "0E-999999999") { text ->
       text.toBoundedDecimalOrNull() shouldBe null
     }
   }

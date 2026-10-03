@@ -30,8 +30,9 @@ class UseImporter(
 ) {
 
   fun import(csvFileLines: List<String>, modifyUse: (Use) -> (Use) = { it }): Result<Unit> = runCatching {
+    val strainColumns = csvFileLines.firstOrNull()?.let(UseCsvParser::strainColumnsIn)
     val rows = csvFileLines.mapIndexed { index, s ->
-      UseCsvParser.parse(s).onFailure {
+      UseCsvParser.parse(s, strainColumns).onFailure {
         if (index > 0) throw it
       }
     }.mapNotNull { it.getOrNull() }

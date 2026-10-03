@@ -188,10 +188,4 @@
     <string name="method_other">Diğer</string>
     <string name="method_unspecified">Belirtilmemiş</string>
     <string name="duplicate_use">Kullanımı Çoğalt</string>
-    <string name="strain_id_label">tür_id</string>
-    <string name="strain_name_label">tür_adı</string>
-    <string name="strain_thc_label">tür_thc_yüzde</string>
-    <string name="strain_cbd_label">tür_cbd_yüzde</string>
-    <string name="strain_cost_label">tür_gram_başına_maliyet</string>
-    <string name="strain_archived_label">tür_arşivlendi</string>
 </resources>

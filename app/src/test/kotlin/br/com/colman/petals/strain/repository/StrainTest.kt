@@ -100,6 +100,11 @@ class StrainTest : FunSpec({
       Strain("\u0130PEK").hasName("IPEK").shouldBeTrue()
     }
 
+    test("Keeps Turkish dotless i apart from i") {
+      Strain("K\u0131rm\u0131z\u0131").hasName("Kirmizi").shouldBeFalse()
+      Strain("K\u0131rm\u0131z\u0131").hasName("K\u0131RM\u0131Z\u0131").shouldBeTrue()
+    }
+
     test("Does not match a different name") {
       strain.hasName("420 Evo FLM 2").shouldBeFalse()
     }

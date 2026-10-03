@@ -24,11 +24,11 @@ data class Strain(
 ) {
 
   /** [name] in the form two names are compared in, see [nameKey]. */
-  val nameKey: String get() = nameKey(name)
+  val nameKey: String by lazy { nameKey(name) }
 
   /**
-   * The strain's CSV columns, written after the use's own on every exported line. They hold the whole strain, so a
-   * backup restores the catalog as it was, archived strains and default costs included.
+   * The strain's CSV columns, written after the use's own on every exported line, in the order of [CsvHeader]. They
+   * hold the whole strain, so a backup restores the catalog as it was, archived strains and default costs included.
    */
   fun columns(): List<String> = listOf(
     id,
@@ -42,20 +42,41 @@ data class Strain(
   fun hasName(other: String): Boolean = nameKey == nameKey(other)
 
   companion object {
+    const val IdColumn = "strain_id"
+    const val NameColumn = "strain_name"
+    const val ThcColumn = "strain_thc_percent"
+    const val CbdColumn = "strain_cbd_percent"
+    const val CostColumn = "strain_cost_per_gram"
+    const val ArchivedColumn = "strain_archived"
+
+    /**
+     * The labels of [columns], in its order. Unlike the use's columns they are never translated: the importer finds
+     * the strain's columns by these labels, so columns a user added to a file are never read as a strain.
+     */
+    val CsvHeader = listOf(IdColumn, NameColumn, ThcColumn, CbdColumn, CostColumn, ArchivedColumn)
+
     /** How many columns [columns] writes. */
-    const val CsvColumnCount = 6
+    val CsvColumnCount = CsvHeader.size
 
     /**
      * Names count as the same strain regardless of case, surrounding spaces and how an accent was encoded, so
      * "Café Kush" typed on a phone matches the same name saved by a desktop tool as e + combining accent.
      *
-     * Lower, upper, then lower case again folds what one mapping leaves apart: "Straße", "STRASSE" and "STRAẞE".
-     * The dot a lowercased Turkish "İ" keeps is dropped, so "İpek" matches "ipek". Normalizing comes last, because
-     * case mapping can itself decompose a letter, as with Greek "ΐ".
+     * Each letter is lowercased, uppercased and lowercased again, which folds what one mapping leaves apart:
+     * "Straße", "STRASSE" and "STRAẞE". Turkish dotless "ı" is left alone, since it is not "i"; the dot a lowercased
+     * "İ" keeps is dropped, so "İpek" matches "ipek". Normalizing comes last, because case mapping can itself
+     * decompose a letter, as with Greek "ΐ".
      */
     fun nameKey(name: String): String {
-      val folded = name.trim().lowercase(Locale.ROOT).uppercase(Locale.ROOT).lowercase(Locale.ROOT)
-      return Normalizer.normalize(folded.replace("i\u0307", "i"), Normalizer.Form.NFC)
+      val folded = buildString {
+        name.trim().lowercase(Locale.ROOT).codePoints().forEach { codePoint ->
+          val letter = String(Character.toChars(codePoint))
+          append(if (codePoint == DotlessI) letter else letter.uppercase(Locale.ROOT).lowercase(Locale.ROOT))
+        }
+      }
+      return Normalizer.normalize(folded.replace("i̇", "i"), Normalizer.Form.NFC)
     }
+
+    private const val DotlessI = 0x0131
   }
 }

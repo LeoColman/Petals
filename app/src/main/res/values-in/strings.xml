@@ -200,10 +200,4 @@
     <string name="method_other">Lainnya</string>
     <string name="method_unspecified">Tidak ditentukan</string>
     <string name="duplicate_use">Duplikat penggunaan</string>
-    <string name="strain_id_label">varietas_id</string>
-    <string name="strain_name_label">varietas_nama</string>
-    <string name="strain_thc_label">varietas_thc_persen</string>
-    <string name="strain_cbd_label">varietas_cbd_persen</string>
-    <string name="strain_cost_label">varietas_biaya_per_gram</string>
-    <string name="strain_archived_label">varietas_diarsipkan</string>
 </resources>

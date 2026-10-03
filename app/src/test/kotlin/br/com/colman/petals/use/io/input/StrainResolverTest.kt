@@ -76,6 +76,15 @@ class StrainResolverTest : FunSpec({
       target.created shouldContainExactly listOf(flm)
     }
 
+    test("lands every line with that id where the first landed, even under another name") {
+      val catalogued = Strain("A", id = "catalogued")
+      val target = StrainResolver(listOf(catalogued))
+
+      target.resolve(CsvStrain("file-id", "A")) shouldBeSameInstanceAs catalogued
+      target.resolve(CsvStrain("file-id", "B")) shouldBeSameInstanceAs catalogued
+      target.created.shouldBeEmpty()
+    }
+
     test("is kept apart from a created strain that shares its name but not its id") {
       val oldBatch = Strain(flm.name, isArchived = true, id = "old-batch")
       val newBatch = Strain(flm.name, id = "new-batch")

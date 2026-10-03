@@ -133,12 +133,15 @@ class UseImporterTest : FunSpec({
     }
 
     val flm = Strain("420 Evo FLM", BigDecimal("27"), BigDecimal("1"))
+    val header = (List(6) { "column" } + Strain.CsvHeader).joinToString(",")
+    fun withHeader(vararg lines: String) = listOf(header) + lines
+    fun withHeader(lines: List<String>) = listOf(header) + lines
     fun line(strain: Strain?) =
       (UseArb.take(1).single().columns() + (strain?.columns() ?: List(Strain.CsvColumnCount) { "" })).joinToString(",")
 
     test("Creates the strain a file names and links its uses to it") {
       with(Catalog()) {
-        importer.import(listOf(line(flm))).shouldBeSuccess()
+        importer.import(withHeader(line(flm))).shouldBeSuccess()
 
         strains.allNow() shouldContainExactly listOf(flm)
         uses.all().first().single().strainId shouldBe flm.id
@@ -147,7 +150,7 @@ class UseImporterTest : FunSpec({
 
     test("Creates a strain named on many lines only once") {
       with(Catalog()) {
-        importer.import(List(3) { line(flm) }).shouldBeSuccess()
+        importer.import(withHeader(List(3) { line(flm) })).shouldBeSuccess()
 
         strains.allNow().shouldBeSingleton()
         uses.all().first().map { it.strainId }.toSet() shouldBe setOf(flm.id)
@@ -159,7 +162,7 @@ class UseImporterTest : FunSpec({
         val catalogued = Strain("420 evo flm")
         strains.upsert(catalogued)
 
-        importer.import(listOf(line(flm))).shouldBeSuccess()
+        importer.import(withHeader(line(flm))).shouldBeSuccess()
 
         strains.allNow() shouldContainExactly listOf(catalogued)
         uses.all().first().single().strainId shouldBe catalogued.id
@@ -171,7 +174,7 @@ class UseImporterTest : FunSpec({
         val renamed = flm.copy(name = "FLM, new batch")
         strains.upsert(renamed)
 
-        importer.import(listOf(line(flm))).shouldBeSuccess()
+        importer.import(withHeader(line(flm))).shouldBeSuccess()
 
         strains.allNow() shouldContainExactly listOf(renamed)
         uses.all().first().single().strainId shouldBe renamed.id
@@ -180,7 +183,7 @@ class UseImporterTest : FunSpec({
 
     test("Imports lines without strain columns with no strain") {
       with(Catalog()) {
-        importer.import(listOf(line(null))).shouldBeSuccess()
+        importer.import(withHeader(line(null))).shouldBeSuccess()
 
         strains.allNow() shouldHaveSize 0
         uses.all().first().single().strainId shouldBe null
@@ -193,7 +196,7 @@ class UseImporterTest : FunSpec({
           3
         ) { (UseArb.take(1).single().columns() + listOf("", "Bedrocan", "22", "1")).joinToString(",") }
 
-        importer.import(idLess).shouldBeSuccess()
+        importer.import(withHeader(idLess)).shouldBeSuccess()
 
         strains.allNow().single().name shouldBe "Bedrocan"
         uses.all().first().map { it.strainId }.toSet() shouldBe setOf(strains.allNow().single().id)
@@ -202,13 +205,13 @@ class UseImporterTest : FunSpec({
 
     test("Makes one strain when an id-less line comes before the line giving the strain's id") {
       with(Catalog()) {
-        val bedrocan = Strain("Bedrocan", BigDecimal("22"), id = "from-the-file")
+        val bedrocan = Strain("Bedrocan", BigDecimal("22"))
         val idLess = (UseArb.take(1).single().columns() + listOf("", "Bedrocan", "22", "")).joinToString(",")
 
-        importer.import(listOf(idLess, line(bedrocan))).shouldBeSuccess()
+        importer.import(withHeader(idLess, line(bedrocan))).shouldBeSuccess()
 
-        strains.allNow().map { it.id } shouldBe listOf("from-the-file")
-        uses.all().first().map { it.strainId }.toSet() shouldBe setOf("from-the-file")
+        strains.allNow().map { it.id } shouldBe listOf(bedrocan.id)
+        uses.all().first().map { it.strainId }.toSet() shouldBe setOf(bedrocan.id)
       }
     }
 
@@ -218,7 +221,7 @@ class UseImporterTest : FunSpec({
         strains.upsert(renamed)
         val idLess = (UseArb.take(1).single().columns() + listOf("", flm.name)).joinToString(",")
 
-        importer.import(listOf(line(flm), idLess)).shouldBeSuccess()
+        importer.import(withHeader(line(flm), idLess)).shouldBeSuccess()
 
         strains.allNow() shouldContainExactly listOf(renamed)
         uses.all().first().map { it.strainId }.toSet() shouldBe setOf(renamed.id)
@@ -229,7 +232,7 @@ class UseImporterTest : FunSpec({
       with(Catalog()) {
         val archived = Strain("Old batch", BigDecimal("22"), BigDecimal("1"), BigDecimal("9.80"), isArchived = true)
 
-        importer.import(listOf(line(archived))).shouldBeSuccess()
+        importer.import(withHeader(line(archived))).shouldBeSuccess()
 
         strains.allNow() shouldContainExactly listOf(archived)
       }
@@ -240,7 +243,7 @@ class UseImporterTest : FunSpec({
         val oldBatch = Strain(flm.name, BigDecimal("22"), isArchived = true)
         val newBatch = Strain(flm.name, BigDecimal("27"))
 
-        importer.import(listOf(line(oldBatch), line(newBatch))).shouldBeSuccess()
+        importer.import(withHeader(line(oldBatch), line(newBatch))).shouldBeSuccess()
 
         strains.allNow().map { it.id }.toSet() shouldBe setOf(oldBatch.id, newBatch.id)
       }
@@ -256,7 +259,7 @@ class UseImporterTest : FunSpec({
           strains.upsert(flm)
           uses.upsert(existing)
 
-          importer.import(listOf(legacyLine())).shouldBeSuccess()
+          importer.import(withHeader(legacyLine())).shouldBeSuccess()
 
           uses.all().first().single().strainId shouldBe flm.id
         }
@@ -267,7 +270,7 @@ class UseImporterTest : FunSpec({
           strains.upsert(flm)
           uses.upsert(existing)
 
-          importer.import(listOf(emptyStrainLine())).shouldBeSuccess()
+          importer.import(withHeader(emptyStrainLine())).shouldBeSuccess()
 
           uses.all().first().single().strainId shouldBe flm.id
         }
@@ -279,16 +282,29 @@ class UseImporterTest : FunSpec({
           strains.upsertAll(listOf(flm, bedrocan))
           uses.upsert(existing)
 
-          importer.import(listOf((existing.columns() + bedrocan.columns()).joinToString(","))).shouldBeSuccess()
+          importer.import(withHeader((existing.columns() + bedrocan.columns()).joinToString(","))).shouldBeSuccess()
 
           uses.all().first().single().strainId shouldBe bedrocan.id
         }
       }
     }
 
+    test("Reads no strain from a file without the strain header, whatever its extra columns hold") {
+      with(Catalog()) {
+        val userColumns = (UseArb.take(1).single().columns() + listOf("my note", "my tag")).joinToString(",")
+        val unlabelled = (UseArb.take(1).single().columns() + flm.columns()).joinToString(",")
+
+        importer.import(listOf("date,amount,cost,id,description,method,notes,tags", userColumns)).shouldBeSuccess()
+        importer.import(listOf(unlabelled)).shouldBeSuccess()
+
+        strains.allNow() shouldHaveSize 0
+        uses.all().first().map { it.strainId }.toSet() shouldBe setOf(null)
+      }
+    }
+
     test("Saves nothing when a line can't be parsed") {
       with(Catalog()) {
-        importer.import(listOf(line(flm), line(flm), "not,a,use")).shouldBeFailure()
+        importer.import(withHeader(line(flm), line(flm), "not,a,use")).shouldBeFailure()
 
         strains.allNow() shouldHaveSize 0
         uses.all().first() shouldHaveSize 0
@@ -302,7 +318,7 @@ class UseImporterTest : FunSpec({
         every { upsertAllKeepingStrains(any()) } throws IllegalStateException("disk full")
       }
 
-      UseImporter(failingUses, strains, database).import(listOf(line(flm))).shouldBeFailure()
+      UseImporter(failingUses, strains, database).import(withHeader(line(flm))).shouldBeFailure()
 
       strains.allNow() shouldHaveSize 0
     }

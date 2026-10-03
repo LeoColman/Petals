@@ -216,7 +216,7 @@ class UseCsvParserTest : FunSpec({
     val strain = Strain("420 Evo FLM", BigDecimal("27.5"), BigDecimal("1"))
     val parsedStrain = CsvStrain(strain.id, strain.name, strain.thcPercent, strain.cbdPercent, isArchived = false)
     fun line(vararg strainColumns: String) = (UseArb.next().columns() + strainColumns).joinToString(",")
-    fun strainOf(line: String) = UseCsvParser.parse(line).getOrThrow().strain
+    fun strainOf(line: String) = UseCsvParser.parse(line, strainColumns = 6).getOrThrow().strain
 
     test("A line from before strains, without strain columns, has no strain") {
       strainOf(line()) shouldBe null
@@ -228,7 +228,7 @@ class UseCsvParserTest : FunSpec({
 
     test("Reads the strain the line names, and leaves the use without a strain id for the importer to link") {
       val use = UseArb.next()
-      val row = UseCsvParser.parse((use.columns() + strain.columns()).joinToString(",")).getOrThrow()
+      val row = UseCsvParser.parse((use.columns() + strain.columns()).joinToString(","), 6).getOrThrow()
 
       row.strain shouldBe parsedStrain
       row.use shouldBe use
@@ -247,6 +247,26 @@ class UseCsvParserTest : FunSpec({
 
     test("A strain without an id has none, for the importer to match by name") {
       strainOf(line(" ", strain.name))!!.id shouldBe null
+    }
+
+    test("Only a UUID counts as a strain id, so a hand-made id like 1 is matched by name instead") {
+      strainOf(line("1", strain.name))!!.id shouldBe null
+      strainOf(line("not-a-uuid", strain.name))!!.id shouldBe null
+      strainOf(line(strain.id.uppercase(), strain.name))!!.id shouldBe strain.id.uppercase()
+    }
+
+    test("Is never read from a file whose header doesn't have the strain columns") {
+      val use = UseArb.next()
+      val line = (use.columns() + strain.columns()).joinToString(",")
+
+      UseCsvParser.parse(line).getOrThrow().strain shouldBe null
+    }
+
+    test("Is read from wherever the header put the strain columns") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf("a note", "a tag") + strain.columns()).joinToString(",")
+
+      UseCsvParser.parse(line, strainColumns = 8).getOrThrow().strain shouldBe parsedStrain
     }
 
     test("Trims the strain name and id") {
@@ -307,6 +327,42 @@ class UseCsvParserTest : FunSpec({
       archivedFrom("false") shouldBe false
       archivedFrom("") shouldBe false
       archivedFrom("yes") shouldBe false
+    }
+  }
+  context("strainColumnsIn") {
+    val useLabels = listOf("date", "amount", "cost", "id", "description", "method")
+
+    test("Finds the strain columns right after the use's own, as the app writes them") {
+      UseCsvParser.strainColumnsIn((useLabels + Strain.CsvHeader).joinToString(",")) shouldBe 6
+    }
+
+    test("Finds them after columns a user added, and ignores columns added after them") {
+      val header = useLabels + listOf("notes", "tags") + Strain.CsvHeader + listOf("rating")
+
+      UseCsvParser.strainColumnsIn(header.joinToString(",")) shouldBe 8
+    }
+
+    test("Tolerates spaces around the labels") {
+      UseCsvParser.strainColumnsIn((useLabels + Strain.CsvHeader.map { " $it " }).joinToString(",")) shouldBe 6
+    }
+
+    test("Finds none in a header from before strains, or one with columns a user added instead") {
+      UseCsvParser.strainColumnsIn(useLabels.joinToString(",")) shouldBe null
+      val userColumns = useLabels + listOf("notes", "tags", "a", "b", "c", "d")
+      UseCsvParser.strainColumnsIn(userColumns.joinToString(",")) shouldBe null
+    }
+
+    test("Finds none when the strain labels are incomplete or out of order") {
+      UseCsvParser.strainColumnsIn((useLabels + Strain.CsvHeader.dropLast(1)).joinToString(",")) shouldBe null
+      UseCsvParser.strainColumnsIn((useLabels + Strain.CsvHeader.reversed()).joinToString(",")) shouldBe null
+    }
+
+    test("Finds none in a file without a header, whose first line is a use") {
+      UseCsvParser.strainColumnsIn(UseArb.next().columns().joinToString(",")) shouldBe null
+    }
+
+    test("Finds none in a line that isn't CSV") {
+      UseCsvParser.strainColumnsIn("\"unterminated") shouldBe null
     }
   }
 })

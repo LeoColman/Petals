@@ -9,7 +9,8 @@ import java.util.UUID
  * A strain with an id is matched by that id first, so a backup restores onto the strains it came from even if they
  * were renamed since; then by name to an active catalog strain, so another install's export joins the strains the
  * user is using, not ones they retired; and is created with its id otherwise. It is never matched by name to a
- * strain this import created, so two strains a backup keeps apart by id stay apart.
+ * strain this import created, so two strains a backup keeps apart by id stay apart. Whatever a file id lands on,
+ * every other line with that id lands there too.
  *
  * A strain without an id has only its name. It is matched first to whatever strain the file's own id-bearing lines
  * called by that name, even one since renamed in the catalog; then by name in the catalog, active strains first; and
@@ -46,8 +47,10 @@ class StrainResolver(catalog: List<Strain>) {
       ?: catalogByName[key]
       ?: create(strain.toStrain(UUID.randomUUID().toString())).also { fileByName[key] = it }
 
-    return (byId[id] ?: activeByName[key] ?: create(strain.toStrain(id)))
-      .also { resolved -> fileByName.merge(key, resolved) { kept, new -> minOf(kept, new, Preferred) } }
+    return (byId[id] ?: activeByName[key] ?: create(strain.toStrain(id))).also { resolved ->
+      byId[id] = resolved
+      fileByName.merge(key, resolved) { kept, new -> minOf(kept, new, Preferred) }
+    }
   }
 
   private fun create(strain: Strain): Strain = strain.also {

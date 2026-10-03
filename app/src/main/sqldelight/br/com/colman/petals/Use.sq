@@ -19,6 +19,7 @@ ON CONFLICT (id) DO UPDATE SET date = excluded.date,
  strain_id = excluded.strain_id,
   cost_per_gram = excluded.cost_per_gram;
 
+-- Like upsert, except a use without a strain keeps the one it has, for imports, which never unlink. Keep both in step.
 upsertKeepingStrain:
 INSERT INTO Use(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id) VALUES ?
 ON CONFLICT (id) DO UPDATE SET date = excluded.date,

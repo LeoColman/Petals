@@ -25,12 +25,6 @@ import br.com.colman.petals.R.string.cost_per_gram_label
 import br.com.colman.petals.R.string.date_label
 import br.com.colman.petals.R.string.description_label
 import br.com.colman.petals.R.string.id_label
-import br.com.colman.petals.R.string.strain_archived_label
-import br.com.colman.petals.R.string.strain_cbd_label
-import br.com.colman.petals.R.string.strain_cost_label
-import br.com.colman.petals.R.string.strain_id_label
-import br.com.colman.petals.R.string.strain_name_label
-import br.com.colman.petals.R.string.strain_thc_label
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.UseArb
 import br.com.colman.petals.use.repository.Use
@@ -50,11 +44,8 @@ import java.time.LocalDateTime
 
 class UseCsvSerializerTest : FunSpec({
   val useRepository = mockk<UseRepository>()
-  val useCsvHeaders = UseCsvHeaders(
-    "date", "amount", "cost", "id", "description", "method",
-    "strain_id", "strain", "thc", "cbd", "strain_cost", "archived"
-  )
-  val headerLine = "date,amount,cost,id,description,method,strain_id,strain,thc,cbd,strain_cost,archived"
+  val useCsvHeaders = UseCsvHeaders("date", "amount", "cost", "id", "description", "method")
+  val headerLine = "date,amount,cost,id,description,method," + Strain.CsvHeader.joinToString(",")
   val target = UseCsvSerializer(useRepository, useCsvHeaders)
 
   fun Use.lineWithoutStrain() = (columns() + List(Strain.CsvColumnCount) { "" }).joinToString(",")
@@ -95,17 +86,11 @@ class UseCsvSerializerTest : FunSpec({
       every { getString(id_label) } returns "d"
       every { getString(description_label) } returns "e"
       every { getString(consumption_method_label) } returns "f"
-      every { getString(strain_id_label) } returns "g"
-      every { getString(strain_name_label) } returns "h"
-      every { getString(strain_thc_label) } returns "i"
-      every { getString(strain_cbd_label) } returns "j"
-      every { getString(strain_cost_label) } returns "k"
-      every { getString(strain_archived_label) } returns "l"
     }
 
     val localizedHeaders = UseCsvHeaders(resources)
 
-    localizedHeaders.toList() shouldBe listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l")
+    localizedHeaders.toList() shouldBe listOf("a", "b", "c", "d", "e", "f") + Strain.CsvHeader
   }
 
   test("Throws exception when data retrieval fails") {
@@ -146,14 +131,14 @@ class UseCsvSerializerTest : FunSpec({
   }
 
   test("Handles headers with non-ASCII characters") {
-    val localizedHeaders = UseCsvHeaders("ã", "æ", "̉ħ", "ŋ", "®", "µ", "ø", "ß", "þ", "ð", "œ", "ŧ")
+    val localizedHeaders = UseCsvHeaders("ã", "æ", "̉ħ", "ŋ", "®", "µ")
     val targetWithLocalizedHeaders = UseCsvSerializer(useRepository, localizedHeaders)
     val uses = UseArb.take(1).toList()
     every { useRepository.allWithStrains(any()) } returns flowOf(uses.map { it to null })
 
     val file = targetWithLocalizedHeaders.computeUseCsv()
 
-    file shouldStartWith "ã,æ,̉ħ,ŋ,®,µ,ø,ß,þ,ð,œ,ŧ\n"
+    file shouldStartWith "ã,æ,̉ħ,ŋ,®,µ,${Strain.CsvHeader.joinToString(",")}\n"
   }
 
   context("strain columns") {

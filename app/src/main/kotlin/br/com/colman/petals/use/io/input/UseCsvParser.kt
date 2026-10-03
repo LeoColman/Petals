@@ -36,17 +36,21 @@ data class CsvStrain(
 object UseCsvParser {
   private val csvReader = csvReader()
   private val Percentages = BigDecimal.ZERO..BigDecimal(100)
+  private val Uuid = Regex("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
 
-  // Where the strain's columns start: right after the use's own, in the order Strain.columns() writes them.
-  private const val StrainColumns = 6
-  private const val StrainId = StrainColumns
-  private const val StrainName = StrainColumns + 1
-  private const val StrainThc = StrainColumns + 2
-  private const val StrainCbd = StrainColumns + 3
-  private const val StrainCost = StrainColumns + 4
-  private const val StrainArchived = StrainColumns + 5
+  /**
+   * Where the strain's columns start in a file with this [header], or null when it has none. They are found by their
+   * fixed labels, in [Strain.CsvHeader] order, so a file from before strains, a file without a header, or columns a
+   * user added in a spreadsheet are never read as a strain.
+   */
+  fun strainColumnsIn(header: String): Int? = runCatching { csvReader.readAll(header).single() }.getOrNull()
+    ?.map { it.trim() }
+    ?.windowed(Strain.CsvColumnCount)
+    ?.indexOfFirst { it == Strain.CsvHeader }
+    ?.takeIf { it >= 0 }
 
-  fun parse(line: String): Result<UseCsvRow> = runCatching {
+  /** Reads a line, and its strain from the columns starting at [strainColumns], if the file has them. */
+  fun parse(line: String, strainColumns: Int? = null): Result<UseCsvRow> = runCatching {
     val values = csvReader.readAll(line).single()
 
     val dateTime = parseDateTime(values[0])
@@ -55,25 +59,28 @@ object UseCsvParser {
     val id = parseOrGenerateUUID(values.getOrNull(3))
     val description = values.getOrElse(4) { "" }
     val consumptionMethod = ConsumptionMethod.fromKey(values.getOrElse(5) { "" })
+    val strain = strainColumns?.let { parseStrain { label -> values.getOrNull(it + Strain.CsvHeader.indexOf(label)) } }
 
-    UseCsvRow(Use(dateTime, amount, cost, id, description, consumptionMethod), parseStrain(values))
+    UseCsvRow(Use(dateTime, amount, cost, id, description, consumptionMethod), strain)
   }
 
   /**
    * A line names a strain only when it has a strain name: an id alone can't recreate the strain on another install.
-   * Every strain value is optional, so one that can't be read is dropped rather than failing the whole line.
+   * Every strain value is optional, so one that can't be read is dropped rather than failing the whole line. Only a
+   * UUID counts as an id, as the app writes them; a hand-made id like "1" could collide with another file's, so such
+   * a strain is matched by name instead.
    */
-  private fun parseStrain(values: List<String>): CsvStrain? {
-    val name = values.getOrElse(StrainName) { "" }.trim()
+  private fun parseStrain(valueOf: (String) -> String?): CsvStrain? {
+    val name = valueOf(Strain.NameColumn)?.trim().orEmpty()
     if (name.isEmpty()) return null
 
     return CsvStrain(
-      values.getOrNull(StrainId)?.trim()?.ifEmpty { null },
+      valueOf(Strain.IdColumn)?.trim()?.takeIf { it.matches(Uuid) },
       name,
-      parsePercentage(values.getOrNull(StrainThc)),
-      parsePercentage(values.getOrNull(StrainCbd)),
-      values.getOrNull(StrainCost)?.trim()?.toBoundedDecimalOrNull()?.takeIf { it >= BigDecimal.ZERO },
-      values.getOrNull(StrainArchived)?.trim().let { it.equals("true", ignoreCase = true) || it == "1" }
+      parsePercentage(valueOf(Strain.ThcColumn)),
+      parsePercentage(valueOf(Strain.CbdColumn)),
+      valueOf(Strain.CostColumn)?.trim()?.toBoundedDecimalOrNull()?.takeIf { it >= BigDecimal.ZERO },
+      valueOf(Strain.ArchivedColumn)?.trim().let { it.equals("true", ignoreCase = true) || it == "1" }
     )
   }
 

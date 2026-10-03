@@ -210,10 +210,4 @@
     <string name="method_other">Інше</string>
     <string name="method_unspecified">Не вказано</string>
     <string name="duplicate_use">Дублювати вжиток</string>
-    <string name="strain_id_label">сорт_id</string>
-    <string name="strain_name_label">сорт_назва</string>
-    <string name="strain_thc_label">сорт_thc_відсоток</string>
-    <string name="strain_cbd_label">сорт_cbd_відсоток</string>
-    <string name="strain_cost_label">сорт_ціна_за_грам</string>
-    <string name="strain_archived_label">сорт_в_архіві</string>
 </resources>

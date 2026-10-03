@@ -6,6 +6,7 @@ import br.com.colman.petals.StrainQueries
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import java.text.Collator
 import br.com.colman.petals.Strain as StrainEntity
@@ -19,7 +20,7 @@ class StrainRepository(
    * so Cyrillic or accented names would sort capitals apart from lowercase; a Collator sorts them as people read.
    */
   fun all(dispatcher: CoroutineDispatcher = IO): Flow<List<Strain>> =
-    strainQueries.selectAll().asFlow().mapToList(dispatcher).map { it.toSortedStrains() }
+    strainQueries.selectAll().asFlow().mapToList(dispatcher).map { it.toSortedStrains() }.flowOn(dispatcher)
 
   /** The same strains as [all], read once and in no particular order. For an import, which doesn't care. */
   fun allNow(): List<Strain> = strainQueries.selectAll().executeAsList().map(StrainEntity::toStrain)

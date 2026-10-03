@@ -8,11 +8,14 @@ import androidx.core.net.toUri
 import androidx.test.core.app.ApplicationProvider
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.koin
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.io.input.UseCsvFileImporter
 import br.com.colman.petals.use.io.output.UseExporter
+import br.com.colman.petals.use.repository.UseRepository
 import io.kotest.matchers.file.shouldHaveSameStructureAndContentAs
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.flow.first
 import java.io.File
 import java.time.LocalDate
 
@@ -20,6 +23,14 @@ class UseIOModuleTest : FunSpec({
 
   val useCsvFileImporter = koin.get<UseCsvFileImporter>()
   val useExporter = koin.get<UseExporter>()
+  val useRepository = koin.get<UseRepository>()
+  val strainRepository = koin.get<StrainRepository>()
+
+  // The importer writes to the app's own database, so the uses and the strain this test adds are removed after it.
+  afterTest {
+    useRepository.all().first().filter { it.id in FixtureUseIds }.forEach(useRepository::delete)
+    strainRepository.allNow().filter { it.id == FixtureStrainId }.forEach(strainRepository::delete)
+  }
 
   test("should import and export data maintaining integrity") {
     val inputFile = File(ApplicationProvider.getApplicationContext<Context>().filesDir, "test_input.csv")
@@ -60,3 +71,6 @@ class UseIOModuleTest : FunSpec({
     inputFile shouldHaveSameStructureAndContentAs exportedFile
   }
 })
+
+private val FixtureUseIds = setOf("80204597-00eb-4412-b7ee-223388806fe2", "5d2f8a3e-1c4b-4f6e-9a7d-2b8c0e1f3a45")
+private const val FixtureStrainId = "0b7e9c1a-6d2f-4e8b-a3c5-9f1d2e4b6a78"

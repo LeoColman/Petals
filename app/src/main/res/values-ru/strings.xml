@@ -192,10 +192,4 @@
     <string name="method_other">Другое</string>
     <string name="method_unspecified">Не указано</string>
     <string name="duplicate_use">Дублировать употребление</string>
-    <string name="strain_id_label">сорт_id</string>
-    <string name="strain_name_label">сорт_название</string>
-    <string name="strain_thc_label">сорт_thc_процент</string>
-    <string name="strain_cbd_label">сорт_cbd_процент</string>
-    <string name="strain_cost_label">сорт_цена_за_грамм</string>
-    <string name="strain_archived_label">сорт_в_архиве</string>
 </resources>

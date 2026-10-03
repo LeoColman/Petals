@@ -25,12 +25,6 @@ import br.com.colman.petals.R.string.consumption_method_label
 import br.com.colman.petals.R.string.cost_per_gram_label
 import br.com.colman.petals.R.string.date_label
 import br.com.colman.petals.R.string.id_label
-import br.com.colman.petals.R.string.strain_archived_label
-import br.com.colman.petals.R.string.strain_cbd_label
-import br.com.colman.petals.R.string.strain_cost_label
-import br.com.colman.petals.R.string.strain_id_label
-import br.com.colman.petals.R.string.strain_name_label
-import br.com.colman.petals.R.string.strain_thc_label
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.UseRepository
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
@@ -38,19 +32,17 @@ import kotlinx.coroutines.flow.first
 import java.io.ByteArrayOutputStream
 import kotlin.text.Charsets.UTF_8
 
+/**
+ * The CSV header. The use's own columns are labelled in the app's language; the strain's keep the fixed labels of
+ * [Strain.CsvHeader], which the importer finds them by.
+ */
 data class UseCsvHeaders(
   val date: String,
   val amount: String,
   val costPerGram: String,
   val id: String,
   val description: String,
-  val consumptionMethod: String,
-  val strainId: String,
-  val strainName: String,
-  val strainThc: String,
-  val strainCbd: String,
-  val strainCostPerGram: String,
-  val strainArchived: String
+  val consumptionMethod: String
 ) {
   constructor(resources: Resources) : this(
     resources.getString(date_label),
@@ -58,29 +50,10 @@ data class UseCsvHeaders(
     resources.getString(cost_per_gram_label),
     resources.getString(id_label),
     resources.getString(R.string.description_label),
-    resources.getString(consumption_method_label),
-    resources.getString(strain_id_label),
-    resources.getString(strain_name_label),
-    resources.getString(strain_thc_label),
-    resources.getString(strain_cbd_label),
-    resources.getString(strain_cost_label),
-    resources.getString(strain_archived_label)
+    resources.getString(consumption_method_label)
   )
 
-  fun toList() = listOf(
-    date,
-    amount,
-    costPerGram,
-    id,
-    description,
-    consumptionMethod,
-    strainId,
-    strainName,
-    strainThc,
-    strainCbd,
-    strainCostPerGram,
-    strainArchived
-  )
+  fun toList() = listOf(date, amount, costPerGram, id, description, consumptionMethod) + Strain.CsvHeader
 }
 
 class UseCsvSerializer(
