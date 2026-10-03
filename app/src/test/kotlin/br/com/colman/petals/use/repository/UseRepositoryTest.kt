@@ -84,6 +84,14 @@ class UseRepositoryTest : FunSpec({
       target.all().first().single() shouldBe edited.copy(strainId = "flm")
     }
 
+    test("Takes the strain a use names") {
+      target.upsert(use.copy(strainId = "flm"))
+
+      target.upsertAllKeepingStrains(listOf(use.copy(strainId = "bed")))
+
+      target.all().first().single().strainId shouldBe "bed"
+    }
+
     test("Inserts a new use as it is") {
       target.upsertAllKeepingStrains(listOf(use))
 

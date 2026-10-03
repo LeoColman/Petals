@@ -49,6 +49,7 @@ import br.com.colman.petals.R.string.total_spent
 import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.use.repository.Use
+import br.com.colman.petals.utils.toBoundedDecimalOrNull
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Cash
@@ -238,8 +239,8 @@ private fun EditUseDialog(
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
-    amount.value.toBigDecimalOrNull() ?: BigDecimal.ZERO,
-    costPerGram.value.toBigDecimalOrNull() ?: BigDecimal.ZERO,
+    amount.value.toBoundedDecimalOrNull() ?: BigDecimal.ZERO,
+    costPerGram.value.toBoundedDecimalOrNull() ?: BigDecimal.ZERO,
     use.id,
     description.value,
     consumptionMethod.value,

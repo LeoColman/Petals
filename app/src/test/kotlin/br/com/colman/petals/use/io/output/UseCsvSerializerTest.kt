@@ -57,7 +57,7 @@ class UseCsvSerializerTest : FunSpec({
   val headerLine = "date,amount,cost,id,description,method,strain_id,strain,thc,cbd,strain_cost,archived"
   val target = UseCsvSerializer(useRepository, useCsvHeaders)
 
-  fun Use.lineWithoutStrain() = (columns() + List(6) { "" }).joinToString(",")
+  fun Use.lineWithoutStrain() = (columns() + List(Strain.CsvColumnCount) { "" }).joinToString(",")
 
   test("Includes all values in resulting file") {
     val uses = UseArb.take(10).toList()

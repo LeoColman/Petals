@@ -31,6 +31,7 @@ import br.com.colman.petals.R.string.strain_cost_label
 import br.com.colman.petals.R.string.strain_id_label
 import br.com.colman.petals.R.string.strain_name_label
 import br.com.colman.petals.R.string.strain_thc_label
+import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.UseRepository
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import kotlinx.coroutines.flow.first
@@ -112,4 +113,4 @@ class UseCsvSerializer(
   }
 }
 
-private val NoStrainColumns = List(6) { "" }
+private val NoStrainColumns = List(Strain.CsvColumnCount) { "" }

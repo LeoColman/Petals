@@ -25,6 +25,7 @@ ON CONFLICT (id) DO UPDATE SET date = excluded.date,
  amount_grams = excluded.amount_grams,
  description = excluded.description,
  consumption_method = excluded.consumption_method,
+ strain_id = coalesce(excluded.strain_id, Use.strain_id),
   cost_per_gram = excluded.cost_per_gram;
 
 selectLast:

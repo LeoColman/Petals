@@ -39,15 +39,12 @@ class UseImporter(
     transacter.transaction {
       val strains = StrainResolver(strainRepository.allNow())
       val resolved = strains.resolveAll(rows.map { it.strain })
-      val uses = rows.zip(resolved) { row, strain -> row to modifyUse(row.use.copy(strainId = strain?.id)) }
-
-      // A line from before strains says nothing about the strain, so the use keeps the one it has rather than an old
-      // backup wiping it. A line with empty strain columns does say the use had none, like every other column.
-      val (withStrainColumns, fromBeforeStrains) = uses.partition { (row, _) -> row.hasStrainColumns }
+      val uses = rows.zip(resolved) { row, strain -> modifyUse(row.use.copy(strainId = strain?.id)) }
 
       strainRepository.upsertAll(strains.created)
-      useRepository.upsertAll(withStrainColumns.map { it.second })
-      useRepository.upsertAllKeepingStrains(fromBeforeStrains.map { it.second })
+      // An import links strains but never unlinks them: a line that names no strain, from before strains or not,
+      // leaves an existing use's strain alone, so no backup can wipe the links made since it was taken.
+      useRepository.upsertAllKeepingStrains(uses)
     }
   }
 }

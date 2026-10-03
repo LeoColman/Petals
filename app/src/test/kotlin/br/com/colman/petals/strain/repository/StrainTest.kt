@@ -37,6 +37,10 @@ class StrainTest : FunSpec({
     }
   }
 
+  test("CsvColumnCount is how many columns a strain writes") {
+    Strain("Bedrocan").columns().size shouldBe Strain.CsvColumnCount
+  }
+
   context("nameKey") {
     test("Is the trimmed, composed, lowercase name") {
       Strain("  Cafe\u0301 KUSH ").nameKey shouldBe "caf\u00e9 kush"
@@ -84,6 +88,16 @@ class StrainTest : FunSpec({
 
     test("Matches a Turkish dotted capital I with its lowercase spelling") {
       Strain("\u0130stanbul").hasName("i\u0307stanbul").shouldBeTrue()
+    }
+
+    test("Folds the capital sharp S too") {
+      Strain("STRA\u1e9eE KUSH").hasName("Stra\u00dfe Kush").shouldBeTrue()
+      Strain("STRA\u1e9eE KUSH").hasName("STRASSE KUSH").shouldBeTrue()
+    }
+
+    test("Matches a Turkish dotted capital I however it is cased") {
+      Strain("\u0130pek").hasName("ipek").shouldBeTrue()
+      Strain("\u0130PEK").hasName("IPEK").shouldBeTrue()
     }
 
     test("Does not match a different name") {

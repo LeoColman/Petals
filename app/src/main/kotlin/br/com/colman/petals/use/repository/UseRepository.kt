@@ -34,8 +34,8 @@ class UseRepository(
   }
 
   /**
-   * Like [upsertAll], except that an existing use keeps the strain it has. For imported lines from before strains,
-   * which say nothing about the strain, so an old backup can't wipe it.
+   * Like [upsertAll], except that a use without a strain doesn't take away the strain an existing use has. For
+   * imports, which link strains but never unlink them.
    */
   fun upsertAllKeepingStrains(uses: Iterable<Use>) {
     useQueries.transaction {

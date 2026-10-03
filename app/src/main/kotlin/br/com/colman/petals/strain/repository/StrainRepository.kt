@@ -21,8 +21,8 @@ class StrainRepository(
   fun all(dispatcher: CoroutineDispatcher = IO): Flow<List<Strain>> =
     strainQueries.selectAll().asFlow().mapToList(dispatcher).map { it.toSortedStrains() }
 
-  /** The same as [all], read once. For callers that are not collecting, like an import. */
-  fun allNow(): List<Strain> = strainQueries.selectAll().executeAsList().toSortedStrains()
+  /** The same strains as [all], read once and in no particular order. For an import, which doesn't care. */
+  fun allNow(): List<Strain> = strainQueries.selectAll().executeAsList().map(StrainEntity::toStrain)
 
   fun upsert(strain: Strain) {
     strainQueries.upsert(strain.toEntity())

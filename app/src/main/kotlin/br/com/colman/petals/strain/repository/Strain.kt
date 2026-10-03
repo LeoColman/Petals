@@ -42,13 +42,20 @@ data class Strain(
   fun hasName(other: String): Boolean = nameKey == nameKey(other)
 
   companion object {
+    /** How many columns [columns] writes. */
+    const val CsvColumnCount = 6
+
     /**
      * Names count as the same strain regardless of case, surrounding spaces and how an accent was encoded, so
-     * "Café Kush" typed on a phone matches the same name saved by a desktop tool as e + combining accent. Going
-     * through upper case first folds what lower case alone leaves apart, like "Straße" and "STRASSE". Normalizing
-     * comes last, because case mapping can itself decompose a letter, as with Greek "ΐ".
+     * "Café Kush" typed on a phone matches the same name saved by a desktop tool as e + combining accent.
+     *
+     * Lower, upper, then lower case again folds what one mapping leaves apart: "Straße", "STRASSE" and "STRAẞE".
+     * The dot a lowercased Turkish "İ" keeps is dropped, so "İpek" matches "ipek". Normalizing comes last, because
+     * case mapping can itself decompose a letter, as with Greek "ΐ".
      */
-    fun nameKey(name: String): String =
-      Normalizer.normalize(name.trim().uppercase(Locale.ROOT).lowercase(Locale.ROOT), Normalizer.Form.NFC)
+    fun nameKey(name: String): String {
+      val folded = name.trim().lowercase(Locale.ROOT).uppercase(Locale.ROOT).lowercase(Locale.ROOT)
+      return Normalizer.normalize(folded.replace("i\u0307", "i"), Normalizer.Form.NFC)
+    }
   }
 }

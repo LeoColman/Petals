@@ -7,6 +7,7 @@ import br.com.colman.petals.use.repository.ConsumptionMethod
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.result.shouldBeFailure
+import io.kotest.matchers.result.shouldBeSuccess
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeUUID
 import io.kotest.property.arbitrary.filter
@@ -131,12 +132,22 @@ class UseCsvParserTest : FunSpec({
     UseCsvParser.parse(useCsv).shouldBeFailure()
   }
 
-  test("Returns failure if amount or cost uses an exponent, which toPlainString would blow up into a huge string") {
+  test("Returns failure if amount or cost uses an exponent so far out that it can't be stored") {
     val use = UseArb.next()
     val columns = use.columns()
 
     UseCsvParser.parse((listOf(columns[0], "1E-3000000") + columns.drop(2)).joinToString(",")).shouldBeFailure()
     UseCsvParser.parse((columns.take(2) + "1E+3000000" + columns.drop(3)).joinToString(",")).shouldBeFailure()
+  }
+
+  test("Reads amount and cost written as .5, +2 or with a small exponent, as other tools write them") {
+    val columns = UseArb.next().columns()
+    val parsed = UseCsvParser.parse((columns.take(1) + listOf(".5", "1.25e1") + columns.drop(3)).joinToString(","))
+      .getOrThrow().use
+
+    parsed.amountGrams shouldBe BigDecimal(".5")
+    parsed.costPerGram shouldBe BigDecimal("12.5")
+    UseCsvParser.parse((columns.take(1) + listOf("+2", "3.") + columns.drop(3)).joinToString(",")).shouldBeSuccess()
   }
 
   test("Returns failure if cost is not a valid number") {
@@ -203,154 +214,92 @@ class UseCsvParserTest : FunSpec({
 
   context("strain columns") {
     val strain = Strain("420 Evo FLM", BigDecimal("27.5"), BigDecimal("1"))
+    val parsedStrain = CsvStrain(strain.id, strain.name, strain.thcPercent, strain.cbdPercent, isArchived = false)
+    fun line(vararg strainColumns: String) = (UseArb.next().columns() + strainColumns).joinToString(",")
+    fun strainOf(line: String) = UseCsvParser.parse(line).getOrThrow().strain
 
-    test("A line from before strains, without strain columns, has no strain and says so") {
-      val use = UseArb.next()
-      val row = UseCsvParser.parse(use.columns().joinToString(",")).getOrThrow()
-
-      row.strain shouldBe null
-      row.hasStrainColumns shouldBe false
+    test("A line from before strains, without strain columns, has no strain") {
+      strainOf(line()) shouldBe null
     }
 
-    test("A line with empty strain columns has no strain but does have the columns") {
-      val use = UseArb.next()
-      val row = UseCsvParser.parse((use.columns() + List(6) { "" }).joinToString(",")).getOrThrow()
-
-      row.strain shouldBe null
-      row.hasStrainColumns shouldBe true
+    test("A line with empty strain columns has no strain") {
+      strainOf(line(*Array(Strain.CsvColumnCount) { "" })) shouldBe null
     }
 
-    test("Reads the strain the line names") {
+    test("Reads the strain the line names, and leaves the use without a strain id for the importer to link") {
       val use = UseArb.next()
       val row = UseCsvParser.parse((use.columns() + strain.columns()).joinToString(",")).getOrThrow()
 
-      row.strain shouldBe strain
+      row.strain shouldBe parsedStrain
       row.use shouldBe use
-    }
-
-    test("Leaves the strain id off the use, for the importer to link") {
-      val use = UseArb.next()
-      val row = UseCsvParser.parse((use.columns() + strain.columns()).joinToString(",")).getOrThrow()
-
       row.use.strainId shouldBe null
     }
 
-    test("A strain id without a name is not a strain") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, "", "27", "1")).joinToString(",")
-
-      UseCsvParser.parse(line).getOrThrow().strain shouldBe null
-    }
-
-    test("Leaves a strain without an id with an empty one, for the importer to match by name") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(" ", strain.name, "", "")).joinToString(",")
-
-      UseCsvParser.parse(line).getOrThrow().strain!!.id shouldBe ""
-    }
-
-    test("A stray trailing column after a line from before strains is not a strain column") {
-      val use = UseArb.next()
-      val row = UseCsvParser.parse(use.columns().joinToString(",") + ",").getOrThrow()
-
-      row.strain shouldBe null
-      row.hasStrainColumns shouldBe false
-    }
-
-    test("Trims the strain name") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, "  ${strain.name}  ", "", "")).joinToString(",")
-
-      UseCsvParser.parse(line).getOrThrow().strain!!.name shouldBe strain.name
-    }
-
-    test("Drops an unreadable potency instead of failing the line") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, strain.name, "lots", "1")).joinToString(",")
-      val parsed = UseCsvParser.parse(line).getOrThrow().strain!!
-
-      parsed.thcPercent shouldBe null
-      parsed.cbdPercent shouldBe BigDecimal("1")
-    }
-
-    test("Trims spaces around potencies, as a spreadsheet may add them") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, strain.name, " 27.5", "1 ")).joinToString(",")
-
-      UseCsvParser.parse(line).getOrThrow().strain shouldBe strain
-    }
-
-    test("Drops a potency outside 0 to 100") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, strain.name, "-5", "250")).joinToString(",")
-      val parsed = UseCsvParser.parse(line).getOrThrow().strain!!
-
-      parsed.thcPercent shouldBe null
-      parsed.cbdPercent shouldBe null
-    }
-
-    test("Keeps the bounds 0 and 100") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, strain.name, "100", "0")).joinToString(",")
-      val parsed = UseCsvParser.parse(line).getOrThrow().strain!!
-
-      parsed.thcPercent shouldBe BigDecimal("100")
-      parsed.cbdPercent shouldBe BigDecimal("0")
-    }
-
-    test("Drops a potency with a huge exponent instead of failing later on it") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, strain.name, "1E+999999999", "1")).joinToString(",")
-
-      UseCsvParser.parse(line).getOrThrow().strain!!.thcPercent shouldBe null
-    }
-
-    test("Drops a potency with a tiny exponent, which a range check alone would let through") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, strain.name, "1E-999999999", "0E-999999999")).joinToString(",")
-      val parsed = UseCsvParser.parse(line).getOrThrow().strain!!
-
-      parsed.thcPercent shouldBe null
-      parsed.cbdPercent shouldBe null
-    }
-
-    test("Only reads plain decimals") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, strain.name, "2.7E1", "+1")).joinToString(",")
-      val parsed = UseCsvParser.parse(line).getOrThrow().strain!!
-
-      parsed.thcPercent shouldBe null
-      parsed.cbdPercent shouldBe null
-    }
-
-    test("Reads a potency written with a percent sign") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, strain.name, "27.5%", "1 %")).joinToString(",")
-
-      UseCsvParser.parse(line).getOrThrow().strain shouldBe strain
-    }
-
-    test("Reads the strain's default cost and archived flag back") {
-      val use = UseArb.next()
+    test("Reads every column Strain writes back") {
       val full = strain.copy(costPerGram = BigDecimal("12.50"), isArchived = true)
 
-      UseCsvParser.parse((use.columns() + full.columns()).joinToString(",")).getOrThrow().strain shouldBe full
+      strainOf(line(*full.columns().toTypedArray()))!!.toStrain(full.id) shouldBe full
     }
 
-    test("Drops a default cost that isn't a plain positive decimal") {
-      val use = UseArb.next()
-      listOf("-1", "1E+3000000", "twelve").forEach { cost ->
-        val line = (use.columns() + listOf(strain.id, strain.name, "", "", cost, "false")).joinToString(",")
+    test("A strain id without a name is not a strain") {
+      strainOf(line(strain.id, "", "27", "1")) shouldBe null
+    }
 
-        UseCsvParser.parse(line).getOrThrow().strain!!.costPerGram shouldBe null
+    test("A strain without an id has none, for the importer to match by name") {
+      strainOf(line(" ", strain.name))!!.id shouldBe null
+    }
+
+    test("Trims the strain name and id") {
+      val parsed = strainOf(line(" ${strain.id} ", "  ${strain.name}  "))!!
+
+      parsed.id shouldBe strain.id
+      parsed.name shouldBe strain.name
+    }
+
+    context("Potency") {
+      fun potencies(thc: String, cbd: String) = strainOf(line(strain.id, strain.name, thc, cbd))!!.let {
+        it.thcPercent to it.cbdPercent
+      }
+
+      test("Is dropped when it can't be read, without failing the line") {
+        potencies("lots", "1") shouldBe (null to BigDecimal("1"))
+      }
+
+      test("Is read trimmed, and with a percent sign") {
+        potencies(" 27.5", "1 %") shouldBe (BigDecimal("27.5") to BigDecimal("1"))
+      }
+
+      test("Keeps the bounds 0 and 100, and drops anything outside them") {
+        potencies("100", "0") shouldBe (BigDecimal("100") to BigDecimal("0"))
+        potencies("-5", "250") shouldBe (null to null)
+      }
+
+      test("Is read with an exponent or sign as long as it stays short") {
+        potencies("2.7E1", "+1") shouldBe (BigDecimal("2.7E1") to BigDecimal("1"))
+      }
+
+      test("Is dropped when its exponent is so far out it can't be stored") {
+        potencies("1E+999999999", "1E-999999999") shouldBe (null to null)
+        potencies("0E-999999999", "1") shouldBe (null to BigDecimal("1"))
+      }
+
+      test("Keeps more than six decimals, so a stored potency survives a backup") {
+        potencies("22.1234567", "1") shouldBe (BigDecimal("22.1234567") to BigDecimal("1"))
+      }
+
+      test("Reads as none when the columns are missing") {
+        strainOf(line(strain.id, strain.name)) shouldBe CsvStrain(strain.id, strain.name)
+      }
+    }
+
+    test("Drops a default cost that is negative or can't be read") {
+      listOf("-1", "1E+3000000", "twelve").forEach { cost ->
+        strainOf(line(strain.id, strain.name, "", "", cost, "false"))!!.costPerGram shouldBe null
       }
     }
 
     test("Reads the archived flag as true or 1, and anything else as active") {
-      val use = UseArb.next()
-      fun archivedFrom(value: String) = UseCsvParser.parse(
-        (use.columns() + listOf(strain.id, strain.name, "", "", "", value)).joinToString(",")
-      ).getOrThrow().strain!!.isArchived
+      fun archivedFrom(value: String) = strainOf(line(strain.id, strain.name, "", "", "", value))!!.isArchived
 
       archivedFrom("true") shouldBe true
       archivedFrom("TRUE") shouldBe true
@@ -358,13 +307,6 @@ class UseCsvParserTest : FunSpec({
       archivedFrom("false") shouldBe false
       archivedFrom("") shouldBe false
       archivedFrom("yes") shouldBe false
-    }
-
-    test("Missing potency columns read as no potency") {
-      val use = UseArb.next()
-      val line = (use.columns() + listOf(strain.id, strain.name)).joinToString(",")
-
-      UseCsvParser.parse(line).getOrThrow().strain shouldBe Strain(strain.name, id = strain.id)
     }
   }
 })

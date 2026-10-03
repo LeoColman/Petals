@@ -63,24 +63,14 @@ class UseImporterTest : FunSpec({
     }
   }
 
-  context("Current strains") {
-    test("Are overwritten by lines with strain columns") {
-      val uses = UseArb.take(3).toList()
+  test("Saves every line with the upsert that never takes a strain away, in the file's order") {
+    val uses = UseArb.take(3).toList()
+    val lines = listOf(uses[0].columns(), uses[1].columns() + List(Strain.CsvColumnCount) { "" }, uses[2].columns())
 
-      target.import(uses.map { (it.columns() + List(6) { "" }).joinToString(",") }).shouldBeSuccess()
+    target.import(lines.map { it.joinToString(",") }).shouldBeSuccess()
 
-      verify { useRepository.upsertAll(uses) }
-      verify { useRepository.upsertAllKeepingStrains(emptyList()) }
-    }
-
-    test("Are kept for lines from before strains") {
-      val uses = UseArb.take(3).toList()
-
-      target.import(uses.map { it.columns().joinToString(",") }).shouldBeSuccess()
-
-      verify { useRepository.upsertAllKeepingStrains(uses) }
-      verify { useRepository.upsertAll(emptyList()) }
-    }
+    verify { useRepository.upsertAllKeepingStrains(uses) }
+    verify(exactly = 0) { useRepository.upsertAll(any()) }
   }
 
   context("Data ingestion") {
@@ -129,7 +119,7 @@ class UseImporterTest : FunSpec({
 
       shouldNotThrowAny {
         verify {
-          useRepository.upsertAll(emptyList())
+          useRepository.upsertAllKeepingStrains(emptyList())
         }
       }
     }
@@ -144,7 +134,7 @@ class UseImporterTest : FunSpec({
 
     val flm = Strain("420 Evo FLM", BigDecimal("27"), BigDecimal("1"))
     fun line(strain: Strain?) =
-      (UseArb.take(1).single().columns() + (strain?.columns() ?: List(6) { "" })).joinToString(",")
+      (UseArb.take(1).single().columns() + (strain?.columns() ?: List(Strain.CsvColumnCount) { "" })).joinToString(",")
 
     test("Creates the strain a file names and links its uses to it") {
       with(Catalog()) {
@@ -222,6 +212,19 @@ class UseImporterTest : FunSpec({
       }
     }
 
+    test("Joins an id-less line to a strain the file names by id, even though it was renamed here since") {
+      with(Catalog()) {
+        val renamed = flm.copy(name = "FLM, 2023 batch")
+        strains.upsert(renamed)
+        val idLess = (UseArb.take(1).single().columns() + listOf("", flm.name)).joinToString(",")
+
+        importer.import(listOf(line(flm), idLess)).shouldBeSuccess()
+
+        strains.allNow() shouldContainExactly listOf(renamed)
+        uses.all().first().map { it.strainId }.toSet() shouldBe setOf(renamed.id)
+      }
+    }
+
     test("Restoring onto an empty catalog brings strains back as they were") {
       with(Catalog()) {
         val archived = Strain("Old batch", BigDecimal("22"), BigDecimal("1"), BigDecimal("9.80"), isArchived = true)
@@ -246,7 +249,7 @@ class UseImporterTest : FunSpec({
     context("An existing use") {
       val existing = UseArb.take(1).single().copy(strainId = flm.id)
       fun legacyLine() = existing.columns().joinToString(",")
-      fun emptyStrainLine() = (existing.columns() + List(6) { "" }).joinToString(",")
+      fun emptyStrainLine() = (existing.columns() + List(Strain.CsvColumnCount) { "" }).joinToString(",")
 
       test("keeps its strain when the line comes from before strains") {
         with(Catalog()) {
@@ -259,14 +262,26 @@ class UseImporterTest : FunSpec({
         }
       }
 
-      test("loses its strain when the line says it had none") {
+      test("keeps its strain when the line has empty strain columns, as an import never unlinks") {
         with(Catalog()) {
           strains.upsert(flm)
           uses.upsert(existing)
 
           importer.import(listOf(emptyStrainLine())).shouldBeSuccess()
 
-          uses.all().first().single().strainId shouldBe null
+          uses.all().first().single().strainId shouldBe flm.id
+        }
+      }
+
+      test("takes the strain the line names") {
+        with(Catalog()) {
+          val bedrocan = Strain("Bedrocan", id = "bedrocan")
+          strains.upsertAll(listOf(flm, bedrocan))
+          uses.upsert(existing)
+
+          importer.import(listOf((existing.columns() + bedrocan.columns()).joinToString(","))).shouldBeSuccess()
+
+          uses.all().first().single().strainId shouldBe bedrocan.id
         }
       }
     }
@@ -284,7 +299,7 @@ class UseImporterTest : FunSpec({
       val database = inMemoryDatabase()
       val strains = StrainRepository(database.strainQueries)
       val failingUses = spyk(UseRepository(database.useQueries)) {
-        every { upsertAll(any()) } throws IllegalStateException("disk full")
+        every { upsertAllKeepingStrains(any()) } throws IllegalStateException("disk full")
       }
 
       UseImporter(failingUses, strains, database).import(listOf(line(flm))).shouldBeFailure()
