@@ -17,11 +17,17 @@ data class Use(
 
   val description: String = "",
 
-  val consumptionMethod: ConsumptionMethod? = null
+  val consumptionMethod: ConsumptionMethod? = null,
+
+  val strainId: String? = null
 ) {
   @Transient
   val localDate: LocalDate = date.toLocalDate()
 
+  /**
+   * This use's own CSV columns. The strain's columns follow them, written from the catalog by the serializer,
+   * which is why [strainId] is not here.
+   */
   fun columns(): List<String> = listOf(
     date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
     amountGrams.toPlainString(),
@@ -42,6 +48,7 @@ data class Use(
     if (costPerGram != other.costPerGram) return false
     if (description != other.description) return false
     if (consumptionMethod != other.consumptionMethod) return false
+    if (strainId != other.strainId) return false
 
     return true
   }
@@ -52,6 +59,7 @@ data class Use(
     result = 31 * result + costPerGram.hashCode()
     result = 31 * result + description.hashCode()
     result = 31 * result + (consumptionMethod?.hashCode() ?: 0)
+    result = 31 * result + (strainId?.hashCode() ?: 0)
     return result
   }
 }

@@ -18,20 +18,30 @@
 
 package br.com.colman.petals.use.io.input
 
+import app.cash.sqldelight.Transacter
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 
 class UseImporter(
-  private val useRepository: UseRepository
+  private val useRepository: UseRepository,
+  private val strainRepository: StrainRepository,
+  private val transacter: Transacter
 ) {
 
   fun import(csvFileLines: List<String>, modifyUse: (Use) -> (Use) = { it }): Result<Unit> = runCatching {
-    val uses = csvFileLines.mapIndexed { index, s ->
+    val rows = csvFileLines.mapIndexed { index, s ->
       UseCsvParser.parse(s).onFailure {
         if (index > 0) throw it
       }
     }.mapNotNull { it.getOrNull() }
 
-    useRepository.upsertAll(uses.map(modifyUse))
+    val strains = StrainResolver(strainRepository.allNow())
+    val uses = rows.map { (use, strain) -> modifyUse(use.copy(strainId = strain?.let(strains::resolve)?.id)) }
+
+    transacter.transaction {
+      strainRepository.upsertAll(strains.created)
+      useRepository.upsertAll(uses)
+    }
   }
 }

@@ -2,6 +2,7 @@ package br.com.colman.petals.use.io.output
 
 import android.content.Context
 import android.content.res.Resources
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.repository.UseRepository
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
@@ -17,6 +18,7 @@ class UseOutputModuleTest : FunSpec({
       UseOutputModule,
       module {
         single { mockk<UseRepository>() }
+        single { mockk<StrainRepository>() }
         single { mockk<Resources>(relaxed = true) }
         single {
           mockk<Context> {

@@ -82,6 +82,20 @@ class UseTest : FunSpec({
 
       use1 shouldNotBeEqual use2
     }
+
+    test("different strainId should not be equal") {
+      val use1 = Use(strainId = "flm")
+      val use2 = use1.copy(strainId = "bedrocan")
+
+      use1 shouldNotBeEqual use2
+    }
+
+    test("null and non-null strainId should not be equal") {
+      val use1 = Use(strainId = null)
+      val use2 = use1.copy(strainId = "flm")
+
+      use1 shouldNotBeEqual use2
+    }
   }
 
   context("Hashcode") {
@@ -140,6 +154,20 @@ class UseTest : FunSpec({
       val use2 = Use(consumptionMethod = ConsumptionMethod.VAPORIZED)
 
       use1 shouldNotBeEqual use2
+      use1.hashCode() shouldNotBe use2.hashCode()
+    }
+
+    test("different strainId => different hash code") {
+      val use1 = Use(strainId = "flm")
+      val use2 = use1.copy(strainId = "bedrocan")
+
+      use1.hashCode() shouldNotBe use2.hashCode()
+    }
+
+    test("null and non-null strainId => different hash code") {
+      val use1 = Use(strainId = null)
+      val use2 = use1.copy(strainId = "flm")
+
       use1.hashCode() shouldNotBe use2.hashCode()
     }
   }

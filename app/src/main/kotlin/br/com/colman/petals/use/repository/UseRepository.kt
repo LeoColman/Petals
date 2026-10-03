@@ -61,7 +61,8 @@ fun Use.toEntity(): UseEntity = UseEntity(
   costPerGram.toPlainString(),
   id,
   description,
-  consumptionMethod?.key.orEmpty()
+  consumptionMethod?.key.orEmpty(),
+  strainId
 )
 
 fun UseEntity.toUse() = Use(
@@ -70,5 +71,6 @@ fun UseEntity.toUse() = Use(
   cost_per_gram.toBigDecimal(),
   id,
   description,
-  ConsumptionMethod.fromKey(consumption_method)
+  ConsumptionMethod.fromKey(consumption_method),
+  strain_id
 )

@@ -243,4 +243,8 @@
     <string name="ignore_longest_daily_delay">Ignore longest daily delay</string>
     <string name="ignore_longest_daily_delay_description">Useful to ignore sleeping time when calculating average time between sessions</string>
     <string name="duplicate_use">Duplicate use</string>
+    <string name="strain_id_label">strain_id</string>
+    <string name="strain_name_label">strain_name</string>
+    <string name="strain_thc_label">strain_thc_percent</string>
+    <string name="strain_cbd_label">strain_cbd_percent</string>
 </resources>

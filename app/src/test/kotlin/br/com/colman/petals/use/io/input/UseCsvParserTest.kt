@@ -1,5 +1,6 @@
 package br.com.colman.petals.use.io.input
 
+import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.UseArb
 import br.com.colman.petals.use.io.UseCsvArb
 import br.com.colman.petals.use.repository.ConsumptionMethod
@@ -21,7 +22,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow() shouldBe use
+    parsed.getOrThrow().use shouldBe use
   }
 
   test("Returns failure if an invalid line is passed") {
@@ -44,7 +45,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow().id shouldBe use.id
+    parsed.getOrThrow().use.id shouldBe use.id
   }
 
   test("Creates new id if id field is empty") {
@@ -52,7 +53,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow().id.shouldBeUUID()
+    parsed.getOrThrow().use.id.shouldBeUUID()
   }
 
   test("Creates new id if id field is not present") {
@@ -60,7 +61,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().dropLast(1).joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow().id.shouldBeUUID()
+    parsed.getOrThrow().use.id.shouldBeUUID()
   }
 
   test("Parsers the description field if present") {
@@ -68,7 +69,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow().description shouldBe "my description"
+    parsed.getOrThrow().use.description shouldBe "my description"
   }
 
   test("Parsers the description field to empty if absent") {
@@ -76,7 +77,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().dropLast(2).joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow().description shouldBe ""
+    parsed.getOrThrow().use.description shouldBe ""
   }
 
   test("Parses the consumption method field if present") {
@@ -84,7 +85,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow().consumptionMethod shouldBe ConsumptionMethod.VAPORIZED
+    parsed.getOrThrow().use.consumptionMethod shouldBe ConsumptionMethod.VAPORIZED
   }
 
   test("Parses the consumption method field to null if absent (legacy 5-column CSV)") {
@@ -95,7 +96,7 @@ class UseCsvParserTest : FunSpec({
 
     val parsed = UseCsvParser.parse(legacyCsv)
 
-    parsed.getOrThrow().consumptionMethod shouldBe null
+    parsed.getOrThrow().use.consumptionMethod shouldBe null
   }
 
   test("Parses the consumption method field to null if the key is unknown") {
@@ -103,7 +104,7 @@ class UseCsvParserTest : FunSpec({
     val csvWithUnknownMethod = use.columns().dropLast(1).plus("unknown-method").joinToString(",")
     val parsed = UseCsvParser.parse(csvWithUnknownMethod)
 
-    parsed.getOrThrow().consumptionMethod shouldBe null
+    parsed.getOrThrow().use.consumptionMethod shouldBe null
   }
 
   test("Parses successfully even if extra fields are present") {
@@ -112,7 +113,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().plus(extraField).joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow() shouldBe use
+    parsed.getOrThrow().use shouldBe use
   }
 
   test("Returns failure if date is not in ISO_LOCAL_DATE_TIME format") {
@@ -148,7 +149,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow() shouldBe use
+    parsed.getOrThrow().use shouldBe use
   }
 
   test("Parses successfully when amount and cost are zero") {
@@ -156,7 +157,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow() shouldBe use
+    parsed.getOrThrow().use shouldBe use
   }
 
   test("Parses successfully with very large amount and cost values") {
@@ -165,7 +166,7 @@ class UseCsvParserTest : FunSpec({
     val useCsv = use.columns().joinToString(",")
     val parsed = UseCsvParser.parse(useCsv)
 
-    parsed.getOrThrow() shouldBe use
+    parsed.getOrThrow().use shouldBe use
   }
 
   test("Returns failure if amount and cost have locale-specific formatting") {
@@ -190,5 +191,67 @@ class UseCsvParserTest : FunSpec({
   test("Returns failure if more than one line is passed") {
     val uses = UseCsvArb.take(Random.nextInt(2, 1000)).toList().joinToString("\n")
     UseCsvParser.parse(uses).shouldBeFailure()
+  }
+
+  context("strain columns") {
+    val strain = Strain("420 Evo FLM", BigDecimal("27.5"), BigDecimal("1"))
+
+    test("A line from before strains, without strain columns, has no strain") {
+      val use = UseArb.next()
+
+      UseCsvParser.parse(use.columns().joinToString(",")).getOrThrow().strain shouldBe null
+    }
+
+    test("Reads the strain the line names") {
+      val use = UseArb.next()
+      val row = UseCsvParser.parse((use.columns() + strain.columns()).joinToString(",")).getOrThrow()
+
+      row.strain shouldBe strain
+      row.use shouldBe use
+    }
+
+    test("Leaves the strain id off the use, for the importer to link") {
+      val use = UseArb.next()
+      val row = UseCsvParser.parse((use.columns() + strain.columns()).joinToString(",")).getOrThrow()
+
+      row.use.strainId shouldBe null
+    }
+
+    test("A strain id without a name is not a strain") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf(strain.id, "", "27", "1")).joinToString(",")
+
+      UseCsvParser.parse(line).getOrThrow().strain shouldBe null
+    }
+
+    test("A strain with a blank id gets a new one") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf("", strain.name, "", "")).joinToString(",")
+
+      UseCsvParser.parse(line).getOrThrow().strain!!.id.shouldBeUUID()
+    }
+
+    test("Trims the strain name") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf(strain.id, "  ${strain.name}  ", "", "")).joinToString(",")
+
+      UseCsvParser.parse(line).getOrThrow().strain!!.name shouldBe strain.name
+    }
+
+    test("Drops an unreadable potency instead of failing the line") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf(strain.id, strain.name, "lots", "1")).joinToString(",")
+      val parsed = UseCsvParser.parse(line).getOrThrow().strain!!
+
+      parsed.thcPercent shouldBe null
+      parsed.cbdPercent shouldBe BigDecimal("1")
+    }
+
+    test("Missing potency columns read as no potency") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf(strain.id, strain.name)).joinToString(",")
+
+      UseCsvParser.parse(line).getOrThrow().strain shouldBe Strain(strain.name, id = strain.id)
+    }
   }
 })

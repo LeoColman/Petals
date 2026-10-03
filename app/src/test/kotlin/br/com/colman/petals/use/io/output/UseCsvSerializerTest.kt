@@ -25,6 +25,12 @@ import br.com.colman.petals.R.string.cost_per_gram_label
 import br.com.colman.petals.R.string.date_label
 import br.com.colman.petals.R.string.description_label
 import br.com.colman.petals.R.string.id_label
+import br.com.colman.petals.R.string.strain_cbd_label
+import br.com.colman.petals.R.string.strain_id_label
+import br.com.colman.petals.R.string.strain_name_label
+import br.com.colman.petals.R.string.strain_thc_label
+import br.com.colman.petals.strain.repository.Strain
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.UseArb
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
@@ -43,12 +49,18 @@ import java.time.LocalDateTime
 
 class UseCsvSerializerTest : FunSpec({
   val useRepository = mockk<UseRepository>()
-  val useCsvHeaders = UseCsvHeaders("date", "amount", "cost", "id", "description", "method")
-  val target = UseCsvSerializer(useRepository, useCsvHeaders)
+  val strainRepository = mockk<StrainRepository> { every { all(any()) } returns flowOf(emptyList()) }
+  val useCsvHeaders = UseCsvHeaders(
+    "date", "amount", "cost", "id", "description", "method", "strain_id", "strain", "thc", "cbd"
+  )
+  val headerLine = "date,amount,cost,id,description,method,strain_id,strain,thc,cbd"
+  val target = UseCsvSerializer(useRepository, strainRepository, useCsvHeaders)
+
+  fun Use.lineWithoutStrain() = (columns() + List(4) { "" }).joinToString(",")
 
   test("Includes all values in resulting file") {
     val uses = UseArb.take(10).toList()
-    val usesCsv = uses.map { it.columns().joinToString(",") }
+    val usesCsv = uses.map { it.lineWithoutStrain() }
     every { useRepository.all() } returns flowOf(uses)
 
     val file = target.computeUseCsv()
@@ -62,7 +74,7 @@ class UseCsvSerializerTest : FunSpec({
 
     val file = target.computeUseCsv()
 
-    file shouldStartWith "date,amount,cost,id,description,method\n"
+    file shouldStartWith "$headerLine\n"
   }
 
   test("Produces CSV with only headers when there is no data") {
@@ -71,7 +83,7 @@ class UseCsvSerializerTest : FunSpec({
 
     val file = target.computeUseCsv()
 
-    file shouldBe "date,amount,cost,id,description,method"
+    file shouldBe headerLine
   }
 
   test("Initializes headers from resources correctly") {
@@ -82,11 +94,15 @@ class UseCsvSerializerTest : FunSpec({
       every { getString(id_label) } returns "d"
       every { getString(description_label) } returns "e"
       every { getString(consumption_method_label) } returns "f"
+      every { getString(strain_id_label) } returns "g"
+      every { getString(strain_name_label) } returns "h"
+      every { getString(strain_thc_label) } returns "i"
+      every { getString(strain_cbd_label) } returns "j"
     }
 
     val localizedHeaders = UseCsvHeaders(resources)
 
-    localizedHeaders.toList() shouldBe listOf("a", "b", "c", "d", "e", "f")
+    localizedHeaders.toList() shouldBe listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j")
   }
 
   test("Throws exception when data retrieval fails") {
@@ -104,7 +120,7 @@ class UseCsvSerializerTest : FunSpec({
     val file = target.computeUseCsv()
 
     val csvLines = file.lines().drop(1)
-    val expectedCsvLines = uses.map { it.columns().joinToString(",") }
+    val expectedCsvLines = uses.map { it.lineWithoutStrain() }
 
     csvLines shouldBe expectedCsvLines
   }
@@ -127,13 +143,33 @@ class UseCsvSerializerTest : FunSpec({
   }
 
   test("Handles headers with non-ASCII characters") {
-    val localizedHeaders = UseCsvHeaders("ã", "æ", "̉ħ", "ŋ", "®", "µ")
-    val targetWithLocalizedHeaders = UseCsvSerializer(useRepository, localizedHeaders)
+    val localizedHeaders = UseCsvHeaders("ã", "æ", "̉ħ", "ŋ", "®", "µ", "ø", "ß", "þ", "ð")
+    val targetWithLocalizedHeaders = UseCsvSerializer(useRepository, strainRepository, localizedHeaders)
     val uses = UseArb.take(1).toList()
     every { useRepository.all() } returns flowOf(uses)
 
     val file = targetWithLocalizedHeaders.computeUseCsv()
 
-    file shouldStartWith "ã,æ,̉ħ,ŋ,®,µ\n"
+    file shouldStartWith "ã,æ,̉ħ,ŋ,®,µ,ø,ß,þ,ð\n"
+  }
+
+  context("strain columns") {
+    val strain = Strain("420 Evo FLM", BigDecimal("27.5"), BigDecimal("1"))
+
+    test("Writes each use's strain after the use's own columns") {
+      val use = UseArb.take(1).single().copy(strainId = strain.id)
+      every { useRepository.all() } returns flowOf(listOf(use))
+      every { strainRepository.all(any()) } returns flowOf(listOf(strain))
+
+      target.computeUseCsv().lines()[1] shouldBe (use.columns() + strain.columns()).joinToString(",")
+    }
+
+    test("Leaves the strain columns empty for a use whose strain is gone") {
+      val use = UseArb.take(1).single().copy(strainId = "deleted")
+      every { useRepository.all() } returns flowOf(listOf(use))
+      every { strainRepository.all(any()) } returns flowOf(listOf(strain))
+
+      target.computeUseCsv().lines()[1] shouldBe use.lineWithoutStrain()
+    }
   }
 })

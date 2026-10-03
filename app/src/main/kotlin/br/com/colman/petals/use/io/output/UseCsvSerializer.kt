@@ -25,6 +25,11 @@ import br.com.colman.petals.R.string.consumption_method_label
 import br.com.colman.petals.R.string.cost_per_gram_label
 import br.com.colman.petals.R.string.date_label
 import br.com.colman.petals.R.string.id_label
+import br.com.colman.petals.R.string.strain_cbd_label
+import br.com.colman.petals.R.string.strain_id_label
+import br.com.colman.petals.R.string.strain_name_label
+import br.com.colman.petals.R.string.strain_thc_label
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.repository.UseRepository
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import kotlinx.coroutines.flow.first
@@ -37,7 +42,11 @@ data class UseCsvHeaders(
   val costPerGram: String,
   val id: String,
   val description: String,
-  val consumptionMethod: String
+  val consumptionMethod: String,
+  val strainId: String,
+  val strainName: String,
+  val strainThc: String,
+  val strainCbd: String
 ) {
   constructor(resources: Resources) : this(
     resources.getString(date_label),
@@ -45,19 +54,42 @@ data class UseCsvHeaders(
     resources.getString(cost_per_gram_label),
     resources.getString(id_label),
     resources.getString(R.string.description_label),
-    resources.getString(consumption_method_label)
+    resources.getString(consumption_method_label),
+    resources.getString(strain_id_label),
+    resources.getString(strain_name_label),
+    resources.getString(strain_thc_label),
+    resources.getString(strain_cbd_label)
   )
 
-  fun toList() = listOf(date, amount, costPerGram, id, description, consumptionMethod)
+  fun toList() = listOf(
+    date,
+    amount,
+    costPerGram,
+    id,
+    description,
+    consumptionMethod,
+    strainId,
+    strainName,
+    strainThc,
+    strainCbd
+  )
 }
 
 class UseCsvSerializer(
   private val useRepository: UseRepository,
+  private val strainRepository: StrainRepository,
   private val useCsvHeaders: UseCsvHeaders
 ) {
 
+  /**
+   * Every use, each followed by its strain's columns. A use without a strain, or whose strain is gone, gets empty
+   * strain columns, which reads back as no strain.
+   */
   suspend fun computeUseCsv(): String {
-    val uses = useRepository.all().first().map { it.columns() }
+    val strains = strainRepository.all().first().associateBy { it.id }
+    val uses = useRepository.all().first().map { use ->
+      use.columns() + (use.strainId?.let(strains::get)?.columns() ?: NoStrainColumns)
+    }
     val content = listOf(useCsvHeaders.toList()) + uses
 
     return serialize(content)
@@ -74,3 +106,5 @@ class UseCsvSerializer(
     return strOutput.toByteArray().toString(UTF_8)
   }
 }
+
+private val NoStrainColumns = List(4) { "" }

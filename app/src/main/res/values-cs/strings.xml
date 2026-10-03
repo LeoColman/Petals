@@ -211,4 +211,8 @@
     <string name="method_other">Jiné</string>
     <string name="method_unspecified">Neurčeno</string>
     <string name="duplicate_use">Duplikovat užití</string>
+    <string name="strain_id_label">odrůda_id</string>
+    <string name="strain_name_label">odrůda_název</string>
+    <string name="strain_thc_label">odrůda_thc_procent</string>
+    <string name="strain_cbd_label">odrůda_cbd_procent</string>
 </resources>

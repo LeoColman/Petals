@@ -177,4 +177,8 @@
     <string name="method_other">Autre</string>
     <string name="method_unspecified">Non spécifié</string>
     <string name="duplicate_use">Dupliquer l\'utilisation</string>
+    <string name="strain_id_label">variété_id</string>
+    <string name="strain_name_label">variété_nom</string>
+    <string name="strain_thc_label">variété_thc_pourcentage</string>
+    <string name="strain_cbd_label">variété_cbd_pourcentage</string>
 </resources>

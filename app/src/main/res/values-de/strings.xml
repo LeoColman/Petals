@@ -207,4 +207,8 @@
     <string name="method_other">Andere</string>
     <string name="method_unspecified">Nicht angegeben</string>
     <string name="duplicate_use">Konsum duplizieren</string>
+    <string name="strain_id_label">sorte_id</string>
+    <string name="strain_name_label">sorte_name</string>
+    <string name="strain_thc_label">sorte_thc_prozent</string>
+    <string name="strain_cbd_label">sorte_cbd_prozent</string>
 </resources>

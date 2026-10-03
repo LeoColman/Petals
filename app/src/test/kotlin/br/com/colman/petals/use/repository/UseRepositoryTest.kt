@@ -70,6 +70,20 @@ class UseRepositoryTest : FunSpec({
     target.all().first().single() shouldBe use
   }
 
+  test("Keeps the strain a use was logged with") {
+    val withStrain = use.copy(strainId = "420-evo-flm")
+    target.upsert(withStrain)
+
+    target.all().first().single().strainId shouldBe "420-evo-flm"
+  }
+
+  test("Upsert can clear a use's strain") {
+    target.upsert(use.copy(strainId = "420-evo-flm"))
+    target.upsert(use.copy(strainId = null))
+
+    target.all().first().single().strainId shouldBe null
+  }
+
   test("Count All should return 0 when empty") {
     target.countAll().first() shouldBe 0
   }

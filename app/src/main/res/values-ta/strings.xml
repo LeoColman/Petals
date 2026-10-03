@@ -200,4 +200,8 @@
     <string name="method_other">மற்றவை</string>
     <string name="method_unspecified">குறிப்பிடப்படவில்லை</string>
     <string name="duplicate_use">பயன்பாட்டை நகலெடு</string>
+    <string name="strain_id_label">வகை_id</string>
+    <string name="strain_name_label">வகை_பெயர்</string>
+    <string name="strain_thc_label">வகை_thc_சதவீதம்</string>
+    <string name="strain_cbd_label">வகை_cbd_சதவீதம்</string>
 </resources>
