@@ -1,8 +1,6 @@
 package br.com.colman.petals.strain.repository
 
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
-import br.com.colman.petals.Database
+import br.com.colman.petals.inMemoryDatabase
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 import io.kotest.core.spec.style.FunSpec
@@ -17,10 +15,7 @@ import java.util.Locale
 
 class StrainRepositoryTest : FunSpec({
 
-  val database = JdbcSqliteDriver(IN_MEMORY).let {
-    Database.Schema.create(it)
-    Database(it)
-  }
+  val database = inMemoryDatabase()
 
   val target = StrainRepository(database.strainQueries)
   val uses = UseRepository(database.useQueries)

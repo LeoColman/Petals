@@ -78,6 +78,14 @@ class StrainTest : FunSpec({
       Strain("\u03c4\u03b1\u03c3").hasName("\u03c4\u03b1\u03c2").shouldBeTrue()
     }
 
+    test("Matches a Greek name whose case mapping decomposes a letter") {
+      Strain("\u0390").hasName("\u03aa\u0301").shouldBeTrue()
+    }
+
+    test("Matches a Turkish dotted capital I with its lowercase spelling") {
+      Strain("\u0130stanbul").hasName("i\u0307stanbul").shouldBeTrue()
+    }
+
     test("Does not match a different name") {
       strain.hasName("420 Evo FLM 2").shouldBeFalse()
     }

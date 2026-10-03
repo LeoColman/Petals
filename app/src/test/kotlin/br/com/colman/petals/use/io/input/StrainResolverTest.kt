@@ -144,6 +144,34 @@ class StrainResolverTest : FunSpec({
     }
   }
 
+  context("resolveAll") {
+    test("Keeps each strain in its line's place, with no strain where a line had none") {
+      val target = StrainResolver(listOf(bedrocan))
+
+      target.resolveAll(listOf(flm, null, bedrocan.copy(id = ""))) shouldBe listOf(flm, null, bedrocan)
+    }
+
+    test("Joins an id-less line to the strain a later line gives the id of, instead of making two") {
+      val withId = Strain("Bedrocan", id = "from-the-file")
+      val idLess = Strain("bedrocan", id = "")
+      val target = StrainResolver(emptyList())
+
+      val resolved = target.resolveAll(listOf(idLess, withId))
+
+      resolved.forEach { it shouldBeSameInstanceAs withId }
+      target.created shouldContainExactly listOf(withId)
+    }
+
+    test("Gives id-less lines the preferred strain among those it created, whatever their order") {
+      val idLess = Strain("Bedrocan", id = "")
+      val b = Strain("Bedrocan", id = "b")
+      val a = Strain("Bedrocan", id = "a")
+
+      StrainResolver(emptyList()).resolveAll(listOf(b, a, idLess)).last() shouldBeSameInstanceAs a
+      StrainResolver(emptyList()).resolveAll(listOf(a, b, idLess)).last() shouldBeSameInstanceAs a
+    }
+  }
+
   test("Lists the strains it created in the order it created them") {
     val target = StrainResolver(emptyList())
 

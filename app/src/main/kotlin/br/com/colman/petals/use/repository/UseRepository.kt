@@ -6,6 +6,7 @@ import app.cash.sqldelight.coroutines.mapToOneOrNull
 import br.com.colman.petals.SelectAllWithStrain
 import br.com.colman.petals.UseQueries
 import br.com.colman.petals.strain.repository.Strain
+import br.com.colman.petals.strain.repository.toStrain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
@@ -15,6 +16,7 @@ import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.LocalDateTime.parse
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
+import br.com.colman.petals.Strain as StrainEntity
 import br.com.colman.petals.Use as UseEntity
 
 class UseRepository(
@@ -29,6 +31,16 @@ class UseRepository(
 
   fun upsert(use: Use) {
     useQueries.upsert(use.toEntity())
+  }
+
+  /**
+   * Like [upsertAll], except that an existing use keeps the strain it has. For imported lines from before strains,
+   * which say nothing about the strain, so an old backup can't wipe it.
+   */
+  fun upsertAllKeepingStrains(uses: Iterable<Use>) {
+    useQueries.transaction {
+      uses.forEach { useQueries.upsertKeepingStrain(it.toEntity()) }
+    }
   }
 
   fun getLastUse(dispatcher: CoroutineDispatcher = IO) =
@@ -59,10 +71,6 @@ class UseRepository(
     useQueries.selectAllWithStrain().asFlow().mapToList(dispatcher)
       .map { it.map(SelectAllWithStrain::toUseAndStrain) }
 
-  /** The strain of every use that has one, by use id, read once. */
-  fun strainIds(): Map<String, String> =
-    useQueries.selectStrainIds().executeAsList().associate { it.id to it.strain_id!! }
-
   fun delete(use: Use) {
     Timber.d("Deleting use: $use")
     useQueries.delete(use.id)
@@ -90,26 +98,18 @@ fun UseEntity.toUse() = Use(
 )
 
 private fun SelectAllWithStrain.toUseAndStrain(): Pair<Use, Strain?> {
-  val use = Use(
-    parse(date),
-    amount_grams.toBigDecimal(),
-    cost_per_gram.toBigDecimal(),
-    id,
-    description,
-    ConsumptionMethod.fromKey(consumption_method),
-    strain_id
-  )
+  val use = UseEntity(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id).toUse()
   val strain = if (strain_id == null || strain_name == null) {
     null
   } else {
-    Strain(
+    StrainEntity(
+      strain_id,
       strain_name,
-      strain_thc_percent?.toBigDecimal(),
-      strain_cbd_percent?.toBigDecimal(),
-      strain_cost_per_gram?.toBigDecimal(),
-      strain_is_archived == 1L,
-      strain_id
-    )
+      strain_thc_percent,
+      strain_cbd_percent,
+      strain_cost_per_gram,
+      strain_is_archived ?: 0
+    ).toStrain()
   }
   return use to strain
 }

@@ -19,6 +19,14 @@ ON CONFLICT (id) DO UPDATE SET date = excluded.date,
  strain_id = excluded.strain_id,
   cost_per_gram = excluded.cost_per_gram;
 
+upsertKeepingStrain:
+INSERT INTO Use(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id) VALUES ?
+ON CONFLICT (id) DO UPDATE SET date = excluded.date,
+ amount_grams = excluded.amount_grams,
+ description = excluded.description,
+ consumption_method = excluded.consumption_method,
+  cost_per_gram = excluded.cost_per_gram;
+
 selectLast:
 SELECT * FROM Use WHERE datetime(date) <= datetime('now', 'localtime') ORDER BY date DESC LIMIT 1;
 
@@ -44,6 +52,3 @@ DELETE FROM Use WHERE id IS (?);
 
 countAll:
 SELECT COUNT(*) FROM Use;
-
-selectStrainIds:
-SELECT id, strain_id FROM Use WHERE strain_id IS NOT NULL;

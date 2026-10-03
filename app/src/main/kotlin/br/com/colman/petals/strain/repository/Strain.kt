@@ -40,9 +40,10 @@ data class Strain(
     /**
      * Names count as the same strain regardless of case, surrounding spaces and how an accent was encoded, so
      * "Café Kush" typed on a phone matches the same name saved by a desktop tool as e + combining accent. Going
-     * through upper case first folds what lower case alone leaves apart, like "Straße" and "STRASSE".
+     * through upper case first folds what lower case alone leaves apart, like "Straße" and "STRASSE". Normalizing
+     * comes last, because case mapping can itself decompose a letter, as with Greek "ΐ".
      */
     fun nameKey(name: String): String =
-      Normalizer.normalize(name.trim(), Normalizer.Form.NFC).uppercase(Locale.ROOT).lowercase(Locale.ROOT)
+      Normalizer.normalize(name.trim().uppercase(Locale.ROOT).lowercase(Locale.ROOT), Normalizer.Form.NFC)
   }
 }

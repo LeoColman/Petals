@@ -21,16 +21,17 @@ object UseCsvParser {
   private val csvReader = csvReader()
   private val Percentages = BigDecimal.ZERO..BigDecimal(100)
 
-  // Plain decimals only. Exponents like 1E-999999999 pass a range check yet make toPlainString build a string
-  // of a billion digits, so they are refused before they become numbers.
+  // Plain decimals only. Exponents like 1E-999999999 are tiny or huge numbers that make toPlainString build a
+  // string of a billion digits, so they are refused before they become numbers.
+  private val PlainDecimal = Regex("-?[0-9]+([.][0-9]+)?")
   private val PlainPercentage = Regex("[0-9]{1,3}([.][0-9]{1,6})?")
 
   fun parse(line: String): Result<UseCsvRow> = runCatching {
     val values = csvReader.readAll(line).single()
 
     val dateTime = parseDateTime(values[0])
-    val amount = values[1].toBigDecimal()
-    val cost = values[2].toBigDecimal()
+    val amount = parseDecimal(values[1])
+    val cost = parseDecimal(values[2])
     val id = parseOrGenerateUUID(values.getOrNull(3))
     val description = values.getOrElse(4) { "" }
     val consumptionMethod = ConsumptionMethod.fromKey(values.getOrElse(5) { "" })
@@ -49,9 +50,17 @@ object UseCsvParser {
     return Strain(name, parsePercentage(values.getOrNull(8)), parsePercentage(values.getOrNull(9)), id = id)
   }
 
-  /** Potencies are optional, so one that isn't a percentage is dropped rather than failing the whole line. */
-  private fun parsePercentage(value: String?) =
-    value?.trim()?.takeIf { it.matches(PlainPercentage) }?.toBigDecimal()?.takeIf { it in Percentages }
+  private fun parseDecimal(value: String): BigDecimal {
+    require(value.matches(PlainDecimal)) { "Not a plain decimal: $value" }
+    return value.toBigDecimal()
+  }
+
+  /**
+   * Potencies are optional, so one that isn't a percentage is dropped rather than failing the whole line. A trailing
+   * percent sign, as a spreadsheet formats the column, is fine.
+   */
+  private fun parsePercentage(value: String?) = value?.trim()?.removeSuffix("%")?.trim()
+    ?.takeIf { it.matches(PlainPercentage) }?.toBigDecimal()?.takeIf { it in Percentages }
 
   private fun parseDateTime(date: String) = LocalDateTime.parse(date, ISO_LOCAL_DATE_TIME)
 

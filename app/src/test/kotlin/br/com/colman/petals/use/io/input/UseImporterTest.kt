@@ -1,8 +1,7 @@
 package br.com.colman.petals.use.io.input
 
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
 import br.com.colman.petals.Database
+import br.com.colman.petals.inMemoryDatabase
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.UseArb
@@ -30,7 +29,7 @@ import java.math.BigDecimal
 import kotlin.random.Random
 
 class UseImporterTest : FunSpec({
-  val useRepository = mockk<UseRepository>(relaxed = true) { every { strainIds() } returns emptyMap() }
+  val useRepository = mockk<UseRepository>(relaxed = true)
   val strainRepository = mockk<StrainRepository>(relaxed = true) { every { allNow() } returns emptyList() }
   val target = UseImporter(useRepository, strainRepository, inMemoryDatabase())
 
@@ -64,21 +63,23 @@ class UseImporterTest : FunSpec({
     }
   }
 
-  context("Current strain links") {
-    test("Are not read when every line has strain columns") {
-      val lines = UseArb.take(3).toList().map { (it.columns() + List(4) { "" }).joinToString(",") }
+  context("Current strains") {
+    test("Are overwritten by lines with strain columns") {
+      val uses = UseArb.take(3).toList()
 
-      target.import(lines).shouldBeSuccess()
+      target.import(uses.map { (it.columns() + List(4) { "" }).joinToString(",") }).shouldBeSuccess()
 
-      verify(exactly = 0) { useRepository.strainIds() }
+      verify { useRepository.upsertAll(uses) }
+      verify { useRepository.upsertAllKeepingStrains(emptyList()) }
     }
 
-    test("Are read once for lines from before strains") {
-      val lines = UseArb.take(3).toList().map { it.columns().joinToString(",") }
+    test("Are kept for lines from before strains") {
+      val uses = UseArb.take(3).toList()
 
-      target.import(lines).shouldBeSuccess()
+      target.import(uses.map { it.columns().joinToString(",") }).shouldBeSuccess()
 
-      verify(exactly = 1) { useRepository.strainIds() }
+      verify { useRepository.upsertAllKeepingStrains(uses) }
+      verify { useRepository.upsertAll(emptyList()) }
     }
   }
 
@@ -103,7 +104,7 @@ class UseImporterTest : FunSpec({
 
       shouldNotThrowAny {
         verify {
-          useRepository.upsertAll(uses)
+          useRepository.upsertAllKeepingStrains(uses)
         }
       }
     }
@@ -116,7 +117,7 @@ class UseImporterTest : FunSpec({
 
       shouldNotThrowAny {
         verify {
-          useRepository.upsertAll(uses)
+          useRepository.upsertAllKeepingStrains(uses)
         }
       }
     }
@@ -135,8 +136,7 @@ class UseImporterTest : FunSpec({
   }
 
   context("Strains") {
-    class Catalog {
-      val database = inMemoryDatabase()
+    class Catalog(val database: Database = inMemoryDatabase()) {
       val uses = UseRepository(database.useQueries)
       val strains = StrainRepository(database.strainQueries)
       val importer = UseImporter(uses, strains, database)
@@ -210,6 +210,18 @@ class UseImporterTest : FunSpec({
       }
     }
 
+    test("Makes one strain when an id-less line comes before the line giving the strain's id") {
+      with(Catalog()) {
+        val bedrocan = Strain("Bedrocan", BigDecimal("22"), id = "from-the-file")
+        val idLess = (UseArb.take(1).single().columns() + listOf("", "Bedrocan", "22", "")).joinToString(",")
+
+        importer.import(listOf(idLess, line(bedrocan))).shouldBeSuccess()
+
+        strains.allNow().map { it.id } shouldBe listOf("from-the-file")
+        uses.all().first().map { it.strainId }.toSet() shouldBe setOf("from-the-file")
+      }
+    }
+
     test("Restoring onto an empty catalog keeps apart strains that share a name") {
       with(Catalog()) {
         val oldBatch = Strain(flm.name, BigDecimal("22"), isArchived = true)
@@ -271,11 +283,6 @@ class UseImporterTest : FunSpec({
     }
   }
 })
-
-private fun inMemoryDatabase() = JdbcSqliteDriver(IN_MEMORY).let {
-  Database.Schema.create(it)
-  Database(it)
-}
 
 val invalidUseCsvArb = UseCsvArb.map {
   Random.mutants(replaceWithPossiblyMeaningfulText(), 1, it)

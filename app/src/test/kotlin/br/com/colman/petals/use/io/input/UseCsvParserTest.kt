@@ -131,6 +131,14 @@ class UseCsvParserTest : FunSpec({
     UseCsvParser.parse(useCsv).shouldBeFailure()
   }
 
+  test("Returns failure if amount or cost uses an exponent, which toPlainString would blow up into a huge string") {
+    val use = UseArb.next()
+    val columns = use.columns()
+
+    UseCsvParser.parse((listOf(columns[0], "1E-3000000") + columns.drop(2)).joinToString(",")).shouldBeFailure()
+    UseCsvParser.parse((columns.take(2) + "1E+3000000" + columns.drop(3)).joinToString(",")).shouldBeFailure()
+  }
+
   test("Returns failure if cost is not a valid number") {
     val useCsv = "2023-10-16T12:00:00,100.00,invalidCost"
     UseCsvParser.parse(useCsv).shouldBeFailure()
@@ -313,6 +321,13 @@ class UseCsvParserTest : FunSpec({
 
       parsed.thcPercent shouldBe null
       parsed.cbdPercent shouldBe null
+    }
+
+    test("Reads a potency written with a percent sign") {
+      val use = UseArb.next()
+      val line = (use.columns() + listOf(strain.id, strain.name, "27.5%", "1 %")).joinToString(",")
+
+      UseCsvParser.parse(line).getOrThrow().strain shouldBe strain
     }
 
     test("Missing potency columns read as no potency") {

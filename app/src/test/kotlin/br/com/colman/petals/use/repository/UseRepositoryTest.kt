@@ -18,9 +18,7 @@
 
 package br.com.colman.petals.use.repository
 
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
-import br.com.colman.petals.Database
+import br.com.colman.petals.inMemoryDatabase
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.UseArb
@@ -37,10 +35,7 @@ import kotlin.system.measureTimeMillis
 
 class UseRepositoryTest : FunSpec({
 
-  val database = JdbcSqliteDriver(IN_MEMORY).let {
-    Database.Schema.create(it)
-    Database(it)
-  }
+  val database = inMemoryDatabase()
 
   val target = UseRepository(database.useQueries)
 
@@ -79,12 +74,21 @@ class UseRepositoryTest : FunSpec({
     target.all().first().single().strainId shouldBe "420-evo-flm"
   }
 
-  test("strainIds maps each use with a strain to it, and leaves out uses without one") {
-    target.upsertAll(
-      listOf(use.copy(id = "a", strainId = "flm"), use.copy(id = "b"), use.copy(id = "c", strainId = "bed"))
-    )
+  context("upsertAllKeepingStrains") {
+    test("Updates an existing use but keeps the strain it has") {
+      target.upsert(use.copy(strainId = "flm"))
+      val edited = use.copy(amountGrams = BigDecimal("0.5"), strainId = null)
 
-    target.strainIds() shouldBe mapOf("a" to "flm", "c" to "bed")
+      target.upsertAllKeepingStrains(listOf(edited))
+
+      target.all().first().single() shouldBe edited.copy(strainId = "flm")
+    }
+
+    test("Inserts a new use as it is") {
+      target.upsertAllKeepingStrains(listOf(use))
+
+      target.all().first().single() shouldBe use
+    }
   }
 
   context("allWithStrains") {
