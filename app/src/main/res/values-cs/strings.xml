@@ -215,4 +215,6 @@
     <string name="strain_name_label">odrůda_název</string>
     <string name="strain_thc_label">odrůda_thc_procent</string>
     <string name="strain_cbd_label">odrůda_cbd_procent</string>
+    <string name="strain_cost_label">odrůda_cena_za_gram</string>
+    <string name="strain_archived_label">odrůda_archivována</string>
 </resources>

@@ -247,4 +247,6 @@
     <string name="strain_name_label">strain_name</string>
     <string name="strain_thc_label">strain_thc_percent</string>
     <string name="strain_cbd_label">strain_cbd_percent</string>
+    <string name="strain_cost_label">strain_cost_per_gram</string>
+    <string name="strain_archived_label">strain_archived</string>
 </resources>

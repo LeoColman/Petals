@@ -197,4 +197,6 @@
     <string name="strain_name_label">varietà_nome</string>
     <string name="strain_thc_label">varietà_thc_percentuale</string>
     <string name="strain_cbd_label">varietà_cbd_percentuale</string>
+    <string name="strain_cost_label">varietà_costo_per_grammo</string>
+    <string name="strain_archived_label">varietà_archiviata</string>
 </resources>

@@ -204,4 +204,6 @@
     <string name="strain_name_label">வகை_பெயர்</string>
     <string name="strain_thc_label">வகை_thc_சதவீதம்</string>
     <string name="strain_cbd_label">வகை_cbd_சதவீதம்</string>
+    <string name="strain_cost_label">வகை_ஒரு_கிராமுக்கு_விலை</string>
+    <string name="strain_archived_label">வகை_காப்பகப்படுத்தப்பட்டது</string>
 </resources>

@@ -26,12 +26,17 @@ data class Strain(
   /** [name] in the form two names are compared in, see [nameKey]. */
   val nameKey: String get() = nameKey(name)
 
-  /** The strain's CSV columns, written after the use's own on every exported line. */
+  /**
+   * The strain's CSV columns, written after the use's own on every exported line. They hold the whole strain, so a
+   * backup restores the catalog as it was, archived strains and default costs included.
+   */
   fun columns(): List<String> = listOf(
     id,
     name,
     thcPercent?.toPlainString().orEmpty(),
-    cbdPercent?.toPlainString().orEmpty()
+    cbdPercent?.toPlainString().orEmpty(),
+    costPerGram?.toPlainString().orEmpty(),
+    isArchived.toString()
   )
 
   fun hasName(other: String): Boolean = nameKey == nameKey(other)

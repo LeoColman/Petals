@@ -25,6 +25,7 @@ object UseCsvParser {
   // string of a billion digits, so they are refused before they become numbers.
   private val PlainDecimal = Regex("-?[0-9]+([.][0-9]+)?")
   private val PlainPercentage = Regex("[0-9]{1,3}([.][0-9]{1,6})?")
+  private val PlainCost = Regex("[0-9]+([.][0-9]+)?")
 
   fun parse(line: String): Result<UseCsvRow> = runCatching {
     val values = csvReader.readAll(line).single()
@@ -46,8 +47,14 @@ object UseCsvParser {
     val name = values.getOrElse(7) { "" }.trim()
     if (name.isEmpty()) return null
 
-    val id = values.getOrNull(6)?.trim().orEmpty()
-    return Strain(name, parsePercentage(values.getOrNull(8)), parsePercentage(values.getOrNull(9)), id = id)
+    return Strain(
+      name,
+      parsePercentage(values.getOrNull(8)),
+      parsePercentage(values.getOrNull(9)),
+      values.getOrNull(10)?.trim()?.takeIf { it.matches(PlainCost) }?.toBigDecimal(),
+      values.getOrNull(11)?.trim().let { it.equals("true", ignoreCase = true) || it == "1" },
+      values.getOrNull(6)?.trim().orEmpty()
+    )
   }
 
   private fun parseDecimal(value: String): BigDecimal {

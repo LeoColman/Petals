@@ -67,7 +67,7 @@ class UseImporterTest : FunSpec({
     test("Are overwritten by lines with strain columns") {
       val uses = UseArb.take(3).toList()
 
-      target.import(uses.map { (it.columns() + List(4) { "" }).joinToString(",") }).shouldBeSuccess()
+      target.import(uses.map { (it.columns() + List(6) { "" }).joinToString(",") }).shouldBeSuccess()
 
       verify { useRepository.upsertAll(uses) }
       verify { useRepository.upsertAllKeepingStrains(emptyList()) }
@@ -144,7 +144,7 @@ class UseImporterTest : FunSpec({
 
     val flm = Strain("420 Evo FLM", BigDecimal("27"), BigDecimal("1"))
     fun line(strain: Strain?) =
-      (UseArb.take(1).single().columns() + (strain?.columns() ?: List(4) { "" })).joinToString(",")
+      (UseArb.take(1).single().columns() + (strain?.columns() ?: List(6) { "" })).joinToString(",")
 
     test("Creates the strain a file names and links its uses to it") {
       with(Catalog()) {
@@ -222,6 +222,16 @@ class UseImporterTest : FunSpec({
       }
     }
 
+    test("Restoring onto an empty catalog brings strains back as they were") {
+      with(Catalog()) {
+        val archived = Strain("Old batch", BigDecimal("22"), BigDecimal("1"), BigDecimal("9.80"), isArchived = true)
+
+        importer.import(listOf(line(archived))).shouldBeSuccess()
+
+        strains.allNow() shouldContainExactly listOf(archived)
+      }
+    }
+
     test("Restoring onto an empty catalog keeps apart strains that share a name") {
       with(Catalog()) {
         val oldBatch = Strain(flm.name, BigDecimal("22"), isArchived = true)
@@ -236,7 +246,7 @@ class UseImporterTest : FunSpec({
     context("An existing use") {
       val existing = UseArb.take(1).single().copy(strainId = flm.id)
       fun legacyLine() = existing.columns().joinToString(",")
-      fun emptyStrainLine() = (existing.columns() + List(4) { "" }).joinToString(",")
+      fun emptyStrainLine() = (existing.columns() + List(6) { "" }).joinToString(",")
 
       test("keeps its strain when the line comes from before strains") {
         with(Catalog()) {

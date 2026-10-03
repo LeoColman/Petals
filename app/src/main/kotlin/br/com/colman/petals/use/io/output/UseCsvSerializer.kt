@@ -25,7 +25,9 @@ import br.com.colman.petals.R.string.consumption_method_label
 import br.com.colman.petals.R.string.cost_per_gram_label
 import br.com.colman.petals.R.string.date_label
 import br.com.colman.petals.R.string.id_label
+import br.com.colman.petals.R.string.strain_archived_label
 import br.com.colman.petals.R.string.strain_cbd_label
+import br.com.colman.petals.R.string.strain_cost_label
 import br.com.colman.petals.R.string.strain_id_label
 import br.com.colman.petals.R.string.strain_name_label
 import br.com.colman.petals.R.string.strain_thc_label
@@ -45,7 +47,9 @@ data class UseCsvHeaders(
   val strainId: String,
   val strainName: String,
   val strainThc: String,
-  val strainCbd: String
+  val strainCbd: String,
+  val strainCostPerGram: String,
+  val strainArchived: String
 ) {
   constructor(resources: Resources) : this(
     resources.getString(date_label),
@@ -57,7 +61,9 @@ data class UseCsvHeaders(
     resources.getString(strain_id_label),
     resources.getString(strain_name_label),
     resources.getString(strain_thc_label),
-    resources.getString(strain_cbd_label)
+    resources.getString(strain_cbd_label),
+    resources.getString(strain_cost_label),
+    resources.getString(strain_archived_label)
   )
 
   fun toList() = listOf(
@@ -70,7 +76,9 @@ data class UseCsvHeaders(
     strainId,
     strainName,
     strainThc,
-    strainCbd
+    strainCbd,
+    strainCostPerGram,
+    strainArchived
   )
 }
 
@@ -104,4 +112,4 @@ class UseCsvSerializer(
   }
 }
 
-private val NoStrainColumns = List(4) { "" }
+private val NoStrainColumns = List(6) { "" }

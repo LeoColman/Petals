@@ -211,4 +211,6 @@
     <string name="strain_name_label">sorte_name</string>
     <string name="strain_thc_label">sorte_thc_prozent</string>
     <string name="strain_cbd_label">sorte_cbd_prozent</string>
+    <string name="strain_cost_label">sorte_kosten_pro_gramm</string>
+    <string name="strain_archived_label">sorte_archiviert</string>
 </resources>

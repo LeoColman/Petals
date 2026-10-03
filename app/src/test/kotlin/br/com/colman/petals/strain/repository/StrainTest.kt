@@ -20,20 +20,20 @@ class StrainTest : FunSpec({
   }
 
   context("columns()") {
-    test("Writes the id, name and potencies, without the cost or archived flag") {
+    test("Writes the whole strain: id, name, potencies, default cost and whether it is archived") {
       val strain = Strain("420 Evo FLM", BigDecimal("27.5"), BigDecimal("1"), BigDecimal("12.50"), true, "flm")
 
-      strain.columns() shouldBe listOf("flm", "420 Evo FLM", "27.5", "1")
+      strain.columns() shouldBe listOf("flm", "420 Evo FLM", "27.5", "1", "12.50", "true")
     }
 
-    test("Writes a missing potency as an empty column") {
-      Strain("Bedrocan", id = "bed").columns() shouldBe listOf("bed", "Bedrocan", "", "")
+    test("Writes a missing potency or cost as an empty column, and an active strain as not archived") {
+      Strain("Bedrocan", id = "bed").columns() shouldBe listOf("bed", "Bedrocan", "", "", "", "false")
     }
 
     test("Writes potencies as plain numbers, never in scientific notation") {
       val strain = Strain("Tiny", BigDecimal("1E-1"), BigDecimal("2E+1"), id = "t")
 
-      strain.columns() shouldBe listOf("t", "Tiny", "0.1", "20")
+      strain.columns() shouldBe listOf("t", "Tiny", "0.1", "20", "", "false")
     }
   }
 

@@ -214,4 +214,6 @@
     <string name="strain_name_label">сорт_назва</string>
     <string name="strain_thc_label">сорт_thc_відсоток</string>
     <string name="strain_cbd_label">сорт_cbd_відсоток</string>
+    <string name="strain_cost_label">сорт_ціна_за_грам</string>
+    <string name="strain_archived_label">сорт_в_архіві</string>
 </resources>

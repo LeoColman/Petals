@@ -214,7 +214,7 @@ class UseCsvParserTest : FunSpec({
 
     test("A line with empty strain columns has no strain but does have the columns") {
       val use = UseArb.next()
-      val row = UseCsvParser.parse((use.columns() + List(4) { "" }).joinToString(",")).getOrThrow()
+      val row = UseCsvParser.parse((use.columns() + List(6) { "" }).joinToString(",")).getOrThrow()
 
       row.strain shouldBe null
       row.hasStrainColumns shouldBe true
@@ -328,6 +328,36 @@ class UseCsvParserTest : FunSpec({
       val line = (use.columns() + listOf(strain.id, strain.name, "27.5%", "1 %")).joinToString(",")
 
       UseCsvParser.parse(line).getOrThrow().strain shouldBe strain
+    }
+
+    test("Reads the strain's default cost and archived flag back") {
+      val use = UseArb.next()
+      val full = strain.copy(costPerGram = BigDecimal("12.50"), isArchived = true)
+
+      UseCsvParser.parse((use.columns() + full.columns()).joinToString(",")).getOrThrow().strain shouldBe full
+    }
+
+    test("Drops a default cost that isn't a plain positive decimal") {
+      val use = UseArb.next()
+      listOf("-1", "1E+3000000", "twelve").forEach { cost ->
+        val line = (use.columns() + listOf(strain.id, strain.name, "", "", cost, "false")).joinToString(",")
+
+        UseCsvParser.parse(line).getOrThrow().strain!!.costPerGram shouldBe null
+      }
+    }
+
+    test("Reads the archived flag as true or 1, and anything else as active") {
+      val use = UseArb.next()
+      fun archivedFrom(value: String) = UseCsvParser.parse(
+        (use.columns() + listOf(strain.id, strain.name, "", "", "", value)).joinToString(",")
+      ).getOrThrow().strain!!.isArchived
+
+      archivedFrom("true") shouldBe true
+      archivedFrom("TRUE") shouldBe true
+      archivedFrom("1") shouldBe true
+      archivedFrom("false") shouldBe false
+      archivedFrom("") shouldBe false
+      archivedFrom("yes") shouldBe false
     }
 
     test("Missing potency columns read as no potency") {
