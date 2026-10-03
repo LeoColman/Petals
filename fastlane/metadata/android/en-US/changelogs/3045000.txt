@@ -1,0 +1,1 @@
+New: a duplicate button on every use. It opens the form with the amount, cost, notes and method already filled in and the date set to now, so logging a strain you had before means no retyping. The notes on each use can now be selected and copied too.
