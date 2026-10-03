@@ -30,7 +30,6 @@ import br.com.colman.petals.R.string.strain_id_label
 import br.com.colman.petals.R.string.strain_name_label
 import br.com.colman.petals.R.string.strain_thc_label
 import br.com.colman.petals.strain.repository.Strain
-import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.UseArb
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
@@ -49,19 +48,18 @@ import java.time.LocalDateTime
 
 class UseCsvSerializerTest : FunSpec({
   val useRepository = mockk<UseRepository>()
-  val strainRepository = mockk<StrainRepository> { every { all(any()) } returns flowOf(emptyList()) }
   val useCsvHeaders = UseCsvHeaders(
     "date", "amount", "cost", "id", "description", "method", "strain_id", "strain", "thc", "cbd"
   )
   val headerLine = "date,amount,cost,id,description,method,strain_id,strain,thc,cbd"
-  val target = UseCsvSerializer(useRepository, strainRepository, useCsvHeaders)
+  val target = UseCsvSerializer(useRepository, useCsvHeaders)
 
   fun Use.lineWithoutStrain() = (columns() + List(4) { "" }).joinToString(",")
 
   test("Includes all values in resulting file") {
     val uses = UseArb.take(10).toList()
     val usesCsv = uses.map { it.lineWithoutStrain() }
-    every { useRepository.all() } returns flowOf(uses)
+    every { useRepository.allWithStrains(any()) } returns flowOf(uses.map { it to null })
 
     val file = target.computeUseCsv()
 
@@ -70,7 +68,7 @@ class UseCsvSerializerTest : FunSpec({
 
   test("Includes the headers at the start of the file") {
     val uses = UseArb.take(10).toList()
-    every { useRepository.all() } returns flowOf(uses)
+    every { useRepository.allWithStrains(any()) } returns flowOf(uses.map { it to null })
 
     val file = target.computeUseCsv()
 
@@ -79,7 +77,7 @@ class UseCsvSerializerTest : FunSpec({
 
   test("Produces CSV with only headers when there is no data") {
     val emptyUses = emptyList<Use>()
-    every { useRepository.all() } returns flowOf(emptyUses)
+    every { useRepository.allWithStrains(any()) } returns flowOf(emptyUses.map { it to null })
 
     val file = target.computeUseCsv()
 
@@ -106,7 +104,7 @@ class UseCsvSerializerTest : FunSpec({
   }
 
   test("Throws exception when data retrieval fails") {
-    every { useRepository.all() } throws RuntimeException("Data retrieval failed")
+    every { useRepository.allWithStrains(any()) } throws RuntimeException("Data retrieval failed")
 
     shouldThrow<RuntimeException> {
       target.computeUseCsv()
@@ -115,7 +113,7 @@ class UseCsvSerializerTest : FunSpec({
 
   test("Data in CSV output matches data from repository") {
     val uses = UseArb.take(10).toList()
-    every { useRepository.all() } returns flowOf(uses)
+    every { useRepository.allWithStrains(any()) } returns flowOf(uses.map { it to null })
 
     val file = target.computeUseCsv()
 
@@ -133,7 +131,7 @@ class UseCsvSerializerTest : FunSpec({
       costPerGram = BigDecimal("78.90")
     )
     val uses = listOf(use)
-    every { useRepository.all() } returns flowOf(uses)
+    every { useRepository.allWithStrains(any()) } returns flowOf(uses.map { it to null })
 
     val file = target.computeUseCsv()
 
@@ -144,9 +142,9 @@ class UseCsvSerializerTest : FunSpec({
 
   test("Handles headers with non-ASCII characters") {
     val localizedHeaders = UseCsvHeaders("ã", "æ", "̉ħ", "ŋ", "®", "µ", "ø", "ß", "þ", "ð")
-    val targetWithLocalizedHeaders = UseCsvSerializer(useRepository, strainRepository, localizedHeaders)
+    val targetWithLocalizedHeaders = UseCsvSerializer(useRepository, localizedHeaders)
     val uses = UseArb.take(1).toList()
-    every { useRepository.all() } returns flowOf(uses)
+    every { useRepository.allWithStrains(any()) } returns flowOf(uses.map { it to null })
 
     val file = targetWithLocalizedHeaders.computeUseCsv()
 
@@ -158,16 +156,14 @@ class UseCsvSerializerTest : FunSpec({
 
     test("Writes each use's strain after the use's own columns") {
       val use = UseArb.take(1).single().copy(strainId = strain.id)
-      every { useRepository.all() } returns flowOf(listOf(use))
-      every { strainRepository.all(any()) } returns flowOf(listOf(strain))
+      every { useRepository.allWithStrains(any()) } returns flowOf(listOf(use to strain))
 
       target.computeUseCsv().lines()[1] shouldBe (use.columns() + strain.columns()).joinToString(",")
     }
 
     test("Leaves the strain columns empty for a use whose strain is gone") {
       val use = UseArb.take(1).single().copy(strainId = "deleted")
-      every { useRepository.all() } returns flowOf(listOf(use))
-      every { strainRepository.all(any()) } returns flowOf(listOf(strain))
+      every { useRepository.allWithStrains(any()) } returns flowOf(listOf(use to null))
 
       target.computeUseCsv().lines()[1] shouldBe use.lineWithoutStrain()
     }

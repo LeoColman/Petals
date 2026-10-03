@@ -38,7 +38,7 @@ class UseImporter(
 
     transacter.transaction {
       val strains = StrainResolver(strainRepository.allNow())
-      val currentStrainIds = useRepository.strainIds()
+      val currentStrainIds = lazy { useRepository.strainIds() }
       val uses = rows.map { row -> modifyUse(row.use.copy(strainId = row.strainId(strains, currentStrainIds))) }
 
       strainRepository.upsertAll(strains.created)
@@ -49,10 +49,11 @@ class UseImporter(
   /**
    * A line from before strains says nothing about the strain, so the use keeps the one it already has rather than
    * an old backup wiping it. A line with empty strain columns does say the use had none, like every other column.
+   * The current links are only read if a line from before strains needs them.
    */
-  private fun UseCsvRow.strainId(strains: StrainResolver, currentStrainIds: Map<String, String>): String? = when {
+  private fun UseCsvRow.strainId(strains: StrainResolver, currentStrainIds: Lazy<Map<String, String>>) = when {
     strain != null -> strains.resolve(strain).id
     hasStrainColumns -> null
-    else -> currentStrainIds[use.id]
+    else -> currentStrainIds.value[use.id]
   }
 }

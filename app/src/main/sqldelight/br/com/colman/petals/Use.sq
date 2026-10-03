@@ -25,6 +25,15 @@ SELECT * FROM Use WHERE datetime(date) <= datetime('now', 'localtime') ORDER BY 
 selectAll:
 SELECT * FROM Use;
 
+selectAllWithStrain:
+SELECT Use.*,
+  Strain.name AS strain_name,
+  Strain.thc_percent AS strain_thc_percent,
+  Strain.cbd_percent AS strain_cbd_percent,
+  Strain.cost_per_gram AS strain_cost_per_gram,
+  Strain.is_archived AS strain_is_archived
+FROM Use LEFT JOIN Strain ON Strain.id = Use.strain_id;
+
 selectSince:
 SELECT * FROM Use
 WHERE datetime(date) >= datetime(:from) AND datetime(date) <= datetime('now', 'localtime')

@@ -70,6 +70,14 @@ class StrainTest : FunSpec({
       Strain("Caf\u00e9 Kush").hasName("Cafe\u0301 Kush").shouldBeTrue()
     }
 
+    test("Folds case beyond what lower case alone does") {
+      Strain("Stra\u00dfe Kush").hasName("STRASSE KUSH").shouldBeTrue()
+    }
+
+    test("Matches a Greek name whichever sigma ends it") {
+      Strain("\u03c4\u03b1\u03c3").hasName("\u03c4\u03b1\u03c2").shouldBeTrue()
+    }
+
     test("Does not match a different name") {
       strain.hasName("420 Evo FLM 2").shouldBeFalse()
     }

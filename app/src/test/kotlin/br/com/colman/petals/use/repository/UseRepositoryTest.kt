@@ -21,6 +21,8 @@ package br.com.colman.petals.use.repository
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
 import br.com.colman.petals.Database
+import br.com.colman.petals.strain.repository.Strain
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.UseArb
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
@@ -83,6 +85,32 @@ class UseRepositoryTest : FunSpec({
     )
 
     target.strainIds() shouldBe mapOf("a" to "flm", "c" to "bed")
+  }
+
+  context("allWithStrains") {
+    val strains = StrainRepository(database.strainQueries)
+    val flm = Strain("420 Evo FLM", BigDecimal("27.5"), BigDecimal("1"), BigDecimal("12.50"), id = "flm")
+
+    test("Pairs each use with the strain it was logged with") {
+      strains.upsert(flm)
+      target.upsert(use.copy(strainId = flm.id))
+
+      target.allWithStrains().first().single() shouldBe (use.copy(strainId = flm.id) to flm)
+    }
+
+    test("Pairs a use without a strain with none") {
+      target.upsert(use)
+
+      target.allWithStrains().first().single() shouldBe (use to null)
+    }
+
+    test("Pairs a use whose strain is gone with none, but keeps its strain id") {
+      target.upsert(use.copy(strainId = "deleted"))
+
+      val (read, strain) = target.allWithStrains().first().single()
+      read.strainId shouldBe "deleted"
+      strain shouldBe null
+    }
   }
 
   test("Upsert can clear a use's strain") {

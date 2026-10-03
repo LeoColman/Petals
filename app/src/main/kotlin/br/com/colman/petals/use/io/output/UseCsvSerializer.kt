@@ -29,7 +29,6 @@ import br.com.colman.petals.R.string.strain_cbd_label
 import br.com.colman.petals.R.string.strain_id_label
 import br.com.colman.petals.R.string.strain_name_label
 import br.com.colman.petals.R.string.strain_thc_label
-import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.repository.UseRepository
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import kotlinx.coroutines.flow.first
@@ -77,22 +76,16 @@ data class UseCsvHeaders(
 
 class UseCsvSerializer(
   private val useRepository: UseRepository,
-  private val strainRepository: StrainRepository,
   private val useCsvHeaders: UseCsvHeaders
 ) {
 
   /**
    * Every use, each followed by its strain's columns. A use without a strain, or whose strain is gone, gets empty
    * strain columns, which reads back as no strain.
-   *
-   * Uses are read before strains: an import landing between the two reads only adds strains, which the uses already
-   * read can't refer to, while the other order would miss the strains of uses that import added.
    */
   suspend fun computeUseCsv(): String {
-    val uses = useRepository.all().first()
-    val strains = strainRepository.all().first().associateBy { it.id }
-    val lines = uses.map { use ->
-      use.columns() + (use.strainId?.let(strains::get)?.columns() ?: NoStrainColumns)
+    val lines = useRepository.allWithStrains().first().map { (use, strain) ->
+      use.columns() + (strain?.columns() ?: NoStrainColumns)
     }
     val content = listOf(useCsvHeaders.toList()) + lines
 

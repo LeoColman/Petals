@@ -64,6 +64,24 @@ class UseImporterTest : FunSpec({
     }
   }
 
+  context("Current strain links") {
+    test("Are not read when every line has strain columns") {
+      val lines = UseArb.take(3).toList().map { (it.columns() + List(4) { "" }).joinToString(",") }
+
+      target.import(lines).shouldBeSuccess()
+
+      verify(exactly = 0) { useRepository.strainIds() }
+    }
+
+    test("Are read once for lines from before strains") {
+      val lines = UseArb.take(3).toList().map { it.columns().joinToString(",") }
+
+      target.import(lines).shouldBeSuccess()
+
+      verify(exactly = 1) { useRepository.strainIds() }
+    }
+  }
+
   context("Data ingestion") {
     test("Doesn't call database when a line is wrong") {
       val wrongLine = "invalid,csv,line,is,invalid"

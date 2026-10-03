@@ -4,6 +4,8 @@ import br.com.colman.petals.strain.repository.Strain
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldBeUUID
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import java.math.BigDecimal
 
@@ -85,6 +87,61 @@ class StrainResolverTest : FunSpec({
     target.resolve(oldBatch) shouldBeSameInstanceAs oldBatch
     target.resolve(newBatch) shouldBeSameInstanceAs newBatch
     target.created shouldContainExactly listOf(oldBatch, newBatch)
+  }
+
+  test("Breaks a tie between active strains with the same name by id, whatever order the catalog came in") {
+    val first = Strain(flm.name, id = "a")
+    val second = Strain(flm.name, id = "b")
+
+    StrainResolver(listOf(first, second)).resolve(flm) shouldBeSameInstanceAs first
+    StrainResolver(listOf(second, first)).resolve(flm) shouldBeSameInstanceAs first
+  }
+
+  context("A strain the line gave no id") {
+    val idLess = Strain("Bedrocan", BigDecimal("22"), id = "")
+
+    test("is matched by name in the catalog") {
+      val catalogued = Strain("bedrocan", id = "catalogued")
+
+      StrainResolver(listOf(catalogued)).resolve(idLess) shouldBeSameInstanceAs catalogued
+    }
+
+    test("is matched by name to the active strain, even when an archived one has the name too") {
+      val archived = Strain("Bedrocan", isArchived = true, id = "a-archived")
+      val active = Strain("Bedrocan", id = "z-active")
+
+      StrainResolver(listOf(archived, active)).resolve(idLess) shouldBeSameInstanceAs active
+    }
+
+    test("is created with a new id when nothing has its name") {
+      val target = StrainResolver(emptyList())
+
+      val created = target.resolve(idLess)
+
+      created.id.shouldBeUUID()
+      created shouldBe idLess.copy(id = created.id)
+      target.created shouldContainExactly listOf(created)
+    }
+
+    test("lands on one strain however many lines name it") {
+      val target = StrainResolver(emptyList())
+
+      val created = target.resolve(idLess)
+      target.resolve(idLess.copy()) shouldBeSameInstanceAs created
+      target.resolve(idLess.copy(name = " BEDROCAN ")) shouldBeSameInstanceAs created
+
+      target.created shouldContainExactly listOf(created)
+    }
+
+    test("joins a strain with that name that this import created from an id") {
+      val withId = Strain("Bedrocan", id = "from-the-file")
+      val target = StrainResolver(emptyList())
+
+      target.resolve(withId)
+
+      target.resolve(idLess) shouldBeSameInstanceAs withId
+      target.created shouldContainExactly listOf(withId)
+    }
   }
 
   test("Lists the strains it created in the order it created them") {

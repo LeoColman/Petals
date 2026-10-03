@@ -3,7 +3,9 @@ package br.com.colman.petals.use.repository
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
+import br.com.colman.petals.SelectAllWithStrain
 import br.com.colman.petals.UseQueries
+import br.com.colman.petals.strain.repository.Strain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
@@ -49,6 +51,14 @@ class UseRepository(
     useQueries.selectSince(from.format(ISO_LOCAL_DATE_TIME)).asFlow().mapToList(dispatcher)
       .map { it.map(UseEntity::toUse) }
 
+  /**
+   * Every use with the strain it was logged with, read in one query so a use and its strain always come from the
+   * same moment. The strain is null for a use without one, or whose strain is gone.
+   */
+  fun allWithStrains(dispatcher: CoroutineDispatcher = IO): Flow<List<Pair<Use, Strain?>>> =
+    useQueries.selectAllWithStrain().asFlow().mapToList(dispatcher)
+      .map { it.map(SelectAllWithStrain::toUseAndStrain) }
+
   /** The strain of every use that has one, by use id, read once. */
   fun strainIds(): Map<String, String> =
     useQueries.selectStrainIds().executeAsList().associate { it.id to it.strain_id!! }
@@ -78,3 +88,28 @@ fun UseEntity.toUse() = Use(
   ConsumptionMethod.fromKey(consumption_method),
   strain_id
 )
+
+private fun SelectAllWithStrain.toUseAndStrain(): Pair<Use, Strain?> {
+  val use = Use(
+    parse(date),
+    amount_grams.toBigDecimal(),
+    cost_per_gram.toBigDecimal(),
+    id,
+    description,
+    ConsumptionMethod.fromKey(consumption_method),
+    strain_id
+  )
+  val strain = if (strain_id == null || strain_name == null) {
+    null
+  } else {
+    Strain(
+      strain_name,
+      strain_thc_percent?.toBigDecimal(),
+      strain_cbd_percent?.toBigDecimal(),
+      strain_cost_per_gram?.toBigDecimal(),
+      strain_is_archived == 1L,
+      strain_id
+    )
+  }
+  return use to strain
+}
