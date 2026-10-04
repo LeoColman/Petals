@@ -28,7 +28,9 @@ data class Strain(
 
   /**
    * The strain's CSV columns, written after the use's own on every exported line, in the order of [CsvHeader]. They
-   * hold the whole strain, so a backup restores the catalog as it was, archived strains and default costs included.
+   * hold the whole strain, so a backup restores every strain a use was logged with as it was, archived flag and
+   * default cost included. A strain no use was logged with has no line to ride on, so it isn't in the backup: every
+   * line is a use, and a line that isn't would make older versions of the app reject the whole file.
    */
   fun columns(): List<String> = listOf(
     id,

@@ -132,15 +132,7 @@ class UseCsvParserTest : FunSpec({
     UseCsvParser.parse(useCsv).shouldBeFailure()
   }
 
-  test("Returns failure if amount or cost uses an exponent so far out that it can't be stored") {
-    val use = UseArb.next()
-    val columns = use.columns()
-
-    UseCsvParser.parse((listOf(columns[0], "1E-3000000") + columns.drop(2)).joinToString(",")).shouldBeFailure()
-    UseCsvParser.parse((columns.take(2) + "1E+3000000" + columns.drop(3)).joinToString(",")).shouldBeFailure()
-  }
-
-  test("Reads amount and cost written as .5, +2 or with a small exponent, as other tools write them") {
+  test("Reads amount and cost written as .5, +2 or with an exponent, as other tools write them") {
     val columns = UseArb.next().columns()
     val parsed = UseCsvParser.parse((columns.take(1) + listOf(".5", "1.25e1") + columns.drop(3)).joinToString(","))
       .getOrThrow().use
@@ -294,13 +286,8 @@ class UseCsvParserTest : FunSpec({
         potencies("-5", "250") shouldBe (null to null)
       }
 
-      test("Is read with an exponent or sign as long as it stays short") {
+      test("Is read with an exponent or a sign") {
         potencies("2.7E1", "+1") shouldBe (BigDecimal("2.7E1") to BigDecimal("1"))
-      }
-
-      test("Is dropped when its exponent is so far out it can't be stored") {
-        potencies("1E+999999999", "1E-999999999") shouldBe (null to null)
-        potencies("0E-999999999", "1") shouldBe (null to BigDecimal("1"))
       }
 
       test("Keeps more than six decimals, so a stored potency survives a backup") {
@@ -313,7 +300,7 @@ class UseCsvParserTest : FunSpec({
     }
 
     test("Drops a default cost that is negative or can't be read") {
-      listOf("-1", "1E+3000000", "twelve").forEach { cost ->
+      listOf("-1", "twelve").forEach { cost ->
         strainOf(line(strain.id, strain.name, "", "", cost, "false"))!!.costPerGram shouldBe null
       }
     }

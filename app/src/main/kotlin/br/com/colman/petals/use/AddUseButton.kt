@@ -36,7 +36,6 @@ import br.com.colman.petals.R.string.yes_timer
 import br.com.colman.petals.review.ReviewAppRequester
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
-import br.com.colman.petals.utils.toBoundedDecimalOrNull
 import br.com.colman.petals.widgets.updateWidget
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Lock
@@ -200,8 +199,8 @@ private fun AddUseDialog(
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
-    amount.value.toBoundedDecimalOrNull() ?: ZERO,
-    costPerGram.value.toBoundedDecimalOrNull() ?: ZERO,
+    amount.value.toBigDecimalOrNull() ?: ZERO,
+    costPerGram.value.toBigDecimalOrNull() ?: ZERO,
     description = description.value,
     consumptionMethod = consumptionMethod.value,
     strainId = previousUse?.strainId

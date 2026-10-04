@@ -3,7 +3,6 @@ package br.com.colman.petals.use.io.input
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.ConsumptionMethod
 import br.com.colman.petals.use.repository.Use
-import br.com.colman.petals.utils.toBoundedDecimalOrNull
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -54,8 +53,8 @@ object UseCsvParser {
     val values = csvReader.readAll(line).single()
 
     val dateTime = parseDateTime(values[0])
-    val amount = parseDecimal(values[1])
-    val cost = parseDecimal(values[2])
+    val amount = values[1].toBigDecimal()
+    val cost = values[2].toBigDecimal()
     val id = parseOrGenerateUUID(values.getOrNull(3))
     val description = values.getOrElse(4) { "" }
     val consumptionMethod = ConsumptionMethod.fromKey(values.getOrElse(5) { "" })
@@ -79,17 +78,14 @@ object UseCsvParser {
       name,
       parsePercentage(valueOf(Strain.ThcColumn)),
       parsePercentage(valueOf(Strain.CbdColumn)),
-      valueOf(Strain.CostColumn)?.trim()?.toBoundedDecimalOrNull()?.takeIf { it >= BigDecimal.ZERO },
+      valueOf(Strain.CostColumn)?.trim()?.toBigDecimalOrNull()?.takeIf { it >= BigDecimal.ZERO },
       valueOf(Strain.ArchivedColumn)?.trim().let { it.equals("true", ignoreCase = true) || it == "1" }
     )
   }
 
-  private fun parseDecimal(value: String): BigDecimal =
-    requireNotNull(value.toBoundedDecimalOrNull()) { "Not a number this app can store: $value" }
-
   /** A trailing percent sign, as a spreadsheet formats the column, is fine. */
   private fun parsePercentage(value: String?) =
-    value?.trim()?.removeSuffix("%")?.trim()?.toBoundedDecimalOrNull()?.takeIf { it in Percentages }
+    value?.trim()?.removeSuffix("%")?.trim()?.toBigDecimalOrNull()?.takeIf { it in Percentages }
 
   private fun parseDateTime(date: String) = LocalDateTime.parse(date, ISO_LOCAL_DATE_TIME)
 
