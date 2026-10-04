@@ -18,7 +18,7 @@ class DayOfWeekFormatterTest : FunSpec({
       Pair(7f, "Sun")
     ) { (dayAsFloat, expectedDay) ->
 
-      val actual = DayOfWeekFormatter.getFormattedValue(dayAsFloat, null)
+      val actual = DayOfWeekFormatter(dayAsFloat)
       actual shouldBe expectedDay
     }
   }
@@ -35,7 +35,7 @@ class DayOfWeekFormatterTest : FunSpec({
       Pair(7f, "dom")
     ) { (dayAsFloat, expectedDay) ->
 
-      val actual = DayOfWeekFormatter.getFormattedValue(dayAsFloat, null)
+      val actual = DayOfWeekFormatter(dayAsFloat)
       actual shouldBe expectedDay
     }
   }

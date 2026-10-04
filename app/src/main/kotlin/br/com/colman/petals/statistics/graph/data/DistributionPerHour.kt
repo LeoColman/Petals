@@ -1,28 +1,31 @@
 package br.com.colman.petals.statistics.graph.data
 
-import androidx.compose.ui.graphics.toArgb
 import br.com.colman.petals.statistics.graph.color.createColor
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.totalGrams
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.data.LineDataSet.Mode.HORIZONTAL_BEZIER
+import io.grafima.charts.line.LineDataPoint
+import io.grafima.charts.line.LineSeries
 
-private fun calculateGramDistributionPerHour(uses: List<Use>): List<Entry> {
+private const val FillAlpha = 0.3f
+
+private fun calculateGramDistributionPerHour(uses: List<Use>): List<LineDataPoint> {
   val hoursInDay = (0..23)
   val usesPerHourOfDay = hoursInDay.associateWith { uses.filter { a -> a.date.hour == it } }
   return usesPerHourOfDay.mapValues { it.value.totalGrams }
-    .toSortedMap().map { (k, v) -> Entry(k.toFloat(), v.toFloat()) }
+    .toSortedMap().map { (hour, grams) -> LineDataPoint(hour.toFloat(), grams.toFloat()) }
 }
 
-fun createDistributionPerHourDataset(days: Int, uses: List<Use>, label: String): LineDataSet {
-  return LineDataSet(calculateGramDistributionPerHour(uses), label).apply {
-    setDrawCircles(true)
-    setDrawFilled(true)
-    setDrawValues(false)
-    fillColor = createColor(days).toArgb()
-    color = createColor(days).toArgb()
-    setCircleColor(createColor(days).toArgb())
-    mode = HORIZONTAL_BEZIER
-  }
+/**
+ * One period's grams by hour of day. Points carry no label of their own, which leaves the hour
+ * labels to the axis formatter rather than to the twenty-four points underneath it.
+ */
+fun createDistributionPerHourSeries(days: Int, uses: List<Use>, label: String): LineSeries {
+  val color = createColor(days)
+  return LineSeries(
+    id = "hour-$days",
+    label = label,
+    points = calculateGramDistributionPerHour(uses),
+    color = color,
+    fillAlpha = FillAlpha
+  )
 }
