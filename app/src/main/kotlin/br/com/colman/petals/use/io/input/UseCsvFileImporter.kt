@@ -9,11 +9,8 @@ class UseCsvFileImporter(
 ) {
 
   fun importCsvFile(uri: Uri) {
-    val lines = uri.readLines()
-    useImporter.import(lines)
+    useImporter.import(uri.readText())
   }
 
-  private fun Uri?.readLines() = this?.run {
-    contentResolver.openInputStream(this)?.bufferedReader()?.readLines()
-  }.orEmpty()
+  private fun Uri.readText() = contentResolver.openInputStream(this)?.bufferedReader()?.use { it.readText() }.orEmpty()
 }

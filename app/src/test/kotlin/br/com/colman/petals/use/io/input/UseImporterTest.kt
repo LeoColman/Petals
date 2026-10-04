@@ -6,6 +6,9 @@ import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.UseArb
 import br.com.colman.petals.use.io.UseCsvArb
+import br.com.colman.petals.use.io.output.UseCsvHeaders
+import br.com.colman.petals.use.io.output.UseCsvSerializer
+import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 import com.natpryce.snodge.mutants
 import com.natpryce.snodge.text.replaceWithPossiblyMeaningfulText
@@ -13,11 +16,17 @@ import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.result.shouldBeFailure
 import io.kotest.matchers.result.shouldBeSuccess
 import io.kotest.matchers.shouldBe
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.Codepoint
+import io.kotest.property.arbitrary.element
 import io.kotest.property.arbitrary.map
+import io.kotest.property.arbitrary.next
+import io.kotest.property.arbitrary.string
 import io.kotest.property.arbitrary.take
 import io.mockk.Called
 import io.mockk.every
@@ -33,33 +42,43 @@ class UseImporterTest : FunSpec({
   val strainRepository = mockk<StrainRepository>(relaxed = true) { every { allNow() } returns emptyList() }
   val target = UseImporter(useRepository, strainRepository, inMemoryDatabase())
 
+  class Catalog(val database: Database = inMemoryDatabase()) {
+    val uses = UseRepository(database.useQueries)
+    val strains = StrainRepository(database.strainQueries)
+    val importer = UseImporter(uses, strains, database)
+  }
+
   context("Parse file") {
     test("Returns success if all lines are parseable") {
       val usesCsv = UseCsvArb.take(1000).toList()
-      target.import(usesCsv).shouldBeSuccess()
+      target.import(usesCsv.joinToString("\n")).shouldBeSuccess()
     }
 
     test("Returns success if the only unparseable line is the header") {
-      val header = "my,header,line\n"
+      val header = "my,header,line"
       val usesCsv = UseCsvArb.take(1000)
       val csvLines = listOf(header) + usesCsv
 
-      target.import(csvLines).shouldBeSuccess()
+      target.import(csvLines.joinToString("\n")).shouldBeSuccess()
     }
 
     test("Returns failure when any line other than the header is unparseable") {
-      val header = "my,header,line\n"
+      val header = "my,header,line"
       val usesCsv = UseCsvArb.take(1000).toList()
       val invalidUseCsvs = invalidUseCsvArb.take(1000).toList()
 
       val firstLine = listOf(usesCsv.first())
       val otherLines = (listOf(header) + usesCsv + invalidUseCsvs).shuffled()
 
-      target.import(firstLine + otherLines).shouldBeFailure()
+      target.import((firstLine + otherLines).joinToString("\n")).shouldBeFailure()
+    }
+
+    test("Returns failure when a quote is never closed") {
+      target.import(UseCsvArb.take(3).joinToString("\n", postfix = ",\"unclosed")).shouldBeFailure()
     }
 
     test("Returns success when file is empty") {
-      target.import(emptyList()).shouldBeSuccess()
+      target.import("").shouldBeSuccess()
     }
   }
 
@@ -67,7 +86,7 @@ class UseImporterTest : FunSpec({
     val uses = UseArb.take(3).toList()
     val lines = listOf(uses[0].columns(), uses[1].columns() + List(Strain.CsvColumnCount) { "" }, uses[2].columns())
 
-    target.import(lines.map { it.joinToString(",") }).shouldBeSuccess()
+    target.import(lines.joinToString("\n") { it.joinToString(",") }).shouldBeSuccess()
 
     verify { useRepository.upsertAllKeepingStrains(uses) }
     verify(exactly = 0) { useRepository.upsertAll(any()) }
@@ -77,7 +96,7 @@ class UseImporterTest : FunSpec({
     test("Doesn't call database when a line is wrong") {
       val wrongLine = "invalid,csv,line,is,invalid"
 
-      target.import(List(2) { wrongLine })
+      target.import(List(2) { wrongLine }.joinToString("\n"))
 
       shouldNotThrowAny {
         verify { useRepository wasNot Called }
@@ -90,7 +109,7 @@ class UseImporterTest : FunSpec({
 
       val csvs = listOf(header) + uses.map { it.columns().joinToString(",") }
 
-      target.import(csvs)
+      target.import(csvs.joinToString("\n"))
 
       shouldNotThrowAny {
         verify {
@@ -103,7 +122,7 @@ class UseImporterTest : FunSpec({
       val uses = UseArb.take(1000).toList()
 
       val csvs = uses.map { it.columns().joinToString(",") }
-      target.import(csvs)
+      target.import(csvs.joinToString("\n"))
 
       shouldNotThrowAny {
         verify {
@@ -112,10 +131,8 @@ class UseImporterTest : FunSpec({
       }
     }
 
-    test("Doesn't do anything if the list is empty") {
-      val empty = emptyList<String>()
-
-      target.import(empty)
+    test("Doesn't do anything if the file is empty") {
+      target.import("")
 
       shouldNotThrowAny {
         verify {
@@ -125,17 +142,48 @@ class UseImporterTest : FunSpec({
     }
   }
 
-  context("Strains") {
-    class Catalog(val database: Database = inMemoryDatabase()) {
-      val uses = UseRepository(database.useQueries)
-      val strains = StrainRepository(database.strainQueries)
-      val importer = UseImporter(uses, strains, database)
+  context("Its own export") {
+    val headers = UseCsvHeaders("date", "amount", "cost", "id", "description", "method")
+    suspend fun exportOf(saved: List<Use>, strain: Strain) = with(Catalog()) {
+      strains.upsert(strain)
+      uses.upsertAll(saved)
+      UseCsvSerializer(uses, headers).computeUseCsv()
     }
 
+    test("Imports every use, even when one's notes hold a line break") {
+      val bedrocan = Strain("Bedrocan", BigDecimal("22"))
+      val saved = listOf(
+        UseArb.next().copy(description = "Bedrocan\nfelt sleepy", strainId = bedrocan.id),
+        UseArb.next().copy(description = "")
+      )
+
+      with(Catalog()) {
+        importer.import(exportOf(saved, bedrocan)).shouldBeSuccess()
+
+        uses.all().first() shouldContainExactlyInAnyOrder saved
+        strains.allNow() shouldContainExactly listOf(bedrocan)
+      }
+    }
+
+    test("Imports back whatever the notes hold, line breaks, commas and quotes included") {
+      val notes = Arb.string(0..12, Arb.element("ab \n\r,\"".map { Codepoint(it.code) }))
+      val strain = Strain("Strain, \"with\"\nall of them", BigDecimal("22"))
+      val saved = UseArb.map { it.copy(description = notes.next(), strainId = strain.id) }.take(500).toList()
+
+      with(Catalog()) {
+        importer.import(exportOf(saved, strain)).shouldBeSuccess()
+
+        uses.all().first() shouldContainExactlyInAnyOrder saved
+        strains.allNow() shouldContainExactly listOf(strain)
+      }
+    }
+  }
+
+  context("Strains") {
     val flm = Strain("420 Evo FLM", BigDecimal("27"), BigDecimal("1"))
     val header = (List(6) { "column" } + Strain.CsvHeader).joinToString(",")
-    fun withHeader(vararg lines: String) = listOf(header) + lines
-    fun withHeader(lines: List<String>) = listOf(header) + lines
+    fun withHeader(lines: List<String>) = (listOf(header) + lines).joinToString("\n")
+    fun withHeader(vararg lines: String) = withHeader(lines.toList())
     fun line(strain: Strain?) =
       (UseArb.take(1).single().columns() + (strain?.columns() ?: List(Strain.CsvColumnCount) { "" })).joinToString(",")
 
@@ -294,8 +342,8 @@ class UseImporterTest : FunSpec({
         val userColumns = (UseArb.take(1).single().columns() + listOf("my note", "my tag")).joinToString(",")
         val unlabelled = (UseArb.take(1).single().columns() + flm.columns()).joinToString(",")
 
-        importer.import(listOf("date,amount,cost,id,description,method,notes,tags", userColumns)).shouldBeSuccess()
-        importer.import(listOf(unlabelled)).shouldBeSuccess()
+        importer.import("date,amount,cost,id,description,method,notes,tags\n$userColumns").shouldBeSuccess()
+        importer.import(unlabelled).shouldBeSuccess()
 
         strains.allNow() shouldHaveSize 0
         uses.all().first().map { it.strainId }.toSet() shouldBe setOf(null)

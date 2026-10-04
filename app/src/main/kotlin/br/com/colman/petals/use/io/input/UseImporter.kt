@@ -29,10 +29,15 @@ class UseImporter(
   private val transacter: Transacter
 ) {
 
-  fun import(csvFileLines: List<String>, modifyUse: (Use) -> (Use) = { it }): Result<Unit> = runCatching {
-    val strainColumns = csvFileLines.firstOrNull()?.let(UseCsvParser::strainColumnsIn)
-    val rows = csvFileLines.mapIndexed { index, s ->
-      UseCsvParser.parse(s, strainColumns).onFailure {
+  /**
+   * Saves every use in the CSV file [csv]. The first row is skipped when it isn't a use, as it's the header then; any
+   * other row that isn't a use fails the import, which then saves nothing.
+   */
+  fun import(csv: String, modifyUse: (Use) -> (Use) = { it }): Result<Unit> = runCatching {
+    val csvRows = UseCsvParser.rowsOf(csv)
+    val strainColumns = csvRows.firstOrNull()?.let(UseCsvParser::strainColumnsIn)
+    val rows = csvRows.mapIndexed { index, values ->
+      UseCsvParser.parse(values, strainColumns).onFailure {
         if (index > 0) throw it
       }
     }.mapNotNull { it.getOrNull() }
