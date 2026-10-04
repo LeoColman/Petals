@@ -25,12 +25,17 @@ import br.com.colman.petals.R.string.consumption_method_label
 import br.com.colman.petals.R.string.cost_per_gram_label
 import br.com.colman.petals.R.string.date_label
 import br.com.colman.petals.R.string.id_label
+import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.UseRepository
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import kotlinx.coroutines.flow.first
 import java.io.ByteArrayOutputStream
 import kotlin.text.Charsets.UTF_8
 
+/**
+ * The CSV header. The use's own columns are labelled in the app's language; the strain's keep the fixed labels of
+ * [Strain.CsvHeader], which the importer finds them by.
+ */
 data class UseCsvHeaders(
   val date: String,
   val amount: String,
@@ -48,7 +53,7 @@ data class UseCsvHeaders(
     resources.getString(consumption_method_label)
   )
 
-  fun toList() = listOf(date, amount, costPerGram, id, description, consumptionMethod)
+  fun toList() = listOf(date, amount, costPerGram, id, description, consumptionMethod) + Strain.CsvHeader
 }
 
 class UseCsvSerializer(
@@ -56,9 +61,15 @@ class UseCsvSerializer(
   private val useCsvHeaders: UseCsvHeaders
 ) {
 
+  /**
+   * Every use, each followed by its strain's columns. A use without a strain, or whose strain is gone, gets empty
+   * strain columns, which reads back as no strain.
+   */
   suspend fun computeUseCsv(): String {
-    val uses = useRepository.all().first().map { it.columns() }
-    val content = listOf(useCsvHeaders.toList()) + uses
+    val lines = useRepository.allWithStrains().first().map { (use, strain) ->
+      use.columns() + (strain?.columns() ?: NoStrainColumns)
+    }
+    val content = listOf(useCsvHeaders.toList()) + lines
 
     return serialize(content)
   }
@@ -74,3 +85,5 @@ class UseCsvSerializer(
     return strOutput.toByteArray().toString(UTF_8)
   }
 }
+
+private val NoStrainColumns = List(Strain.CsvColumnCount) { "" }

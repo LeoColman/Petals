@@ -4,15 +4,29 @@ CREATE TABLE Use(
     cost_per_gram TEXT NOT NULL,
     id TEXT PRIMARY KEY,
     description TEXT NOT NULL DEFAULT "",
-    consumption_method TEXT NOT NULL DEFAULT ''
+    consumption_method TEXT NOT NULL DEFAULT '',
+    strain_id TEXT
 );
 
+CREATE INDEX use_strain_id ON Use(strain_id);
+
 upsert:
-INSERT INTO Use(date, amount_grams, cost_per_gram, id, description, consumption_method) VALUES ?
+INSERT INTO Use(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id) VALUES ?
 ON CONFLICT (id) DO UPDATE SET date = excluded.date,
  amount_grams = excluded.amount_grams,
  description = excluded.description,
  consumption_method = excluded.consumption_method,
+ strain_id = excluded.strain_id,
+  cost_per_gram = excluded.cost_per_gram;
+
+-- Like upsert, except a use without a strain keeps the one it has, for imports, which never unlink. Keep both in step.
+upsertKeepingStrain:
+INSERT INTO Use(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id) VALUES ?
+ON CONFLICT (id) DO UPDATE SET date = excluded.date,
+ amount_grams = excluded.amount_grams,
+ description = excluded.description,
+ consumption_method = excluded.consumption_method,
+ strain_id = coalesce(excluded.strain_id, Use.strain_id),
   cost_per_gram = excluded.cost_per_gram;
 
 selectLast:
@@ -20,6 +34,15 @@ SELECT * FROM Use WHERE datetime(date) <= datetime('now', 'localtime') ORDER BY 
 
 selectAll:
 SELECT * FROM Use;
+
+selectAllWithStrain:
+SELECT Use.*,
+  Strain.name AS strain_name,
+  Strain.thc_percent AS strain_thc_percent,
+  Strain.cbd_percent AS strain_cbd_percent,
+  Strain.cost_per_gram AS strain_cost_per_gram,
+  Strain.is_archived AS strain_is_archived
+FROM Use LEFT JOIN Strain ON Strain.id = Use.strain_id;
 
 selectSince:
 SELECT * FROM Use

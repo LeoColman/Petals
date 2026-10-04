@@ -202,7 +202,8 @@ private fun AddUseDialog(
     amount.value.toBigDecimalOrNull() ?: ZERO,
     costPerGram.value.toBigDecimalOrNull() ?: ZERO,
     description = description.value,
-    consumptionMethod = consumptionMethod.value
+    consumptionMethod = consumptionMethod.value,
+    strainId = previousUse?.strainId
   )
 
   AlertDialog(

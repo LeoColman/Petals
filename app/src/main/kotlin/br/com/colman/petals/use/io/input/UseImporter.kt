@@ -18,20 +18,34 @@
 
 package br.com.colman.petals.use.io.input
 
+import app.cash.sqldelight.Transacter
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 
 class UseImporter(
-  private val useRepository: UseRepository
+  private val useRepository: UseRepository,
+  private val strainRepository: StrainRepository,
+  private val transacter: Transacter
 ) {
 
   fun import(csvFileLines: List<String>, modifyUse: (Use) -> (Use) = { it }): Result<Unit> = runCatching {
-    val uses = csvFileLines.mapIndexed { index, s ->
-      UseCsvParser.parse(s).onFailure {
+    val strainColumns = csvFileLines.firstOrNull()?.let(UseCsvParser::strainColumnsIn)
+    val rows = csvFileLines.mapIndexed { index, s ->
+      UseCsvParser.parse(s, strainColumns).onFailure {
         if (index > 0) throw it
       }
     }.mapNotNull { it.getOrNull() }
 
-    useRepository.upsertAll(uses.map(modifyUse))
+    transacter.transaction {
+      val strains = StrainResolver(strainRepository.allNow())
+      val resolved = strains.resolveAll(rows.map { it.strain })
+      val uses = rows.zip(resolved) { row, strain -> modifyUse(row.use.copy(strainId = strain?.id)) }
+
+      strainRepository.upsertAll(strains.created)
+      // An import links strains but never unlinks them: a line that names no strain, from before strains or not,
+      // leaves an existing use's strain alone, so no backup can wipe the links made since it was taken.
+      useRepository.upsertAllKeepingStrains(uses)
+    }
   }
 }

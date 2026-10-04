@@ -1,6 +1,8 @@
 package br.com.colman.petals.use.io.input
 
 import android.content.ContentResolver
+import br.com.colman.petals.Database
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.repository.UseRepository
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldNotBe
@@ -15,6 +17,8 @@ class UseInputModuleTest : FunSpec({
       UseInputModule,
       module {
         single { mockk<UseRepository>() }
+        single { mockk<StrainRepository>() }
+        single { mockk<Database>() }
         single { mockk<ContentResolver>() }
       }
     )

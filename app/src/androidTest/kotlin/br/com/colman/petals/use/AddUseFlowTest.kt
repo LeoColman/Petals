@@ -38,7 +38,8 @@ class AddUseFlowTest : FunSpec({
     "0.3".toBigDecimal(),
     "12.5".toBigDecimal(),
     description = "420 Evo FLM 27/1",
-    consumptionMethod = VAPORIZED
+    consumptionMethod = VAPORIZED,
+    strainId = "420-evo-flm"
   )
 
   val noReview = object : ReviewAppRequester {}

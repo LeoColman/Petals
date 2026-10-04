@@ -18,9 +18,9 @@
 
 package br.com.colman.petals.use.repository
 
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
-import br.com.colman.petals.Database
+import br.com.colman.petals.inMemoryDatabase
+import br.com.colman.petals.strain.repository.Strain
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.UseArb
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
@@ -35,10 +35,7 @@ import kotlin.system.measureTimeMillis
 
 class UseRepositoryTest : FunSpec({
 
-  val database = JdbcSqliteDriver(IN_MEMORY).let {
-    Database.Schema.create(it)
-    Database(it)
-  }
+  val database = inMemoryDatabase()
 
   val target = UseRepository(database.useQueries)
 
@@ -68,6 +65,71 @@ class UseRepositoryTest : FunSpec({
   test("Get all") {
     database.useQueries.upsert(use.toEntity())
     target.all().first().single() shouldBe use
+  }
+
+  test("Keeps the strain a use was logged with") {
+    val withStrain = use.copy(strainId = "420-evo-flm")
+    target.upsert(withStrain)
+
+    target.all().first().single().strainId shouldBe "420-evo-flm"
+  }
+
+  context("upsertAllKeepingStrains") {
+    test("Updates an existing use but keeps the strain it has") {
+      target.upsert(use.copy(strainId = "flm"))
+      val edited = use.copy(amountGrams = BigDecimal("0.5"), strainId = null)
+
+      target.upsertAllKeepingStrains(listOf(edited))
+
+      target.all().first().single() shouldBe edited.copy(strainId = "flm")
+    }
+
+    test("Takes the strain a use names") {
+      target.upsert(use.copy(strainId = "flm"))
+
+      target.upsertAllKeepingStrains(listOf(use.copy(strainId = "bed")))
+
+      target.all().first().single().strainId shouldBe "bed"
+    }
+
+    test("Inserts a new use as it is") {
+      target.upsertAllKeepingStrains(listOf(use))
+
+      target.all().first().single() shouldBe use
+    }
+  }
+
+  context("allWithStrains") {
+    val strains = StrainRepository(database.strainQueries)
+    val flm = Strain("420 Evo FLM", BigDecimal("27.5"), BigDecimal("1"), BigDecimal("12.50"), id = "flm")
+
+    test("Pairs each use with the strain it was logged with") {
+      strains.upsert(flm)
+      target.upsert(use.copy(strainId = flm.id))
+
+      target.allWithStrains().first().single() shouldBe (use.copy(strainId = flm.id) to flm)
+    }
+
+    test("Pairs a use without a strain with none") {
+      target.upsert(use)
+
+      target.allWithStrains().first().single() shouldBe (use to null)
+    }
+
+    test("Pairs a use whose strain is gone with none, but keeps its strain id") {
+      target.upsert(use.copy(strainId = "deleted"))
+
+      val (read, strain) = target.allWithStrains().first().single()
+      read.strainId shouldBe "deleted"
+      strain shouldBe null
+    }
+  }
+
+  test("Upsert can clear a use's strain") {
+    target.upsert(use.copy(strainId = "420-evo-flm"))
+    target.upsert(use.copy(strainId = null))
+
+    target.all().first().single().strainId shouldBe null
   }
 
   test("Count All should return 0 when empty") {

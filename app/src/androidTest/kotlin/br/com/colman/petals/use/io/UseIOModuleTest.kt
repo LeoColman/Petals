@@ -8,11 +8,14 @@ import androidx.core.net.toUri
 import androidx.test.core.app.ApplicationProvider
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.koin
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.io.input.UseCsvFileImporter
 import br.com.colman.petals.use.io.output.UseExporter
+import br.com.colman.petals.use.repository.UseRepository
 import io.kotest.matchers.file.shouldHaveSameStructureAndContentAs
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.flow.first
 import java.io.File
 import java.time.LocalDate
 
@@ -20,17 +23,28 @@ class UseIOModuleTest : FunSpec({
 
   val useCsvFileImporter = koin.get<UseCsvFileImporter>()
   val useExporter = koin.get<UseExporter>()
+  val useRepository = koin.get<UseRepository>()
+  val strainRepository = koin.get<StrainRepository>()
+
+  // The importer writes to the app's own database, so the uses and the strain this test adds are removed after it.
+  afterTest {
+    useRepository.all().first().filter { it.id in FixtureUseIds }.forEach(useRepository::delete)
+    strainRepository.allNow().filter { it.id == FixtureStrainId }.forEach(strainRepository::delete)
+  }
 
   test("should import and export data maintaining integrity") {
     val inputFile = File(ApplicationProvider.getApplicationContext<Context>().filesDir, "test_input.csv")
 
     // Every column the exporter writes, in its order. The fixture used to stop at `id`, from before
     // description and consumption method existed, so the round trip compared four columns against
-    // six and could never match.
+    // six and could never match. The second line names a strain, so the round trip also proves the
+    // import creates it and the export writes it back. Its name is the test's own, so a strain made
+    // by hand on the same device can't be matched by name instead.
     inputFile.writeText(
       """
-        date,amount,cost_per_gram,id,description,consumption_method
-        2024-03-21T19:01:47.163,0.08,22.2,80204597-00eb-4412-b7ee-223388806fe2,,
+        date,amount,cost_per_gram,id,description,consumption_method,strain_id,strain_name,strain_thc_percent,strain_cbd_percent,strain_cost_per_gram,strain_archived
+        2024-03-21T19:01:47.163,0.08,22.2,80204597-00eb-4412-b7ee-223388806fe2,,,,,,,,
+        2024-03-22T21:30:00,0.25,12.5,5d2f8a3e-1c4b-4f6e-9a7d-2b8c0e1f3a45,,vaporized,0b7e9c1a-6d2f-4e8b-a3c5-9f1d2e4b6a78,UseIOModuleTest strain,27,1,12.5,false
       """.trimIndent()
     )
 
@@ -57,3 +71,6 @@ class UseIOModuleTest : FunSpec({
     inputFile shouldHaveSameStructureAndContentAs exportedFile
   }
 })
+
+private val FixtureUseIds = setOf("80204597-00eb-4412-b7ee-223388806fe2", "5d2f8a3e-1c4b-4f6e-9a7d-2b8c0e1f3a45")
+private const val FixtureStrainId = "0b7e9c1a-6d2f-4e8b-a3c5-9f1d2e4b6a78"

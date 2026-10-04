@@ -55,6 +55,8 @@ import br.com.colman.petals.use.io.input.UseCsvFileImporter
 import br.com.colman.petals.use.io.output.UseExporter
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Settings
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -113,11 +115,13 @@ private fun ImportExportButtons() {
 @Preview
 @Composable
 private fun ImportButton(
-  useCsvFileImporter: UseCsvFileImporter = koinInject()
+  useCsvFileImporter: UseCsvFileImporter = koinInject(),
+  dispatcher: CoroutineDispatcher = IO
 ) {
+  val scope = rememberCoroutineScope()
   val launcher = rememberLauncherForActivityResult(GetContent()) {
     if (it != null) {
-      useCsvFileImporter.importCsvFile(it)
+      scope.launch(dispatcher) { useCsvFileImporter.importCsvFile(it) }
     }
   }
 
