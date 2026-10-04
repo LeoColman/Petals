@@ -164,7 +164,6 @@
     <string name="delete_pause">Pause löschen</string>
     <string name="hours_24">24 Stunden</string>
     <string name="grams_distribution_over_days_since_first_use">Gramm pro Tag</string>
-    <string name="filter_data_by_description_containing">Daten nach Beschreibungen filtern, die ... enthalten</string>
     <string name="with_a_friend">mit einem Freund</string>
     <string name="id_label">ID</string>
     <string name="confirm_deletion">Löschung bestätigen</string>
@@ -207,4 +206,27 @@
     <string name="method_other">Andere</string>
     <string name="method_unspecified">Nicht angegeben</string>
     <string name="duplicate_use">Konsum duplizieren</string>
+    <string name="strain">Sorte</string>
+    <string name="no_strain">Keine Sorte</string>
+    <string name="new_strain">Neue Sorte…</string>
+    <string name="strains">Sorten</string>
+    <string name="strains_description">Sorten hinzufügen, bearbeiten und archivieren, mit denen du Konsum erfasst</string>
+    <string name="add_strain">Sorte hinzufügen</string>
+    <string name="edit_strain">Sorte bearbeiten</string>
+    <string name="strain_name">Name</string>
+    <string name="thc_percent" formatted="false">THC %</string>
+    <string name="cbd_percent" formatted="false">CBD %</string>
+    <string name="strain_thc">THC %s%%</string>
+    <string name="strain_cbd">CBD %s%%</string>
+    <string name="strain_archived">%s (archiviert)</string>
+    <string name="strain_name_taken">Du hast schon eine Sorte mit diesem Namen</string>
+    <string name="percent_out_of_range">Gib eine Zahl von 0 bis 100 ein</string>
+    <string name="cost_invalid">Gib eine Zahl ab 0 ein</string>
+    <string name="archive_strain">Archivieren</string>
+    <string name="unarchive_strain">Wiederherstellen</string>
+    <string name="delete_strain">Sorte löschen</string>
+    <string name="delete_strain_confirm">%s löschen? Damit wurde kein Konsum erfasst.</string>
+    <string name="show_archived">Archivierte anzeigen</string>
+    <string name="no_strains_yet">Noch keine Sorten. Füge hier eine hinzu oder im Formular zum Hinzufügen von Konsum.</string>
+    <string name="filter_by_description_or_strain">Nach Beschreibung oder Sorte filtern…</string>
 </resources>

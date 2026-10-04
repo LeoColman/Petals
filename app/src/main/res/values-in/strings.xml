@@ -170,7 +170,6 @@
     <string name="description_label">deskripsi</string>
     <string name="description">Deskripsi</string>
     <string name="because_i_wanted">Karena saya mau</string>
-    <string name="filter_data_by_description_containing">Filter data berdasarkan deskripsi yang berisi…</string>
     <string name="with_a_friend">bersama teman</string>
     <string name="add_a_copy_of_my_last_use">Tambahkan salinan dari penggunaan terakhir saya</string>
     <string name="no_previous_use_found">Tidak ditemukan penggunaan sebelumnya</string>
@@ -200,4 +199,27 @@
     <string name="method_other">Lainnya</string>
     <string name="method_unspecified">Tidak ditentukan</string>
     <string name="duplicate_use">Duplikat penggunaan</string>
+    <string name="strain">Varietas</string>
+    <string name="no_strain">Tanpa varietas</string>
+    <string name="new_strain">Varietas baru…</string>
+    <string name="strains">Varietas</string>
+    <string name="strains_description">Tambah, ubah, dan arsipkan varietas yang Anda gunakan saat mencatat penggunaan</string>
+    <string name="add_strain">Tambah varietas</string>
+    <string name="edit_strain">Ubah varietas</string>
+    <string name="strain_name">Nama</string>
+    <string name="thc_percent" formatted="false">THC %</string>
+    <string name="cbd_percent" formatted="false">CBD %</string>
+    <string name="strain_thc">THC %s%%</string>
+    <string name="strain_cbd">CBD %s%%</string>
+    <string name="strain_archived">%s (diarsipkan)</string>
+    <string name="strain_name_taken">Anda sudah punya varietas dengan nama ini</string>
+    <string name="percent_out_of_range">Gunakan angka dari 0 sampai 100</string>
+    <string name="cost_invalid">Gunakan angka 0 atau lebih</string>
+    <string name="archive_strain">Arsipkan</string>
+    <string name="unarchive_strain">Batalkan arsip</string>
+    <string name="delete_strain">Hapus varietas</string>
+    <string name="delete_strain_confirm">Hapus %s? Belum ada penggunaan yang dicatat dengannya.</string>
+    <string name="show_archived">Tampilkan yang diarsipkan</string>
+    <string name="no_strains_yet">Belum ada varietas. Tambahkan di sini, atau dari formulir tambah penggunaan.</string>
+    <string name="filter_by_description_or_strain">Filter berdasarkan deskripsi atau varietas…</string>
 </resources>

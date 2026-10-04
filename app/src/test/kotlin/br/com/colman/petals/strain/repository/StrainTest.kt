@@ -41,6 +41,35 @@ class StrainTest : FunSpec({
     Strain("Bedrocan").columns().size shouldBe Strain.CsvColumnCount
   }
 
+  context("percentageOrNull") {
+    test("Reads a number from 0 to 100, trimmed, with a percent sign or a decimal comma") {
+      Strain.percentageOrNull(" 22.5 ") shouldBe BigDecimal("22.5")
+      Strain.percentageOrNull("22,5") shouldBe BigDecimal("22.5")
+      Strain.percentageOrNull("22 %") shouldBe BigDecimal("22")
+      Strain.percentageOrNull("0") shouldBe BigDecimal("0")
+      Strain.percentageOrNull("100") shouldBe BigDecimal("100")
+    }
+
+    test("Is null outside 0 to 100, or for anything else") {
+      Strain.percentageOrNull("-1") shouldBe null
+      Strain.percentageOrNull("100.5") shouldBe null
+      Strain.percentageOrNull("lots") shouldBe null
+      Strain.percentageOrNull("") shouldBe null
+    }
+  }
+
+  context("costOrNull") {
+    test("Reads a number of 0 or more, with a decimal comma") {
+      Strain.costOrNull("9,80") shouldBe BigDecimal("9.80")
+      Strain.costOrNull("0") shouldBe BigDecimal("0")
+    }
+
+    test("Is null when negative, or for anything else") {
+      Strain.costOrNull("-1") shouldBe null
+      Strain.costOrNull("cheap") shouldBe null
+    }
+  }
+
   context("nameKey") {
     test("Is the trimmed, composed, lowercase name") {
       Strain("  Cafe\u0301 KUSH ").nameKey shouldBe "caf\u00e9 kush"

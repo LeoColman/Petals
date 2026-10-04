@@ -177,4 +177,27 @@
     <string name="method_other">Autre</string>
     <string name="method_unspecified">Non spécifié</string>
     <string name="duplicate_use">Dupliquer l\'utilisation</string>
+    <string name="strain">Variété</string>
+    <string name="no_strain">Aucune variété</string>
+    <string name="new_strain">Nouvelle variété…</string>
+    <string name="strains">Variétés</string>
+    <string name="strains_description">Ajoutez, modifiez et archivez les variétés avec lesquelles vous enregistrez vos utilisations</string>
+    <string name="add_strain">Ajouter une variété</string>
+    <string name="edit_strain">Modifier la variété</string>
+    <string name="strain_name">Nom</string>
+    <string name="thc_percent" formatted="false">THC %</string>
+    <string name="cbd_percent" formatted="false">CBD %</string>
+    <string name="strain_thc">THC %s%%</string>
+    <string name="strain_cbd">CBD %s%%</string>
+    <string name="strain_archived">%s (archivée)</string>
+    <string name="strain_name_taken">Vous avez déjà une variété portant ce nom</string>
+    <string name="percent_out_of_range">Saisissez un nombre entre 0 et 100</string>
+    <string name="cost_invalid">Saisissez un nombre supérieur ou égal à 0</string>
+    <string name="archive_strain">Archiver</string>
+    <string name="unarchive_strain">Désarchiver</string>
+    <string name="delete_strain">Supprimer la variété</string>
+    <string name="delete_strain_confirm">Supprimer %s ? Aucune utilisation n\'a été enregistrée avec.</string>
+    <string name="show_archived">Afficher les archivées</string>
+    <string name="no_strains_yet">Aucune variété pour l\'instant. Ajoutez-en une ici ou depuis le formulaire d\'ajout.</string>
+    <string name="filter_by_description_or_strain">Filtrer par description ou variété…</string>
 </resources>

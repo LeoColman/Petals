@@ -182,7 +182,6 @@
     <string name="later">Пізніше</string>
     <string name="support_my_work">Підтримайте мою роботу❤️</string>
     <string name="thank_your_for_using_message">Дякуємо за використання Petals! Просто нагадую, що ви можете підтримати мою роботу над покращенням цієї безкоштовної програми.</string>
-    <string name="filter_data_by_description_containing">Фільтрувати дані за описом, що містить…</string>
     <string name="with_a_friend">з другом</string>
     <string name="add_a_copy_of_my_last_use">Додати копію мого останнього використання</string>
     <string name="no_previous_use_found">Попереднього використання не знайдено</string>
@@ -210,4 +209,27 @@
     <string name="method_other">Інше</string>
     <string name="method_unspecified">Не вказано</string>
     <string name="duplicate_use">Дублювати вжиток</string>
+    <string name="strain">Сорт</string>
+    <string name="no_strain">Без сорту</string>
+    <string name="new_strain">Новий сорт…</string>
+    <string name="strains">Сорти</string>
+    <string name="strains_description">Додавайте, змінюйте й архівуйте сорти, з якими записуєте вжиток</string>
+    <string name="add_strain">Додати сорт</string>
+    <string name="edit_strain">Змінити сорт</string>
+    <string name="strain_name">Назва</string>
+    <string name="thc_percent" formatted="false">THC %</string>
+    <string name="cbd_percent" formatted="false">CBD %</string>
+    <string name="strain_thc">THC %s%%</string>
+    <string name="strain_cbd">CBD %s%%</string>
+    <string name="strain_archived">%s (в архіві)</string>
+    <string name="strain_name_taken">У вас уже є сорт із такою назвою</string>
+    <string name="percent_out_of_range">Введіть число від 0 до 100</string>
+    <string name="cost_invalid">Введіть число від 0 і більше</string>
+    <string name="archive_strain">В архів</string>
+    <string name="unarchive_strain">Повернути з архіву</string>
+    <string name="delete_strain">Видалити сорт</string>
+    <string name="delete_strain_confirm">Видалити %s? З ним не записано жодного вжитку.</string>
+    <string name="show_archived">Показати архівні</string>
+    <string name="no_strains_yet">Сортів поки немає. Додайте сорт тут або у формі додавання вжитку.</string>
+    <string name="filter_by_description_or_strain">Фільтр за описом або сортом…</string>
 </resources>

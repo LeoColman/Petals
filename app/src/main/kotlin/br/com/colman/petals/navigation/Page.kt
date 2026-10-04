@@ -50,6 +50,7 @@ import br.com.colman.petals.hittimer.ComposeHitTimer
 import br.com.colman.petals.navigation.Page.Usage
 import br.com.colman.petals.settings.SettingsView
 import br.com.colman.petals.statistics.StatisticsPage
+import br.com.colman.petals.strain.StrainsPage
 import br.com.colman.petals.withdrawal.SymptomsPage
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Flask
@@ -77,7 +78,11 @@ fun NavHostContainer(navController: NavHostController, paddingValues: PaddingVal
     }
 
     composable("settings") {
-      SettingsView(koinInject())
+      SettingsView(koinInject(), onOpenStrains = { navController.navigate("strains") })
+    }
+
+    composable("strains") {
+      StrainsPage()
     }
   }
 }

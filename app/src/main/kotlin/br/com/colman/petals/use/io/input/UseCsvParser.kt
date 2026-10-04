@@ -34,7 +34,6 @@ data class CsvStrain(
 
 object UseCsvParser {
   private val csvReader = csvReader()
-  private val Percentages = BigDecimal.ZERO..BigDecimal(100)
   private val Uuid = Regex("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
 
   /**
@@ -78,14 +77,12 @@ object UseCsvParser {
       name,
       parsePercentage(valueOf(Strain.ThcColumn)),
       parsePercentage(valueOf(Strain.CbdColumn)),
-      valueOf(Strain.CostColumn)?.trim()?.toBigDecimalOrNull()?.takeIf { it >= BigDecimal.ZERO },
+      valueOf(Strain.CostColumn)?.let(Strain::costOrNull),
       valueOf(Strain.ArchivedColumn)?.trim().let { it.equals("true", ignoreCase = true) || it == "1" }
     )
   }
 
-  /** A trailing percent sign, as a spreadsheet formats the column, is fine. */
-  private fun parsePercentage(value: String?) =
-    value?.trim()?.removeSuffix("%")?.trim()?.toBigDecimalOrNull()?.takeIf { it in Percentages }
+  private fun parsePercentage(value: String?) = value?.let(Strain::percentageOrNull)
 
   private fun parseDateTime(date: String) = LocalDateTime.parse(date, ISO_LOCAL_DATE_TIME)
 

@@ -213,7 +213,6 @@
     <string name="description_label">description</string>
     <string name="description">Description</string>
     <string name="because_i_wanted">Because I wanted to</string>
-    <string name="filter_data_by_description_containing">Filter data by description containing…</string>
     <string name="consumption_method">Consumption method</string>
     <string name="consumption_method_label">consumption_method</string>
     <string name="method_smoked">Smoked</string>
@@ -243,4 +242,27 @@
     <string name="ignore_longest_daily_delay">Ignore longest daily delay</string>
     <string name="ignore_longest_daily_delay_description">Useful to ignore sleeping time when calculating average time between sessions</string>
     <string name="duplicate_use">Duplicate use</string>
+    <string name="strain">Strain</string>
+    <string name="no_strain">No strain</string>
+    <string name="new_strain">New strain…</string>
+    <string name="strains">Strains</string>
+    <string name="strains_description">Add, edit and archive the strains you log uses with</string>
+    <string name="add_strain">Add strain</string>
+    <string name="edit_strain">Edit strain</string>
+    <string name="strain_name">Name</string>
+    <string name="thc_percent" formatted="false">THC %</string>
+    <string name="cbd_percent" formatted="false">CBD %</string>
+    <string name="strain_thc">THC %s%%</string>
+    <string name="strain_cbd">CBD %s%%</string>
+    <string name="strain_archived">%s (archived)</string>
+    <string name="strain_name_taken">You already have a strain with this name</string>
+    <string name="percent_out_of_range">Use a number from 0 to 100</string>
+    <string name="cost_invalid">Use a number of 0 or more</string>
+    <string name="archive_strain">Archive</string>
+    <string name="unarchive_strain">Unarchive</string>
+    <string name="delete_strain">Delete strain</string>
+    <string name="delete_strain_confirm">Delete %s? No use was logged with it.</string>
+    <string name="show_archived">Show archived</string>
+    <string name="no_strains_yet">No strains yet. Add one here, or from the add-use form.</string>
+    <string name="filter_by_description_or_strain">Filter by description or strain…</string>
 </resources>

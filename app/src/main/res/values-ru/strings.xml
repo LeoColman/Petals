@@ -137,7 +137,6 @@
     <string name="grams_distribution_over_days_since_first_use">Граммов в день</string>
     <string name="language_label">Язык приложения</string>
     <string name="what_language_should_be_used">Какой язык использовать</string>
-    <string name="filter_data_by_description_containing">Фильтровать данные по описанию содержащему…</string>
     <string name="with_a_friend">с другом</string>
     <string name="clock_format_label">Формат часов</string>
     <string name="what_clock_format_should_be_used">Какой формат часов следует использовать</string>
@@ -192,4 +191,27 @@
     <string name="method_other">Другое</string>
     <string name="method_unspecified">Не указано</string>
     <string name="duplicate_use">Дублировать употребление</string>
+    <string name="strain">Сорт</string>
+    <string name="no_strain">Без сорта</string>
+    <string name="new_strain">Новый сорт…</string>
+    <string name="strains">Сорта</string>
+    <string name="strains_description">Добавляйте, изменяйте и архивируйте сорта, с которыми записываете употребления</string>
+    <string name="add_strain">Добавить сорт</string>
+    <string name="edit_strain">Изменить сорт</string>
+    <string name="strain_name">Название</string>
+    <string name="thc_percent" formatted="false">THC %</string>
+    <string name="cbd_percent" formatted="false">CBD %</string>
+    <string name="strain_thc">THC %s%%</string>
+    <string name="strain_cbd">CBD %s%%</string>
+    <string name="strain_archived">%s (в архиве)</string>
+    <string name="strain_name_taken">У вас уже есть сорт с таким названием</string>
+    <string name="percent_out_of_range">Введите число от 0 до 100</string>
+    <string name="cost_invalid">Введите число от 0 и больше</string>
+    <string name="archive_strain">В архив</string>
+    <string name="unarchive_strain">Вернуть из архива</string>
+    <string name="delete_strain">Удалить сорт</string>
+    <string name="delete_strain_confirm">Удалить %s? С ним не записано ни одного употребления.</string>
+    <string name="show_archived">Показать архивные</string>
+    <string name="no_strains_yet">Сортов пока нет. Добавьте сорт здесь или в форме добавления употребления.</string>
+    <string name="filter_by_description_or_strain">Фильтр по описанию или сорту…</string>
 </resources>

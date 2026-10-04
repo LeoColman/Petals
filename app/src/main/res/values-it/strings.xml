@@ -171,7 +171,6 @@
     <string name="what_language_should_be_used">Quale lingua dovrebbe essere usata</string>
     <string name="hour_of_day_line_in_stats_enabled">Attiva la linea dell\'ora del giorno</string>
     <string name="enable_or_disable_hour_of_day_line_in_stats">Abilita o disabilita la linea dell\'ora del giorno sui grafici</string>
-    <string name="filter_data_by_description_containing">Filtra i dati per descrizione contenente…</string>
     <string name="support_my_work">Sostieni il mio lavoro ❤️</string>
     <string name="with_a_friend">con un amico</string>
     <string name="support_now">Sostieni ora</string>
@@ -193,4 +192,27 @@
     <string name="method_other">Altro</string>
     <string name="method_unspecified">Non specificato</string>
     <string name="duplicate_use">Duplica uso</string>
+    <string name="strain">Varietà</string>
+    <string name="no_strain">Nessuna varietà</string>
+    <string name="new_strain">Nuova varietà…</string>
+    <string name="strains">Varietà</string>
+    <string name="strains_description">Aggiungi, modifica e archivia le varietà con cui registri gli usi</string>
+    <string name="add_strain">Aggiungi varietà</string>
+    <string name="edit_strain">Modifica varietà</string>
+    <string name="strain_name">Nome</string>
+    <string name="thc_percent" formatted="false">THC %</string>
+    <string name="cbd_percent" formatted="false">CBD %</string>
+    <string name="strain_thc">THC %s%%</string>
+    <string name="strain_cbd">CBD %s%%</string>
+    <string name="strain_archived">%s (archiviata)</string>
+    <string name="strain_name_taken">Hai già una varietà con questo nome</string>
+    <string name="percent_out_of_range">Usa un numero da 0 a 100</string>
+    <string name="cost_invalid">Usa un numero pari o superiore a 0</string>
+    <string name="archive_strain">Archivia</string>
+    <string name="unarchive_strain">Ripristina</string>
+    <string name="delete_strain">Elimina varietà</string>
+    <string name="delete_strain_confirm">Eliminare %s? Nessun uso è stato registrato con questa varietà.</string>
+    <string name="show_archived">Mostra archiviate</string>
+    <string name="no_strains_yet">Ancora nessuna varietà. Aggiungine una qui o dal modulo di aggiunta uso.</string>
+    <string name="filter_by_description_or_strain">Filtra per descrizione o varietà…</string>
 </resources>

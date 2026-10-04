@@ -26,12 +26,17 @@ import br.com.colman.petals.settings.view.listitem.ShareApp
 import br.com.colman.petals.settings.view.listitem.TimeListItem
 import br.com.colman.petals.statistics.view.listitem.BreakPeriodInStatsEnabledListItem
 import br.com.colman.petals.statistics.view.listitem.HourOfDayLineInStatsEnabledListItem
+import br.com.colman.petals.strain.StrainsListItem
 import br.com.colman.petals.use.io.output.auto.AutoExportEnabler
 import br.com.colman.petals.withdrawal.view.listitem.ToleranceModelEnabledListItem
 import org.koin.compose.koinInject
 
 @Composable
-fun SettingsView(settingsRepository: SettingsRepository, autoExportEnabler: AutoExportEnabler = koinInject()) {
+fun SettingsView(
+  settingsRepository: SettingsRepository,
+  autoExportEnabler: AutoExportEnabler = koinInject(),
+  onOpenStrains: () -> Unit = {}
+) {
   val currentCurrency by settingsRepository.currencyIcon.collectAsState("$")
   val currentDateFormat by settingsRepository.dateFormat.collectAsState(settingsRepository.dateFormatList[0])
   val currentTimeFormat by settingsRepository.timeFormat.collectAsState(settingsRepository.timeFormatList[0])
@@ -54,6 +59,7 @@ fun SettingsView(settingsRepository: SettingsRepository, autoExportEnabler: Auto
   val currentToleranceModelEnabled by settingsRepository.isToleranceModelEnabled.collectAsState(true)
 
   Column(Modifier.verticalScroll(rememberScrollState())) {
+    StrainsListItem(onOpenStrains)
     CurrencyListItem(currentCurrency, settingsRepository::setCurrencyIcon)
     PinListItem(settingsRepository::setPin)
     RepositoryListItem()

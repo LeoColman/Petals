@@ -2,14 +2,18 @@ package br.com.colman.petals.use
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runAndroidComposeUiTest
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.MainActivity
 import br.com.colman.petals.R.string.duplicate_use
+import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.Use
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalTestApi::class)
@@ -26,6 +30,16 @@ class UseCardTest : FunSpec({
       onNodeWithContentDescription(activity!!.getString(duplicate_use)).performClick()
 
       duplicated shouldBeSameInstanceAs use
+    }
+  }
+
+  test("shows the strain the use was logged with, with its potency") {
+    runAndroidComposeUiTest<MainActivity> {
+      val strain = Strain("420 Evo FLM", BigDecimal("27"), BigDecimal("1"))
+      activity!!.setContent { UseCard(Use(strainId = strain.id), strain) }
+
+      onNodeWithText("420 Evo FLM").assertIsDisplayed()
+      onNodeWithText("THC 27% · CBD 1%").assertIsDisplayed()
     }
   }
 })
