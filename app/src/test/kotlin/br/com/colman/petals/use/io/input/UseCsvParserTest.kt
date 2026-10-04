@@ -2,8 +2,8 @@ package br.com.colman.petals.use.io.input
 
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.UseArb
-import br.com.colman.petals.use.io.UseCsvArb
 import br.com.colman.petals.use.repository.ConsumptionMethod
+import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.result.shouldBeFailure
@@ -12,38 +12,69 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeUUID
 import io.kotest.property.arbitrary.filter
 import io.kotest.property.arbitrary.next
-import io.kotest.property.arbitrary.take
 import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
-import kotlin.random.Random
 
 class UseCsvParserTest : FunSpec({
+  context("rowsOf") {
+    test("Reads each line as a row") {
+      UseCsvParser.rowsOf("a,b,c\nd,e,f") shouldBe listOf(listOf("a", "b", "c"), listOf("d", "e", "f"))
+    }
+
+    test("Reads a quoted value with line breaks as one value, so its row spans lines") {
+      val csv = "date,description,method\n2026-10-03T14:39:50,\"Bedrocan\nfelt sleepy\r\nagain\",vaporized\nnext,row,"
+
+      UseCsvParser.rowsOf(csv) shouldBe listOf(
+        listOf("date", "description", "method"),
+        listOf("2026-10-03T14:39:50", "Bedrocan\nfelt sleepy\r\nagain", "vaporized"),
+        listOf("next", "row", "")
+      )
+    }
+
+    test("Reads rows with more or fewer values than the first, as an old export's header labels fewer columns") {
+      UseCsvParser.rowsOf("date,amount\na,b,c,d\ne") shouldBe listOf(
+        listOf("date", "amount"),
+        listOf("a", "b", "c", "d"),
+        listOf("e")
+      )
+    }
+
+    test("Reads Windows line breaks, and no extra row after a final line break") {
+      UseCsvParser.rowsOf("a,b\r\nc,d\r\n") shouldBe listOf(listOf("a", "b"), listOf("c", "d"))
+    }
+
+    test("Reads an empty file as no rows") {
+      UseCsvParser.rowsOf("") shouldBe emptyList()
+    }
+
+    test("Fails on a quote that is never closed") {
+      shouldThrowAny { UseCsvParser.rowsOf("a,b\nc,\"d\ne,f") }
+    }
+  }
+
   test("Converts CSV to Use") {
     val use = UseArb.next()
-    val useCsv = use.columns().joinToString(",")
-    val parsed = UseCsvParser.parse(useCsv)
+    val parsed = UseCsvParser.parse(use.columns())
 
     parsed.getOrThrow().use shouldBe use
   }
 
-  test("Returns failure if an invalid line is passed") {
-    val useCsv = "invalid,cs,v"
-    UseCsvParser.parse(useCsv).shouldBeFailure()
+  test("Returns failure if an invalid row is passed") {
+    UseCsvParser.parse(listOf("invalid", "cs", "v")).shouldBeFailure()
   }
 
-  test("Returns failure if an empty line is passed") {
-    val useCsv = ""
-    UseCsvParser.parse(useCsv).shouldBeFailure()
+  test("Returns failure if an empty row is passed") {
+    UseCsvParser.parse(emptyList()).shouldBeFailure()
+    UseCsvParser.parse(listOf("")).shouldBeFailure()
   }
 
   test("Returns failure if fewer than three fields are passed") {
-    val useCsv = "2024-02-09T12:00:00,100.00"
-    UseCsvParser.parse(useCsv).shouldBeFailure()
+    UseCsvParser.parse(listOf("2024-02-09T12:00:00", "100.00")).shouldBeFailure()
   }
 
   test("Parses the id field if it's present") {
     val use = UseArb.next()
-    val useCsv = use.columns().joinToString(",")
+    val useCsv = use.columns()
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().use.id shouldBe use.id
@@ -51,7 +82,7 @@ class UseCsvParserTest : FunSpec({
 
   test("Creates new id if id field is empty") {
     val use = UseArb.next().copy(id = "")
-    val useCsv = use.columns().joinToString(",")
+    val useCsv = use.columns()
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().use.id.shouldBeUUID()
@@ -59,7 +90,7 @@ class UseCsvParserTest : FunSpec({
 
   test("Creates new id if id field is not present") {
     val use = UseArb.next().copy(id = "")
-    val useCsv = use.columns().dropLast(1).joinToString(",")
+    val useCsv = use.columns().dropLast(1)
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().use.id.shouldBeUUID()
@@ -67,7 +98,7 @@ class UseCsvParserTest : FunSpec({
 
   test("Parsers the description field if present") {
     val use = UseArb.next().copy(description = "my description")
-    val useCsv = use.columns().joinToString(",")
+    val useCsv = use.columns()
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().use.description shouldBe "my description"
@@ -75,7 +106,7 @@ class UseCsvParserTest : FunSpec({
 
   test("Parsers the description field to empty if absent") {
     val use = UseArb.next().copy(description = "my description")
-    val useCsv = use.columns().dropLast(2).joinToString(",")
+    val useCsv = use.columns().dropLast(2)
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().use.description shouldBe ""
@@ -83,7 +114,7 @@ class UseCsvParserTest : FunSpec({
 
   test("Parses the consumption method field if present") {
     val use = UseArb.next().copy(consumptionMethod = ConsumptionMethod.VAPORIZED)
-    val useCsv = use.columns().joinToString(",")
+    val useCsv = use.columns()
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().use.consumptionMethod shouldBe ConsumptionMethod.VAPORIZED
@@ -91,9 +122,9 @@ class UseCsvParserTest : FunSpec({
 
   test("Parses the consumption method field to null if absent (legacy 5-column CSV)") {
     val use = UseArb.next().copy(consumptionMethod = ConsumptionMethod.SMOKED)
-    val legacyCsv = use.columns().dropLast(1).joinToString(",")
+    val legacyCsv = use.columns().dropLast(1)
 
-    legacyCsv.split(",") shouldHaveSize 5
+    legacyCsv shouldHaveSize 5
 
     val parsed = UseCsvParser.parse(legacyCsv)
 
@@ -102,7 +133,7 @@ class UseCsvParserTest : FunSpec({
 
   test("Parses the consumption method field to null if the key is unknown") {
     val use = UseArb.next()
-    val csvWithUnknownMethod = use.columns().dropLast(1).plus("unknown-method").joinToString(",")
+    val csvWithUnknownMethod = use.columns().dropLast(1).plus("unknown-method")
     val parsed = UseCsvParser.parse(csvWithUnknownMethod)
 
     parsed.getOrThrow().use.consumptionMethod shouldBe null
@@ -111,45 +142,44 @@ class UseCsvParserTest : FunSpec({
   test("Parses successfully even if extra fields are present") {
     val use = UseArb.next()
     val extraField = "extra"
-    val useCsv = use.columns().plus(extraField).joinToString(",")
+    val useCsv = use.columns().plus(extraField)
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().use shouldBe use
   }
 
   test("Returns failure if date is not in ISO_LOCAL_DATE_TIME format") {
-    val useCsv = "09/02/2024 12:00:00,100.00,50.00"
+    val useCsv = listOf("09/02/2024 12:00:00", "100.00", "50.00")
     UseCsvParser.parse(useCsv).shouldBeFailure()
   }
 
   test("Returns failure if date includes time zone information") {
-    val useCsv = "2023-10-16T12:00:00Z,100.00,50.00"
+    val useCsv = listOf("2023-10-16T12:00:00Z", "100.00", "50.00")
     UseCsvParser.parse(useCsv).shouldBeFailure()
   }
 
   test("Returns failure if amount is not a valid number") {
-    val useCsv = "2023-10-16T12:00:00,invalidAmount,50.00"
+    val useCsv = listOf("2023-10-16T12:00:00", "invalidAmount", "50.00")
     UseCsvParser.parse(useCsv).shouldBeFailure()
   }
 
   test("Reads amount and cost written as .5, +2 or with an exponent, as other tools write them") {
     val columns = UseArb.next().columns()
-    val parsed = UseCsvParser.parse((columns.take(1) + listOf(".5", "1.25e1") + columns.drop(3)).joinToString(","))
-      .getOrThrow().use
+    val parsed = UseCsvParser.parse(columns.take(1) + listOf(".5", "1.25e1") + columns.drop(3)).getOrThrow().use
 
     parsed.amountGrams shouldBe BigDecimal(".5")
     parsed.costPerGram shouldBe BigDecimal("12.5")
-    UseCsvParser.parse((columns.take(1) + listOf("+2", "3.") + columns.drop(3)).joinToString(",")).shouldBeSuccess()
+    UseCsvParser.parse(columns.take(1) + listOf("+2", "3.") + columns.drop(3)).shouldBeSuccess()
   }
 
   test("Returns failure if cost is not a valid number") {
-    val useCsv = "2023-10-16T12:00:00,100.00,invalidCost"
+    val useCsv = listOf("2023-10-16T12:00:00", "100.00", "invalidCost")
     UseCsvParser.parse(useCsv).shouldBeFailure()
   }
 
   test("Fails to parse with leading/trailing whitespaces in fields") {
     val use = UseArb.next()
-    val useCsv = use.columns().joinToString(",") { " ${it.trim()} " }
+    val useCsv = use.columns().map { " ${it.trim()} " }
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.shouldBeFailure()
@@ -157,7 +187,7 @@ class UseCsvParserTest : FunSpec({
 
   test("Parses successfully with negative amount and cost values") {
     val use = UseArb.filter { it.amountGrams <= BigDecimal.ZERO || it.costPerGram <= BigDecimal.ZERO }.next()
-    val useCsv = use.columns().joinToString(",")
+    val useCsv = use.columns()
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().use shouldBe use
@@ -165,7 +195,7 @@ class UseCsvParserTest : FunSpec({
 
   test("Parses successfully when amount and cost are zero") {
     val use = UseArb.next().copy(amountGrams = BigDecimal.ZERO, costPerGram = BigDecimal.ZERO)
-    val useCsv = use.columns().joinToString(",")
+    val useCsv = use.columns()
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().use shouldBe use
@@ -174,41 +204,36 @@ class UseCsvParserTest : FunSpec({
   test("Parses successfully with very large amount and cost values") {
     val largeNumber = BigDecimal("9999999999999999999999999999.99")
     val use = UseArb.next().copy(amountGrams = largeNumber, costPerGram = largeNumber)
-    val useCsv = use.columns().joinToString(",")
+    val useCsv = use.columns()
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.getOrThrow().use shouldBe use
   }
 
   test("Returns failure if amount and cost have locale-specific formatting") {
-    val useCsv = "2024-02-09T12:00:00,1.000,\"50,00\""
+    val useCsv = listOf("2024-02-09T12:00:00", "1.000", "50,00")
     UseCsvParser.parse(useCsv).shouldBeFailure()
   }
 
   test("Returns failure if date is logically invalid") {
-    val useCsv = "2024-02-30T12:00:00,100.00,50.00" // February 30th doesn't exist
+    val useCsv = listOf("2024-02-30T12:00:00", "100.00", "50.00") // February 30th doesn't exist
     UseCsvParser.parse(useCsv).shouldBeFailure()
   }
 
   test("Parses successfully when fields contain non-ASCII characters") {
     val use = UseArb.next()
     val dateWithUnicode = use.date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + "𝓤"
-    val useCsv = listOf(dateWithUnicode, use.amountGrams.toString(), use.costPerGram.toString()).joinToString(",")
+    val useCsv = listOf(dateWithUnicode, use.amountGrams.toString(), use.costPerGram.toString())
     val parsed = UseCsvParser.parse(useCsv)
 
     parsed.shouldBeFailure()
   }
 
-  test("Returns failure if more than one line is passed") {
-    val uses = UseCsvArb.take(Random.nextInt(2, 1000)).toList().joinToString("\n")
-    UseCsvParser.parse(uses).shouldBeFailure()
-  }
-
   context("strain columns") {
     val strain = Strain("420 Evo FLM", BigDecimal("27.5"), BigDecimal("1"))
     val parsedStrain = CsvStrain(strain.id, strain.name, strain.thcPercent, strain.cbdPercent, isArchived = false)
-    fun line(vararg strainColumns: String) = (UseArb.next().columns() + strainColumns).joinToString(",")
-    fun strainOf(line: String) = UseCsvParser.parse(line, strainColumns = 6).getOrThrow().strain
+    fun line(vararg strainColumns: String) = UseArb.next().columns() + strainColumns
+    fun strainOf(line: List<String>) = UseCsvParser.parse(line, strainColumns = 6).getOrThrow().strain
 
     test("A line from before strains, without strain columns, has no strain") {
       strainOf(line()) shouldBe null
@@ -220,7 +245,7 @@ class UseCsvParserTest : FunSpec({
 
     test("Reads the strain the line names, and leaves the use without a strain id for the importer to link") {
       val use = UseArb.next()
-      val row = UseCsvParser.parse((use.columns() + strain.columns()).joinToString(","), 6).getOrThrow()
+      val row = UseCsvParser.parse(use.columns() + strain.columns(), 6).getOrThrow()
 
       row.strain shouldBe parsedStrain
       row.use shouldBe use
@@ -249,14 +274,14 @@ class UseCsvParserTest : FunSpec({
 
     test("Is never read from a file whose header doesn't have the strain columns") {
       val use = UseArb.next()
-      val line = (use.columns() + strain.columns()).joinToString(",")
+      val line = use.columns() + strain.columns()
 
       UseCsvParser.parse(line).getOrThrow().strain shouldBe null
     }
 
     test("Is read from wherever the header put the strain columns") {
       val use = UseArb.next()
-      val line = (use.columns() + listOf("a note", "a tag") + strain.columns()).joinToString(",")
+      val line = use.columns() + listOf("a note", "a tag") + strain.columns()
 
       UseCsvParser.parse(line, strainColumns = 8).getOrThrow().strain shouldBe parsedStrain
     }
@@ -320,36 +345,32 @@ class UseCsvParserTest : FunSpec({
     val useLabels = listOf("date", "amount", "cost", "id", "description", "method")
 
     test("Finds the strain columns right after the use's own, as the app writes them") {
-      UseCsvParser.strainColumnsIn((useLabels + Strain.CsvHeader).joinToString(",")) shouldBe 6
+      UseCsvParser.strainColumnsIn(useLabels + Strain.CsvHeader) shouldBe 6
     }
 
     test("Finds them after columns a user added, and ignores columns added after them") {
       val header = useLabels + listOf("notes", "tags") + Strain.CsvHeader + listOf("rating")
 
-      UseCsvParser.strainColumnsIn(header.joinToString(",")) shouldBe 8
+      UseCsvParser.strainColumnsIn(header) shouldBe 8
     }
 
     test("Tolerates spaces around the labels") {
-      UseCsvParser.strainColumnsIn((useLabels + Strain.CsvHeader.map { " $it " }).joinToString(",")) shouldBe 6
+      UseCsvParser.strainColumnsIn(useLabels + Strain.CsvHeader.map { " $it " }) shouldBe 6
     }
 
     test("Finds none in a header from before strains, or one with columns a user added instead") {
-      UseCsvParser.strainColumnsIn(useLabels.joinToString(",")) shouldBe null
+      UseCsvParser.strainColumnsIn(useLabels) shouldBe null
       val userColumns = useLabels + listOf("notes", "tags", "a", "b", "c", "d")
-      UseCsvParser.strainColumnsIn(userColumns.joinToString(",")) shouldBe null
+      UseCsvParser.strainColumnsIn(userColumns) shouldBe null
     }
 
     test("Finds none when the strain labels are incomplete or out of order") {
-      UseCsvParser.strainColumnsIn((useLabels + Strain.CsvHeader.dropLast(1)).joinToString(",")) shouldBe null
-      UseCsvParser.strainColumnsIn((useLabels + Strain.CsvHeader.reversed()).joinToString(",")) shouldBe null
+      UseCsvParser.strainColumnsIn(useLabels + Strain.CsvHeader.dropLast(1)) shouldBe null
+      UseCsvParser.strainColumnsIn(useLabels + Strain.CsvHeader.reversed()) shouldBe null
     }
 
     test("Finds none in a file without a header, whose first line is a use") {
-      UseCsvParser.strainColumnsIn(UseArb.next().columns().joinToString(",")) shouldBe null
-    }
-
-    test("Finds none in a line that isn't CSV") {
-      UseCsvParser.strainColumnsIn("\"unterminated") shouldBe null
+      UseCsvParser.strainColumnsIn(UseArb.next().columns()) shouldBe null
     }
   }
 })

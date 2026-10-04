@@ -179,7 +179,7 @@ private fun MainActivity.importDemoUses() {
     LocalDateTime.now().withHour(22).withMinute(36).minusDays(1)
   )
 
-  useImporter.import(assets.open("HeavyUse.csv").readAllBytes().decodeToString().split("\n")) {
+  useImporter.import(assets.open("HeavyUse.csv").readAllBytes().decodeToString()) {
     it.copy(date = it.date.plus(millisFromLastUseToToday, ChronoUnit.MILLIS))
   }.getOrThrow()
 }
