@@ -1,7 +1,6 @@
 package br.com.colman.petals.strain
 
 import br.com.colman.petals.strain.repository.Strain
-import java.math.BigDecimal
 
 /** What the strain form holds, as typed, and whether it makes a strain. */
 data class StrainDraft(
@@ -33,19 +32,14 @@ data class StrainDraft(
   /** The strain this draft makes, keeping [editing]'s id and archived flag. Only meaningful without [problems]. */
   fun toStrain(editing: Strain? = null): Strain = (editing ?: Strain(name)).copy(
     name = name.trim(),
-    thcPercent = thcPercent.toNumber(),
-    cbdPercent = cbdPercent.toNumber(),
-    costPerGram = costPerGram.toNumber()
+    thcPercent = Strain.percentageOrNull(thcPercent),
+    cbdPercent = Strain.percentageOrNull(cbdPercent),
+    costPerGram = Strain.costOrNull(costPerGram)
   )
 }
 
 enum class StrainProblem { NameMissing, NameTaken, ThcOutOfRange, CbdOutOfRange, CostInvalid }
 
-private val Percentages = BigDecimal.ZERO..BigDecimal(100)
+private fun String.isPercentage() = isBlank() || Strain.percentageOrNull(this) != null
 
-// A decimal comma, as many keyboards type it, reads as a decimal point.
-private fun String.toNumber() = trim().replace(',', '.').toBigDecimalOrNull()
-
-private fun String.isPercentage() = isBlank() || toNumber()?.let { it in Percentages } == true
-
-private fun String.isCost() = isBlank() || toNumber()?.let { it >= BigDecimal.ZERO } == true
+private fun String.isCost() = isBlank() || Strain.costOrNull(this) != null

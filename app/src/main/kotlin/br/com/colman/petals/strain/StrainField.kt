@@ -85,10 +85,3 @@ fun StrainField(
     }
   }
 }
-
-/**
- * The strain a new use starts with, copied from [previous]: none when that strain is archived or gone, since an
- * archived strain is one the user is done with and the picker doesn't offer it.
- */
-fun newUseStrainId(previous: String?, catalog: List<Strain>): String? =
-  catalog.find { it.id == previous && !it.isArchived }?.id

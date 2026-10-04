@@ -62,6 +62,7 @@ fun AddUseForm(
   description: MutableState<String>,
   consumptionMethod: MutableState<ConsumptionMethod?>,
   strainId: MutableState<String?>,
+  fillsStrainCost: Boolean = true,
 ) {
   val settingsRepository = koinInject<SettingsRepository>()
   val is24HoursFormat by settingsRepository.is24HoursFormat.collectAsState(false)
@@ -80,7 +81,9 @@ fun AddUseForm(
   Column(Modifier, Arrangement.spacedBy(8.dp)) {
     Text(stringResource(add_use), fontWeight = Bold, fontSize = 16.sp)
 
-    UseStrainField(strainId) { cost = it }
+    // Picking a strain fills in its cost for a new use, but never for one being edited: a use keeps the cost it was
+    // logged at, so tagging an old use with a strain doesn't rewrite what it cost.
+    UseStrainField(strainId) { if (fillsStrainCost) cost = it }
 
     OutlinedTextField(
       value = amount,
@@ -133,7 +136,7 @@ fun AddUseForm(
 @Composable
 private fun UseStrainField(strainId: MutableState<String?>, setCost: (String) -> Unit) {
   val strainRepository = koinInject<StrainRepository>()
-  val catalog by strainRepository.all().collectAsState(emptyList())
+  val catalog by remember(strainRepository) { strainRepository.all() }.collectAsState(emptyList())
 
   StrainField(
     strainId,

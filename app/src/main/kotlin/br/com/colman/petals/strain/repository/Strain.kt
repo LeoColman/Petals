@@ -79,6 +79,19 @@ data class Strain(
       return Normalizer.normalize(folded.replace("i̇", "i"), Normalizer.Form.NFC)
     }
 
+    /**
+     * A potency as typed in the strain form or found in a CSV: a number from 0 to 100, read with an optional percent
+     * sign and a decimal comma as many keyboards type it. Null when it isn't one.
+     */
+    fun percentageOrNull(text: String): BigDecimal? = text.toNumberOrNull()?.takeIf { it in Percentages }
+
+    /** A cost per gram as typed in the strain form or found in a CSV: a number of 0 or more, or null. */
+    fun costOrNull(text: String): BigDecimal? = text.toNumberOrNull()?.takeIf { it >= BigDecimal.ZERO }
+
+    private val Percentages = BigDecimal.ZERO..BigDecimal(100)
+
+    private fun String.toNumberOrNull() = trim().removeSuffix("%").trim().replace(',', '.').toBigDecimalOrNull()
+
     private const val DotlessI = 0x0131
   }
 }

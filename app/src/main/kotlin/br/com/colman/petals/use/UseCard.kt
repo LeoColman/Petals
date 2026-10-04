@@ -266,7 +266,7 @@ private fun EditUseDialog(
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId) },
+    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, false) },
     confirmButton = { ConfirmEdit(onEditUse, use, onDismiss) }
   )
 }

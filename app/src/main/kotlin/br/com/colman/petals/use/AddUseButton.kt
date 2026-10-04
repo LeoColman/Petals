@@ -34,8 +34,7 @@ import br.com.colman.petals.R.string.thank_your_for_using_message
 import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.R.string.yes_timer
 import br.com.colman.petals.review.ReviewAppRequester
-import br.com.colman.petals.strain.newUseStrainId
-import br.com.colman.petals.strain.repository.StrainRepository
+import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.widgets.updateWidget
@@ -43,7 +42,6 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.Lock
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
 import java.math.BigDecimal.ZERO
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -63,7 +61,16 @@ fun AddUseButton(isAnyPauseActive: Boolean = false, onClick: () -> Unit = { }) {
 /**
  * A use about to be added, its form prefilled from [template], or left blank when there is none.
  */
-data class AddUseRequest(val template: Use?)
+data class AddUseRequest(val template: Use?) {
+  companion object {
+    /**
+     * A request starting from [use], whose [strain] it keeps only while that strain is active: a new use doesn't
+     * start with a strain the user archived because they are done with it, and the picker wouldn't offer it.
+     */
+    fun from(use: Use?, strain: Strain?) =
+      AddUseRequest(use?.copy(strainId = strain?.takeIf { it.id == use.strainId && !it.isArchived }?.id))
+  }
+}
 
 /**
  * Takes [request] through to a saved use: the pause confirmation when a pause is active, the prefilled form, then the
@@ -200,13 +207,6 @@ private fun AddUseDialog(
   val description = remember { mutableStateOf(previousUse?.description.orEmpty()) }
   val consumptionMethod = remember { mutableStateOf(previousUse?.consumptionMethod) }
   val strainId = remember { mutableStateOf(previousUse?.strainId) }
-
-  // The copied strain is dropped once the catalog shows it archived or gone: a new use doesn't start with a strain
-  // the user is done with.
-  val catalog by koinInject<StrainRepository>().all().collectAsState(null)
-  LaunchedEffect(catalog != null) {
-    catalog?.let { strainId.value = newUseStrainId(strainId.value, it) }
-  }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),

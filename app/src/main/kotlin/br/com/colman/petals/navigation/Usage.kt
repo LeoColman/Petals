@@ -49,7 +49,6 @@ import br.com.colman.petals.R.string.filter_by_description_or_strain
 import br.com.colman.petals.R.string.with_a_friend
 import br.com.colman.petals.review.ReviewAppRequester
 import br.com.colman.petals.strain.repository.Strain
-import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.AddUseButton
 import br.com.colman.petals.use.AddUseFlow
 import br.com.colman.petals.use.AddUseRequest
@@ -76,8 +75,7 @@ import kotlin.time.Duration.Companion.seconds
 fun Usage(
   useRepository: UseRepository = koinInject(),
   pauseRepository: PauseRepository = koinInject(),
-  reviewAppRequester: ReviewAppRequester = koinInject(),
-  strainRepository: StrainRepository = koinInject()
+  reviewAppRequester: ReviewAppRequester = koinInject()
 ) {
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
   val lastUse = useRepository.getLastUse().collectAsState(null)
@@ -105,6 +103,9 @@ fun Usage(
   val pauses by pauseRepository.getAll().collectAsState(listOf())
   val isAnyPauseActive by remember { derivedStateOf { pauses.any { it.isActive(currentTime) } } }
   var addUseRequest by remember { mutableStateOf<AddUseRequest?>(null) }
+  val usesWithStrains by remember(useRepository) { useRepository.allWithStrains() }.collectAsState(emptyList())
+  val strains = remember(usesWithStrains) { usesWithStrains.mapNotNull { it.second }.associateBy { it.id } }
+  fun strainOf(use: Use?) = use?.strainId?.let(strains::get)
 
   Column(
     Modifier
@@ -116,7 +117,7 @@ fun Usage(
     lastUseDate?.let { LastUseDateTimer(it) }
 
     Row(Modifier.padding(8.dp), spacedBy(8.dp), CenterVertically) {
-      AddUseButton(isAnyPauseActive) { addUseRequest = AddUseRequest(lastUse.value) }
+      AddUseButton(isAnyPauseActive) { addUseRequest = AddUseRequest.from(lastUse.value, strainOf(lastUse.value)) }
       PauseButton(pauseRepository)
     }
 
@@ -125,10 +126,9 @@ fun Usage(
     PauseCards(pauseRepository)
 
     var filter by remember { mutableStateOf("") }
-    val strains by strainRepository.all().map { all -> all.associateBy { it.id } }.collectAsState(emptyMap())
-    val uses by useRepository.all().map { uses ->
-      uses.filter { it.matchesFilter(filter, it.strainId?.let(strains::get)) }
-    }.collectAsState(emptyList())
+    val uses = remember(usesWithStrains, filter) {
+      usesWithStrains.filter { (use, strain) -> use.matchesFilter(filter, strain) }.map { it.first }
+    }
 
     StatsBlocks(uses)
     UsageFilter(filter) { filter = it }
@@ -138,7 +138,7 @@ fun Usage(
       strains,
       onEditUse = { scope.launch { updateUse(useRepository, it, context) } },
       onDeleteUse = { scope.launch { fetchCountAndUpdateWidget(useRepository, context, it) } },
-      onDuplicateUse = { addUseRequest = AddUseRequest(it) }
+      onDuplicateUse = { addUseRequest = AddUseRequest.from(it, strainOf(it)) }
     )
   }
 }

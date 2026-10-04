@@ -22,6 +22,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -63,19 +64,21 @@ import java.math.RoundingMode.HALF_UP
 
 /**
  * The strain catalog: adding and editing strains, archiving the ones the user is done with, and deleting a strain no
- * use was logged with. A used strain can only be archived, so past uses keep their name and potency.
+ * use was logged with, so a use never loses its strain. Editing a strain changes it for every use logged with it; a
+ * new batch with another potency is a new strain.
  */
 @Composable
 fun StrainsPage(
   repository: StrainRepository = koinInject(),
   settingsRepository: SettingsRepository = koinInject()
 ) {
-  val catalog by repository.all().collectAsState(emptyList())
-  val useCounts by repository.useCounts().collectAsState(emptyMap())
+  val catalog by remember(repository) { repository.all() }.collectAsState(null)
+  // Null until counted, so no strain is offered for deletion before its uses are known.
+  val useCounts by remember(repository) { repository.useCounts() }.collectAsState(null)
   var isShowingArchived by remember { mutableStateOf(false) }
   var isAdding by remember { mutableStateOf(false) }
   var editing by remember { mutableStateOf<Strain?>(null) }
-  val shown = catalog.filter { isShowingArchived || !it.isArchived }
+  val shown = catalog.orEmpty().filter { isShowingArchived || !it.isArchived }
 
   Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), spacedBy(8.dp)) {
     Text(stringResource(strains), fontWeight = Bold, fontSize = 20.sp)
@@ -90,31 +93,33 @@ fun StrainsPage(
       Switch(isShowingArchived, { isShowingArchived = it }, Modifier.testTag("ShowArchivedStrains"))
     }
 
-    if (shown.isEmpty()) {
+    if (catalog?.isEmpty() == true) {
       Text(stringResource(no_strains_yet))
     }
 
     shown.forEach { strain ->
-      StrainCard(
-        strain,
-        useCounts[strain.id] ?: 0,
-        settingsRepository,
-        onEdit = { editing = strain },
-        onArchive = { repository.upsert(strain.copy(isArchived = !strain.isArchived)) },
-        onDelete = { repository.delete(strain) }
-      )
+      key(strain.id) {
+        StrainCard(
+          strain,
+          useCounts?.let { it[strain.id] ?: 0 },
+          settingsRepository,
+          onEdit = { editing = strain },
+          onArchive = { repository.upsert(strain.copy(isArchived = !strain.isArchived)) },
+          onDelete = { repository.delete(strain) }
+        )
+      }
     }
   }
 
   if (isAdding) {
-    StrainDialog(catalog, onDismiss = { isAdding = false }) {
+    StrainDialog(catalog.orEmpty(), onDismiss = { isAdding = false }) {
       repository.upsert(it)
       isAdding = false
     }
   }
 
   editing?.let { strain ->
-    StrainDialog(catalog, strain, onDismiss = { editing = null }) {
+    StrainDialog(catalog.orEmpty(), strain, onDismiss = { editing = null }) {
       repository.upsert(it)
       editing = null
     }
@@ -125,7 +130,7 @@ fun StrainsPage(
 @Composable
 private fun StrainCard(
   strain: Strain,
-  uses: Long,
+  uses: Long?,
   settingsRepository: SettingsRepository,
   onEdit: () -> Unit,
   onArchive: () -> Unit,
@@ -143,7 +148,7 @@ private fun StrainCard(
         strain.costPerGram?.let {
           Text("$currencySymbol " + stringResource(cost_per_gram, it.setScale(decimalPrecision, HALF_UP).toString()))
         }
-        Text(pluralStringResource(amount_uses, uses.toInt(), uses.toString()))
+        uses?.let { Text(pluralStringResource(amount_uses, it.toInt(), it.toString())) }
       }
 
       Column(horizontalAlignment = End, verticalArrangement = spacedBy(16.dp)) {
