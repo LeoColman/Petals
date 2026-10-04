@@ -222,4 +222,8 @@
     <string name="show_archived">Tampilkan yang diarsipkan</string>
     <string name="no_strains_yet">Belum ada varietas. Tambahkan di sini, atau dari formulir tambah penggunaan.</string>
     <string name="filter_by_description_or_strain">Filter berdasarkan deskripsi atau varietas…</string>
+    <plurals name="import_succeeded">
+        <item quantity="other">%d penggunaan diimpor</item>
+    </plurals>
+    <string name="import_failed">File ini tidak dapat diimpor. Tidak ada penggunaan yang disimpan.</string>
 </resources>

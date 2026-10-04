@@ -250,4 +250,10 @@
     <string name="show_archived">Mostrar arquivadas</string>
     <string name="no_strains_yet">Nenhuma variedade ainda. Adicione uma aqui ou no formulário de adicionar uso.</string>
     <string name="filter_by_description_or_strain">Filtrar por descrição ou variedade…</string>
+    <plurals name="import_succeeded">
+        <item quantity="one">%d uso importado</item>
+        <item quantity="many">%d usos importados</item>
+        <item quantity="other">%d usos importados</item>
+    </plurals>
+    <string name="import_failed">Não foi possível importar este arquivo. Nenhum uso foi salvo.</string>
 </resources>

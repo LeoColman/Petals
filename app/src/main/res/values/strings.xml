@@ -265,4 +265,9 @@
     <string name="show_archived">Show archived</string>
     <string name="no_strains_yet">No strains yet. Add one here, or from the add-use form.</string>
     <string name="filter_by_description_or_strain">Filter by description or strain…</string>
+    <plurals name="import_succeeded">
+        <item quantity="one">Imported %d use</item>
+        <item quantity="other">Imported %d uses</item>
+    </plurals>
+    <string name="import_failed">Couldn\'t import this file. No use was saved.</string>
 </resources>

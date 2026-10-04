@@ -203,4 +203,10 @@
     <string name="show_archived">Mostrar archivadas</string>
     <string name="no_strains_yet">Aún no hay variedades. Agrega una aquí o desde el formulario de consumo.</string>
     <string name="filter_by_description_or_strain">Filtrar por descripción o variedad…</string>
+    <plurals name="import_succeeded">
+        <item quantity="one">%d consumo importado</item>
+        <item quantity="many">%d consumos importados</item>
+        <item quantity="other">%d consumos importados</item>
+    </plurals>
+    <string name="import_failed">No se pudo importar este archivo. No se guardó ningún consumo.</string>
 </resources>

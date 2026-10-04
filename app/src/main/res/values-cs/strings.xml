@@ -233,4 +233,11 @@
     <string name="show_archived">Zobrazit archivované</string>
     <string name="no_strains_yet">Zatím žádné odrůdy. Přidejte je zde nebo ve formuláři pro přidání užití.</string>
     <string name="filter_by_description_or_strain">Filtrovat podle popisu nebo odrůdy…</string>
+    <plurals name="import_succeeded">
+        <item quantity="one">Importováno %d užití</item>
+        <item quantity="few">Importována %d užití</item>
+        <item quantity="many">Importováno %d užití</item>
+        <item quantity="other">Importováno %d užití</item>
+    </plurals>
+    <string name="import_failed">Tento soubor nelze importovat. Žádné užití nebylo uloženo.</string>
 </resources>

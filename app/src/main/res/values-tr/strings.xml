@@ -210,4 +210,9 @@
     <string name="show_archived">Arşivlenenleri göster</string>
     <string name="no_strains_yet">Henüz tür yok. Buradan ya da kullanım ekleme formundan ekleyin.</string>
     <string name="filter_by_description_or_strain">Açıklamaya veya türe göre filtrele…</string>
+    <plurals name="import_succeeded">
+        <item quantity="one">%d kullanım içe aktarıldı</item>
+        <item quantity="other">%d kullanım içe aktarıldı</item>
+    </plurals>
+    <string name="import_failed">Bu dosya içe aktarılamadı. Hiçbir kullanım kaydedilmedi.</string>
 </resources>

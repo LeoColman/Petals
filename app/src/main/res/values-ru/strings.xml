@@ -214,4 +214,11 @@
     <string name="show_archived">Показать архивные</string>
     <string name="no_strains_yet">Сортов пока нет. Добавьте сорт здесь или в форме добавления употребления.</string>
     <string name="filter_by_description_or_strain">Фильтр по описанию или сорту…</string>
+    <plurals name="import_succeeded">
+        <item quantity="one">Импортировано %d употребление</item>
+        <item quantity="few">Импортировано %d употребления</item>
+        <item quantity="many">Импортировано %d употреблений</item>
+        <item quantity="other">Импортировано %d употреблений</item>
+    </plurals>
+    <string name="import_failed">Не удалось импортировать этот файл. Ни одно употребление не сохранено.</string>
 </resources>

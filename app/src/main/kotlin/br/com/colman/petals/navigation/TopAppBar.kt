@@ -18,6 +18,9 @@
 
 package br.com.colman.petals.navigation
 
+import android.content.Context
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
@@ -40,6 +43,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,8 +51,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.colman.petals.BuildConfig
+import br.com.colman.petals.R.plurals.import_succeeded
 import br.com.colman.petals.R.string.app_name
 import br.com.colman.petals.R.string.export_export
+import br.com.colman.petals.R.string.import_failed
 import br.com.colman.petals.R.string.import_import
 import br.com.colman.petals.R.string.settings
 import br.com.colman.petals.use.io.input.UseCsvFileImporter
@@ -58,6 +64,7 @@ import compose.icons.tablericons.Settings
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 
 @Composable
@@ -118,10 +125,14 @@ private fun ImportButton(
   useCsvFileImporter: UseCsvFileImporter = koinInject(),
   dispatcher: CoroutineDispatcher = IO
 ) {
+  val context = LocalContext.current
   val scope = rememberCoroutineScope()
-  val launcher = rememberLauncherForActivityResult(GetContent()) {
-    if (it != null) {
-      scope.launch(dispatcher) { useCsvFileImporter.importCsvFile(it) }
+  val launcher = rememberLauncherForActivityResult(GetContent()) { uri ->
+    if (uri != null) {
+      scope.launch {
+        val imported = withContext(dispatcher) { useCsvFileImporter.importCsvFile(uri) }
+        Toast.makeText(context, context.importMessage(imported), LENGTH_LONG).show()
+      }
     }
   }
 
@@ -129,6 +140,11 @@ private fun ImportButton(
     Text(stringResource(import_import), fontSize = 14.sp)
   }
 }
+
+private fun Context.importMessage(imported: Result<Int>) = imported.fold(
+  onSuccess = { resources.getQuantityString(import_succeeded, it, it) },
+  onFailure = { getString(import_failed) }
+)
 
 @Composable
 private fun ExportButton(

@@ -49,17 +49,17 @@ class UseImporterTest : FunSpec({
   }
 
   context("Parse file") {
-    test("Returns success if all lines are parseable") {
+    test("Returns how many uses it saved if all lines are parseable") {
       val usesCsv = UseCsvArb.take(1000).toList()
-      target.import(usesCsv.joinToString("\n")).shouldBeSuccess()
+      target.import(usesCsv.joinToString("\n")) shouldBeSuccess 1000
     }
 
-    test("Returns success if the only unparseable line is the header") {
+    test("Returns how many uses it saved, without the header, if the only unparseable line is the header") {
       val header = "my,header,line"
       val usesCsv = UseCsvArb.take(1000)
       val csvLines = listOf(header) + usesCsv
 
-      target.import(csvLines.joinToString("\n")).shouldBeSuccess()
+      target.import(csvLines.joinToString("\n")) shouldBeSuccess 1000
     }
 
     test("Returns failure when any line other than the header is unparseable") {
@@ -77,8 +77,8 @@ class UseImporterTest : FunSpec({
       target.import(UseCsvArb.take(3).joinToString("\n", postfix = ",\"unclosed")).shouldBeFailure()
     }
 
-    test("Returns success when file is empty") {
-      target.import("").shouldBeSuccess()
+    test("Returns success with no use when file is empty") {
+      target.import("") shouldBeSuccess 0
     }
   }
 
@@ -158,7 +158,7 @@ class UseImporterTest : FunSpec({
       )
 
       with(Catalog()) {
-        importer.import(exportOf(saved, bedrocan)).shouldBeSuccess()
+        importer.import(exportOf(saved, bedrocan)) shouldBeSuccess 2
 
         uses.all().first() shouldContainExactlyInAnyOrder saved
         strains.allNow() shouldContainExactly listOf(bedrocan)
@@ -171,7 +171,7 @@ class UseImporterTest : FunSpec({
       val saved = UseArb.map { it.copy(description = notes.next(), strainId = strain.id) }.take(500).toList()
 
       with(Catalog()) {
-        importer.import(exportOf(saved, strain)).shouldBeSuccess()
+        importer.import(exportOf(saved, strain)) shouldBeSuccess saved.size
 
         uses.all().first() shouldContainExactlyInAnyOrder saved
         strains.allNow() shouldContainExactly listOf(strain)
