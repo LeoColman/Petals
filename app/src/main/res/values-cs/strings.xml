@@ -163,7 +163,6 @@
     <string name="description_label">popis</string>
     <string name="description">Popis</string>
     <string name="because_i_wanted">Protože jsem chtěl(a)</string>
-    <string name="filter_data_by_description_containing">Filtrovat data podle popisu obsahujícího…</string>
     <string name="with_a_friend">s kamarádem</string>
     <string name="add_a_copy_of_my_last_use">Přidat kopii mého posledního užití</string>
     <string name="no_previous_use_found">Nebylo nalezeno žádné předchozí užití</string>
@@ -211,4 +210,27 @@
     <string name="method_other">Jiné</string>
     <string name="method_unspecified">Neurčeno</string>
     <string name="duplicate_use">Duplikovat užití</string>
+    <string name="strain">Odrůda</string>
+    <string name="no_strain">Bez odrůdy</string>
+    <string name="new_strain">Nová odrůda…</string>
+    <string name="strains">Odrůdy</string>
+    <string name="strains_description">Přidávejte, upravujte a archivujte odrůdy, se kterými zaznamenáváte užití</string>
+    <string name="add_strain">Přidat odrůdu</string>
+    <string name="edit_strain">Upravit odrůdu</string>
+    <string name="strain_name">Název</string>
+    <string name="thc_percent" formatted="false">THC %</string>
+    <string name="cbd_percent" formatted="false">CBD %</string>
+    <string name="strain_thc">THC %s%%</string>
+    <string name="strain_cbd">CBD %s%%</string>
+    <string name="strain_archived">%s (archivováno)</string>
+    <string name="strain_name_taken">Odrůdu s tímto názvem už máte</string>
+    <string name="percent_out_of_range">Zadejte číslo od 0 do 100</string>
+    <string name="cost_invalid">Zadejte číslo 0 nebo větší</string>
+    <string name="archive_strain">Archivovat</string>
+    <string name="unarchive_strain">Obnovit z archivu</string>
+    <string name="delete_strain">Smazat odrůdu</string>
+    <string name="delete_strain_confirm">Smazat %s? Nebylo s ní zaznamenáno žádné užití.</string>
+    <string name="show_archived">Zobrazit archivované</string>
+    <string name="no_strains_yet">Zatím žádné odrůdy. Přidejte je zde nebo ve formuláři pro přidání užití.</string>
+    <string name="filter_by_description_or_strain">Filtrovat podle popisu nebo odrůdy…</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
@@ -48,12 +49,16 @@ import br.com.colman.petals.R.string.see_more
 import br.com.colman.petals.R.string.total_spent
 import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.strain.displayName
+import br.com.colman.petals.strain.potencyText
+import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Cash
 import compose.icons.tablericons.Copy
 import compose.icons.tablericons.Flame
+import compose.icons.tablericons.Leaf
 import compose.icons.tablericons.Notebook
 import compose.icons.tablericons.ReportMoney
 import compose.icons.tablericons.Scale
@@ -70,6 +75,7 @@ import java.time.format.DateTimeFormatter.ofPattern
 @Composable
 fun UseCards(
   uses: List<Use> = List(5) { Use() },
+  strains: Map<String, Strain> = emptyMap(),
   onEditUse: (Use) -> Unit = {},
   onDeleteUse: (Use) -> Unit = {},
   onDuplicateUse: (Use) -> Unit = {},
@@ -78,7 +84,7 @@ fun UseCards(
 
   Column(Modifier.fillMaxWidth(), spacedBy(8.dp)) {
     uses.sortedByDescending { it.date }.take(usesToShow).forEach {
-      UseCard(it, onEditUse, onDeleteUse, onDuplicateUse)
+      UseCard(it, it.strainId?.let(strains::get), onEditUse, onDeleteUse, onDuplicateUse)
     }
 
     Button({ usesToShow += 5 }, Modifier.align(CenterHorizontally)) {
@@ -92,6 +98,7 @@ fun UseCards(
 @Composable
 fun UseCard(
   use: Use = Use(),
+  strain: Strain? = null,
   onEditUse: (Use) -> Unit = { },
   onDeleteUse: (Use) -> Unit = {},
   onDuplicateUse: (Use) -> Unit = {},
@@ -121,6 +128,16 @@ fun UseCard(
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(ImageVector.vectorResource(ic_cannabis), null)
           Text(stringResource(date_at_time, dateString, timeString))
+        }
+
+        strain?.let {
+          Row(Modifier, spacedBy(8.dp), CenterVertically) {
+            Icon(TablerIcons.Leaf, null)
+            Column {
+              Text(it.displayName())
+              it.potencyText()?.let { potency -> Text(potency, style = MaterialTheme.typography.caption) }
+            }
+          }
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
@@ -235,6 +252,7 @@ private fun EditUseDialog(
   val time = remember { mutableStateOf(use.date.toLocalTime()) }
   val description = remember { mutableStateOf(use.description) }
   val consumptionMethod = remember { mutableStateOf(use.consumptionMethod) }
+  val strainId = remember { mutableStateOf(use.strainId) }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
@@ -243,12 +261,12 @@ private fun EditUseDialog(
     use.id,
     description.value,
     consumptionMethod.value,
-    use.strainId
+    strainId.value
   )
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod) },
+    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId) },
     confirmButton = { ConfirmEdit(onEditUse, use, onDismiss) }
   )
 }

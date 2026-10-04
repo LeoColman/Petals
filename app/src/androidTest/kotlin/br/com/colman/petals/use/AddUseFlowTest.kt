@@ -15,9 +15,13 @@ import br.com.colman.petals.MainActivity
 import br.com.colman.petals.R.string.add_use_during_pause_alert
 import br.com.colman.petals.R.string.amount_grams_title
 import br.com.colman.petals.R.string.no
+import br.com.colman.petals.R.string.no_strain
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.yes
+import br.com.colman.petals.koin
 import br.com.colman.petals.review.ReviewAppRequester
+import br.com.colman.petals.strain.repository.Strain
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.repository.ConsumptionMethod.VAPORIZED
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
@@ -44,6 +48,13 @@ class AddUseFlowTest : FunSpec({
 
   val noReview = object : ReviewAppRequester {}
 
+  // The form reads strains from the app's own catalog, so the template's strain lives there for each test.
+  val strains = koin.get<StrainRepository>()
+  val templateStrain = Strain("AddUseFlowTest strain", id = template.strainId!!)
+  val archivedStrain = Strain("AddUseFlowTest archived", isArchived = true, id = "add-use-flow-archived")
+  beforeTest { strains.upsertAll(listOf(templateStrain, archivedStrain)) }
+  afterTest { listOf(templateStrain, archivedStrain).forEach(strains::delete) }
+
   fun inMemoryRepository(context: Context) =
     UseRepository(Database(AndroidSqliteDriver(Database.Schema, context, null)).useQueries)
 
@@ -57,6 +68,7 @@ class AddUseFlowTest : FunSpec({
         AddUseFlow(AddUseRequest(template), false, noReview, repository) { finished = true }
       }
 
+      waitUntil(timeoutMillis = 5_000) { onAllNodesWithText(templateStrain.name).fetchSemanticsNodes().isNotEmpty() }
       onNodeWithText(activity!!.getString(ok)).performClick()
     }
 
@@ -65,6 +77,23 @@ class AddUseFlowTest : FunSpec({
     saved.id shouldNotBe template.id
     Duration.between(saved.date, LocalDateTime.now()).abs() shouldBeLessThan Duration.ofMinutes(1)
     finished shouldBe true
+  }
+
+  test("a new use doesn't start with a strain that was archived") {
+    lateinit var repository: UseRepository
+
+    runAndroidComposeUiTest<MainActivity> {
+      repository = inMemoryRepository(activity!!)
+      activity!!.setContent {
+        AddUseFlow(AddUseRequest(template.copy(strainId = archivedStrain.id)), false, noReview, repository) { }
+      }
+
+      val noStrain = activity!!.getString(no_strain)
+      waitUntil(timeoutMillis = 5_000) { onAllNodesWithText(noStrain).fetchSemanticsNodes().isNotEmpty() }
+      onNodeWithText(activity!!.getString(ok)).performClick()
+    }
+
+    repository.all().first().single().strainId shouldBe null
   }
 
   test("during a pause the form only opens once the pause is confirmed") {

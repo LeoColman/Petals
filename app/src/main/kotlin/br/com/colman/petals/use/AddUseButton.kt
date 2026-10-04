@@ -34,6 +34,8 @@ import br.com.colman.petals.R.string.thank_your_for_using_message
 import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.R.string.yes_timer
 import br.com.colman.petals.review.ReviewAppRequester
+import br.com.colman.petals.strain.newUseStrainId
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.widgets.updateWidget
@@ -41,6 +43,7 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.Lock
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 import java.math.BigDecimal.ZERO
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -196,6 +199,14 @@ private fun AddUseDialog(
   val time = remember { mutableStateOf(LocalTime.now()) }
   val description = remember { mutableStateOf(previousUse?.description.orEmpty()) }
   val consumptionMethod = remember { mutableStateOf(previousUse?.consumptionMethod) }
+  val strainId = remember { mutableStateOf(previousUse?.strainId) }
+
+  // The copied strain is dropped once the catalog shows it archived or gone: a new use doesn't start with a strain
+  // the user is done with.
+  val catalog by koinInject<StrainRepository>().all().collectAsState(null)
+  LaunchedEffect(catalog != null) {
+    catalog?.let { strainId.value = newUseStrainId(strainId.value, it) }
+  }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
@@ -203,12 +214,12 @@ private fun AddUseDialog(
     costPerGram.value.toBigDecimalOrNull() ?: ZERO,
     description = description.value,
     consumptionMethod = consumptionMethod.value,
-    strainId = previousUse?.strainId
+    strainId = strainId.value
   )
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod) },
+    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId) },
     confirmButton = { ConfirmNewUseButton(onAddUse, use, onDismiss) }
   )
 }

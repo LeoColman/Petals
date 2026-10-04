@@ -45,9 +45,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import br.com.colman.petals.R.string.filter_data_by_description_containing
+import br.com.colman.petals.R.string.filter_by_description_or_strain
 import br.com.colman.petals.R.string.with_a_friend
 import br.com.colman.petals.review.ReviewAppRequester
+import br.com.colman.petals.strain.repository.Strain
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.AddUseButton
 import br.com.colman.petals.use.AddUseFlow
 import br.com.colman.petals.use.AddUseRequest
@@ -74,7 +76,8 @@ import kotlin.time.Duration.Companion.seconds
 fun Usage(
   useRepository: UseRepository = koinInject(),
   pauseRepository: PauseRepository = koinInject(),
-  reviewAppRequester: ReviewAppRequester = koinInject()
+  reviewAppRequester: ReviewAppRequester = koinInject(),
+  strainRepository: StrainRepository = koinInject()
 ) {
   val lastUseDate by useRepository.getLastUseDate().collectAsState(null)
   val lastUse = useRepository.getLastUse().collectAsState(null)
@@ -121,27 +124,28 @@ fun Usage(
 
     PauseCards(pauseRepository)
 
-    var descriptionContains by remember { mutableStateOf("") }
+    var filter by remember { mutableStateOf("") }
+    val strains by strainRepository.all().map { all -> all.associateBy { it.id } }.collectAsState(emptyMap())
     val uses by useRepository.all().map { uses ->
-      uses.filter {
-        it.description.contains(
-          descriptionContains,
-          true
-        )
-      }
+      uses.filter { it.matchesFilter(filter, it.strainId?.let(strains::get)) }
     }.collectAsState(emptyList())
 
     StatsBlocks(uses)
-    UsageFilter(descriptionContains) { descriptionContains = it }
+    UsageFilter(filter) { filter = it }
     val scope = rememberCoroutineScope()
     UseCards(
       uses,
+      strains,
       onEditUse = { scope.launch { updateUse(useRepository, it, context) } },
       onDeleteUse = { scope.launch { fetchCountAndUpdateWidget(useRepository, context, it) } },
       onDuplicateUse = { addUseRequest = AddUseRequest(it) }
     )
   }
 }
+
+/** Whether [this] use shows under a filter for [text]: its notes or its [strain]'s name contain it, ignoring case. */
+internal fun Use.matchesFilter(text: String, strain: Strain?): Boolean =
+  description.contains(text, ignoreCase = true) || strain?.name?.contains(text, ignoreCase = true) == true
 
 private suspend fun updateUse(
   useRepository: UseRepository,
@@ -169,7 +173,7 @@ private fun UsageFilter(value: String, onValueChange: (String) -> Unit) {
       .fillMaxWidth()
       .padding(16.dp),
     leadingIcon = { Icon(TablerIcons.ListSearch, null) },
-    label = { Text(stringResource(filter_data_by_description_containing)) },
+    label = { Text(stringResource(filter_by_description_or_strain)) },
     placeholder = { Text(stringResource(with_a_friend)) }
   )
 }

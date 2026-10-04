@@ -37,6 +37,11 @@ class StrainRepository(
 
   fun countUses(strain: Strain): Long = strainQueries.countUses(strain.id).executeAsOne()
 
+  /** How many uses were logged with each strain that has any, by strain id. */
+  fun useCounts(dispatcher: CoroutineDispatcher = IO): Flow<Map<String, Long>> =
+    strainQueries.countUsesByStrain().asFlow().mapToList(dispatcher)
+      .map { rows -> rows.associate { it.strain_id!! to it.uses } }
+
   /**
    * Deletes [strain] only while no use refers to it, and says whether it did. Callers offer archiving for a strain
    * that has been used, so past uses keep their name and potency; this only refuses, it never archives.

@@ -37,6 +37,8 @@ import br.com.colman.petals.components.ClickableTextField
 import br.com.colman.petals.components.dateDialogState
 import br.com.colman.petals.components.timeDialogState
 import br.com.colman.petals.settings.SettingsRepository
+import br.com.colman.petals.strain.StrainField
+import br.com.colman.petals.strain.repository.StrainRepository
 import br.com.colman.petals.use.repository.ConsumptionMethod
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
@@ -59,6 +61,7 @@ fun AddUseForm(
   time: MutableState<LocalTime>,
   description: MutableState<String>,
   consumptionMethod: MutableState<ConsumptionMethod?>,
+  strainId: MutableState<String?>,
 ) {
   val settingsRepository = koinInject<SettingsRepository>()
   val is24HoursFormat by settingsRepository.is24HoursFormat.collectAsState(false)
@@ -76,6 +79,8 @@ fun AddUseForm(
 
   Column(Modifier, Arrangement.spacedBy(8.dp)) {
     Text(stringResource(add_use), fontWeight = Bold, fontSize = 16.sp)
+
+    UseStrainField(strainId) { cost = it }
 
     OutlinedTextField(
       value = amount,
@@ -122,6 +127,20 @@ fun AddUseForm(
 
     ConsumptionMethodField(consumptionMethod)
   }
+}
+
+/** The strain picker, over the whole catalog, filling in the cost of whichever strain is picked or made. */
+@Composable
+private fun UseStrainField(strainId: MutableState<String?>, setCost: (String) -> Unit) {
+  val strainRepository = koinInject<StrainRepository>()
+  val catalog by strainRepository.all().collectAsState(emptyList())
+
+  StrainField(
+    strainId,
+    catalog,
+    onPick = { strain -> strain?.costPerGram?.let { setCost(it.toPlainString()) } },
+    onCreate = strainRepository::upsert
+  )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
