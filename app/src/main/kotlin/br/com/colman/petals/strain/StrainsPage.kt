@@ -15,6 +15,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.ListItem
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
@@ -151,15 +152,15 @@ private fun StrainCard(
         uses?.let { Text(pluralStringResource(amount_uses, it.toInt(), it.toString())) }
       }
 
-      Column(horizontalAlignment = End, verticalArrangement = spacedBy(16.dp)) {
-        Icon(TablerIcons.Pencil, stringResource(edit_strain), Modifier.clickable(onClick = onEdit))
+      Column(horizontalAlignment = End) {
+        IconButton(onEdit) { Icon(TablerIcons.Pencil, stringResource(edit_strain)) }
         if (strain.isArchived) {
-          Icon(TablerIcons.ArrowBackUp, stringResource(unarchive_strain), Modifier.clickable(onClick = onArchive))
+          IconButton(onArchive) { Icon(TablerIcons.ArrowBackUp, stringResource(unarchive_strain)) }
         } else {
-          Icon(TablerIcons.Archive, stringResource(archive_strain), Modifier.clickable(onClick = onArchive))
+          IconButton(onArchive) { Icon(TablerIcons.Archive, stringResource(archive_strain)) }
         }
         if (uses == 0L) {
-          Icon(TablerIcons.Trash, stringResource(delete_strain), Modifier.clickable { isConfirmingDelete = true })
+          IconButton({ isConfirmingDelete = true }) { Icon(TablerIcons.Trash, stringResource(delete_strain)) }
         }
       }
     }
