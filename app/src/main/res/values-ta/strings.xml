@@ -222,4 +222,9 @@
     <string name="show_archived">காப்பகப்படுத்தியவற்றைக் காட்டு</string>
     <string name="no_strains_yet">இன்னும் வகைகள் இல்லை. இங்கே அல்லது பயன்பாடு சேர்க்கும் படிவத்தில் ஒன்றைச் சேர்க்கவும்.</string>
     <string name="filter_by_description_or_strain">விவரம் அல்லது வகையின்படி வடிகட்டு…</string>
+    <plurals name="import_succeeded">
+        <item quantity="one">%d பயன்பாடு இறக்குமதி செய்யப்பட்டது</item>
+        <item quantity="other">%d பயன்பாடுகள் இறக்குமதி செய்யப்பட்டன</item>
+    </plurals>
+    <string name="import_failed">இந்தக் கோப்பை இறக்குமதி செய்ய முடியவில்லை. எந்தப் பயன்பாடும் சேமிக்கப்படவில்லை.</string>
 </resources>

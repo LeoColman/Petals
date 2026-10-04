@@ -200,4 +200,10 @@
     <string name="show_archived">Afficher les archivées</string>
     <string name="no_strains_yet">Aucune variété pour l\'instant. Ajoutez-en une ici ou depuis le formulaire d\'ajout.</string>
     <string name="filter_by_description_or_strain">Filtrer par description ou variété…</string>
+    <plurals name="import_succeeded">
+        <item quantity="one">%d utilisation importée</item>
+        <item quantity="many">%d utilisations importées</item>
+        <item quantity="other">%d utilisations importées</item>
+    </plurals>
+    <string name="import_failed">Impossible d\'importer ce fichier. Aucune utilisation n\'a été enregistrée.</string>
 </resources>

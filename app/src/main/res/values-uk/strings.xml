@@ -232,4 +232,11 @@
     <string name="show_archived">Показати архівні</string>
     <string name="no_strains_yet">Сортів поки немає. Додайте сорт тут або у формі додавання вжитку.</string>
     <string name="filter_by_description_or_strain">Фільтр за описом або сортом…</string>
+    <plurals name="import_succeeded">
+        <item quantity="one">Імпортовано %d вжиток</item>
+        <item quantity="few">Імпортовано %d вжитки</item>
+        <item quantity="many">Імпортовано %d вжитків</item>
+        <item quantity="other">Імпортовано %d вжитків</item>
+    </plurals>
+    <string name="import_failed">Не вдалося імпортувати цей файл. Жоден вжиток не збережено.</string>
 </resources>

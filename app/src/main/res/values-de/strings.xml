@@ -229,4 +229,9 @@
     <string name="show_archived">Archivierte anzeigen</string>
     <string name="no_strains_yet">Noch keine Sorten. Füge hier eine hinzu oder im Formular zum Hinzufügen von Konsum.</string>
     <string name="filter_by_description_or_strain">Nach Beschreibung oder Sorte filtern…</string>
+    <plurals name="import_succeeded">
+        <item quantity="one">%d Konsum importiert</item>
+        <item quantity="other">%d Konsumeinträge importiert</item>
+    </plurals>
+    <string name="import_failed">Diese Datei konnte nicht importiert werden. Es wurde kein Konsum gespeichert.</string>
 </resources>

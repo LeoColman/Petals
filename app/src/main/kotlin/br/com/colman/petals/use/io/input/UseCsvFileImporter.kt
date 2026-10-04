@@ -8,8 +8,9 @@ class UseCsvFileImporter(
   private val contentResolver: ContentResolver
 ) {
 
-  fun importCsvFile(uri: Uri) {
-    useImporter.import(uri.readText())
+  /** Imports the file at [uri], and returns how many uses it saved, or why it couldn't be read or imported. */
+  fun importCsvFile(uri: Uri): Result<Int> = runCatching {
+    useImporter.import(uri.readText()).getOrThrow()
   }
 
   private fun Uri.readText() = contentResolver.openInputStream(this)?.bufferedReader()?.use { it.readText() }.orEmpty()

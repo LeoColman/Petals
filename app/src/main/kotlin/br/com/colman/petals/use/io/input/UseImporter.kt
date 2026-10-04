@@ -30,10 +30,10 @@ class UseImporter(
 ) {
 
   /**
-   * Saves every use in the CSV file [csv]. The first row is skipped when it isn't a use, as it's the header then; any
-   * other row that isn't a use fails the import, which then saves nothing.
+   * Saves every use in the CSV file [csv], and returns how many. The first row is skipped when it isn't a use, as it's
+   * the header then; any other row that isn't a use fails the import, which then saves nothing.
    */
-  fun import(csv: String, modifyUse: (Use) -> (Use) = { it }): Result<Unit> = runCatching {
+  fun import(csv: String, modifyUse: (Use) -> (Use) = { it }): Result<Int> = runCatching {
     val csvRows = UseCsvParser.rowsOf(csv)
     val strainColumns = csvRows.firstOrNull()?.let(UseCsvParser::strainColumnsIn)
     val rows = csvRows.mapIndexed { index, values ->
@@ -52,5 +52,6 @@ class UseImporter(
       // leaves an existing use's strain alone, so no backup can wipe the links made since it was taken.
       useRepository.upsertAllKeepingStrains(uses)
     }
+    rows.size
   }
 }
