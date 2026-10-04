@@ -180,4 +180,27 @@
     <string name="method_other">Otro</string>
     <string name="method_unspecified">No especificado</string>
     <string name="duplicate_use">Duplicar consumo</string>
+    <string name="strain">Variedad</string>
+    <string name="no_strain">Sin variedad</string>
+    <string name="new_strain">Nueva variedad…</string>
+    <string name="strains">Variedades</string>
+    <string name="strains_description">Agrega, edita y archiva las variedades con las que registras tus consumos</string>
+    <string name="add_strain">Agregar variedad</string>
+    <string name="edit_strain">Editar variedad</string>
+    <string name="strain_name">Nombre</string>
+    <string name="thc_percent" formatted="false">THC %</string>
+    <string name="cbd_percent" formatted="false">CBD %</string>
+    <string name="strain_thc">THC %s%%</string>
+    <string name="strain_cbd">CBD %s%%</string>
+    <string name="strain_archived">%s (archivada)</string>
+    <string name="strain_name_taken">Ya tienes una variedad con este nombre</string>
+    <string name="percent_out_of_range">Usa un número de 0 a 100</string>
+    <string name="cost_invalid">Usa un número de 0 o más</string>
+    <string name="archive_strain">Archivar</string>
+    <string name="unarchive_strain">Desarchivar</string>
+    <string name="delete_strain">Borrar variedad</string>
+    <string name="delete_strain_confirm">¿Borrar %s? No se registró ningún consumo con ella.</string>
+    <string name="show_archived">Mostrar archivadas</string>
+    <string name="no_strains_yet">Aún no hay variedades. Agrega una aquí o desde el formulario de consumo.</string>
+    <string name="filter_by_description_or_strain">Filtrar por descripción o variedad…</string>
 </resources>

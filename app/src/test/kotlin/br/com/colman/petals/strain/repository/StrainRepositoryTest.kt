@@ -92,6 +92,14 @@ class StrainRepositoryTest : FunSpec({
     test("A strain nobody used has no uses") {
       target.countUses(flm) shouldBe 0
     }
+
+    test("useCounts counts the uses of every strain that has any") {
+      val bedrocan = Strain("Bedrocan")
+      target.upsertAll(listOf(flm, bedrocan, Strain("Unused")))
+      uses.upsertAll(List(3) { Use(strainId = flm.id) } + Use(strainId = bedrocan.id) + Use())
+
+      target.useCounts().first() shouldBe mapOf(flm.id to 3L, bedrocan.id to 1L)
+    }
   }
 
   context("Delete") {

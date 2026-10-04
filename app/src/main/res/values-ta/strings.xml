@@ -173,7 +173,6 @@
     <string name="description_label">விவரம்</string>
     <string name="description">விவரம்</string>
     <string name="because_i_wanted">ஏனென்றால் நான் விரும்பினேன்</string>
-    <string name="filter_data_by_description_containing">விளக்கத்தின் மூலம் தரவை வடிகட்டவும்…</string>
     <string name="drug_test">மருந்து சோதனை</string>
     <string name="add_a_copy_of_my_last_use">நான் கடைசியாகப் பயன்படுத்தியதன் நகலைச் சேர்க்கவும்</string>
     <string name="no_previous_use_found">முந்தைய பயன்பாடு எதுவும் இல்லை</string>
@@ -200,4 +199,27 @@
     <string name="method_other">மற்றவை</string>
     <string name="method_unspecified">குறிப்பிடப்படவில்லை</string>
     <string name="duplicate_use">பயன்பாட்டை நகலெடு</string>
+    <string name="strain">வகை</string>
+    <string name="no_strain">வகை இல்லை</string>
+    <string name="new_strain">புதிய வகை…</string>
+    <string name="strains">வகைகள்</string>
+    <string name="strains_description">பயன்பாடுகளைப் பதிவுசெய்யும் வகைகளைச் சேர்க்கவும், திருத்தவும், காப்பகப்படுத்தவும்</string>
+    <string name="add_strain">வகையைச் சேர்</string>
+    <string name="edit_strain">வகையைத் திருத்து</string>
+    <string name="strain_name">பெயர்</string>
+    <string name="thc_percent" formatted="false">THC %</string>
+    <string name="cbd_percent" formatted="false">CBD %</string>
+    <string name="strain_thc">THC %s%%</string>
+    <string name="strain_cbd">CBD %s%%</string>
+    <string name="strain_archived">%s (காப்பகப்படுத்தப்பட்டது)</string>
+    <string name="strain_name_taken">இந்தப் பெயரில் ஏற்கனவே ஒரு வகை உள்ளது</string>
+    <string name="percent_out_of_range">0 முதல் 100 வரையிலான எண்ணை உள்ளிடவும்</string>
+    <string name="cost_invalid">0 அல்லது அதற்கு மேற்பட்ட எண்ணை உள்ளிடவும்</string>
+    <string name="archive_strain">காப்பகப்படுத்து</string>
+    <string name="unarchive_strain">காப்பகத்திலிருந்து மீட்டெடு</string>
+    <string name="delete_strain">வகையை நீக்கு</string>
+    <string name="delete_strain_confirm">%s ஐ நீக்கவா? இதனுடன் எந்தப் பயன்பாடும் பதிவு செய்யப்படவில்லை.</string>
+    <string name="show_archived">காப்பகப்படுத்தியவற்றைக் காட்டு</string>
+    <string name="no_strains_yet">இன்னும் வகைகள் இல்லை. இங்கே அல்லது பயன்பாடு சேர்க்கும் படிவத்தில் ஒன்றைச் சேர்க்கவும்.</string>
+    <string name="filter_by_description_or_strain">விவரம் அல்லது வகையின்படி வடிகட்டு…</string>
 </resources>

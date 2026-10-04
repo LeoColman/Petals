@@ -23,3 +23,6 @@ DELETE FROM Strain WHERE id IS (?);
 
 countUses:
 SELECT COUNT(*) FROM Use WHERE strain_id IS (?);
+
+countUsesByStrain:
+SELECT strain_id, COUNT(*) AS uses FROM Use WHERE strain_id IS NOT NULL GROUP BY strain_id;
