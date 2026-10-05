@@ -373,4 +373,41 @@ class UseCsvParserTest : FunSpec({
       UseCsvParser.strainColumnsIn(UseArb.next().columns()) shouldBe null
     }
   }
+  context("rating") {
+    val header = listOf("date", "amount", "cost", "id", "description", "method") + Strain.CsvHeader + "rating"
+
+    test("Is found by its label, wherever the header put it") {
+      UseCsvParser.ratingColumnIn(header) shouldBe 12
+      UseCsvParser.ratingColumnIn(listOf("date", "amount", "cost", " rating ")) shouldBe 3
+    }
+
+    test("Isn't found in a header from before ratings, or in a file without a header") {
+      UseCsvParser.ratingColumnIn(header.dropLast(1)) shouldBe null
+      UseCsvParser.ratingColumnIn(UseArb.next().columns()) shouldBe null
+    }
+
+    fun ratingOf(value: String, column: Int? = 6) =
+      UseCsvParser.parse(UseArb.next().columns() + value, ratingColumn = column).getOrThrow().use.rating
+
+    test("Reads whole and half stars, and a decimal comma") {
+      ratingOf("4") shouldBe 4.0
+      ratingOf("3.5") shouldBe 3.5
+      ratingOf(" 3,5 ") shouldBe 3.5
+    }
+
+    test("Rounds to the nearest half star") {
+      ratingOf("3.7") shouldBe 3.5
+    }
+
+    test("Is dropped, without failing the row, when it can't be read or is out of range") {
+      ratingOf("great") shouldBe null
+      ratingOf("6") shouldBe null
+      ratingOf("0") shouldBe null
+      ratingOf("") shouldBe null
+    }
+
+    test("Isn't read without a rating column, whatever the row holds") {
+      ratingOf("4", column = null) shouldBe null
+    }
+  }
 })

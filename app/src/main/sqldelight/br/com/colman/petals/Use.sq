@@ -5,28 +5,32 @@ CREATE TABLE Use(
     id TEXT PRIMARY KEY,
     description TEXT NOT NULL DEFAULT "",
     consumption_method TEXT NOT NULL DEFAULT '',
-    strain_id TEXT
+    strain_id TEXT,
+    rating REAL
 );
 
 CREATE INDEX use_strain_id ON Use(strain_id);
 
 upsert:
-INSERT INTO Use(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id) VALUES ?
+INSERT INTO Use(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id, rating) VALUES ?
 ON CONFLICT (id) DO UPDATE SET date = excluded.date,
  amount_grams = excluded.amount_grams,
  description = excluded.description,
  consumption_method = excluded.consumption_method,
  strain_id = excluded.strain_id,
+ rating = excluded.rating,
   cost_per_gram = excluded.cost_per_gram;
 
--- Like upsert, except a use without a strain keeps the one it has, for imports, which never unlink. Keep both in step.
-upsertKeepingStrain:
-INSERT INTO Use(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id) VALUES ?
+-- Like upsert, except a use without a strain or a rating keeps the one it has, for imports, which add what a file
+-- holds but never take anything away. Keep both in step.
+upsertImported:
+INSERT INTO Use(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id, rating) VALUES ?
 ON CONFLICT (id) DO UPDATE SET date = excluded.date,
  amount_grams = excluded.amount_grams,
  description = excluded.description,
  consumption_method = excluded.consumption_method,
  strain_id = coalesce(excluded.strain_id, Use.strain_id),
+ rating = coalesce(excluded.rating, Use.rating),
   cost_per_gram = excluded.cost_per_gram;
 
 selectLast:
