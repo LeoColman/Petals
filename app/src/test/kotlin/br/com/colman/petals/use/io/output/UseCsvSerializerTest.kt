@@ -45,10 +45,10 @@ import java.time.LocalDateTime
 class UseCsvSerializerTest : FunSpec({
   val useRepository = mockk<UseRepository>()
   val useCsvHeaders = UseCsvHeaders("date", "amount", "cost", "id", "description", "method")
-  val headerLine = "date,amount,cost,id,description,method," + Strain.CsvHeader.joinToString(",")
+  val headerLine = "date,amount,cost,id,description,method," + Strain.CsvHeader.joinToString(",") + ",rating"
   val target = UseCsvSerializer(useRepository, useCsvHeaders)
 
-  fun Use.lineWithoutStrain() = (columns() + List(Strain.CsvColumnCount) { "" }).joinToString(",")
+  fun Use.lineWithoutStrain() = (columns() + List(Strain.CsvColumnCount) { "" } + "").joinToString(",")
 
   test("Includes all values in resulting file") {
     val uses = UseArb.take(10).toList()
@@ -90,7 +90,7 @@ class UseCsvSerializerTest : FunSpec({
 
     val localizedHeaders = UseCsvHeaders(resources)
 
-    localizedHeaders.toList() shouldBe listOf("a", "b", "c", "d", "e", "f") + Strain.CsvHeader
+    localizedHeaders.toList() shouldBe listOf("a", "b", "c", "d", "e", "f") + Strain.CsvHeader + "rating"
   }
 
   test("Throws exception when data retrieval fails") {
@@ -138,7 +138,7 @@ class UseCsvSerializerTest : FunSpec({
 
     val file = targetWithLocalizedHeaders.computeUseCsv()
 
-    file shouldStartWith "ã,æ,̉ħ,ŋ,®,µ,${Strain.CsvHeader.joinToString(",")}\n"
+    file shouldStartWith "ã,æ,̉ħ,ŋ,®,µ,${Strain.CsvHeader.joinToString(",")},rating\n"
   }
 
   context("strain columns") {
@@ -148,7 +148,7 @@ class UseCsvSerializerTest : FunSpec({
       val use = UseArb.take(1).single().copy(strainId = strain.id)
       every { useRepository.allWithStrains(any()) } returns flowOf(listOf(use to strain))
 
-      target.computeUseCsv().lines()[1] shouldBe (use.columns() + strain.columns()).joinToString(",")
+      target.computeUseCsv().lines()[1] shouldBe (use.columns() + strain.columns() + "").joinToString(",")
     }
 
     test("Leaves the strain columns empty for a use whose strain is gone") {
@@ -156,6 +156,18 @@ class UseCsvSerializerTest : FunSpec({
       every { useRepository.allWithStrains(any()) } returns flowOf(listOf(use to null))
 
       target.computeUseCsv().lines()[1] shouldBe use.lineWithoutStrain()
+    }
+  }
+  context("rating") {
+    test("Writes a use's rating last, whole stars without decimals") {
+      val halves = UseArb.take(1).single().copy(rating = 3.5)
+      val whole = halves.copy(id = "whole", rating = 4.0)
+      every { useRepository.allWithStrains(any()) } returns flowOf(listOf(halves to null, whole to null))
+
+      val lines = target.computeUseCsv().lines()
+
+      lines[1] shouldEndWith ",3.5"
+      lines[2] shouldEndWith ",4"
     }
   }
 })

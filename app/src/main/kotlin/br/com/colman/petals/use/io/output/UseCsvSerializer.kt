@@ -26,6 +26,7 @@ import br.com.colman.petals.R.string.cost_per_gram_label
 import br.com.colman.petals.R.string.date_label
 import br.com.colman.petals.R.string.id_label
 import br.com.colman.petals.strain.repository.Strain
+import br.com.colman.petals.use.repository.Rating
 import br.com.colman.petals.use.repository.UseRepository
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import kotlinx.coroutines.flow.first
@@ -33,8 +34,8 @@ import java.io.ByteArrayOutputStream
 import kotlin.text.Charsets.UTF_8
 
 /**
- * The CSV header. The use's own columns are labelled in the app's language; the strain's keep the fixed labels of
- * [Strain.CsvHeader], which the importer finds them by.
+ * The CSV header. The use's own columns are labelled in the app's language; the strain's and the rating keep the
+ * fixed labels of [Strain.CsvHeader] and [Rating.CsvColumn], which the importer finds them by.
  */
 data class UseCsvHeaders(
   val date: String,
@@ -53,7 +54,8 @@ data class UseCsvHeaders(
     resources.getString(consumption_method_label)
   )
 
-  fun toList() = listOf(date, amount, costPerGram, id, description, consumptionMethod) + Strain.CsvHeader
+  fun toList() = listOf(date, amount, costPerGram, id, description, consumptionMethod) + Strain.CsvHeader +
+    Rating.CsvColumn
 }
 
 class UseCsvSerializer(
@@ -62,12 +64,12 @@ class UseCsvSerializer(
 ) {
 
   /**
-   * Every use, each followed by its strain's columns. A use without a strain, or whose strain is gone, gets empty
-   * strain columns, which reads back as no strain.
+   * Every use, each followed by its strain's columns and its rating. A use without a strain, or whose strain is gone,
+   * gets empty strain columns, which reads back as no strain, and an unrated use an empty rating.
    */
   suspend fun computeUseCsv(): String {
     val lines = useRepository.allWithStrains().first().map { (use, strain) ->
-      use.columns() + (strain?.columns() ?: NoStrainColumns)
+      use.columns() + (strain?.columns() ?: NoStrainColumns) + use.rating?.let(Rating::format).orEmpty()
     }
     val content = listOf(useCsvHeaders.toList()) + lines
 

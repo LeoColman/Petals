@@ -90,6 +90,20 @@ class UseTest : FunSpec({
       use1 shouldNotBeEqual use2
     }
 
+    test("different rating should not be equal") {
+      val use1 = Use(rating = 3.5)
+      val use2 = use1.copy(rating = 4.0)
+
+      use1 shouldNotBeEqual use2
+    }
+
+    test("null and non-null rating should not be equal") {
+      val use1 = Use(rating = null)
+      val use2 = use1.copy(rating = 3.0)
+
+      use1 shouldNotBeEqual use2
+    }
+
     test("null and non-null strainId should not be equal") {
       val use1 = Use(strainId = null)
       val use2 = use1.copy(strainId = "flm")
@@ -160,6 +174,13 @@ class UseTest : FunSpec({
     test("different strainId => different hash code") {
       val use1 = Use(strainId = "flm")
       val use2 = use1.copy(strainId = "bedrocan")
+
+      use1.hashCode() shouldNotBe use2.hashCode()
+    }
+
+    test("different rating => different hash code") {
+      val use1 = Use(rating = 3.5)
+      val use2 = use1.copy(rating = 4.0)
 
       use1.hashCode() shouldNotBe use2.hashCode()
     }

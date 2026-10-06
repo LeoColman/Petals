@@ -43,11 +43,11 @@ class UseIOModuleTest : FunSpec({
     // the export quotes, so its use spans two lines of the file.
     inputFile.writeText(
       """
-        date,amount,cost_per_gram,id,description,consumption_method,strain_id,strain_name,strain_thc_percent,strain_cbd_percent,strain_cost_per_gram,strain_archived
-        2024-03-21T19:01:47.163,0.08,22.2,80204597-00eb-4412-b7ee-223388806fe2,,,,,,,,
-        2024-03-22T21:30:00,0.25,12.5,5d2f8a3e-1c4b-4f6e-9a7d-2b8c0e1f3a45,,vaporized,0b7e9c1a-6d2f-4e8b-a3c5-9f1d2e4b6a78,UseIOModuleTest strain,27,1,12.5,false
+        date,amount,cost_per_gram,id,description,consumption_method,strain_id,strain_name,strain_thc_percent,strain_cbd_percent,strain_cost_per_gram,strain_archived,rating
+        2024-03-21T19:01:47.163,0.08,22.2,80204597-00eb-4412-b7ee-223388806fe2,,,,,,,,,
+        2024-03-22T21:30:00,0.25,12.5,5d2f8a3e-1c4b-4f6e-9a7d-2b8c0e1f3a45,,vaporized,0b7e9c1a-6d2f-4e8b-a3c5-9f1d2e4b6a78,UseIOModuleTest strain,27,1,12.5,false,3.5
         2024-03-23T08:15:00,0.1,10,9c1e2f3a-4b5d-4e6f-8a7b-1c2d3e4f5a6b,"Bedrocan
-        felt sleepy",smoked,,,,,,
+        felt sleepy",smoked,,,,,,,4
       """.trimIndent()
     )
 

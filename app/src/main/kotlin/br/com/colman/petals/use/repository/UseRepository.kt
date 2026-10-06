@@ -34,12 +34,13 @@ class UseRepository(
   }
 
   /**
-   * Like [upsertAll], except that a use without a strain doesn't take away the strain an existing use has. For
-   * imports, which link strains but never unlink them.
+   * Like [upsertAll], except that a use without a strain or a rating doesn't take away the one an existing use has.
+   * For imports, which add what a file holds but never take anything away, so an old backup can't wipe what was
+   * added since it was taken.
    */
-  fun upsertAllKeepingStrains(uses: Iterable<Use>) {
+  fun upsertAllImported(uses: Iterable<Use>) {
     useQueries.transaction {
-      uses.forEach { useQueries.upsertKeepingStrain(it.toEntity()) }
+      uses.forEach { useQueries.upsertImported(it.toEntity()) }
     }
   }
 
@@ -84,7 +85,8 @@ fun Use.toEntity(): UseEntity = UseEntity(
   id,
   description,
   consumptionMethod?.key.orEmpty(),
-  strainId
+  strainId,
+  rating
 )
 
 fun UseEntity.toUse() = Use(
@@ -94,11 +96,12 @@ fun UseEntity.toUse() = Use(
   id,
   description,
   ConsumptionMethod.fromKey(consumption_method),
-  strain_id
+  strain_id,
+  rating
 )
 
 private fun SelectAllWithStrain.toUseAndStrain(): Pair<Use, Strain?> {
-  val use = UseEntity(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id).toUse()
+  val use = UseEntity(date, amount_grams, cost_per_gram, id, description, consumption_method, strain_id, rating).toUse()
   val strain = if (strain_id == null || strain_name == null) {
     null
   } else {

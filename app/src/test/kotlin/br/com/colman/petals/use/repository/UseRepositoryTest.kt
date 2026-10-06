@@ -74,12 +74,12 @@ class UseRepositoryTest : FunSpec({
     target.all().first().single().strainId shouldBe "420-evo-flm"
   }
 
-  context("upsertAllKeepingStrains") {
+  context("upsertAllImported") {
     test("Updates an existing use but keeps the strain it has") {
       target.upsert(use.copy(strainId = "flm"))
       val edited = use.copy(amountGrams = BigDecimal("0.5"), strainId = null)
 
-      target.upsertAllKeepingStrains(listOf(edited))
+      target.upsertAllImported(listOf(edited))
 
       target.all().first().single() shouldBe edited.copy(strainId = "flm")
     }
@@ -87,13 +87,29 @@ class UseRepositoryTest : FunSpec({
     test("Takes the strain a use names") {
       target.upsert(use.copy(strainId = "flm"))
 
-      target.upsertAllKeepingStrains(listOf(use.copy(strainId = "bed")))
+      target.upsertAllImported(listOf(use.copy(strainId = "bed")))
 
       target.all().first().single().strainId shouldBe "bed"
     }
 
+    test("Keeps the rating an existing use has when the imported one has none") {
+      target.upsert(use.copy(rating = 4.0))
+
+      target.upsertAllImported(listOf(use.copy(rating = null)))
+
+      target.all().first().single().rating shouldBe 4.0
+    }
+
+    test("Takes the rating an imported use has") {
+      target.upsert(use.copy(rating = 4.0))
+
+      target.upsertAllImported(listOf(use.copy(rating = 2.5)))
+
+      target.all().first().single().rating shouldBe 2.5
+    }
+
     test("Inserts a new use as it is") {
-      target.upsertAllKeepingStrains(listOf(use))
+      target.upsertAllImported(listOf(use))
 
       target.all().first().single() shouldBe use
     }
@@ -123,6 +139,19 @@ class UseRepositoryTest : FunSpec({
       read.strainId shouldBe "deleted"
       strain shouldBe null
     }
+  }
+
+  test("Keeps the rating a use was given") {
+    target.upsert(use.copy(rating = 3.5))
+
+    target.all().first().single().rating shouldBe 3.5
+  }
+
+  test("Upsert can clear a use's rating, as the edit form does") {
+    target.upsert(use.copy(rating = 3.5))
+    target.upsert(use.copy(rating = null))
+
+    target.all().first().single().rating shouldBe null
   }
 
   test("Upsert can clear a use's strain") {
