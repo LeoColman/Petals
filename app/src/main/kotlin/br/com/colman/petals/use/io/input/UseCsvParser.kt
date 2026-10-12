@@ -2,6 +2,7 @@ package br.com.colman.petals.use.io.input
 
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.ConsumptionMethod
+import br.com.colman.petals.use.repository.Rating
 import br.com.colman.petals.use.repository.Use
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.math.BigDecimal
@@ -56,8 +57,21 @@ object UseCsvParser {
     .indexOfFirst { it == Strain.CsvHeader }
     .takeIf { it >= 0 }
 
-  /** Reads a row, and its strain from the columns starting at [strainColumns], if the file has them. */
-  fun parse(values: List<String>, strainColumns: Int? = null): Result<UseCsvRow> = runCatching {
+  /**
+   * Where the rating is in a file with this [header], or null when it has none. It is found by its fixed label, like
+   * the strain's columns, so a file from before ratings or a column a user added is never read as a rating.
+   */
+  fun ratingColumnIn(header: List<String>): Int? = header.map { it.trim() }.indexOf(Rating.CsvColumn).takeIf { it >= 0 }
+
+  /**
+   * Reads a row, its strain from the columns starting at [strainColumns] and its rating from [ratingColumn], if the
+   * file has them. A rating is rounded to the nearest half star, and dropped when it can't be read or is out of range.
+   */
+  fun parse(
+    values: List<String>,
+    strainColumns: Int? = null,
+    ratingColumn: Int? = null
+  ): Result<UseCsvRow> = runCatching {
     val dateTime = parseDateTime(values[0])
     val amount = values[1].toBigDecimal()
     val cost = values[2].toBigDecimal()
@@ -66,7 +80,9 @@ object UseCsvParser {
     val consumptionMethod = ConsumptionMethod.fromKey(values.getOrElse(5) { "" })
     val strain = strainColumns?.let { parseStrain { label -> values.getOrNull(it + Strain.CsvHeader.indexOf(label)) } }
 
-    UseCsvRow(Use(dateTime, amount, cost, id, description, consumptionMethod), strain)
+    val rating = ratingColumn?.let { values.getOrNull(it) }?.let(::parseRating)
+
+    UseCsvRow(Use(dateTime, amount, cost, id, description, consumptionMethod, rating = rating), strain)
   }
 
   /**
@@ -90,6 +106,8 @@ object UseCsvParser {
   }
 
   private fun parsePercentage(value: String?) = value?.let(Strain::percentageOrNull)
+
+  private fun parseRating(value: String) = value.trim().replace(',', '.').toDoubleOrNull()?.let(Rating::ofOrNull)
 
   private fun parseDateTime(date: String) = LocalDateTime.parse(date, ISO_LOCAL_DATE_TIME)
 

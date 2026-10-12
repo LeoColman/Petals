@@ -36,8 +36,9 @@ class UseImporter(
   fun import(csv: String, modifyUse: (Use) -> (Use) = { it }): Result<Int> = runCatching {
     val csvRows = UseCsvParser.rowsOf(csv)
     val strainColumns = csvRows.firstOrNull()?.let(UseCsvParser::strainColumnsIn)
+    val ratingColumn = csvRows.firstOrNull()?.let(UseCsvParser::ratingColumnIn)
     val rows = csvRows.mapIndexed { index, values ->
-      UseCsvParser.parse(values, strainColumns).onFailure {
+      UseCsvParser.parse(values, strainColumns, ratingColumn).onFailure {
         if (index > 0) throw it
       }
     }.mapNotNull { it.getOrNull() }
@@ -48,9 +49,9 @@ class UseImporter(
       val uses = rows.zip(resolved) { row, strain -> modifyUse(row.use.copy(strainId = strain?.id)) }
 
       strainRepository.upsertAll(strains.created)
-      // An import links strains but never unlinks them: a line that names no strain, from before strains or not,
-      // leaves an existing use's strain alone, so no backup can wipe the links made since it was taken.
-      useRepository.upsertAllKeepingStrains(uses)
+      // An import adds strains and ratings but never takes them away: a row without a strain or a rating, from
+      // before them or not, leaves an existing use's alone, so no backup can wipe what was added since it was taken.
+      useRepository.upsertAllImported(uses)
     }
     rows.size
   }

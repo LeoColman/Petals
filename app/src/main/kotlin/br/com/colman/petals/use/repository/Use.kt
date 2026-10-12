@@ -19,14 +19,17 @@ data class Use(
 
   val consumptionMethod: ConsumptionMethod? = null,
 
-  val strainId: String? = null
+  val strainId: String? = null,
+
+  /** Stars from half a star to five, in halves, see [Rating]; null when the use wasn't rated. */
+  val rating: Double? = null
 ) {
   @Transient
   val localDate: LocalDate = date.toLocalDate()
 
   /**
-   * This use's own CSV columns. The strain's columns follow them, written from the catalog by the serializer,
-   * which is why [strainId] is not here.
+   * This use's own CSV columns. The strain's columns and the rating follow them under fixed labels, written by the
+   * serializer, which is why [strainId] and [rating] are not here.
    */
   fun columns(): List<String> = listOf(
     date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
@@ -49,6 +52,7 @@ data class Use(
     if (description != other.description) return false
     if (consumptionMethod != other.consumptionMethod) return false
     if (strainId != other.strainId) return false
+    if (rating != other.rating) return false
 
     return true
   }
@@ -60,6 +64,7 @@ data class Use(
     result = 31 * result + description.hashCode()
     result = 31 * result + (consumptionMethod?.hashCode() ?: 0)
     result = 31 * result + (strainId?.hashCode() ?: 0)
+    result = 31 * result + (rating?.hashCode() ?: 0)
     return result
   }
 }

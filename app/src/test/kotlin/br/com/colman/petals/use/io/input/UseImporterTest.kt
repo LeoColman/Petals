@@ -88,7 +88,7 @@ class UseImporterTest : FunSpec({
 
     target.import(lines.joinToString("\n") { it.joinToString(",") }).shouldBeSuccess()
 
-    verify { useRepository.upsertAllKeepingStrains(uses) }
+    verify { useRepository.upsertAllImported(uses) }
     verify(exactly = 0) { useRepository.upsertAll(any()) }
   }
 
@@ -113,7 +113,7 @@ class UseImporterTest : FunSpec({
 
       shouldNotThrowAny {
         verify {
-          useRepository.upsertAllKeepingStrains(uses)
+          useRepository.upsertAllImported(uses)
         }
       }
     }
@@ -126,7 +126,7 @@ class UseImporterTest : FunSpec({
 
       shouldNotThrowAny {
         verify {
-          useRepository.upsertAllKeepingStrains(uses)
+          useRepository.upsertAllImported(uses)
         }
       }
     }
@@ -136,7 +136,7 @@ class UseImporterTest : FunSpec({
 
       shouldNotThrowAny {
         verify {
-          useRepository.upsertAllKeepingStrains(emptyList())
+          useRepository.upsertAllImported(emptyList())
         }
       }
     }
@@ -363,12 +363,41 @@ class UseImporterTest : FunSpec({
       val database = inMemoryDatabase()
       val strains = StrainRepository(database.strainQueries)
       val failingUses = spyk(UseRepository(database.useQueries)) {
-        every { upsertAllKeepingStrains(any()) } throws IllegalStateException("disk full")
+        every { upsertAllImported(any()) } throws IllegalStateException("disk full")
       }
 
       UseImporter(failingUses, strains, database).import(withHeader(line(flm))).shouldBeFailure()
 
       strains.allNow() shouldHaveSize 0
+    }
+  }
+  context("Ratings") {
+    val header = (List(6) { "column" } + Strain.CsvHeader + "rating").joinToString(",")
+    fun row(use: Use, rating: String) = (use.columns() + List(Strain.CsvColumnCount) { "" } + rating).joinToString(",")
+
+    test("Imports the rating each row holds") {
+      val database = inMemoryDatabase()
+      val uses = UseRepository(database.useQueries)
+      val use = UseArb.take(1).single()
+
+      UseImporter(uses, StrainRepository(database.strainQueries), database).import(
+        listOf(header, row(use, "3.5")).joinToString("\n")
+      ).shouldBeSuccess()
+
+      uses.all().first().single().rating shouldBe 3.5
+    }
+
+    test("Keeps an existing use's rating when the row has none") {
+      val database = inMemoryDatabase()
+      val uses = UseRepository(database.useQueries)
+      val use = UseArb.take(1).single().copy(rating = 4.0)
+      uses.upsert(use)
+
+      UseImporter(uses, StrainRepository(database.strainQueries), database).import(
+        listOf(header, row(use, "")).joinToString("\n")
+      ).shouldBeSuccess()
+
+      uses.all().first().single().rating shouldBe 4.0
     }
   }
 })
