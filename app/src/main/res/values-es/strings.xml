@@ -211,4 +211,8 @@
         <item quantity="other">%d consumos importados</item>
     </plurals>
     <string name="import_failed">No se pudo importar este archivo. No se guardó ningún consumo.</string>
+    <string name="rating">Valoración</string>
+    <string name="rating_out_of_five">%s de 5 estrellas</string>
+    <string name="average_rating_out_of_five">Valoración media: %s de 5 estrellas</string>
+    <string name="not_rated">Sin valorar</string>
 </resources>

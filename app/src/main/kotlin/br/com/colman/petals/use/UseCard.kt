@@ -48,6 +48,7 @@ import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.see_more
 import br.com.colman.petals.R.string.total_spent
 import br.com.colman.petals.R.string.yes
+import br.com.colman.petals.components.StarRating
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.strain.displayName
 import br.com.colman.petals.strain.potencyText
@@ -139,6 +140,8 @@ fun UseCard(
             }
           }
         }
+
+        use.rating?.let { StarRating(it) }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.Cash, null)
@@ -253,6 +256,7 @@ private fun EditUseDialog(
   val description = remember { mutableStateOf(use.description) }
   val consumptionMethod = remember { mutableStateOf(use.consumptionMethod) }
   val strainId = remember { mutableStateOf(use.strainId) }
+  val rating = remember { mutableStateOf(use.rating) }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
@@ -261,12 +265,13 @@ private fun EditUseDialog(
     use.id,
     description.value,
     consumptionMethod.value,
-    strainId.value
+    strainId.value,
+    rating.value
   )
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, false) },
+    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, rating, false) },
     confirmButton = { ConfirmEdit(onEditUse, use, onDismiss) }
   )
 }

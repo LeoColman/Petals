@@ -258,4 +258,8 @@
         <item quantity="other">%d usos importados</item>
     </plurals>
     <string name="import_failed">Não foi possível importar este arquivo. Nenhum uso foi salvo.</string>
+    <string name="rating">Avaliação</string>
+    <string name="rating_out_of_five">%s de 5 estrelas</string>
+    <string name="average_rating_out_of_five">Avaliação média: %s de 5 estrelas</string>
+    <string name="not_rated">Sem avaliação</string>
 </resources>

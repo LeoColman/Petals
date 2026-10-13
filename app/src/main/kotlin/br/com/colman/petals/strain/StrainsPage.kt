@@ -38,7 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.colman.petals.R.plurals.amount_uses
 import br.com.colman.petals.R.string.add_strain
+import br.com.colman.petals.R.string.amount_grams
 import br.com.colman.petals.R.string.archive_strain
+import br.com.colman.petals.R.string.average_rating_out_of_five
 import br.com.colman.petals.R.string.cost_per_gram
 import br.com.colman.petals.R.string.delete_strain
 import br.com.colman.petals.R.string.delete_strain_confirm
@@ -48,11 +50,15 @@ import br.com.colman.petals.R.string.no_strains_yet
 import br.com.colman.petals.R.string.show_archived
 import br.com.colman.petals.R.string.strains
 import br.com.colman.petals.R.string.strains_description
+import br.com.colman.petals.R.string.total_spent
 import br.com.colman.petals.R.string.unarchive_strain
 import br.com.colman.petals.R.string.yes
+import br.com.colman.petals.components.StarRating
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.strain.repository.StrainRepository
+import br.com.colman.petals.use.repository.Rating
+import br.com.colman.petals.use.repository.UseRepository
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Archive
 import compose.icons.tablericons.ArrowBackUp
@@ -62,6 +68,7 @@ import compose.icons.tablericons.Plus
 import compose.icons.tablericons.Trash
 import org.koin.compose.koinInject
 import java.math.RoundingMode.HALF_UP
+import java.util.Locale
 
 /**
  * The strain catalog: adding and editing strains, archiving the ones the user is done with, and deleting a strain no
@@ -71,11 +78,13 @@ import java.math.RoundingMode.HALF_UP
 @Composable
 fun StrainsPage(
   repository: StrainRepository = koinInject(),
+  useRepository: UseRepository = koinInject(),
   settingsRepository: SettingsRepository = koinInject()
 ) {
   val catalog by remember(repository) { repository.all() }.collectAsState(null)
-  // Null until counted, so no strain is offered for deletion before its uses are known.
-  val useCounts by remember(repository) { repository.useCounts() }.collectAsState(null)
+  // Null until the uses are read, so no strain is offered for deletion before its uses are known.
+  val uses by remember(useRepository) { useRepository.all() }.collectAsState(null)
+  val summaries = remember(uses) { uses?.summariesByStrain() }
   var isShowingArchived by remember { mutableStateOf(false) }
   var isAdding by remember { mutableStateOf(false) }
   var editing by remember { mutableStateOf<Strain?>(null) }
@@ -102,7 +111,7 @@ fun StrainsPage(
       key(strain.id) {
         StrainCard(
           strain,
-          useCounts?.let { it[strain.id] ?: 0 },
+          summaries?.let { StrainUsage(it[strain.id]) },
           settingsRepository,
           onEdit = { editing = strain },
           onArchive = { repository.upsert(strain.copy(isArchived = !strain.isArchived)) },
@@ -131,7 +140,7 @@ fun StrainsPage(
 @Composable
 private fun StrainCard(
   strain: Strain,
-  uses: Long?,
+  usage: StrainUsage?,
   settingsRepository: SettingsRepository,
   onEdit: () -> Unit,
   onArchive: () -> Unit,
@@ -149,7 +158,7 @@ private fun StrainCard(
         strain.costPerGram?.let {
           Text("$currencySymbol " + stringResource(cost_per_gram, it.setScale(decimalPrecision, HALF_UP).toString()))
         }
-        uses?.let { Text(pluralStringResource(amount_uses, it.toInt(), it.toString())) }
+        usage?.let { UsageText(it.summary, currencySymbol, decimalPrecision) }
       }
 
       Column(horizontalAlignment = End) {
@@ -159,7 +168,7 @@ private fun StrainCard(
         } else {
           IconButton(onArchive) { Icon(TablerIcons.Archive, stringResource(archive_strain)) }
         }
-        if (uses == 0L) {
+        if (usage != null && usage.summary == null) {
           IconButton({ isConfirmingDelete = true }) { Icon(TablerIcons.Trash, stringResource(delete_strain)) }
         }
       }
@@ -179,6 +188,28 @@ private fun StrainCard(
       },
       dismissButton = { TextButton({ isConfirmingDelete = false }) { Text(stringResource(no)) } }
     )
+  }
+}
+
+/** What a strain's card says about its uses, once they are read; [summary] is null for a strain never used. */
+private class StrainUsage(val summary: StrainSummary?)
+
+/** "2 uses · 0.55 grams · $ 6.88 total", and the average rating in stars when any use was rated. */
+@Composable
+private fun UsageText(summary: StrainSummary?, currencySymbol: String, decimalPrecision: Int) {
+  val uses = summary?.uses ?: 0
+  val parts = listOfNotNull(
+    pluralStringResource(amount_uses, uses, uses.toString()),
+    summary?.let { stringResource(amount_grams, it.grams.setScale(decimalPrecision, HALF_UP).toPlainString()) },
+    summary?.let {
+      "$currencySymbol " + stringResource(total_spent, it.spent.setScale(decimalPrecision, HALF_UP).toPlainString())
+    }
+  )
+  Text(parts.joinToString(" · "))
+
+  summary?.averageRating?.let { average ->
+    val description = stringResource(average_rating_out_of_five, "%.1f".format(Locale.ROOT, average).removeSuffix(".0"))
+    StarRating(Rating.ofOrNull(average), starSize = 20.dp, description = description)
   }
 }
 

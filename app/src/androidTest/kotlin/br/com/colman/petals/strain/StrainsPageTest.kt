@@ -20,8 +20,10 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.Database
 import br.com.colman.petals.MainActivity
+import br.com.colman.petals.R.plurals.amount_uses
 import br.com.colman.petals.R.string.add_strain
 import br.com.colman.petals.R.string.archive_strain
+import br.com.colman.petals.R.string.average_rating_out_of_five
 import br.com.colman.petals.R.string.delete_strain
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.settings
@@ -50,7 +52,7 @@ class StrainsPageTest : FunSpec({
   fun AndroidComposeUiTest<MainActivity>.catalogWithUsedFlmAndUnusedBedrocan(): Catalog = Catalog(activity!!).apply {
     strains.upsertAll(listOf(flm, bedrocan))
     uses.upsert(Use(strainId = flm.id))
-    activity!!.setContent { StrainsPage(strains) }
+    activity!!.setContent { StrainsPage(strains, uses) }
   }
 
   fun inCard(strain: Strain) = hasAnyAncestor(hasTestTag("StrainCard ${strain.name}"))
@@ -65,6 +67,21 @@ class StrainsPageTest : FunSpec({
 
       waitUntil(timeoutMillis = 5_000) { exists(delete and inCard(bedrocan)) }
       exists(delete and inCard(flm)) shouldBe false
+    }
+  }
+
+  test("A used strain's card counts its uses and averages their ratings") {
+    runAndroidComposeUiTest<MainActivity> {
+      Catalog(activity!!).apply {
+        strains.upsert(flm)
+        uses.upsertAll(listOf(4.0, 3.0, null).map { Use(strainId = flm.id, rating = it) })
+        activity!!.setContent { StrainsPage(strains, uses) }
+      }
+      val threeUses = activity!!.resources.getQuantityString(amount_uses, 3, "3")
+      val averageOfThreeAndAHalf = activity!!.getString(average_rating_out_of_five, "3.5")
+
+      waitUntil(timeoutMillis = 5_000) { exists(hasText(threeUses, substring = true) and inCard(flm)) }
+      exists(hasContentDescription(averageOfThreeAndAHalf) and inCard(flm)) shouldBe true
     }
   }
 

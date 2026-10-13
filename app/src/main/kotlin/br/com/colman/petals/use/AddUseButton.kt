@@ -207,6 +207,8 @@ private fun AddUseDialog(
   val description = remember { mutableStateOf(previousUse?.description.orEmpty()) }
   val consumptionMethod = remember { mutableStateOf(previousUse?.consumptionMethod) }
   val strainId = remember { mutableStateOf(previousUse?.strainId) }
+  // A rating is how that one session went, so a new use starts unrated even when copied from a rated one.
+  val rating = remember { mutableStateOf<Double?>(null) }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
@@ -214,12 +216,13 @@ private fun AddUseDialog(
     costPerGram.value.toBigDecimalOrNull() ?: ZERO,
     description = description.value,
     consumptionMethod = consumptionMethod.value,
-    strainId = strainId.value
+    strainId = strainId.value,
+    rating = rating.value
   )
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId) },
+    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, rating) },
     confirmButton = { ConfirmNewUseButton(onAddUse, use, onDismiss) }
   )
 }

@@ -10,6 +10,7 @@ import androidx.compose.ui.test.runAndroidComposeUiTest
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.MainActivity
 import br.com.colman.petals.R.string.duplicate_use
+import br.com.colman.petals.R.string.rating_out_of_five
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.Use
 import io.kotest.matchers.types.shouldBeSameInstanceAs
@@ -40,6 +41,14 @@ class UseCardTest : FunSpec({
 
       onNodeWithText("420 Evo FLM").assertIsDisplayed()
       onNodeWithText("THC 27% · CBD 1%").assertIsDisplayed()
+    }
+  }
+
+  test("shows the use's rating in stars") {
+    runAndroidComposeUiTest<MainActivity> {
+      activity!!.setContent { UseCard(Use(rating = 3.5)) }
+
+      onNodeWithContentDescription(activity!!.getString(rating_out_of_five, "3.5")).assertIsDisplayed()
     }
   }
 })

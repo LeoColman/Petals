@@ -229,4 +229,8 @@
         <item quantity="other">%d பயன்பாடுகள் இறக்குமதி செய்யப்பட்டன</item>
     </plurals>
     <string name="import_failed">இந்தக் கோப்பை இறக்குமதி செய்ய முடியவில்லை. எந்தப் பயன்பாடும் சேமிக்கப்படவில்லை.</string>
+    <string name="rating">மதிப்பீடு</string>
+    <string name="rating_out_of_five">5 இல் %s நட்சத்திரங்கள்</string>
+    <string name="average_rating_out_of_five">சராசரி மதிப்பீடு: 5 இல் %s நட்சத்திரங்கள்</string>
+    <string name="not_rated">மதிப்பிடப்படவில்லை</string>
 </resources>

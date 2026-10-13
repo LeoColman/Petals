@@ -41,6 +41,7 @@ class AddUseFormTest : FunSpec({
         mutableStateOf(""),
         mutableStateOf<ConsumptionMethod?>(null),
         mutableStateOf(null),
+        mutableStateOf(null),
         fillsStrainCost
       )
     }
