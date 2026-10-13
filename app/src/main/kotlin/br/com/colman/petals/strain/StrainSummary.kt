@@ -11,7 +11,12 @@ data class StrainSummary(
   val grams: BigDecimal,
   val spent: BigDecimal,
   val averageRating: Double?
-)
+) {
+  companion object {
+    /** A strain no use was logged with. */
+    val Unused = StrainSummary(0, BigDecimal.ZERO, BigDecimal.ZERO, null)
+  }
+}
 
 /** A [StrainSummary] for every strain these uses were logged with, by strain id. Uses without a strain are left out. */
 fun List<Use>.summariesByStrain(): Map<String, StrainSummary> = filter { it.strainId != null }

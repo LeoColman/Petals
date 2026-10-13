@@ -12,6 +12,8 @@ import androidx.compose.material.icons.automirrored.rounded.StarHalf
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -28,7 +30,9 @@ import androidx.compose.ui.unit.dp
 import br.com.colman.petals.R.string.not_rated
 import br.com.colman.petals.R.string.rating_out_of_five
 import br.com.colman.petals.use.repository.Rating
-import kotlin.math.ceil
+import java.math.RoundingMode.HALF_UP
+import java.text.NumberFormat
+import java.util.Locale
 
 /**
  * Five stars showing [rating], in halves. Given [onRatingChange], tapping the first half of a star rates half a star
@@ -44,30 +48,21 @@ fun StarRating(
   onRatingChange: ((Double?) -> Unit)? = null
 ) {
   val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+  val onChange by rememberUpdatedState(onRatingChange)
   val semantics = Modifier.semantics(mergeDescendants = true) {
     if (onRatingChange == null) {
       contentDescription = description
     } else {
       stateDescription = description
-      progressBarRangeInfo = ProgressBarRangeInfo((rating ?: 0.0).toFloat(), 0f..Rating.Max.toFloat(), steps = 9)
+      progressBarRangeInfo = ProgressBarRangeInfo((rating ?: 0.0).toFloat(), 0f..Rating.Max.toFloat(), HalfSteps - 1)
       setProgress { stars ->
-        onRatingChange(Rating.ofOrNull(stars.toDouble()))
+        onChange?.invoke(Rating.ofOrNull(stars.toDouble()))
         true
       }
     }
   }
-  val taps = if (onRatingChange == null) {
-    Modifier
-  } else {
-    Modifier.pointerInput(rating, isRtl) {
-      detectTapGestures { offset ->
-        val fraction = offset.x / size.width
-        onRatingChange(ratingAfterTap(ratingAt(if (isRtl) 1 - fraction else fraction), rating))
-      }
-    }
-  }
 
-  Row(modifier.then(semantics).then(taps)) {
+  Row(modifier.then(semantics)) {
     for (star in 1..Stars) {
       val icon = when {
         rating == null || rating <= star - 1 -> Icons.Rounded.StarBorder
@@ -79,7 +74,17 @@ fun StarRating(
       } else {
         MaterialTheme.colors.primary
       }
-      Icon(icon, null, Modifier.size(starSize), tint = tint)
+      // Each star reads its own taps, so a tap always rates the star drawn under it, whatever size the stars end up.
+      val taps = if (onRatingChange == null) {
+        Modifier
+      } else {
+        Modifier.pointerInput(star, rating, isRtl) {
+          detectTapGestures { offset ->
+            onChange?.invoke(ratingAfterTap(ratingAt(star, offset.x, size.width, isRtl), rating))
+          }
+        }
+      }
+      Icon(icon, null, Modifier.size(starSize).then(taps), tint = tint)
     }
   }
 }
@@ -87,15 +92,29 @@ fun StarRating(
 /** "3.5 of 5 stars", or "Not rated". */
 @Composable
 fun ratingDescription(rating: Double?): String =
-  rating?.let { stringResource(rating_out_of_five, Rating.format(it)) } ?: stringResource(not_rated)
-
-private const val Stars = 5
+  rating?.let { stringResource(rating_out_of_five, ratingNumber(it)) } ?: stringResource(not_rated)
 
 /**
- * The rating a tap gives at [fraction] of the way along the stars, in reading order: each star's first half is half a
- * star short of it, its second half the whole star.
+ * [stars] to one decimal at most, as the user's language writes numbers: "4", "3.5", or "3,5" in German. Screen
+ * readers read it out, so it follows the locale where the CSV's [Rating.format] doesn't.
  */
-internal fun ratingAt(fraction: Float): Double = ceil(fraction.coerceIn(0f, 1f) * Stars * 2).coerceIn(1f, 10f) / 2.0
+fun ratingNumber(stars: Double, locale: Locale = Locale.getDefault()): String =
+  NumberFormat.getNumberInstance(locale).apply {
+    maximumFractionDigits = 1
+    roundingMode = HALF_UP
+  }.format(stars)
+
+private val Stars = Rating.Max.toInt()
+private val HalfSteps = Stars * 2
+
+/**
+ * The rating a tap at [x] on [star], [width] wide, gives: half a star short of it in the star's first half in reading
+ * order, which is its right half in a right-to-left language, and the whole star in its second half.
+ */
+internal fun ratingAt(star: Int, x: Float, width: Int, isRtl: Boolean): Double {
+  val isFirstHalf = (x < width / 2f) != isRtl
+  return if (isFirstHalf) star - 0.5 else star.toDouble()
+}
 
 /** The rating after tapping [tapped] when it is [current]: [tapped], or none when it already was that. */
 internal fun ratingAfterTap(tapped: Double, current: Double?): Double? = tapped.takeIf { it != current }

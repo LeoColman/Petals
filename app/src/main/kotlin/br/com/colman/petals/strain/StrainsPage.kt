@@ -54,6 +54,7 @@ import br.com.colman.petals.R.string.total_spent
 import br.com.colman.petals.R.string.unarchive_strain
 import br.com.colman.petals.R.string.yes
 import br.com.colman.petals.components.StarRating
+import br.com.colman.petals.components.ratingNumber
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.strain.repository.StrainRepository
@@ -66,9 +67,12 @@ import compose.icons.tablericons.Leaf
 import compose.icons.tablericons.Pencil
 import compose.icons.tablericons.Plus
 import compose.icons.tablericons.Trash
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import org.koin.compose.koinInject
 import java.math.RoundingMode.HALF_UP
-import java.util.Locale
 
 /**
  * The strain catalog: adding and editing strains, archiving the ones the user is done with, and deleting a strain no
@@ -79,12 +83,15 @@ import java.util.Locale
 fun StrainsPage(
   repository: StrainRepository = koinInject(),
   useRepository: UseRepository = koinInject(),
-  settingsRepository: SettingsRepository = koinInject()
+  settingsRepository: SettingsRepository = koinInject(),
+  dispatcher: CoroutineDispatcher = Default
 ) {
   val catalog by remember(repository) { repository.all() }.collectAsState(null)
-  // Null until the uses are read, so no strain is offered for deletion before its uses are known.
-  val uses by remember(useRepository) { useRepository.all() }.collectAsState(null)
-  val summaries = remember(uses) { uses?.summariesByStrain() }
+  // Null until the uses are read, so no strain is offered for deletion before its uses are known. Every use is summed
+  // up on [dispatcher], off the main thread.
+  val summaries by remember(useRepository, dispatcher) {
+    useRepository.all().map { it.summariesByStrain() }.flowOn(dispatcher)
+  }.collectAsState(null)
   var isShowingArchived by remember { mutableStateOf(false) }
   var isAdding by remember { mutableStateOf(false) }
   var editing by remember { mutableStateOf<Strain?>(null) }
@@ -111,7 +118,7 @@ fun StrainsPage(
       key(strain.id) {
         StrainCard(
           strain,
-          summaries?.let { StrainUsage(it[strain.id]) },
+          summaries?.let { it[strain.id] ?: StrainSummary.Unused },
           settingsRepository,
           onEdit = { editing = strain },
           onArchive = { repository.upsert(strain.copy(isArchived = !strain.isArchived)) },
@@ -140,7 +147,7 @@ fun StrainsPage(
 @Composable
 private fun StrainCard(
   strain: Strain,
-  usage: StrainUsage?,
+  summary: StrainSummary?,
   settingsRepository: SettingsRepository,
   onEdit: () -> Unit,
   onArchive: () -> Unit,
@@ -158,7 +165,7 @@ private fun StrainCard(
         strain.costPerGram?.let {
           Text("$currencySymbol " + stringResource(cost_per_gram, it.setScale(decimalPrecision, HALF_UP).toString()))
         }
-        usage?.let { UsageText(it.summary, currencySymbol, decimalPrecision) }
+        summary?.let { UsageText(it, currencySymbol, decimalPrecision) }
       }
 
       Column(horizontalAlignment = End) {
@@ -168,7 +175,7 @@ private fun StrainCard(
         } else {
           IconButton(onArchive) { Icon(TablerIcons.Archive, stringResource(archive_strain)) }
         }
-        if (usage != null && usage.summary == null) {
+        if (summary?.uses == 0) {
           IconButton({ isConfirmingDelete = true }) { Icon(TablerIcons.Trash, stringResource(delete_strain)) }
         }
       }
@@ -191,24 +198,23 @@ private fun StrainCard(
   }
 }
 
-/** What a strain's card says about its uses, once they are read; [summary] is null for a strain never used. */
-private class StrainUsage(val summary: StrainSummary?)
-
-/** "2 uses · 0.55 grams · $ 6.88 total", and the average rating in stars when any use was rated. */
+/** "2 uses · 0.55 grams · $ 6.88 total", or "0 uses", and the average rating in stars when any use was rated. */
 @Composable
-private fun UsageText(summary: StrainSummary?, currencySymbol: String, decimalPrecision: Int) {
-  val uses = summary?.uses ?: 0
-  val parts = listOfNotNull(
-    pluralStringResource(amount_uses, uses, uses.toString()),
-    summary?.let { stringResource(amount_grams, it.grams.setScale(decimalPrecision, HALF_UP).toPlainString()) },
-    summary?.let {
-      "$currencySymbol " + stringResource(total_spent, it.spent.setScale(decimalPrecision, HALF_UP).toPlainString())
-    }
-  )
-  Text(parts.joinToString(" · "))
+private fun UsageText(summary: StrainSummary, currencySymbol: String, decimalPrecision: Int) {
+  val uses = pluralStringResource(amount_uses, summary.uses, summary.uses.toString())
+  val totals = if (summary.uses == 0) {
+    emptyList()
+  } else {
+    listOf(
+      stringResource(amount_grams, summary.grams.setScale(decimalPrecision, HALF_UP).toPlainString()),
+      "$currencySymbol " +
+        stringResource(total_spent, summary.spent.setScale(decimalPrecision, HALF_UP).toPlainString())
+    )
+  }
+  Text((listOf(uses) + totals).joinToString(" · "))
 
-  summary?.averageRating?.let { average ->
-    val description = stringResource(average_rating_out_of_five, "%.1f".format(Locale.ROOT, average).removeSuffix(".0"))
+  summary.averageRating?.let { average ->
+    val description = stringResource(average_rating_out_of_five, ratingNumber(average))
     StarRating(Rating.ofOrNull(average), starSize = 20.dp, description = description)
   }
 }

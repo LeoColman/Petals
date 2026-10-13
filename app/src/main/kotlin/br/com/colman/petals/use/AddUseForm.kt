@@ -160,8 +160,9 @@ private fun UseStrainField(strainId: MutableState<String?>, setCost: (String) ->
 private fun RatingField(rating: MutableState<Double?>) {
   var stars by rating
 
+  // The label gives way when space is short, so the stars keep their size.
   Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(16.dp), Alignment.CenterVertically) {
-    Text(stringResource(string.rating))
+    Text(stringResource(string.rating), Modifier.weight(1f, fill = false))
     StarRating(stars, Modifier.testTag("RatingField"), starSize = 36.dp) { stars = it }
   }
 }
