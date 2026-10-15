@@ -40,6 +40,12 @@ data class Use(
     consumptionMethod?.key.orEmpty()
   )
 
+  /**
+   * This use as the start of a new one: all of it but the rating, since a rating is how that one session went. Every
+   * new use copied from an old one goes through here, so none starts with a rating the user never gave.
+   */
+  fun asTemplate(): Use = copy(rating = null)
+
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false

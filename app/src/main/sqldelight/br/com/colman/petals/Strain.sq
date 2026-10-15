@@ -23,3 +23,8 @@ DELETE FROM Strain WHERE id IS (?);
 
 countUses:
 SELECT COUNT(*) FROM Use WHERE strain_id IS (?);
+
+-- Only the columns a strain's summary adds up, so summing every strain's uses stays cheap as the log grows. The sums
+-- are taken in Kotlin, as BigDecimal, because SQLite would add the amounts up as floating point.
+selectStrainUses:
+SELECT strain_id, amount_grams, cost_per_gram, rating FROM Use WHERE strain_id IS NOT NULL;

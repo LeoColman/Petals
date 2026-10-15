@@ -2,6 +2,7 @@ package br.com.colman.petals.strain.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import br.com.colman.petals.SelectStrainUses
 import br.com.colman.petals.StrainQueries
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
@@ -38,6 +39,15 @@ class StrainRepository(
   fun countUses(strain: Strain): Long = strainQueries.countUses(strain.id).executeAsOne()
 
   /**
+   * What the uses logged with each strain add up to, by strain id, for every strain that has any. Reads only the
+   * columns it adds up, and adds them up on [dispatcher].
+   */
+  fun summaries(dispatcher: CoroutineDispatcher = IO): Flow<Map<String, StrainSummary>> =
+    strainQueries.selectStrainUses().asFlow().mapToList(dispatcher)
+      .map { rows -> rows.groupBy { it.strain_id!! }.mapValues { (_, uses) -> uses.toSummary() } }
+      .flowOn(dispatcher)
+
+  /**
    * Deletes [strain] only while no use refers to it, and says whether it did. Callers offer archiving for a strain
    * that has been used, so past uses keep their name and potency; this only refuses, it never archives.
    */
@@ -47,6 +57,13 @@ class StrainRepository(
     isUnused
   }
 }
+
+private fun List<SelectStrainUses>.toSummary() = StrainSummary(
+  size,
+  sumOf { it.amount_grams.toBigDecimal() },
+  sumOf { it.cost_per_gram.toBigDecimal() * it.amount_grams.toBigDecimal() },
+  mapNotNull { it.rating }.takeIf { it.isNotEmpty() }?.average()
+)
 
 private fun List<StrainEntity>.toSortedStrains(): List<Strain> {
   val collator = Collator.getInstance()

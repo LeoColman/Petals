@@ -64,11 +64,13 @@ fun AddUseButton(isAnyPauseActive: Boolean = false, onClick: () -> Unit = { }) {
 data class AddUseRequest(val template: Use?) {
   companion object {
     /**
-     * A request starting from [use], whose [strain] it keeps only while that strain is active: a new use doesn't
-     * start with a strain the user archived because they are done with it, and the picker wouldn't offer it.
+     * A request starting from [use] as a [template][Use.asTemplate], whose [strain] it keeps only while that strain is
+     * active: a new use doesn't start with a strain the user archived because they are done with it, and the picker
+     * wouldn't offer it.
      */
-    fun from(use: Use?, strain: Strain?) =
-      AddUseRequest(use?.copy(strainId = strain?.takeIf { it.id == use.strainId && !it.isArchived }?.id))
+    fun from(use: Use?, strain: Strain?) = AddUseRequest(
+      use?.copy(strainId = strain?.takeIf { it.id == use.strainId && !it.isArchived }?.id)?.asTemplate()
+    )
   }
 }
 
@@ -207,8 +209,7 @@ private fun AddUseDialog(
   val description = remember { mutableStateOf(previousUse?.description.orEmpty()) }
   val consumptionMethod = remember { mutableStateOf(previousUse?.consumptionMethod) }
   val strainId = remember { mutableStateOf(previousUse?.strainId) }
-  // A rating is how that one session went, so a new use starts unrated even when copied from a rated one.
-  val rating = remember { mutableStateOf<Double?>(null) }
+  val rating = remember { mutableStateOf(previousUse?.rating) }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),

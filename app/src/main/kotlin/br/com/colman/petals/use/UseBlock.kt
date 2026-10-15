@@ -61,6 +61,8 @@ import br.com.colman.petals.use.repository.BlockType.ThisYear
 import br.com.colman.petals.use.repository.BlockType.Today
 import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.Use
+import br.com.colman.petals.utils.currentLocale
+import br.com.colman.petals.utils.decimalText
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Clock
 import compose.icons.tablericons.Eye
@@ -68,14 +70,11 @@ import compose.icons.tablericons.EyeOff
 import compose.icons.tablericons.Scale
 import compose.icons.tablericons.ZoomMoney
 import org.koin.compose.koinInject
-import java.math.RoundingMode.HALF_UP
-import java.text.NumberFormat
 import java.time.DayOfWeek.MONDAY
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDate.now
 import java.time.LocalTime
-import java.util.Locale
 
 @Composable
 fun StatsBlocks(uses: List<Use>) {
@@ -190,24 +189,14 @@ private fun RowScope.TodayUseBlock(isDayExtended: Boolean, uses: List<Use>, isTo
 private fun UseBlock(modifier: Modifier, blockType: BlockType, uses: List<Use>, isCensored: Boolean) {
   var totalGrams by remember { mutableStateOf("") }
   var totalCost by remember { mutableStateOf("") }
-  val locale = Locale.getDefault()
+  val locale = currentLocale()
 
   val settingsRepository = koinInject<SettingsRepository>()
   val decimalPrecision by settingsRepository.decimalPrecision.collectAsState(settingsRepository.decimalPrecisionList[2])
 
-  val numberFormat = NumberFormat.getNumberInstance(locale).apply {
-    minimumFractionDigits = decimalPrecision
-    maximumFractionDigits = decimalPrecision
-    roundingMode = HALF_UP
-  }
-
-  // HALF_UP is necessary because the default rounding
-  // mode is "throw an exception".
-  LaunchedEffect(uses, decimalPrecision) {
-    totalGrams = uses.sumOf { it.amountGrams }.setScale(decimalPrecision, HALF_UP).let { numberFormat.format(it) }
-    totalCost = uses.sumOf {
-      it.costPerGram * it.amountGrams
-    }.setScale(decimalPrecision, HALF_UP).let { numberFormat.format(it) }
+  LaunchedEffect(uses, decimalPrecision, locale) {
+    totalGrams = decimalText(uses.sumOf { it.amountGrams }, decimalPrecision, locale)
+    totalCost = decimalText(uses.sumOf { it.costPerGram * it.amountGrams }, decimalPrecision, locale)
   }
 
   UseBlock(modifier, blockType, totalGrams, totalCost, isCensored)

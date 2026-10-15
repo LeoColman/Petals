@@ -193,6 +193,20 @@ class UseTest : FunSpec({
     }
   }
 
+  test("A template keeps everything but the rating") {
+    val use = Use(
+      LocalDateTime.of(2025, 2, 11, 11, 0),
+      BigDecimal("0.3"),
+      BigDecimal("12.5"),
+      description = "With a friend",
+      consumptionMethod = ConsumptionMethod.VAPORIZED,
+      strainId = "flm",
+      rating = 4.5
+    )
+
+    use.asTemplate() shouldBe use.copy(rating = null)
+  }
+
   test("columns() should return a list of stringified fields") {
     val date = LocalDateTime.of(2025, 2, 11, 11, 0, 30)
     val use = Use(

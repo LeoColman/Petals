@@ -22,10 +22,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -155,15 +154,19 @@ private fun UseStrainField(strainId: MutableState<String?>, setCost: (String) ->
   )
 }
 
-/** How the use went, in stars; tapping the rating it has clears it. */
+/**
+ * How the use went, in stars; tapping the rating it has clears it. The label sits above the stars, so a long one never
+ * squeezes their touch targets.
+ */
 @Composable
 private fun RatingField(rating: MutableState<Double?>) {
   var stars by rating
+  val label = stringResource(string.rating)
 
-  // The label gives way when space is short, so the stars keep their size.
-  Row(Modifier.fillMaxWidth(), Arrangement.spacedBy(16.dp), Alignment.CenterVertically) {
-    Text(stringResource(string.rating), Modifier.weight(1f, fill = false))
-    StarRating(stars, Modifier.testTag("RatingField"), starSize = 36.dp) { stars = it }
+  Column(Modifier.fillMaxWidth()) {
+    // The stars carry the label for screen readers, so they don't hear it twice.
+    Text(label, Modifier.clearAndSetSemantics { })
+    StarRating(stars, starSize = 36.dp, label = label) { stars = it }
   }
 }
 

@@ -11,6 +11,7 @@ import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.MainActivity
 import br.com.colman.petals.R.string.duplicate_use
 import br.com.colman.petals.R.string.rating_out_of_five
+import br.com.colman.petals.components.ratingNumber
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.Use
 import io.kotest.matchers.types.shouldBeSameInstanceAs
@@ -47,8 +48,10 @@ class UseCardTest : FunSpec({
   test("shows the use's rating in stars") {
     runAndroidComposeUiTest<MainActivity> {
       activity!!.setContent { UseCard(Use(rating = 3.5)) }
+      val locale = activity!!.resources.configuration.locales[0]
 
-      onNodeWithContentDescription(activity!!.getString(rating_out_of_five, "3.5")).assertIsDisplayed()
+      onNodeWithContentDescription(activity!!.getString(rating_out_of_five, ratingNumber(3.5, locale)))
+        .assertIsDisplayed()
     }
   }
 })

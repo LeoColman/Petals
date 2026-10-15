@@ -16,26 +16,38 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.runAndroidComposeUiTest
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.Database
 import br.com.colman.petals.MainActivity
 import br.com.colman.petals.R.plurals.amount_uses
 import br.com.colman.petals.R.string.add_strain
+import br.com.colman.petals.R.string.amount_grams
 import br.com.colman.petals.R.string.archive_strain
 import br.com.colman.petals.R.string.average_rating_out_of_five
+import br.com.colman.petals.R.string.censored
 import br.com.colman.petals.R.string.delete_strain
 import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.settings
 import br.com.colman.petals.R.string.strain_archived
 import br.com.colman.petals.R.string.strain_name
+import br.com.colman.petals.R.string.total_spent
 import br.com.colman.petals.R.string.yes
+import br.com.colman.petals.components.ratingNumber
+import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.strain.repository.StrainRepository
+import br.com.colman.petals.use.repository.BlockType.AllTime
+import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.UseRepository
+import br.com.colman.petals.utils.decimalText
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
+import java.io.File
+import java.math.BigDecimal
+import java.util.UUID
 
 @OptIn(ExperimentalTestApi::class)
 class StrainsPageTest : FunSpec({
@@ -43,16 +55,24 @@ class StrainsPageTest : FunSpec({
   val flm = Strain("420 Evo FLM", id = "flm")
   val bedrocan = Strain("Bedrocan", id = "bedrocan")
 
+  // Settings and censorship start from their defaults for each test, whatever other tests left in the app's own.
   class Catalog(context: Context) {
     private val database = Database(AndroidSqliteDriver(Database.Schema, context, null))
+    private val preferences = PreferenceDataStoreFactory.create {
+      File(context.cacheDir, "StrainsPageTest-${UUID.randomUUID()}.preferences_pb")
+    }
     val strains = StrainRepository(database.strainQueries)
     val uses = UseRepository(database.useQueries)
+    val censorship = CensorshipRepository(preferences)
+    private val settings = SettingsRepository(preferences)
+
+    fun show(activity: MainActivity) = activity.setContent { StrainsPage(strains, settings, censorship) }
   }
 
   fun AndroidComposeUiTest<MainActivity>.catalogWithUsedFlmAndUnusedBedrocan(): Catalog = Catalog(activity!!).apply {
     strains.upsertAll(listOf(flm, bedrocan))
     uses.upsert(Use(strainId = flm.id))
-    activity!!.setContent { StrainsPage(strains, uses) }
+    show(activity!!)
   }
 
   fun inCard(strain: Strain) = hasAnyAncestor(hasTestTag("StrainCard ${strain.name}"))
@@ -75,13 +95,46 @@ class StrainsPageTest : FunSpec({
       Catalog(activity!!).apply {
         strains.upsert(flm)
         uses.upsertAll(listOf(4.0, 3.0, null).map { Use(strainId = flm.id, rating = it) })
-        activity!!.setContent { StrainsPage(strains, uses) }
+        show(activity!!)
       }
       val threeUses = activity!!.resources.getQuantityString(amount_uses, 3, "3")
-      val averageOfThreeAndAHalf = activity!!.getString(average_rating_out_of_five, "3.5")
+      val locale = activity!!.resources.configuration.locales[0]
+      val averageOfThreeAndAHalf = activity!!.getString(average_rating_out_of_five, ratingNumber(3.5, locale))
 
       waitUntil(timeoutMillis = 5_000) { exists(hasText(threeUses, substring = true) and inCard(flm)) }
       exists(hasContentDescription(averageOfThreeAndAHalf) and inCard(flm)) shouldBe true
+    }
+  }
+
+  fun AndroidComposeUiTest<MainActivity>.catalogWithTwoUsesOfFlm(): Catalog = Catalog(activity!!).apply {
+    strains.upsert(flm)
+    uses.upsertAll(List(2) { Use(amountGrams = BigDecimal("0.25"), costPerGram = BigDecimal("10"), strainId = flm.id) })
+  }
+
+  test("A used strain's card adds up its grams and spending, as the app's language writes numbers") {
+    runAndroidComposeUiTest<MainActivity> {
+      catalogWithTwoUsesOfFlm().show(activity!!)
+      val locale = activity!!.resources.configuration.locales[0]
+      val totals = listOf(
+        activity!!.resources.getQuantityString(amount_uses, 2, "2"),
+        activity!!.getString(amount_grams, decimalText(BigDecimal("0.50"), 2, locale)),
+        "$ " + activity!!.getString(total_spent, decimalText(BigDecimal("5.00"), 2, locale))
+      ).joinToString(" · ")
+
+      waitUntil(timeoutMillis = 5_000) { exists(hasText(totals) and inCard(flm)) }
+    }
+  }
+
+  test("A used strain's totals stay hidden while the all-time totals are censored") {
+    runAndroidComposeUiTest<MainActivity> {
+      catalogWithTwoUsesOfFlm().apply {
+        censorship.setBlockCensure(AllTime, true)
+        show(activity!!)
+      }
+      val twoUses = activity!!.resources.getQuantityString(amount_uses, 2, "2")
+      val hidden = "$twoUses · ${activity!!.getString(censored)}"
+
+      waitUntil(timeoutMillis = 5_000) { exists(hasText(hidden) and inCard(flm)) }
     }
   }
 

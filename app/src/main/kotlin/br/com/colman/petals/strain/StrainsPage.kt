@@ -41,6 +41,7 @@ import br.com.colman.petals.R.string.add_strain
 import br.com.colman.petals.R.string.amount_grams
 import br.com.colman.petals.R.string.archive_strain
 import br.com.colman.petals.R.string.average_rating_out_of_five
+import br.com.colman.petals.R.string.censored
 import br.com.colman.petals.R.string.cost_per_gram
 import br.com.colman.petals.R.string.delete_strain
 import br.com.colman.petals.R.string.delete_strain_confirm
@@ -58,8 +59,11 @@ import br.com.colman.petals.components.ratingNumber
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.strain.repository.StrainRepository
+import br.com.colman.petals.strain.repository.StrainSummary
+import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.Rating
-import br.com.colman.petals.use.repository.UseRepository
+import br.com.colman.petals.utils.currentLocale
+import br.com.colman.petals.utils.decimalText
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Archive
 import compose.icons.tablericons.ArrowBackUp
@@ -67,12 +71,7 @@ import compose.icons.tablericons.Leaf
 import compose.icons.tablericons.Pencil
 import compose.icons.tablericons.Plus
 import compose.icons.tablericons.Trash
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers.Default
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import org.koin.compose.koinInject
-import java.math.RoundingMode.HALF_UP
 
 /**
  * The strain catalog: adding and editing strains, archiving the ones the user is done with, and deleting a strain no
@@ -82,16 +81,14 @@ import java.math.RoundingMode.HALF_UP
 @Composable
 fun StrainsPage(
   repository: StrainRepository = koinInject(),
-  useRepository: UseRepository = koinInject(),
   settingsRepository: SettingsRepository = koinInject(),
-  dispatcher: CoroutineDispatcher = Default
+  censorshipRepository: CensorshipRepository = koinInject()
 ) {
   val catalog by remember(repository) { repository.all() }.collectAsState(null)
-  // Null until the uses are read, so no strain is offered for deletion before its uses are known. Every use is summed
-  // up on [dispatcher], off the main thread.
-  val summaries by remember(useRepository, dispatcher) {
-    useRepository.all().map { it.summariesByStrain() }.flowOn(dispatcher)
-  }.collectAsState(null)
+  // Null until the uses are read, so no strain is offered for deletion before its uses are known.
+  val summaries by remember(repository) { repository.summaries() }.collectAsState(null)
+  // A strain's totals are all-time totals, so they stay hidden while the home screen's all-time block is.
+  val isAllTimeCensored by censorshipRepository.isAllTimeCensored.collectAsState(true)
   var isShowingArchived by remember { mutableStateOf(false) }
   var isAdding by remember { mutableStateOf(false) }
   var editing by remember { mutableStateOf<Strain?>(null) }
@@ -119,6 +116,7 @@ fun StrainsPage(
         StrainCard(
           strain,
           summaries?.let { it[strain.id] ?: StrainSummary.Unused },
+          isAllTimeCensored,
           settingsRepository,
           onEdit = { editing = strain },
           onArchive = { repository.upsert(strain.copy(isArchived = !strain.isArchived)) },
@@ -148,6 +146,7 @@ fun StrainsPage(
 private fun StrainCard(
   strain: Strain,
   summary: StrainSummary?,
+  isTotalCensored: Boolean,
   settingsRepository: SettingsRepository,
   onEdit: () -> Unit,
   onArchive: () -> Unit,
@@ -155,6 +154,7 @@ private fun StrainCard(
 ) {
   val currencySymbol by settingsRepository.currencyIcon.collectAsState("$")
   val decimalPrecision by settingsRepository.decimalPrecision.collectAsState(settingsRepository.decimalPrecisionList[2])
+  val locale = currentLocale()
   var isConfirmingDelete by remember { mutableStateOf(false) }
 
   Card(Modifier.fillMaxWidth().testTag("StrainCard ${strain.name}"), elevation = 6.dp) {
@@ -163,9 +163,9 @@ private fun StrainCard(
         Text(strain.displayName(), fontWeight = Bold)
         strain.potencyText()?.let { Text(it) }
         strain.costPerGram?.let {
-          Text("$currencySymbol " + stringResource(cost_per_gram, it.setScale(decimalPrecision, HALF_UP).toString()))
+          Text("$currencySymbol " + stringResource(cost_per_gram, decimalText(it, decimalPrecision, locale)))
         }
-        summary?.let { UsageText(it, currencySymbol, decimalPrecision) }
+        summary?.let { UsageText(it, isTotalCensored, currencySymbol, decimalPrecision) }
       }
 
       Column(horizontalAlignment = End) {
@@ -198,23 +198,26 @@ private fun StrainCard(
   }
 }
 
-/** "2 uses · 0.55 grams · $ 6.88 total", or "0 uses", and the average rating in stars when any use was rated. */
+/**
+ * "2 uses · 0.55 grams · $ 6.88 total", "2 uses · *****" while the totals are censored, or "0 uses", and the average
+ * rating in stars when any use was rated.
+ */
 @Composable
-private fun UsageText(summary: StrainSummary, currencySymbol: String, decimalPrecision: Int) {
+private fun UsageText(summary: StrainSummary, isTotalCensored: Boolean, currencySymbol: String, decimalPrecision: Int) {
+  val locale = currentLocale()
   val uses = pluralStringResource(amount_uses, summary.uses, summary.uses.toString())
-  val totals = if (summary.uses == 0) {
-    emptyList()
-  } else {
-    listOf(
-      stringResource(amount_grams, summary.grams.setScale(decimalPrecision, HALF_UP).toPlainString()),
-      "$currencySymbol " +
-        stringResource(total_spent, summary.spent.setScale(decimalPrecision, HALF_UP).toPlainString())
+  val totals = when {
+    summary.uses == 0 -> emptyList()
+    isTotalCensored -> listOf(stringResource(censored))
+    else -> listOf(
+      stringResource(amount_grams, decimalText(summary.grams, decimalPrecision, locale)),
+      "$currencySymbol " + stringResource(total_spent, decimalText(summary.spent, decimalPrecision, locale))
     )
   }
   Text((listOf(uses) + totals).joinToString(" · "))
 
   summary.averageRating?.let { average ->
-    val description = stringResource(average_rating_out_of_five, ratingNumber(average))
+    val description = stringResource(average_rating_out_of_five, ratingNumber(average, locale))
     StarRating(Rating.ofOrNull(average), starSize = 20.dp, description = description)
   }
 }

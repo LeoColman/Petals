@@ -33,6 +33,11 @@ class AddUseRequestTest : FunSpec({
     AddUseRequest.from(full, active).template shouldBe full
   }
 
+  test("A new use starts unrated, however the copied one was rated") {
+    AddUseRequest.from(use.copy(strainId = active.id, rating = 4.5), active).template shouldBe
+      use.copy(strainId = active.id)
+  }
+
   test("Without a use to copy, the form starts blank") {
     AddUseRequest.from(null, active).template shouldBe null
   }

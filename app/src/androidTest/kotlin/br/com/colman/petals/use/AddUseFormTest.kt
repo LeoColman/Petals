@@ -3,14 +3,18 @@ package br.com.colman.petals.use
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.semantics.SemanticsActions.SetProgress
 import androidx.compose.ui.test.AndroidComposeUiTest
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.runAndroidComposeUiTest
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.MainActivity
+import br.com.colman.petals.R
 import br.com.colman.petals.R.string.no_strain
 import br.com.colman.petals.koin
 import br.com.colman.petals.strain.repository.Strain
@@ -61,6 +65,29 @@ class AddUseFormTest : FunSpec({
   test("Picking a strain leaves the cost alone for a use being edited") {
     runAndroidComposeUiTest<MainActivity> {
       pickStrain(fillsStrainCost = false).value shouldBe "10.00"
+    }
+  }
+
+  test("Screen readers find the stars by the field's label and rate the use with them") {
+    runAndroidComposeUiTest<MainActivity> {
+      val rating = mutableStateOf<Double?>(null)
+      activity!!.setContent {
+        AddUseForm(
+          mutableStateOf(""),
+          mutableStateOf(""),
+          mutableStateOf(LocalDate.now()),
+          mutableStateOf(LocalTime.now()),
+          mutableStateOf(""),
+          mutableStateOf<ConsumptionMethod?>(null),
+          mutableStateOf(null),
+          rating
+        )
+      }
+
+      onNodeWithContentDescription(activity!!.getString(R.string.rating)).performSemanticsAction(SetProgress) { it(4f) }
+      waitForIdle()
+
+      rating.value shouldBe 4.0
     }
   }
 })

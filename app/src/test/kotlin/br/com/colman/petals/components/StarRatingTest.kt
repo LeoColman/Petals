@@ -21,6 +21,17 @@ class StarRatingTest : FunSpec({
     ratingAt(star = 4, x = 10f, width = 100, isRtl = true) shouldBe 4.0
   }
 
+  test("A drag that left the star goes on counting half stars") {
+    ratingAt(star = 2, x = 260f, width = 100, isRtl = false) shouldBe 4.0
+    ratingAt(star = 4, x = -30f, width = 100, isRtl = false) shouldBe 3.0
+    ratingAt(star = 2, x = -160f, width = 100, isRtl = true) shouldBe 4.0
+  }
+
+  test("A drag stops at half a star and at five") {
+    ratingAt(star = 1, x = -500f, width = 100, isRtl = false) shouldBe 0.5
+    ratingAt(star = 5, x = 500f, width = 100, isRtl = false) shouldBe 5.0
+  }
+
   test("Tapping a new rating gives it") {
     ratingAfterTap(3.5, 4.0) shouldBe 3.5
     ratingAfterTap(3.5, null) shouldBe 3.5
