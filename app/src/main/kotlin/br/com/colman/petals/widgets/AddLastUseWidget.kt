@@ -56,11 +56,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import org.koin.compose.koinInject
 import org.koin.java.KoinJavaComponent.getKoin
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter.ofPattern
-import java.util.UUID
 
 class AddLastUseWidget : GlanceAppWidget() {
 
@@ -310,8 +307,7 @@ class AddUseActionCallback : ActionCallback {
     val lastUse = useRepository.getLastUse().first()
 
     lastUse?.let { use ->
-      val dateTime = LocalDateTime.of(LocalDate.now(), LocalTime.now())
-      val updatedUse = use.asTemplate().copy(date = dateTime, id = UUID.randomUUID().toString())
+      val updatedUse = use.asTemplate()
       useRepository.upsert(updatedUse)
       context.updateWidget(updatedUse)
     }

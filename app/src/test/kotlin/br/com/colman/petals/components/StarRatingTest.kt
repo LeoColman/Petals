@@ -37,6 +37,15 @@ class StarRatingTest : FunSpec({
     ratingAfterTap(3.5, null) shouldBe 3.5
   }
 
+  test("An accessibility click adds half a star") {
+    ratingAfterClick(null) shouldBe 0.5
+    ratingAfterClick(3.5) shouldBe 4.0
+  }
+
+  test("An accessibility click on five stars clears the rating") {
+    ratingAfterClick(5.0) shouldBe null
+  }
+
   test("Tapping the rating a use already has clears it") {
     ratingAfterTap(3.5, 3.5) shouldBe null
   }

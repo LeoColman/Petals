@@ -227,4 +227,6 @@
     <string name="rating_out_of_five">%s su 5 stelle</string>
     <string name="average_rating_out_of_five">Valutazione media: %s su 5 stelle</string>
     <string name="not_rated">Non valutato</string>
+    <string name="add_half_star">Aggiungi mezza stella</string>
+    <string name="clear_rating">Cancella valutazione</string>
 </resources>

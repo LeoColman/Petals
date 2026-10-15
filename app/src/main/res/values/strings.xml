@@ -276,4 +276,6 @@
     <string name="rating_out_of_five">%s of 5 stars</string>
     <string name="average_rating_out_of_five">Average rating: %s of 5 stars</string>
     <string name="not_rated">Not rated</string>
+    <string name="add_half_star">Add half a star</string>
+    <string name="clear_rating">Clear rating</string>
 </resources>

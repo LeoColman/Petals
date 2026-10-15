@@ -227,4 +227,6 @@
     <string name="rating_out_of_five">%s из 5 звёзд</string>
     <string name="average_rating_out_of_five">Средняя оценка: %s из 5 звёзд</string>
     <string name="not_rated">Без оценки</string>
+    <string name="add_half_star">Добавить ползвезды</string>
+    <string name="clear_rating">Сбросить оценку</string>
 </resources>

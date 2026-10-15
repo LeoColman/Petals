@@ -30,6 +30,8 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import br.com.colman.petals.R.string.add_half_star
+import br.com.colman.petals.R.string.clear_rating
 import br.com.colman.petals.R.string.not_rated
 import br.com.colman.petals.R.string.rating_out_of_five
 import br.com.colman.petals.use.repository.Rating
@@ -43,8 +45,8 @@ import kotlin.math.floor
  * Five stars showing [rating], in halves. Given [onRatingChange], they work like a slider: tapping the first half of a
  * star rates half a star short of it and the second half rates the whole star, dragging along them rates the half star
  * under the finger, and tapping the rating it already has clears it. Each star then takes at least a 48dp touch target.
- * Screen readers hear [label] and [description] and adjust it half a star at a time; when it can't be changed they hear
- * [description] alone.
+ * Screen readers hear [label] and [description] and adjust it half a star at a time, or add half a star with a double
+ * tap; when it can't be changed they hear [description] alone.
  */
 @Suppress("LongParameterList")
 @Composable
@@ -59,6 +61,7 @@ fun StarRating(
   val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
   val currentRating by rememberUpdatedState(rating)
   val onChange by rememberUpdatedState(onRatingChange)
+  val clickLabel = stringResource(if (rating == Rating.Max) clear_rating else add_half_star)
   val semantics = Modifier.semantics(mergeDescendants = true) {
     if (onRatingChange == null) {
       contentDescription = description
@@ -74,9 +77,13 @@ fun StarRating(
         onChange?.invoke(changed)
         true
       }
-      // Without a click of its own, a screen reader's double tap lands as a tap in the middle of the stars, rating or
-      // clearing the third one. The rating is changed as a slider instead, so the double tap does nothing.
-      onClick { true }
+      // A screen reader's double tap, or a Switch Access or Voice Access tap, adds half a star and clears five, so the
+      // rating can be set without swiping. Without a click of its own, a double tap would land as a tap in the middle
+      // of the stars, rating or clearing the third one.
+      onClick(clickLabel) {
+        onChange?.invoke(ratingAfterClick(currentRating))
+        true
+      }
     }
   }
 
@@ -146,3 +153,6 @@ internal fun ratingAt(star: Int, x: Float, width: Int, isRtl: Boolean): Double {
 
 /** The rating after tapping [tapped] when it is [current]: [tapped], or none when it already was that. */
 internal fun ratingAfterTap(tapped: Double, current: Double?): Double? = tapped.takeIf { it != current }
+
+/** The rating after an accessibility click when it is [current]: half a star more, or none after five. */
+internal fun ratingAfterClick(current: Double?): Double? = ((current ?: 0.0) + 0.5).takeIf { it <= Rating.Max }

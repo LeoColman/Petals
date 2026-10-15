@@ -61,6 +61,8 @@ import br.com.colman.petals.use.repository.BlockType.ThisYear
 import br.com.colman.petals.use.repository.BlockType.Today
 import br.com.colman.petals.use.repository.CensorshipRepository
 import br.com.colman.petals.use.repository.Use
+import br.com.colman.petals.use.repository.totalCost
+import br.com.colman.petals.use.repository.totalGrams
 import br.com.colman.petals.utils.currentLocale
 import br.com.colman.petals.utils.decimalText
 import compose.icons.TablerIcons
@@ -195,8 +197,8 @@ private fun UseBlock(modifier: Modifier, blockType: BlockType, uses: List<Use>, 
   val decimalPrecision by settingsRepository.decimalPrecision.collectAsState(settingsRepository.decimalPrecisionList[2])
 
   LaunchedEffect(uses, decimalPrecision, locale) {
-    totalGrams = decimalText(uses.sumOf { it.amountGrams }, decimalPrecision, locale)
-    totalCost = decimalText(uses.sumOf { it.costPerGram * it.amountGrams }, decimalPrecision, locale)
+    totalGrams = decimalText(uses.totalGrams, decimalPrecision, locale)
+    totalCost = decimalText(uses.totalCost, decimalPrecision, locale)
   }
 
   UseBlock(modifier, blockType, totalGrams, totalCost, isCensored)

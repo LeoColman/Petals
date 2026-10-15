@@ -209,7 +209,8 @@ private fun AddUseDialog(
   val description = remember { mutableStateOf(previousUse?.description.orEmpty()) }
   val consumptionMethod = remember { mutableStateOf(previousUse?.consumptionMethod) }
   val strainId = remember { mutableStateOf(previousUse?.strainId) }
-  val rating = remember { mutableStateOf(previousUse?.rating) }
+  // This dialog only ever adds a use, so it starts unrated whatever request opened it, as Use.asTemplate does.
+  val rating = remember { mutableStateOf<Double?>(null) }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),

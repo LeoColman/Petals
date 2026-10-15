@@ -233,4 +233,6 @@
     <string name="rating_out_of_five">5 இல் %s நட்சத்திரங்கள்</string>
     <string name="average_rating_out_of_five">சராசரி மதிப்பீடு: 5 இல் %s நட்சத்திரங்கள்</string>
     <string name="not_rated">மதிப்பிடப்படவில்லை</string>
+    <string name="add_half_star">அரை நட்சத்திரம் சேர்</string>
+    <string name="clear_rating">மதிப்பீட்டை அழி</string>
 </resources>

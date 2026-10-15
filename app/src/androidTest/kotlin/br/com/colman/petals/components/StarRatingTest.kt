@@ -105,12 +105,16 @@ class StarRatingTest : FunSpec({
     }
   }
 
-  test("A screen reader's double tap leaves the rating as it is") {
+  test("A screen reader's double tap adds half a star, and clears five") {
     runAndroidComposeUiTest<MainActivity> {
-      val rating = stars(3.0)
+      val rating = stars(4.5)
       onNodeWithTag("Stars").performSemanticsAction(OnClick)
       waitForIdle()
-      rating.value shouldBe 3.0
+      rating.value shouldBe 5.0
+
+      onNodeWithTag("Stars").performSemanticsAction(OnClick)
+      waitForIdle()
+      rating.value shouldBe null
     }
   }
 

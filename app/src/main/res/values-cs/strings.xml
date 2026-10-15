@@ -246,4 +246,6 @@
     <string name="rating_out_of_five">%s z 5 hvězdiček</string>
     <string name="average_rating_out_of_five">Průměrné hodnocení: %s z 5 hvězdiček</string>
     <string name="not_rated">Nehodnoceno</string>
+    <string name="add_half_star">Přidat půl hvězdičky</string>
+    <string name="clear_rating">Smazat hodnocení</string>
 </resources>

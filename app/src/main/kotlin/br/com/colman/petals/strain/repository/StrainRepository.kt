@@ -4,6 +4,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import br.com.colman.petals.SelectStrainUses
 import br.com.colman.petals.StrainQueries
+import br.com.colman.petals.use.repository.costOf
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
@@ -61,7 +62,7 @@ class StrainRepository(
 private fun List<SelectStrainUses>.toSummary() = StrainSummary(
   size,
   sumOf { it.amount_grams.toBigDecimal() },
-  sumOf { it.cost_per_gram.toBigDecimal() * it.amount_grams.toBigDecimal() },
+  sumOf { costOf(it.amount_grams.toBigDecimal(), it.cost_per_gram.toBigDecimal()) },
   mapNotNull { it.rating }.takeIf { it.isNotEmpty() }?.average()
 )
 

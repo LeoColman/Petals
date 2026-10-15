@@ -73,7 +73,7 @@ class AddUseFlowTest : FunSpec({
     runAndroidComposeUiTest<MainActivity> {
       repository = inMemoryRepository(activity!!)
       activity!!.setContent {
-        AddUseFlow(AddUseRequest.from(template.copy(rating = 4.5), null), false, noReview, repository) { }
+        AddUseFlow(AddUseRequest(template.copy(rating = 4.5)), false, noReview, repository) { }
       }
 
       onNodeWithText(activity!!.getString(ok)).performClick()

@@ -221,4 +221,6 @@
     <string name="rating_out_of_five">5 üzerinden %s yıldız</string>
     <string name="average_rating_out_of_five">Ortalama puan: 5 üzerinden %s yıldız</string>
     <string name="not_rated">Puanlanmadı</string>
+    <string name="add_half_star">Yarım yıldız ekle</string>
+    <string name="clear_rating">Puanı temizle</string>
 </resources>

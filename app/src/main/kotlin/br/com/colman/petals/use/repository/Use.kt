@@ -41,10 +41,10 @@ data class Use(
   )
 
   /**
-   * This use as the start of a new one: all of it but the rating, since a rating is how that one session went. Every
-   * new use copied from an old one goes through here, so none starts with a rating the user never gave.
+   * This use as the start of a new one, now: a new id, so saving it adds a use instead of overwriting this one, and
+   * no rating, since a rating is how that one session went. Every new use copied from an old one goes through here.
    */
-  fun asTemplate(): Use = copy(rating = null)
+  fun asTemplate(): Use = copy(date = LocalDateTime.now(), id = UUID.randomUUID().toString(), rating = null)
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
@@ -79,4 +79,7 @@ val List<Use>.totalGrams: BigDecimal
   get() = map { it.amountGrams }.fold(BigDecimal.ZERO, BigDecimal::add)
 
 val List<Use>.totalCost: BigDecimal
-  get() = map { it.costPerGram * it.amountGrams }.fold(BigDecimal.ZERO, BigDecimal::add)
+  get() = map { costOf(it.amountGrams, it.costPerGram) }.fold(BigDecimal.ZERO, BigDecimal::add)
+
+/** What [amountGrams] cost at [costPerGram]. Every total spent adds these up, so they all agree. */
+fun costOf(amountGrams: BigDecimal, costPerGram: BigDecimal): BigDecimal = costPerGram * amountGrams

@@ -45,6 +45,9 @@ import br.com.colman.petals.use.repository.UseRepository
 import br.com.colman.petals.utils.decimalText
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import java.io.File
 import java.math.BigDecimal
 import java.util.UUID
@@ -55,16 +58,30 @@ class StrainsPageTest : FunSpec({
   val flm = Strain("420 Evo FLM", id = "flm")
   val bedrocan = Strain("Bedrocan", id = "bedrocan")
 
-  // Settings and censorship start from their defaults for each test, whatever other tests left in the app's own.
+  val cleanups = mutableListOf<() -> Unit>()
+  afterTest {
+    cleanups.forEach { it() }
+    cleanups.clear()
+  }
+
+  // Settings and censorship start from their defaults for each test, whatever other tests left in the app's own. Each
+  // test's preferences file and the scope writing it go away once the test is done.
   class Catalog(context: Context) {
     private val database = Database(AndroidSqliteDriver(Database.Schema, context, null))
-    private val preferences = PreferenceDataStoreFactory.create {
-      File(context.cacheDir, "StrainsPageTest-${UUID.randomUUID()}.preferences_pb")
-    }
+    private val file = File(context.cacheDir, "StrainsPageTest-${UUID.randomUUID()}.preferences_pb")
+    private val scope = CoroutineScope(SupervisorJob())
+    private val preferences = PreferenceDataStoreFactory.create(scope = scope) { file }
     val strains = StrainRepository(database.strainQueries)
     val uses = UseRepository(database.useQueries)
     val censorship = CensorshipRepository(preferences)
     private val settings = SettingsRepository(preferences)
+
+    init {
+      cleanups += {
+        scope.cancel()
+        file.delete()
+      }
+    }
 
     fun show(activity: MainActivity) = activity.setContent { StrainsPage(strains, settings, censorship) }
   }
