@@ -60,7 +60,7 @@ jobs:
       run: './gradlew :app:pixel6Api34FdroidDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.notAnnotation=br.com.colman.petals.DevTooling'
     - id: 'step-6'
       name: 'Upload instrumented test report'
-      uses: 'actions/upload-artifact@v4'
+      uses: 'actions/upload-artifact@v7'
       with:
         name: 'instrumented-test-report'
         path: |-
