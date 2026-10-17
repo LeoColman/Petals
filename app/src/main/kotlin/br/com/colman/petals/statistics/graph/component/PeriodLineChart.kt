@@ -19,6 +19,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.colman.petals.statistics.graph.formatter.GramsLabel
 import br.com.colman.petals.statistics.graph.formatter.gramsAxisFormatter
+import io.grafima.charts.line.LineA11yConfig
 import io.grafima.charts.line.LineAxisConfig
 import io.grafima.charts.line.LineChart
 import io.grafima.charts.line.LineChartStyle
@@ -87,28 +94,44 @@ fun PeriodLineChart(
       style = MaterialTheme.typography.subtitle2
     )
 
-    LineChart(
-      dataSet = LineDataSet(series, title),
-      modifier = Modifier.fillMaxWidth().aspectRatio(1f),
-      style = LineChartStyle(showDots = true, curveType = curveType, valueLabels = valueLabels),
-      axisConfig = LineAxisConfig(
-        showVerticalGrid = true,
-        gridColor = colors.primary.copy(alpha = GridAlpha),
-        axisColor = colors.primary,
-        labelColor = colors.primary,
-        yMin = if (isEmpty) 0f else null,
-        yMax = if (isEmpty) 1f else null,
-        xMin = xMin,
-        xMax = xMax,
-        maxXLabels = maxXLabels,
-        xLabelFormatter = xLabelFormatter,
-        yLabelFormatter = yLabelFormatter,
-        referenceLines = referenceLines
-      ),
-      // Off, as it is on every other chart in the app. On this one it would also offer a break period
-      // band for selection, and a band is a region of the day rather than something that was measured.
-      crosshairConfig = LineCrosshairConfig(enabled = false)
-    )
+    val dataSet = LineDataSet(series, title)
+    val description = remember(dataSet) { describe(dataSet) }
+
+    // Read as one image with Grafima's own description. Left to itself the chart also gets an action
+    // to select each x position, and Compose throws once a node has 32 of them ("Can't have more than
+    // 32 custom actions for one widget"), taking the app down as soon as TalkBack or any other
+    // accessibility service reads it. The hour chart gets there with four breaks off the hour. The
+    // actions would do nothing here anyway, as nothing listens for a selection.
+    Box(
+      Modifier.clearAndSetSemantics {
+        contentDescription = description
+        role = Role.Image
+        liveRegion = LiveRegionMode.Polite
+      }
+    ) {
+      LineChart(
+        dataSet = dataSet,
+        modifier = Modifier.fillMaxWidth().aspectRatio(1f),
+        style = LineChartStyle(showDots = true, curveType = curveType, valueLabels = valueLabels),
+        axisConfig = LineAxisConfig(
+          showVerticalGrid = true,
+          gridColor = colors.primary.copy(alpha = GridAlpha),
+          axisColor = colors.primary,
+          labelColor = colors.primary,
+          yMin = if (isEmpty) 0f else null,
+          yMax = if (isEmpty) 1f else null,
+          xMin = xMin,
+          xMax = xMax,
+          maxXLabels = maxXLabels,
+          xLabelFormatter = xLabelFormatter,
+          yLabelFormatter = yLabelFormatter,
+          referenceLines = referenceLines
+        ),
+        // Off, as it is on every other chart in the app. On this one it would also offer a break period
+        // band for selection, and a band is a region of the day rather than something that was measured.
+        crosshairConfig = LineCrosshairConfig(enabled = false)
+      )
+    }
 
     SeriesLegend(series)
   }
@@ -118,6 +141,15 @@ fun PeriodLineChart(
 // the handful the other charts draw, and at full strength it competes with the readings.
 private const val GridAlpha = 0.3f
 private val ValueLabelSize = 12.sp
+
+private val GrafimaA11y = LineA11yConfig()
+
+/**
+ * Grafima's own chart description, for the named series only. A break period's bands past the first
+ * are unnamed, being there only to be drawn, and would each be read as ": range 0 to 0, 2 points".
+ */
+private fun describe(dataSet: LineDataSet) =
+  GrafimaA11y.chartDescriptionBuilder(dataSet.copy(series = dataSet.series.filter { it.label.isNotBlank() }))
 
 /** Top-level, so the config holding it stays equal across recompositions. */
 private val GramsPointLabel: (LineSeries, LineDataPoint) -> String = { _, point -> GramsLabel(point.y) }
