@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
@@ -22,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -34,6 +37,7 @@ import br.com.colman.petals.R.string.consumption_method
 import br.com.colman.petals.R.string.cost_per_gram_title
 import br.com.colman.petals.R.string.method_unspecified
 import br.com.colman.petals.components.ClickableTextField
+import br.com.colman.petals.components.StarRating
 import br.com.colman.petals.components.dateDialogState
 import br.com.colman.petals.components.timeDialogState
 import br.com.colman.petals.settings.SettingsRepository
@@ -62,6 +66,7 @@ fun AddUseForm(
   description: MutableState<String>,
   consumptionMethod: MutableState<ConsumptionMethod?>,
   strainId: MutableState<String?>,
+  rating: MutableState<Double?>,
   fillsStrainCost: Boolean = true,
 ) {
   val settingsRepository = koinInject<SettingsRepository>()
@@ -78,7 +83,7 @@ fun AddUseForm(
 
   var description by description
 
-  Column(Modifier, Arrangement.spacedBy(8.dp)) {
+  Column(Modifier.verticalScroll(rememberScrollState()), Arrangement.spacedBy(8.dp)) {
     Text(stringResource(add_use), fontWeight = Bold, fontSize = 16.sp)
 
     // Picking a strain fills in its cost for a new use, but never for one being edited: a use keeps the cost it was
@@ -125,8 +130,11 @@ fun AddUseForm(
       onValueChange = { description = it },
       leadingIcon = { Icon(TablerIcons.Notebook, null) },
       label = { Text(stringResource(string.description)) },
-      placeholder = { Text(stringResource(because_i_wanted)) }
+      placeholder = { Text(stringResource(because_i_wanted)) },
+      minLines = 3
     )
+
+    RatingField(rating)
 
     ConsumptionMethodField(consumptionMethod)
   }
@@ -144,6 +152,22 @@ private fun UseStrainField(strainId: MutableState<String?>, setCost: (String) ->
     onPick = { strain -> strain?.costPerGram?.let { setCost(it.toPlainString()) } },
     onCreate = strainRepository::upsert
   )
+}
+
+/**
+ * How the use went, in stars; tapping the rating it has clears it. The label sits above the stars, so a long one never
+ * squeezes their touch targets.
+ */
+@Composable
+private fun RatingField(rating: MutableState<Double?>) {
+  var stars by rating
+  val label = stringResource(string.rating)
+
+  Column(Modifier.fillMaxWidth()) {
+    // The stars carry the label for screen readers, so they don't hear it twice.
+    Text(label, Modifier.clearAndSetSemantics { })
+    StarRating(stars, starSize = 36.dp, label = label) { stars = it }
+  }
 }
 
 @OptIn(ExperimentalMaterialApi::class)

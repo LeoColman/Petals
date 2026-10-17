@@ -236,4 +236,10 @@
         <item quantity="other">%d Konsumeinträge importiert</item>
     </plurals>
     <string name="import_failed">Diese Datei konnte nicht importiert werden. Es wurde kein Konsum gespeichert.</string>
+    <string name="rating">Bewertung</string>
+    <string name="rating_out_of_five">%s von 5 Sternen</string>
+    <string name="average_rating_out_of_five">Durchschnittliche Bewertung: %s von 5 Sternen</string>
+    <string name="not_rated">Nicht bewertet</string>
+    <string name="add_half_star">Einen halben Stern hinzufügen</string>
+    <string name="clear_rating">Bewertung löschen</string>
 </resources>

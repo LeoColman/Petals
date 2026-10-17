@@ -242,4 +242,10 @@
         <item quantity="other">Importováno %d užití</item>
     </plurals>
     <string name="import_failed">Tento soubor nelze importovat. Žádné užití nebylo uloženo.</string>
+    <string name="rating">Hodnocení</string>
+    <string name="rating_out_of_five">%s z 5 hvězdiček</string>
+    <string name="average_rating_out_of_five">Průměrné hodnocení: %s z 5 hvězdiček</string>
+    <string name="not_rated">Nehodnoceno</string>
+    <string name="add_half_star">Přidat půl hvězdičky</string>
+    <string name="clear_rating">Smazat hodnocení</string>
 </resources>

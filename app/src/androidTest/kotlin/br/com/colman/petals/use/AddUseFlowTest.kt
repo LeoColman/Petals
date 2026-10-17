@@ -67,6 +67,21 @@ class AddUseFlowTest : FunSpec({
     finished shouldBe true
   }
 
+  test("a duplicate of a rated use starts unrated") {
+    lateinit var repository: UseRepository
+
+    runAndroidComposeUiTest<MainActivity> {
+      repository = inMemoryRepository(activity!!)
+      activity!!.setContent {
+        AddUseFlow(AddUseRequest(template.copy(rating = 4.5)), false, noReview, repository) { }
+      }
+
+      onNodeWithText(activity!!.getString(ok)).performClick()
+    }
+
+    repository.all().first().single().rating shouldBe null
+  }
+
   test("during a pause the form only opens once the pause is confirmed") {
     lateinit var repository: UseRepository
 

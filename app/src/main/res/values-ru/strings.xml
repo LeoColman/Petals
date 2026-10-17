@@ -223,4 +223,10 @@
         <item quantity="other">Импортировано %d употреблений</item>
     </plurals>
     <string name="import_failed">Не удалось импортировать этот файл. Ни одно употребление не сохранено.</string>
+    <string name="rating">Оценка</string>
+    <string name="rating_out_of_five">%s из 5 звёзд</string>
+    <string name="average_rating_out_of_five">Средняя оценка: %s из 5 звёзд</string>
+    <string name="not_rated">Без оценки</string>
+    <string name="add_half_star">Добавить ползвезды</string>
+    <string name="clear_rating">Сбросить оценку</string>
 </resources>

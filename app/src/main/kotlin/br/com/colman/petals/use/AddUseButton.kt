@@ -64,11 +64,13 @@ fun AddUseButton(isAnyPauseActive: Boolean = false, onClick: () -> Unit = { }) {
 data class AddUseRequest(val template: Use?) {
   companion object {
     /**
-     * A request starting from [use], whose [strain] it keeps only while that strain is active: a new use doesn't
-     * start with a strain the user archived because they are done with it, and the picker wouldn't offer it.
+     * A request starting from [use] as a [template][Use.asTemplate], whose [strain] it keeps only while that strain is
+     * active: a new use doesn't start with a strain the user archived because they are done with it, and the picker
+     * wouldn't offer it.
      */
-    fun from(use: Use?, strain: Strain?) =
-      AddUseRequest(use?.copy(strainId = strain?.takeIf { it.id == use.strainId && !it.isArchived }?.id))
+    fun from(use: Use?, strain: Strain?) = AddUseRequest(
+      use?.copy(strainId = strain?.takeIf { it.id == use.strainId && !it.isArchived }?.id)?.asTemplate()
+    )
   }
 }
 
@@ -207,6 +209,8 @@ private fun AddUseDialog(
   val description = remember { mutableStateOf(previousUse?.description.orEmpty()) }
   val consumptionMethod = remember { mutableStateOf(previousUse?.consumptionMethod) }
   val strainId = remember { mutableStateOf(previousUse?.strainId) }
+  // This dialog only ever adds a use, so it starts unrated whatever request opened it, as Use.asTemplate does.
+  val rating = remember { mutableStateOf<Double?>(null) }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
@@ -214,12 +218,13 @@ private fun AddUseDialog(
     costPerGram.value.toBigDecimalOrNull() ?: ZERO,
     description = description.value,
     consumptionMethod = consumptionMethod.value,
-    strainId = strainId.value
+    strainId = strainId.value,
+    rating = rating.value
   )
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId) },
+    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, rating) },
     confirmButton = { ConfirmNewUseButton(onAddUse, use, onDismiss) }
   )
 }

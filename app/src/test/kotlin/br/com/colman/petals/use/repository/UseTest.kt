@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.bigdecimal.shouldBeEqualIgnoringScale
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.equals.shouldNotBeEqual
+import io.kotest.matchers.ranges.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import java.math.BigDecimal
@@ -190,6 +191,30 @@ class UseTest : FunSpec({
       val use2 = use1.copy(strainId = "flm")
 
       use1.hashCode() shouldNotBe use2.hashCode()
+    }
+  }
+
+  context("Template") {
+    val use = Use(
+      LocalDateTime.of(2025, 2, 11, 11, 0),
+      BigDecimal("0.3"),
+      BigDecimal("12.5"),
+      description = "With a friend",
+      consumptionMethod = ConsumptionMethod.VAPORIZED,
+      strainId = "flm",
+      rating = 4.5
+    )
+
+    test("A template keeps the amount, cost, description, method and strain, but not the rating") {
+      use.asTemplate().copy(date = use.date) shouldBe use.copy(rating = null)
+    }
+
+    test("A template is a new use, now, so saving it never overwrites the one it came from") {
+      val before = LocalDateTime.now()
+      val template = use.asTemplate()
+
+      template.id shouldNotBe use.id
+      template.date.shouldBeIn(before..LocalDateTime.now())
     }
   }
 

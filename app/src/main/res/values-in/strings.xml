@@ -228,4 +228,10 @@
         <item quantity="other">%d penggunaan diimpor</item>
     </plurals>
     <string name="import_failed">File ini tidak dapat diimpor. Tidak ada penggunaan yang disimpan.</string>
+    <string name="rating">Penilaian</string>
+    <string name="rating_out_of_five">%s dari 5 bintang</string>
+    <string name="average_rating_out_of_five">Penilaian rata-rata: %s dari 5 bintang</string>
+    <string name="not_rated">Belum dinilai</string>
+    <string name="add_half_star">Tambah setengah bintang</string>
+    <string name="clear_rating">Hapus penilaian</string>
 </resources>

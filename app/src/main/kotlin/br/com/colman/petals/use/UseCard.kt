@@ -48,11 +48,15 @@ import br.com.colman.petals.R.string.ok
 import br.com.colman.petals.R.string.see_more
 import br.com.colman.petals.R.string.total_spent
 import br.com.colman.petals.R.string.yes
+import br.com.colman.petals.components.StarRating
 import br.com.colman.petals.settings.SettingsRepository
 import br.com.colman.petals.strain.displayName
 import br.com.colman.petals.strain.potencyText
 import br.com.colman.petals.strain.repository.Strain
 import br.com.colman.petals.use.repository.Use
+import br.com.colman.petals.use.repository.costOf
+import br.com.colman.petals.utils.currentLocale
+import br.com.colman.petals.utils.decimalText
 import br.com.colman.petals.utils.truncatedToMinute
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Cash
@@ -65,7 +69,6 @@ import compose.icons.tablericons.Scale
 import compose.icons.tablericons.Trash
 import org.koin.compose.koinInject
 import java.math.BigDecimal
-import java.math.RoundingMode.HALF_UP
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ISO_DATE
 import java.time.format.DateTimeFormatter.ISO_TIME
@@ -111,6 +114,7 @@ fun UseCard(
   val timeString = date.format(ofPattern(timeFormat))
   val currencySymbol by koinInject<SettingsRepository>().currencyIcon.collectAsState("$")
   val decimalPrecision by settingsRepository.decimalPrecision.collectAsState(settingsRepository.decimalPrecisionList[2])
+  val locale = currentLocale()
 
   Card(
     Modifier
@@ -140,21 +144,23 @@ fun UseCard(
           }
         }
 
+        use.rating?.let { StarRating(it) }
+
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.Cash, null)
-          val costPerGramString = costPerGram.setScale(decimalPrecision, HALF_UP).toString()
+          val costPerGramString = decimalText(costPerGram, decimalPrecision, locale)
           Text("$currencySymbol " + stringResource(cost_per_gram, costPerGramString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.Scale, null)
-          val amountGramsString = amountGrams.setScale(decimalPrecision, HALF_UP).toString()
+          val amountGramsString = decimalText(amountGrams, decimalPrecision, locale)
           Text(stringResource(amount_grams, amountGramsString))
         }
 
         Row(Modifier, spacedBy(8.dp), CenterVertically) {
           Icon(TablerIcons.ReportMoney, null)
-          val total = (amountGrams * costPerGram).setScale(decimalPrecision, HALF_UP)
+          val total = decimalText(costOf(amountGrams, costPerGram), decimalPrecision, locale)
           Text("$currencySymbol " + stringResource(total_spent, total))
         }
 
@@ -253,6 +259,7 @@ private fun EditUseDialog(
   val description = remember { mutableStateOf(use.description) }
   val consumptionMethod = remember { mutableStateOf(use.consumptionMethod) }
   val strainId = remember { mutableStateOf(use.strainId) }
+  val rating = remember { mutableStateOf(use.rating) }
 
   val use = Use(
     LocalDateTime.of(date.value, time.value),
@@ -261,12 +268,13 @@ private fun EditUseDialog(
     use.id,
     description.value,
     consumptionMethod.value,
-    strainId.value
+    strainId.value,
+    rating.value
   )
 
   AlertDialog(
     onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, false) },
+    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, rating, false) },
     confirmButton = { ConfirmEdit(onEditUse, use, onDismiss) }
   )
 }

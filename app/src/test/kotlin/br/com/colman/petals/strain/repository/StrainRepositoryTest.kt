@@ -92,13 +92,31 @@ class StrainRepositoryTest : FunSpec({
     test("A strain nobody used has no uses") {
       target.countUses(flm) shouldBe 0
     }
+  }
 
-    test("useCounts counts the uses of every strain that has any") {
-      val bedrocan = Strain("Bedrocan")
-      target.upsertAll(listOf(flm, bedrocan, Strain("Unused")))
-      uses.upsertAll(List(3) { Use(strainId = flm.id) } + Use(strainId = bedrocan.id) + Use())
+  context("Summaries") {
+    fun use(strain: String?, grams: String, cost: String, rating: Double? = null) =
+      Use(amountGrams = BigDecimal(grams), costPerGram = BigDecimal(cost), strainId = strain, rating = rating)
 
-      target.useCounts().first() shouldBe mapOf(flm.id to 3L, bedrocan.id to 1L)
+    test("Add up each strain's uses, grams and spending") {
+      uses.upsertAll(listOf(use("flm", "0.25", "12.50"), use("flm", "0.30", "12.50"), use("bed", "0.20", "9.80")))
+
+      target.summaries().first() shouldBe mapOf(
+        "flm" to StrainSummary(2, BigDecimal("0.55"), BigDecimal("6.8750"), null),
+        "bed" to StrainSummary(1, BigDecimal("0.20"), BigDecimal("1.9600"), null)
+      )
+    }
+
+    test("Average only the rated uses") {
+      uses.upsertAll(listOf(use("flm", "0.25", "10", 4.0), use("flm", "0.25", "10", 3.0), use("flm", "0.25", "10")))
+
+      target.summaries().first().getValue("flm").averageRating shouldBe 3.5
+    }
+
+    test("Leave out uses without a strain") {
+      uses.upsert(use(null, "1", "10", 5.0))
+
+      target.summaries().first() shouldBe emptyMap()
     }
   }
 

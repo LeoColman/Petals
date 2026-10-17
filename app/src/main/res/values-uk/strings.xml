@@ -241,4 +241,10 @@
         <item quantity="other">Імпортовано %d вжитків</item>
     </plurals>
     <string name="import_failed">Не вдалося імпортувати цей файл. Жоден вжиток не збережено.</string>
+    <string name="rating">Оцінка</string>
+    <string name="rating_out_of_five">%s з 5 зірок</string>
+    <string name="average_rating_out_of_five">Середня оцінка: %s з 5 зірок</string>
+    <string name="not_rated">Без оцінки</string>
+    <string name="add_half_star">Додати пів зірки</string>
+    <string name="clear_rating">Скинути оцінку</string>
 </resources>

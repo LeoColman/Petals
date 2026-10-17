@@ -24,5 +24,8 @@ DELETE FROM Strain WHERE id IS (?);
 countUses:
 SELECT COUNT(*) FROM Use WHERE strain_id IS (?);
 
-countUsesByStrain:
-SELECT strain_id, COUNT(*) AS uses FROM Use WHERE strain_id IS NOT NULL GROUP BY strain_id;
+-- One row per use with a strain, with only the columns a strain's summary adds up, so no date or description is read.
+-- It still reads every such use: the sums are taken in Kotlin, as BigDecimal, because SQLite would add the amounts up
+-- as floating point.
+selectStrainUses:
+SELECT strain_id, amount_grams, cost_per_gram, rating FROM Use WHERE strain_id IS NOT NULL;
