@@ -160,6 +160,8 @@
     <string name="delete_pause">இடைநிறுத்தத்தை நீக்கு</string>
     <string name="break_period">இடைவெளி காலம்</string>
     <string name="no_break_period">இடைவெளி காலம் இல்லை</string>
+    <string name="time_of_day_resolution_hour">1 மணி நேரம்</string>
+    <string name="time_of_day_resolution_quarter_hour">15 நிமிடங்கள்</string>
     <string name="hours_12">12 மணி நேரம்</string>
     <string name="hours_24">24 மணி நேரம்</string>
     <string name="grams_distribution_over_days_since_first_use">ஒரு நாளைக்கு கிராம்</string>

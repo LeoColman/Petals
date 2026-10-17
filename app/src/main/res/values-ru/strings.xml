@@ -132,6 +132,8 @@
     <string name="delete_pause">Удалить паузу</string>
     <string name="break_period">Период паузы</string>
     <string name="no_break_period">Период без паузы</string>
+    <string name="time_of_day_resolution_hour">1 час</string>
+    <string name="time_of_day_resolution_quarter_hour">15 минут</string>
     <string name="hours_12">12 часов</string>
     <string name="hours_24">24 часа</string>
     <string name="grams_distribution_over_days_since_first_use">Граммов в день</string>

@@ -14,6 +14,7 @@ import br.com.colman.petals.settings.SettingsRepository.Companion.IsDarkModeOn
 import br.com.colman.petals.settings.SettingsRepository.Companion.IsDayExtended
 import br.com.colman.petals.settings.SettingsRepository.Companion.IsHitTimerMillisecondsEnabled
 import br.com.colman.petals.settings.SettingsRepository.Companion.IsHourOfDayLineInStatsEnabled
+import br.com.colman.petals.settings.SettingsRepository.Companion.IsQuarterHourInStatsEnabled
 import br.com.colman.petals.settings.SettingsRepository.Companion.IsToleranceModelEnabled
 import br.com.colman.petals.settings.SettingsRepository.Companion.Pin
 import br.com.colman.petals.settings.SettingsRepository.Companion.TimeFormat
@@ -166,6 +167,20 @@ class SettingsRepositoryTest : FunSpec({
   test("Persists hour of day line setting") {
     target.setIsHourOfDayLineInStatsEnabled(true)
     datastore.data.first()[IsHourOfDayLineInStatsEnabled] shouldBe true
+  }
+
+  test("Defaults quarter hour in stats to false") {
+    target.isQuarterHourInStatsEnabled.first() shouldBe false
+  }
+
+  test("Changes quarter hour in stats to true") {
+    target.setIsQuarterHourInStatsEnabled(true)
+    target.isQuarterHourInStatsEnabled.first() shouldBe true
+  }
+
+  test("Persists quarter hour in stats setting") {
+    target.setIsQuarterHourInStatsEnabled(true)
+    datastore.data.first()[IsQuarterHourInStatsEnabled] shouldBe true
   }
 
   test("Defaults tolerance model to true") {

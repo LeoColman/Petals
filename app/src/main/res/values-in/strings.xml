@@ -158,6 +158,8 @@
     <string name="delete_pause">Hapus jeda</string>
     <string name="break_period">Periode jeda</string>
     <string name="no_break_period">Tidak ada periode jeda</string>
+    <string name="time_of_day_resolution_hour">1 jam</string>
+    <string name="time_of_day_resolution_quarter_hour">15 menit</string>
     <string name="hours_12">12 jam</string>
     <string name="hours_24">24 jam</string>
     <string name="grams_distribution_over_days_since_first_use">Gram per Hari</string>

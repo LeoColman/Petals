@@ -158,6 +158,8 @@
     <string name="delete_pause">Видалити паузу</string>
     <string name="break_period">Період перерви</string>
     <string name="no_break_period">Без періоду перерви</string>
+    <string name="time_of_day_resolution_hour">1 година</string>
+    <string name="time_of_day_resolution_quarter_hour">15 хвилин</string>
     <string name="what_language_should_be_used">Якою мовою слід користуватися</string>
     <string name="edit_pause">Редагувати паузу</string>
     <string name="hours_24">24 години</string>
