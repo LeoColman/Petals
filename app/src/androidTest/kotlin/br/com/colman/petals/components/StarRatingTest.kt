@@ -1,9 +1,11 @@
 package br.com.colman.petals.components
 
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.semantics.SemanticsActions.SetProgress
@@ -19,6 +21,9 @@ import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.runAndroidComposeUiTest
 import androidx.compose.ui.test.swipe
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.LayoutDirection.Ltr
+import androidx.compose.ui.unit.LayoutDirection.Rtl
 import androidx.compose.ui.unit.dp
 import br.com.colman.kotest.FunSpec
 import br.com.colman.petals.MainActivity
@@ -28,9 +33,16 @@ import io.kotest.matchers.shouldBe
 @OptIn(ExperimentalTestApi::class)
 class StarRatingTest : FunSpec({
 
-  fun AndroidComposeUiTest<MainActivity>.stars(initial: Double?): MutableState<Double?> {
+  fun AndroidComposeUiTest<MainActivity>.stars(
+    initial: Double?,
+    direction: LayoutDirection = Ltr
+  ): MutableState<Double?> {
     val rating = mutableStateOf(initial)
-    activity!!.setContent { StarRating(rating.value, Modifier.testTag("Stars")) { rating.value = it } }
+    activity!!.setContent {
+      CompositionLocalProvider(LocalLayoutDirection provides direction) {
+        StarRating(rating.value, Modifier.testTag("Stars")) { rating.value = it }
+      }
+    }
     return rating
   }
 
@@ -65,6 +77,17 @@ class StarRatingTest : FunSpec({
       val rating = stars(3.5)
       tapAt(0.65f)
       rating.value shouldBe null
+    }
+  }
+
+  test("Right to left, the stars count from the right and each one's right half comes first") {
+    runAndroidComposeUiTest<MainActivity> {
+      val rating = stars(null, Rtl)
+      tapAt(0.35f)
+      rating.value shouldBe 3.5
+
+      tapAt(0.25f)
+      rating.value shouldBe 4.0
     }
   }
 
