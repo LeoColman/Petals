@@ -30,6 +30,12 @@ class BreakPeriodBandTest : FunSpec({
     breakPeriodRanges(listOf(pause), axisEnd = 23.75f) shouldBe listOf(22f to 23.75f, 0f to 6f)
   }
 
+  test("cross-midnight pause starting past the end of the axis shades nothing before midnight") {
+    val pause = Pause(LocalTime.of(23, 30), LocalTime.of(6, 0))
+
+    breakPeriodRanges(listOf(pause), axisEnd = 23f) shouldBe listOf(23f to 23f, 0f to 6f)
+  }
+
   test("pause starting and ending at the same time does not wrap around midnight") {
     val pause = Pause(LocalTime.of(9, 0), LocalTime.of(9, 0))
 

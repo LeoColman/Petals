@@ -17,6 +17,7 @@ private fun LocalTime.toHourAxis() = hour + minute / 60f
 /**
  * The shaded x-ranges (in hour-of-day axis units) covered by the enabled [pauses].
  * A pause crossing midnight (start > end) is split into two ranges: [start..axisEnd] and [0..end].
+ * One that starts past [axisEnd], such as 23:50 by the hour, has nothing to shade before midnight.
  * Pure geometry — no chart dependencies — so it is unit-testable.
  */
 fun breakPeriodRanges(pauses: List<Pause>, axisEnd: Float): List<Pair<Float, Float>> {
@@ -24,7 +25,7 @@ fun breakPeriodRanges(pauses: List<Pause>, axisEnd: Float): List<Pair<Float, Flo
     val startX = pause.startTime.toHourAxis()
     val endX = pause.endTime.toHourAxis()
     if (pause.startTime > pause.endTime) {
-      listOf(startX to axisEnd, 0f to endX)
+      listOf(startX.coerceAtMost(axisEnd) to axisEnd, 0f to endX)
     } else {
       listOf(startX to endX)
     }
