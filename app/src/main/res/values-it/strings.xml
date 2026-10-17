@@ -164,6 +164,8 @@
     <string name="delete_pause">Elimina pausa</string>
     <string name="break_period">Periodo di pausa</string>
     <string name="no_break_period">Nessun periodo di pausa</string>
+    <string name="time_of_day_resolution_hour">1 ora</string>
+    <string name="time_of_day_resolution_quarter_hour">15 minuti</string>
     <string name="hours_12">12 ore</string>
     <string name="hours_24">24 ore</string>
     <string name="grams_distribution_over_days_since_first_use">Grammi al giorno</string>

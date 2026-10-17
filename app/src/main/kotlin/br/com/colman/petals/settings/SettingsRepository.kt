@@ -56,6 +56,7 @@ class SettingsRepository(
   val isHitTimerMillisecondsEnabled = datastore.data.map { it[IsHitTimerMillisecondsEnabled] ?: false }
   val isHourOfDayLineInStatsEnabled = datastore.data.map { it[IsHourOfDayLineInStatsEnabled] ?: false }
   val isBreakPeriodInStatsEnabled = datastore.data.map { it[IsBreakPeriodInStatsEnabled] ?: true }
+  val isQuarterHourInStatsEnabled = datastore.data.map { it[IsQuarterHourInStatsEnabled] ?: false }
   val isIgnoringLongestDailyDelay = datastore.data.map { it[IsIgnoringLongestDailyDelay] ?: false }
   val isToleranceModelEnabled = datastore.data.map { it[IsToleranceModelEnabled] ?: true }
   val isDayExtended = datastore.data.map { it[IsDayExtended] ?: false }
@@ -114,6 +115,10 @@ class SettingsRepository(
 
   fun setIsBreakPeriodInStatsEnabled(value: Boolean): Unit = runBlocking {
     datastore.edit { it[IsBreakPeriodInStatsEnabled] = value }
+  }
+
+  fun setIsQuarterHourInStatsEnabled(value: Boolean): Unit = runBlocking {
+    datastore.edit { it[IsQuarterHourInStatsEnabled] = value }
   }
 
   fun setIsIgnoringLongestDailyDelay(value: Boolean): Unit = runBlocking {
@@ -176,6 +181,7 @@ class SettingsRepository(
     val IsDayExtended = booleanPreferencesKey("is_day_extended_enabled")
     val IsHourOfDayLineInStatsEnabled = booleanPreferencesKey("is_hour_of_day_line_in_stats_enabled")
     val IsBreakPeriodInStatsEnabled = booleanPreferencesKey("is_break_period_in_stats_enabled")
+    val IsQuarterHourInStatsEnabled = booleanPreferencesKey("is_quarter_hour_in_stats_enabled")
     val IsIgnoringLongestDailyDelay = booleanPreferencesKey("is_ignoring_longest_daily_delay")
     val AutoExportTreeUri = stringPreferencesKey("auto_export_tree_uri")
     val AutoExportDocumentUri = stringPreferencesKey("auto_export_document_uri")

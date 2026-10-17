@@ -8,16 +8,27 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.LineDataSet.Mode.HORIZONTAL_BEZIER
 
-private fun calculateGramDistributionPerHour(uses: List<Use>): List<Entry> {
-  val hoursInDay = (0..23)
-  val usesPerHourOfDay = hoursInDay.associateWith { uses.filter { a -> a.date.hour == it } }
-  return usesPerHourOfDay.mapValues { it.value.totalGrams }
-    .toSortedMap().map { (k, v) -> Entry(k.toFloat(), v.toFloat()) }
+/**
+ * The grams used in each [resolution] bucket of the day, counting from midnight.
+ * Plain arithmetic with no chart types, so it is unit-testable.
+ */
+fun gramsPerBucket(uses: List<Use>, resolution: TimeOfDayResolution): List<Float> {
+  val usesPerBucket = uses.groupBy { resolution.bucketOf(it.date.toLocalTime()) }
+  return List(resolution.bucketCount) { bucket -> usesPerBucket[bucket].orEmpty().totalGrams.toFloat() }
 }
 
-fun createDistributionPerHourDataset(days: Int, uses: List<Use>, label: String): LineDataSet {
-  return LineDataSet(calculateGramDistributionPerHour(uses), label).apply {
-    setDrawCircles(true)
+/** One period's grams by time of day, one entry per [resolution] bucket, placed where the bucket starts. */
+fun createDistributionPerHourDataset(
+  days: Int,
+  uses: List<Use>,
+  label: String,
+  resolution: TimeOfDayResolution
+): LineDataSet {
+  val entries = gramsPerBucket(uses, resolution).mapIndexed { bucket, grams ->
+    Entry(resolution.hourOf(bucket), grams)
+  }
+  return LineDataSet(entries, label).apply {
+    setDrawCircles(resolution.drawsDots)
     setDrawFilled(true)
     setDrawValues(false)
     fillColor = createColor(days).toArgb()

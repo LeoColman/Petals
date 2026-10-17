@@ -169,6 +169,8 @@
     <string name="confirm_deletion">Löschung bestätigen</string>
     <string name="break_period">Pausenzeit</string>
     <string name="no_break_period">Keine Pausenzeit</string>
+    <string name="time_of_day_resolution_hour">1 Stunde</string>
+    <string name="time_of_day_resolution_quarter_hour">15 Minuten</string>
     <string name="because_i_wanted">Weil ich wollte</string>
     <string name="hours_12">12 Stunden</string>
     <string name="moving_average_grams_distribution">Durchschnittliche Gramm pro Tag</string>

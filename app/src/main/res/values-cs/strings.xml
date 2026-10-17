@@ -154,6 +154,8 @@
     <string name="delete_pause">Smazat přestávku</string>
     <string name="break_period">Přestávka</string>
     <string name="no_break_period">Žádná přestávka</string>
+    <string name="time_of_day_resolution_hour">1 hodina</string>
+    <string name="time_of_day_resolution_quarter_hour">15 minut</string>
     <string name="hours_12">12 hodin</string>
     <string name="hours_24">24 hodin</string>
     <string name="grams_distribution_over_days_since_first_use">Gramy za den</string>

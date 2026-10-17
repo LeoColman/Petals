@@ -9,31 +9,43 @@ class BreakPeriodBandTest : FunSpec({
   test("non-midnight pause produces a single range spanning start to end hour") {
     val pause = Pause(LocalTime.of(9, 0), LocalTime.of(12, 0))
 
-    breakPeriodRanges(listOf(pause)) shouldBe listOf(9f to 12f)
+    breakPeriodRanges(listOf(pause), axisEnd = 23f) shouldBe listOf(9f to 12f)
   }
 
   test("minutes are reflected as fractional hours on the axis") {
     val pause = Pause(LocalTime.of(9, 30), LocalTime.of(10, 15))
 
-    breakPeriodRanges(listOf(pause)) shouldBe listOf(9.5f to 10.25f)
+    breakPeriodRanges(listOf(pause), axisEnd = 23f) shouldBe listOf(9.5f to 10.25f)
   }
 
   test("cross-midnight pause is split into two ranges") {
     val pause = Pause(LocalTime.of(22, 0), LocalTime.of(6, 0))
 
-    breakPeriodRanges(listOf(pause)) shouldBe listOf(22f to 23f, 0f to 6f)
+    breakPeriodRanges(listOf(pause), axisEnd = 23f) shouldBe listOf(22f to 23f, 0f to 6f)
+  }
+
+  test("cross-midnight pause runs to the end of a quarter-hour axis") {
+    val pause = Pause(LocalTime.of(22, 0), LocalTime.of(6, 0))
+
+    breakPeriodRanges(listOf(pause), axisEnd = 23.75f) shouldBe listOf(22f to 23.75f, 0f to 6f)
+  }
+
+  test("cross-midnight pause starting past the end of the axis shades nothing before midnight") {
+    val pause = Pause(LocalTime.of(23, 30), LocalTime.of(6, 0))
+
+    breakPeriodRanges(listOf(pause), axisEnd = 23f) shouldBe listOf(23f to 23f, 0f to 6f)
   }
 
   test("pause starting and ending at the same time does not wrap around midnight") {
     val pause = Pause(LocalTime.of(9, 0), LocalTime.of(9, 0))
 
-    breakPeriodRanges(listOf(pause)) shouldBe listOf(9f to 9f)
+    breakPeriodRanges(listOf(pause), axisEnd = 23f) shouldBe listOf(9f to 9f)
   }
 
   test("disabled pauses are excluded from ranges and edges") {
     val pause = Pause(LocalTime.of(9, 0), LocalTime.of(12, 0), isEnabled = false)
 
-    breakPeriodRanges(listOf(pause)) shouldBe emptyList()
+    breakPeriodRanges(listOf(pause), axisEnd = 23f) shouldBe emptyList()
     breakPeriodEdges(listOf(pause)) shouldBe emptyList()
   }
 

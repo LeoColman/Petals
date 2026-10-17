@@ -16,15 +16,16 @@ private fun LocalTime.toHourAxis() = hour + minute / 60f
 
 /**
  * The shaded x-ranges (in hour-of-day axis units) covered by the enabled [pauses].
- * A pause crossing midnight (start > end) is split into two ranges: [start..23] and [0..end].
+ * A pause crossing midnight (start > end) is split into two ranges: [start..axisEnd] and [0..end].
+ * One that starts past [axisEnd], such as 23:50 by the hour, has nothing to shade before midnight.
  * Pure geometry — no chart dependencies — so it is unit-testable.
  */
-fun breakPeriodRanges(pauses: List<Pause>): List<Pair<Float, Float>> {
+fun breakPeriodRanges(pauses: List<Pause>, axisEnd: Float): List<Pair<Float, Float>> {
   return pauses.filter { it.isEnabled }.flatMap { pause ->
     val startX = pause.startTime.toHourAxis()
     val endX = pause.endTime.toHourAxis()
     if (pause.startTime > pause.endTime) {
-      listOf(startX to 23f, 0f to endX)
+      listOf(startX.coerceAtMost(axisEnd) to axisEnd, 0f to endX)
     } else {
       listOf(startX to endX)
     }
@@ -42,10 +43,11 @@ fun breakPeriodEdges(pauses: List<Pause>): List<Float> {
 /**
  * Builds the translucent shaded band(s) representing each enabled [Pause] on the per-hour graph,
  * each filled down to the axis baseline (0). Only the first band carries [label] so a single
- * "break period" entry appears in the chart legend (avoiding overlapping per-line labels).
+ * "break period" entry appears in the chart legend (avoiding overlapping per-line labels). A band
+ * crossing midnight runs to [axisEnd] before starting again at 0.
  */
-fun createBreakPeriodBands(pauses: List<Pause>, yMax: Float, label: String): List<LineDataSet> {
-  return breakPeriodRanges(pauses).mapIndexed { index, (startX, endX) ->
+fun createBreakPeriodBands(pauses: List<Pause>, yMax: Float, label: String, axisEnd: Float): List<LineDataSet> {
+  return breakPeriodRanges(pauses, axisEnd).mapIndexed { index, (startX, endX) ->
     bandDataset(startX, endX, yMax, if (index == 0) label else "")
   }
 }

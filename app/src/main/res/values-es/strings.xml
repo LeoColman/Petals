@@ -157,6 +157,8 @@
     <string name="delete_pause">Borrar la pausa</string>
     <string name="break_period">Período de descanso</string>
     <string name="no_break_period">Sin periodo de descanso</string>
+    <string name="time_of_day_resolution_hour">1 hora</string>
+    <string name="time_of_day_resolution_quarter_hour">15 minutos</string>
     <string name="hours_12">12 horas</string>
     <string name="hours_24">24 horas</string>
     <string name="remove_ads_title">Eliminar anuncios</string>

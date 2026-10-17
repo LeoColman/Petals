@@ -157,6 +157,8 @@
     <string name="delete_pause">Supprimer la pause</string>
     <string name="break_period">Période de pause</string>
     <string name="no_break_period">Période sans pause</string>
+    <string name="time_of_day_resolution_hour">1 heure</string>
+    <string name="time_of_day_resolution_quarter_hour">15 minutes</string>
     <string name="hours_12">12 heures</string>
     <string name="hours_24">24 heures</string>
     <string name="language_label">Langue de l\'appli</string>
