@@ -272,11 +272,9 @@ private fun EditUseDialog(
     rating.value
   )
 
-  AlertDialog(
-    onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, rating, false) },
-    confirmButton = { ConfirmEdit(onEditUse, use, onDismiss) }
-  )
+  UseFormDialog(onDismiss, { ConfirmEdit(onEditUse, use, onDismiss) }) {
+    AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, rating, false)
+  }
 }
 
 @Composable

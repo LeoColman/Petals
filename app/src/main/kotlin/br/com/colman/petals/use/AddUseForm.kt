@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
@@ -29,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import br.com.colman.petals.R.string
 import br.com.colman.petals.R.string.add_use
 import br.com.colman.petals.R.string.amount_grams_title
@@ -138,6 +141,25 @@ fun AddUseForm(
 
     ConsumptionMethodField(consumptionMethod)
   }
+}
+
+/**
+ * The dialog that adds or edits a use, holding [form]. It makes room for the keyboard: the dialog shrinks to the space
+ * above it, so the form scrolls and OK stays in reach. Left to the system, the dialog keeps its height and slides up
+ * under the keyboard, which hides the stars, the consumption method and OK, and the form can't scroll to them because
+ * it still fits. Asking the window to resize for the keyboard (SOFT_INPUT_ADJUST_RESIZE) did nothing on Android 16, so
+ * the dialog takes the keyboard's insets itself.
+ */
+@Composable
+fun UseFormDialog(onDismiss: () -> Unit, confirmButton: @Composable () -> Unit, form: @Composable () -> Unit) {
+  AlertDialog(
+    onDismissRequest = onDismiss,
+    text = form,
+    confirmButton = confirmButton,
+    // Clear of the status and navigation bars too, as the dialog's window now reaches under them.
+    modifier = Modifier.safeDrawingPadding(),
+    properties = DialogProperties(decorFitsSystemWindows = false)
+  )
 }
 
 /** The strain picker, over the whole catalog, filling in the cost of whichever strain is picked or made. */
