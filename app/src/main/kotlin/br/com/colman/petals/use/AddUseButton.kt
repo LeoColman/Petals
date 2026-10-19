@@ -222,11 +222,9 @@ private fun AddUseDialog(
     rating = rating.value
   )
 
-  AlertDialog(
-    onDismissRequest = onDismiss,
-    text = { AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, rating) },
-    confirmButton = { ConfirmNewUseButton(onAddUse, use, onDismiss) }
-  )
+  UseFormDialog(onDismiss, { ConfirmNewUseButton(onAddUse, use, onDismiss) }) {
+    AddUseForm(amount, costPerGram, date, time, description, consumptionMethod, strainId, rating)
+  }
 }
 
 @Composable
