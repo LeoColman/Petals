@@ -142,7 +142,9 @@ fun AddUseForm(
       leadingIcon = { Icon(TablerIcons.Notebook, null) },
       label = { Text(stringResource(string.description)) },
       placeholder = { Text(stringResource(because_i_wanted)) },
-      minLines = 3
+      // One line until the notes need a second, so an empty description doesn't make the form any taller. Past two,
+      // the notes scroll inside the field.
+      maxLines = 2
     )
 
     RatingField(rating)
