@@ -5,10 +5,12 @@ import br.com.colman.petals.R.string.method_edible
 import br.com.colman.petals.R.string.method_other
 import br.com.colman.petals.R.string.method_smoked
 import br.com.colman.petals.R.string.method_vaporized
+import br.com.colman.petals.R.string.method_dabbed
 
 enum class ConsumptionMethod(val key: String, @StringRes val label: Int) {
   SMOKED("smoked", method_smoked),
   VAPORIZED("vaporized", method_vaporized),
+  DABBED("dabbed", method_dabbed),
   EDIBLE("edible", method_edible),
   OTHER("other", method_other);
 

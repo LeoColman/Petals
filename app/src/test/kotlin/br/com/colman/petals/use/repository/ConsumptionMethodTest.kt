@@ -14,6 +14,7 @@ class ConsumptionMethodTest : FunSpec({
   test("keys are the expected stable lowercase strings") {
     ConsumptionMethod.SMOKED.key shouldBe "smoked"
     ConsumptionMethod.VAPORIZED.key shouldBe "vaporized"
+    ConsumptionMethod.DABBED.key shouldBe "dabbed"
     ConsumptionMethod.EDIBLE.key shouldBe "edible"
     ConsumptionMethod.OTHER.key shouldBe "other"
   }
