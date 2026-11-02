@@ -204,6 +204,7 @@
     <string name="consumption_method_label">konsum_methode</string>
     <string name="method_smoked">Geraucht</string>
     <string name="method_vaporized">Verdampft</string>
+    <string name="method_dabbed">Gedabbt</string>
     <string name="method_edible">Essbar</string>
     <string name="method_other">Andere</string>
     <string name="method_unspecified">Nicht angegeben</string>
