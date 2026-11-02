@@ -4,9 +4,9 @@ import androidx.compose.ui.graphics.toArgb
 import br.com.colman.petals.statistics.graph.color.createColor
 import br.com.colman.petals.use.repository.Use
 import br.com.colman.petals.use.repository.totalGrams
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.data.LineDataSet.Mode.HORIZONTAL_BEZIER
+import info.appdev.charting.data.EntryFloat
+import info.appdev.charting.data.LineDataSet
+import info.appdev.charting.data.LineDataSet.Mode.HORIZONTAL_BEZIER
 
 /**
  * The grams used in each [resolution] bucket of the day, counting from midnight.
@@ -23,17 +23,17 @@ fun createDistributionPerHourDataset(
   uses: List<Use>,
   label: String,
   resolution: TimeOfDayResolution
-): LineDataSet {
+): LineDataSet<EntryFloat> {
   val entries = gramsPerBucket(uses, resolution).mapIndexed { bucket, grams ->
-    Entry(resolution.hourOf(bucket), grams)
+    EntryFloat(resolution.hourOf(bucket), grams)
   }
-  return LineDataSet(entries, label).apply {
-    setDrawCircles(resolution.drawsDots)
-    setDrawFilled(true)
-    setDrawValues(false)
+  return LineDataSet(entries.toMutableList(), label).apply {
+    isDrawCircles = resolution.drawsDots
+    isDrawFilled = true
+    isDrawValues = false
     fillColor = createColor(days).toArgb()
     color = createColor(days).toArgb()
     setCircleColor(createColor(days).toArgb())
-    mode = HORIZONTAL_BEZIER
+    lineMode = HORIZONTAL_BEZIER
   }
 }

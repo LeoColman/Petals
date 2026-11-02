@@ -85,7 +85,7 @@ android {
 
     create("playstore") {
       dimension = "distribution"
-      minSdk = 23
+      minSdk = 24
       signingConfig = signingConfigs.findByName("self-sign")
     }
 
@@ -355,6 +355,10 @@ licensee {
   allow("MIT")
 
   allowUrl("https://github.com/jsoizo/kotlin-csv/blob/master/LICENSE") {
+    because("Apache-2.0 but self-hosted")
+  }
+
+  allowUrl("https://github.com/AppDevNext/Logcat/blob/master/LICENSE") {
     because("Apache-2.0 but self-hosted")
   }
 

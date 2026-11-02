@@ -20,7 +20,7 @@ android-desugar-jdk = "com.android.tools:desugar_jdk_libs:2.1.5"
 apache-commons-lang = "org.apache.commons:commons-lang3:3.20.0"
 apache-commons-math = "org.apache.commons:commons-math3:3.6.1"
 arcmutate-kotlin = "com.arcmutate:pitest-kotlin-plugin:1.5.1"
-compose-activity = "androidx.activity:activity-compose:1.10.1"
+compose-activity = "androidx.activity:activity-compose:1.13.0"
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 compose-material-dialogs-core = { module = "io.github.vanpra.compose-material-dialogs:core", version.ref = "vanpra-material-dialogs" }
 compose-material-dialogs-date-time = { module = "io.github.vanpra.compose-material-dialogs:datetime", version.ref = "vanpra-material-dialogs" }
@@ -49,7 +49,7 @@ kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
-mp-android-chart = "com.github.AppDevNext:AndroidChart:3.1.0.31"
+mp-android-chart = "com.github.AppDevNext.AndroidChart:chartLib:5.3.1"
 pitest-command-line = { module = "org.pitest:pitest-command-line", version.ref = "pitest" }
 snodge = "com.natpryce:snodge:3.7.0.0"
 sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
@@ -63,8 +63,8 @@ glance-widgets = { module = "androidx.glance:glance-appwidget", version.ref = "g
 glance-widget-preview = { group = "androidx.glance", name = "glance-appwidget-preview", version.ref = "glance" }
 glance-preview = { group = "androidx.glance", name = "glance-preview", version.ref = "glance" }
 glance-material = { group = "androidx.glance", name = "glance-material", version.ref = "glance" }
-play-services-ads = "com.google.android.gms:play-services-ads:24.9.0"
-play-services-billing = "com.android.billingclient:billing:8.3.0"
+play-services-ads = "com.google.android.gms:play-services-ads:25.5.0"
+play-services-billing = "com.android.billingclient:billing:9.1.0"
 fuel = "com.github.kittinunf.fuel:fuel:2.3.1"
 androidx-test-core = "androidx.test:core:1.7.0"
 review = { module = "com.google.android.play:review", version.ref = "review" }

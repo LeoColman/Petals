@@ -25,7 +25,7 @@ jobs:
     steps:
     - id: 'step-0'
       name: 'Check out'
-      uses: 'actions/checkout@v3'
+      uses: 'actions/checkout@v7'
     - id: 'step-1'
       name: 'Execute script'
       run: 'rm ''.github/workflows/release.yaml'' && ''.github/workflows/release.main.kts'''
@@ -50,10 +50,10 @@ jobs:
         distribution: 'adopt'
     - id: 'step-2'
       name: 'Setup Gradle'
-      uses: 'gradle/actions/setup-gradle@v4'
+      uses: 'gradle/actions/setup-gradle@v5'
     - id: 'step-3'
       name: 'Checkout with SSHKey'
-      uses: 'actions/checkout@v3'
+      uses: 'actions/checkout@v7'
       with:
         ssh-key: '${{ secrets.RELEASE_KEY }}'
     - id: 'step-4'
@@ -86,7 +86,7 @@ jobs:
     - id: 'step-9'
       uses: 'ruby/setup-ruby@v1'
       with:
-        ruby-version: '3.4.10'
+        ruby-version: '4.0.9'
     - id: 'step-10'
       name: 'Publish to Playstore'
       working-directory: 'fastlane'

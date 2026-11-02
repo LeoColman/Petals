@@ -38,7 +38,7 @@ import br.com.colman.petals.statistics.graph.data.createDistributionPerHourDatas
 import br.com.colman.petals.statistics.graph.formatter.TwelveHourFormatter
 import br.com.colman.petals.use.pause.repository.PauseRepository
 import br.com.colman.petals.use.repository.Use
-import com.github.mikephil.charting.components.LimitLine
+import info.appdev.charting.components.LimitLine
 import org.koin.compose.koinInject
 import java.time.LocalDate
 import java.time.LocalTime
