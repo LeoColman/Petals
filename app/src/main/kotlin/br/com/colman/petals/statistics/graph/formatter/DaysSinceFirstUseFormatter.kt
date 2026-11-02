@@ -1,8 +1,8 @@
 package br.com.colman.petals.statistics.graph.formatter
 
 import br.com.colman.petals.use.repository.Use
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import info.appdev.charting.components.AxisBase
+import info.appdev.charting.formatter.IAxisValueFormatter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

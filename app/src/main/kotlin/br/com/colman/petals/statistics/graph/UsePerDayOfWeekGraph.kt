@@ -13,7 +13,7 @@ import br.com.colman.petals.statistics.graph.component.LineChart
 import br.com.colman.petals.statistics.graph.data.createDistributionPerDayOfWeekDataset
 import br.com.colman.petals.statistics.graph.formatter.DayOfWeekFormatter
 import br.com.colman.petals.use.repository.Use
-import com.github.mikephil.charting.components.LimitLine
+import info.appdev.charting.components.LimitLine
 import org.koin.compose.koinInject
 import java.time.LocalDate
 import kotlin.random.Random

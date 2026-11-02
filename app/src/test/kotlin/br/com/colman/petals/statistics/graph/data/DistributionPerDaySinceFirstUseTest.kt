@@ -1,7 +1,7 @@
 package br.com.colman.petals.statistics.graph.data
 
 import br.com.colman.petals.use.repository.Use
-import com.github.mikephil.charting.data.Entry
+import info.appdev.charting.data.EntryFloat
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
@@ -12,7 +12,7 @@ class DistributionPerDaySinceFirstUseTest : FunSpec({
 
   fun use(day: LocalDate, grams: String) = Use(day.atTime(12, 0), grams.toBigDecimal())
 
-  fun List<Entry>.points() = map { it.x to it.y }
+  fun List<EntryFloat>.points() = map { it.x to it.y }
 
   context("grams distribution") {
     test("an empty history has no entries") {
@@ -50,7 +50,7 @@ class DistributionPerDaySinceFirstUseTest : FunSpec({
     }
 
     test("each point averages itself and up to six points before it") {
-      val entries = (1..10).map { Entry(it + 9f, it.toFloat()) }
+      val entries = (1..10).map { EntryFloat(it + 9f, it.toFloat()) }
 
       calculateMovingAverage(entries).points() shouldBe listOf(
         10f to 1f,

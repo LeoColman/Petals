@@ -11,14 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import info.appdev.charting.charts.LineChart
+import info.appdev.charting.components.XAxis
+import info.appdev.charting.data.EntryFloat
+import info.appdev.charting.data.LineData
+import info.appdev.charting.data.LineDataSet
 
 @Composable
 fun LineChart(
-  datasets: List<LineDataSet>,
+  datasets: List<LineDataSet<EntryFloat>>,
   description: String,
   visibleXRange: Float? = null,
   configureXAxis: XAxis.() -> Unit
@@ -32,7 +33,7 @@ fun LineChart(
       chart.legend.textColor = colors.primary.toArgb()
       chart.setMaxVisibleValueCount(30)
 
-      chart.data = LineData(datasets)
+      chart.data = LineData(datasets.toMutableList())
       chart.notifyDataSetChanged()
       chart.invalidate()
 
@@ -52,7 +53,11 @@ fun LineChart(
 
       chart.xAxis.apply {
         position = XAxis.XAxisPosition.BOTTOM
-        setDrawLimitLinesBehindData(true)
+        // AndroidChart builds a chart's XAxis before it reads the display density, so the first chart of the process
+        // would keep these two defaults in raw pixels and draw tiny labels. Setting them again applies the density.
+        textSize = 10f
+        yOffset = 4f
+        isDrawLimitLinesBehindData = true
         textColor = colors.primary.toArgb()
         axisLineColor = colors.primary.toArgb()
         configureXAxis(this)

@@ -3,10 +3,10 @@ package br.com.colman.petals.statistics.graph.data
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import br.com.colman.petals.use.pause.repository.Pause
-import com.github.mikephil.charting.components.Legend.LegendForm
-import com.github.mikephil.charting.components.LimitLine
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineDataSet
+import info.appdev.charting.components.Legend.LegendForm
+import info.appdev.charting.components.LimitLine
+import info.appdev.charting.data.EntryFloat
+import info.appdev.charting.data.LineDataSet
 import java.time.LocalTime
 
 private val BreakColor = Color(0xFFFFC107).toArgb() // Amber - warning
@@ -46,7 +46,12 @@ fun breakPeriodEdges(pauses: List<Pause>): List<Float> {
  * "break period" entry appears in the chart legend (avoiding overlapping per-line labels). A band
  * crossing midnight runs to [axisEnd] before starting again at 0.
  */
-fun createBreakPeriodBands(pauses: List<Pause>, yMax: Float, label: String, axisEnd: Float): List<LineDataSet> {
+fun createBreakPeriodBands(
+  pauses: List<Pause>,
+  yMax: Float,
+  label: String,
+  axisEnd: Float
+): List<LineDataSet<EntryFloat>> {
   return breakPeriodRanges(pauses, axisEnd).mapIndexed { index, (startX, endX) ->
     bandDataset(startX, endX, yMax, if (index == 0) label else "")
   }
@@ -64,17 +69,17 @@ fun breakPeriodLimitLines(pauses: List<Pause>): List<LimitLine> {
   }
 }
 
-private fun bandDataset(startX: Float, endX: Float, yMax: Float, label: String): LineDataSet {
-  val entries = listOf(Entry(startX, yMax), Entry(endX, yMax))
-  return LineDataSet(entries, label).apply {
-    setDrawCircles(false)
-    setDrawValues(false)
-    setDrawFilled(true)
+private fun bandDataset(startX: Float, endX: Float, yMax: Float, label: String): LineDataSet<EntryFloat> {
+  val entries = listOf(EntryFloat(startX, yMax), EntryFloat(endX, yMax))
+  return LineDataSet(entries.toMutableList(), label).apply {
+    isDrawCircles = false
+    isDrawValues = false
+    isDrawFilled = true
     lineWidth = 0f
     color = BreakColor
     fillColor = BreakColor
     fillAlpha = BreakFillAlpha
-    isHighlightEnabled = false
+    isHighlight = false
     form = if (label.isEmpty()) LegendForm.NONE else LegendForm.SQUARE
   }
 }
