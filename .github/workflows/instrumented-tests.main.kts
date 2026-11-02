@@ -4,11 +4,11 @@
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:4.0.0")
 
 @file:Repository("https://bindings.krzeminski.it")
-@file:DependsOn("actions:checkout:v4")
+@file:DependsOn("actions:checkout:v7")
 @file:DependsOn("actions:setup-java:v5")
 @file:DependsOn("actions:cache:v4")
-@file:DependsOn("actions:upload-artifact:v4")
-@file:DependsOn("gradle:actions__setup-gradle:v4")
+@file:DependsOn("actions:upload-artifact:v7")
+@file:DependsOn("gradle:actions__setup-gradle:v5")
 
 import io.github.typesafegithub.workflows.actions.actions.Cache
 import io.github.typesafegithub.workflows.actions.actions.Checkout

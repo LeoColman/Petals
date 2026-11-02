@@ -4,9 +4,9 @@
 @file:DependsOn("io.github.typesafegithub:github-workflows-kt:4.0.0")
 
 @file:Repository("https://bindings.krzeminski.it")
-@file:DependsOn("actions:checkout:v3")
+@file:DependsOn("actions:checkout:v7")
 @file:DependsOn("actions:setup-java:v5")
-@file:DependsOn("gradle:actions__setup-gradle:v4")
+@file:DependsOn("gradle:actions__setup-gradle:v5")
 @file:DependsOn("entrostat:git-secret-action:v4")
 @file:DependsOn("ruby:setup-ruby:v1")
 @file:DependsOn("softprops:action-gh-release:v2")
@@ -92,7 +92,7 @@ workflow(
 
     run(name = "Create Playstore Bundle", command = "./gradlew clean bundlePlaystoreRelease")
 
-    uses(action = SetupRuby(rubyVersion = "3.4.10"))
+    uses(action = SetupRuby(rubyVersion = "4.0.9"))
     run(
       name = "Publish to Playstore",
       workingDirectory = "fastlane",
