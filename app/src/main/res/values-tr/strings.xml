@@ -185,6 +185,7 @@
     <string name="consumption_method_label">kullanım_yöntemi</string>
     <string name="method_smoked">İçildi</string>
     <string name="method_vaporized">Buharlaştırıldı</string>
+    <string name="method_dabbed">Dab yapıldı</string>
     <string name="method_edible">Yenilebilir</string>
     <string name="method_other">Diğer</string>
     <string name="method_unspecified">Belirtilmemiş</string>

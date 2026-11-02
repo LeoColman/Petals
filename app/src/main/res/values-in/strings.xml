@@ -197,6 +197,7 @@
     <string name="consumption_method_label">metode_konsumsi</string>
     <string name="method_smoked">Dihisap</string>
     <string name="method_vaporized">Diuapkan</string>
+    <string name="method_dabbed">Di-dab</string>
     <string name="method_edible">Dapat dimakan</string>
     <string name="method_other">Lainnya</string>
     <string name="method_unspecified">Tidak ditentukan</string>

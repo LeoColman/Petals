@@ -197,6 +197,7 @@
     <string name="consumption_method_label">நுகர்வு_முறை</string>
     <string name="method_smoked">புகைத்தல்</string>
     <string name="method_vaporized">ஆவியாக்கல்</string>
+    <string name="method_dabbed">டாபிங்</string>
     <string name="method_edible">உண்ணக்கூடியது</string>
     <string name="method_other">மற்றவை</string>
     <string name="method_unspecified">குறிப்பிடப்படவில்லை</string>

@@ -175,6 +175,7 @@
     <string name="consumption_method_label">méthode_de_consommation</string>
     <string name="method_smoked">Fumé</string>
     <string name="method_vaporized">Vaporisé</string>
+    <string name="method_dabbed">Dabbé</string>
     <string name="method_edible">Comestible</string>
     <string name="method_other">Autre</string>
     <string name="method_unspecified">Non spécifié</string>

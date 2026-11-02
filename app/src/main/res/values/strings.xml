@@ -219,6 +219,7 @@
     <string name="consumption_method_label">consumption_method</string>
     <string name="method_smoked">Smoked</string>
     <string name="method_vaporized">Vaporized</string>
+    <string name="method_dabbed">Dabbed</string>
     <string name="method_edible">Edible</string>
     <string name="method_other">Other</string>
     <string name="method_unspecified">Unspecified</string>
