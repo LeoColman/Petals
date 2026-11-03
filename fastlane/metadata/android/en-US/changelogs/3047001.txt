@@ -1,0 +1,1 @@
+New: Dabbed is now its own consumption method, so you can log dabs apart from vaporizing. Translated to every language. Also updated the libraries the app is built on.
