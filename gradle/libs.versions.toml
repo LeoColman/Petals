@@ -1,6 +1,6 @@
 [versions]
 datastore = "1.2.1"
-compose = "1.11.4"
+compose = "1.12.1"
 detekt = "1.23.8"
 documentfile = "1.1.0"
 glance = "1.2.0"
