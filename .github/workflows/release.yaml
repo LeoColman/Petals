@@ -69,7 +69,7 @@ jobs:
       run: './gradlew assembleGithubRelease'
     - id: 'step-7'
       name: 'Create Github Release'
-      uses: 'softprops/action-gh-release@v2'
+      uses: 'softprops/action-gh-release@v3'
       with:
         name: '${{ steps.step-5.outputs.version }}'
         tag_name: '${{ steps.step-5.outputs.version }}'

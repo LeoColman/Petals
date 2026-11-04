@@ -9,7 +9,7 @@
 @file:DependsOn("gradle:actions__setup-gradle:v5")
 @file:DependsOn("entrostat:git-secret-action:v4")
 @file:DependsOn("ruby:setup-ruby:v1")
-@file:DependsOn("softprops:action-gh-release:v2")
+@file:DependsOn("softprops:action-gh-release:v3")
 
 import io.github.typesafegithub.workflows.actions.actions.Checkout
 import io.github.typesafegithub.workflows.actions.actions.SetupJava
